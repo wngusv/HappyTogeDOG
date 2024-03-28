@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,64 +8,64 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-	<header>
-		<div class="container">
-			<div class="logo">
-				<h1>회원가입</h1>
-			</div>
-			<nav>
-				<ul>
-					<li><a href="#">로그인</a></li>
-					<li><a href="#">회원가입</a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
+   <header>
+      <div class="container">
+         <div class="logo">
+            <h1>회원가입</h1>
+         </div>
+         <nav>
+            <ul>
+               <li><a href="#">로그인</a></li>
+               <li><a href="#">회원가입</a></li>
+            </ul>
+         </nav>
+      </div>
+   </header>
 
-	<section class="signup-form">
-		<div class="container">
-			<form action="ProcessSignupServlet" method="post">
-				<div class="form-group">
-					<label for="id">아이디</label> <input type="text" id="id" name="id"
-						required>
-					<button type="button" id="checkDuplicate">중복확인</button>
-				</div>
-				<div class="form-group">
-					<label for="password">비밀번호</label> <input type="password"
-						id="password" name="password" required>
-				</div>
-				<div class="form-group">
-					<label for="confirmPassword">비밀번호 확인</label> <input type="password"
-						id="confirmPassword" name="confirmPassword" required>
-				</div>
-				<div class="form-group">
-					<label for="name">이름</label> <input type="text" id="name"
-						name="name" required>
-				</div>
-				<div class="form-group">
-					<label for="phone">전화번호</label> <input type="text" id="phone"
-						name="phone" required>
-					<button type="button" id="verifyPhone">본인인증</button>
-				</div>
-				<div class="form-group">
-					<label for="address">주소</label>
-					<!-- <input type="text" id="address" name="address" required>
+   <section class="signup-form">
+      <div class="container">
+         <form action="ProcessSignupServlet" method="post">
+            <div class="form-group">
+               <label for="id">아이디</label> <input type="text" id="id" name="id"
+                  required>
+               <button type="button" id="checkDuplicate">중복확인</button>
+            </div>
+            <div class="form-group">
+               <label for="password">비밀번호</label> <input type="password"
+                  id="password" name="password" required>
+            </div>
+            <div class="form-group">
+               <label for="confirmPassword">비밀번호 확인</label> <input type="password"
+                  id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <div class="form-group">
+               <label for="name">이름</label> <input type="text" id="name"
+                  name="name" required>
+            </div>
+            <div class="form-group">
+               <label for="phone">전화번호</label> <input type="text" id="phone"
+                  name="phone" required>
+               <button type="button" id="verifyPhone">본인인증</button>
+            </div>
+            <div class="form-group">
+               <label for="address">주소</label>
+               <!-- <input type="text" id="address" name="address" required>
                     <button type="button" id="addressButton">주소검색</button> -->
-					<input type="text" id="sample6_postcode" placeholder="우편번호">
-					<input type="button" onclick="sample6_execDaumPostcode()"value="우편번호 찾기"><br> 
-					<input type="text" id="sample6_address" placeholder="주소"><br> 
-					<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-				</div>
-				<button type="submit">확인</button>
-			</form>
-		</div>
-	</section>
+               <input type="text" id="sample6_postcode" placeholder="우편번호">
+               <input type="button" onclick="sample6_execDaumPostcode()"value="우편번호 찾기"><br> 
+               <input type="text" id="sample6_address" placeholder="주소" name="address"><br> 
+               <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="address_detail">
+            </div>
+            <button type="submit">확인</button>
+         </form>
+      </div>
+   </section>
 
-	<footer>
-		<div class="container">
-			<p>&copy; 2024 산책 아르바이트. All rights reserved.</p>
-		</div>
-	</footer>
+   <footer>
+      <div class="container">
+         <p>&copy; 2024 산책 아르바이트. All rights reserved.</p>
+      </div>
+   </footer>
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
