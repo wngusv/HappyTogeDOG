@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/api/login")
 
@@ -23,6 +24,8 @@ public class LoginAPIServlet extends HttpServlet {
 				System.out.println("아이디 비밀번호 확인 완료");
 			} else {
 				resp.sendRedirect("../login.html");
+				HttpSession session = req.getSession();
+				session.setAttribute("username", username);
 			}
 
 		} catch (SQLException e) {
