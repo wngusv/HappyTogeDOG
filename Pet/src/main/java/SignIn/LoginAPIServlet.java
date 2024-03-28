@@ -21,11 +21,14 @@ public class LoginAPIServlet extends HttpServlet {
 		String password = req.getParameter("userPassword");
 		try {
 			if (loginDao.checkLogin(username, password)) {
-				System.out.println("아이디 비밀번호 확인 완료");
-			} else {
-				resp.sendRedirect("../login.html");
 				HttpSession session = req.getSession();
 				session.setAttribute("username", username);
+
+				// 로그인 정보를 URL 파라미터로 전달
+				String redirectUrl = "../index.html?login=success";
+				resp.sendRedirect(redirectUrl);
+			} else {
+				resp.sendRedirect("../login.html");
 			}
 
 		} catch (SQLException e) {

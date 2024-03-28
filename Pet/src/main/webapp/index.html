@@ -2,42 +2,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>pet</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+<meta charset="UTF-8">
+<title>pet</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <h1>메인페이지</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="login.html">로그인</a></li>
-                    <li><a href="signup.jsp">회원가입</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+	<header>
+		<div class="container">
+			<div class="logo">
+				<h1>메인페이지</h1>
+			</div>
+			<nav>
+				<ul>
+					<li><a id="login-button" href="login.html">로그인</a></li>
+					<li><a id="logout-button" href="./api/logout">로그아웃</a></li>
+					<li><a href="signup.jsp">회원가입</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
 
-    <section class="menu">
-        <div class="container">
-            <ul>
-                <li><a href="#">산책 아르바이트</a></li>
-                <li><a href="#">반려동물 시설</a></li>
-                <li><a href="#">지역 유기동물</a></li>
-                <li><a href="#">지역 유기견 보호센터</a></li>
-                <li><a href="#">기부</a></li>
-                <li><a href="#">게시판</a></li>
-            </ul>
-        </div>
-    </section>
+	<section class="menu">
+		<div class="container">
+			<ul>
+				<li><a href="#">산책 아르바이트</a></li>
+				<li><a href="#">반려동물 시설</a></li>
+				<li><a href="#">지역 유기동물</a></li>
+				<li><a href="#">지역 유기견 보호센터</a></li>
+				<li><a href="#">기부</a></li>
+				<li><a href="#">게시판</a></li>
+			</ul>
+		</div>
+	</section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 pet. All rights reserved.</p>
-        </div>
-    </footer>
+	<footer>
+		<div class="container">
+			<p>&copy; 2024 pet. All rights reserved.</p>
+		</div>
+	</footer>
 </body>
+<script>
+	let loginStatus = getUrlParameter("login");
+	if (loginStatus === "success") {
+		document.getElementById("login-button").style.display = "none";
+		document.getElementById("logout-button").style.display = "block";
+	} else {
+		document.getElementById("login-button").style.display = "block";
+		document.getElementById("logout-button").style.display = "none";
+	}
+
+	function getUrlParameter(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+		var results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(
+				/\+/g, " "));
+	}
+</script>
 </html>
