@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // 처음에 버튼 상태 설정
     toggleCertificationButton();
     toggleCheckButton();
-
+	
+    
     function toggleCertificationButton() {
         certificationButton.disabled = !nameInput.value.trim() || !(phoneInput.value.length === 11 && /^\d+$/.test(phoneInput.value));
     }
@@ -46,21 +47,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function verifyCode() {
+        var userCode = document.getElementById('checkNumber').value;
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/VerifyCodeServlet', true); // URL이 서블릿의 URL과 일치하는지 확인
+        xhr.open('POST', 'VerifyCodeServlet_ID', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                alert(xhr.responseText); // 서버로부터의 응답 표시
+                alert(xhr.responseText);
             }
         };
-        xhr.send('code=' + encodeURIComponent(checkNumberInput.value));
+        xhr.send('code=' + userCode);
     }
 
-
-
     document.getElementById('check').addEventListener('click', verifyCode);
-    
+
+    // ...
 });
 </script>
 </head>

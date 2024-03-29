@@ -182,24 +182,24 @@ function verifyCode() {
 }
 
 
-//    document.getElementById('verifyPhone').addEventListener('click', openModal);
+    document.getElementById('verifyPhone').addEventListener('click', openModal);
     
  // 본인인증 버튼 상태를 토글하는 함수
-//    function toggleVerifyPhoneButton() {
-//        var phoneInput = document.getElementById('phone').value;
-//        var verifyPhoneButton = document.getElementById('verifyPhone');
+    function toggleVerifyPhoneButton() {
+        var phoneInput = document.getElementById('phone').value;
+        var verifyPhoneButton = document.getElementById('verifyPhone');
         // 전화번호 입력이 정확히 11자리 and 모든 문자가 숫자로만 구성된 경우에 참
-//        verifyPhoneButton.disabled = !(phoneInput.length === 11 && /^\d+$/.test(phoneInput));
+        verifyPhoneButton.disabled = !(phoneInput.length === 11 && /^\d+$/.test(phoneInput));
 //    }
 
     // 전화번호 입력 변경시 이벤트 리스너
-//    document.getElementById('phone').addEventListener('input', toggleVerifyPhoneButton);
+    document.getElementById('phone').addEventListener('input', toggleVerifyPhoneButton);
 
     // 페이지 로드시 버튼 상태를 올바르게 설정하기 위해 초기 호출
-//    toggleVerifyPhoneButton();
+    toggleVerifyPhoneButton();
 
     // 기존 본인인	증 버튼에 대한 이벤트 리스너
-//    document.getElementById('verifyPhone').addEventListener('click', openModal);
+    document.getElementById('verifyPhone').addEventListener('click', openModal);
     
     // 중복 확인 버튼을 클릭했을 때 실행될 함수
     function checkDuplicateClick() {

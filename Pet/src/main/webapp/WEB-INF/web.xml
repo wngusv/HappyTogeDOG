@@ -41,5 +41,13 @@
     <servlet-name>VerifyCodeServlet</servlet-name>
     <url-pattern>/VerifyCodeServlet</url-pattern>
 </servlet-mapping>
+<servlet>
+    <servlet-name>VerifyCodeServlet_ID</servlet-name>
+    <servlet-class>SMS.VerifyCodeServlet_ID</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>VerifyCodeServlet_ID</servlet-name>
+    <url-pattern>/VerifyCodeServlet_ID</url-pattern>
+</servlet-mapping>
 
 </web-app>
