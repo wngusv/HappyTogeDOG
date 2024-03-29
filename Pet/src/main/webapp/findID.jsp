@@ -8,23 +8,28 @@
 <script>
 // 페이지가 로드될 때 함수를 실행
 document.addEventListener('DOMContentLoaded', function () {
-    // 입력 필드와 버튼 요소를 가져옴
     var nameInput = document.getElementById('name');
     var phoneInput = document.getElementById('phone');
     var certificationButton = document.getElementById('certificationNumber');
+    var checkNumberInput = document.getElementById('checkNumber');
+    var checkButton = document.getElementById('check');
 
     // 이벤트 리스너 추가
     nameInput.addEventListener('input', toggleCertificationButton);
     phoneInput.addEventListener('input', toggleCertificationButton);
     certificationButton.addEventListener('click', sendVerificationRequest);
+    checkNumberInput.addEventListener('input', toggleCheckButton);
 
     // 처음에 버튼 상태 설정
     toggleCertificationButton();
+    toggleCheckButton();
 
-    // 버튼 활성화/비활성화 함수
     function toggleCertificationButton() {
-        // 이름 입력란에 값이 있고, 전화번호 입력란의 길이가 11자리 숫자인지 확인
         certificationButton.disabled = !nameInput.value.trim() || !(phoneInput.value.length === 11 && /^\d+$/.test(phoneInput.value));
+    }
+    
+    function toggleCheckButton() {
+        checkButton.disabled = !(checkNumberInput.value.length === 5 && /^\d+$/.test(checkNumberInput.value));
     }
     
     function sendVerificationRequest() {
@@ -40,7 +45,22 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.send(data);
     }
 
+    function verifyCode() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/VerifyCodeServlet', true); // URL이 서블릿의 URL과 일치하는지 확인
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert(xhr.responseText); // 서버로부터의 응답 표시
+            }
+        };
+        xhr.send('code=' + encodeURIComponent(checkNumberInput.value));
+    }
 
+
+
+    document.getElementById('check').addEventListener('click', verifyCode);
+    
 });
 </script>
 </head>
@@ -56,13 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
  <button type="button" id="certificationNumber" disabled>인증번호 받기</button>
 
  <p>인증번호:</p>
- <input type="text" id="checkNumber" name="checkNumber" class="gray-text" placeholder="5자리 숫자를 입력하세요." required />
- <h2>아이디 찾기 결과</h2>
-<% String findId = (String) request.getAttribute("findId"); %>
-<% if (findId != null) { %>
-    <p>찾은 아이디: <%= findId %></p>
-<% } else { %>
-    <p>아이디를 찾을 수 없습니다.</p>
-<% } %>
+ <input type="text" maxlength="5" id="checkNumber" name="checkNumber" class="gray-text" placeholder="5자리 숫자를 입력하세요." required />
+ <button type="button" id="check" disabled>확인</button>
+
 </body>
 </html>

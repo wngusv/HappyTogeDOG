@@ -26,6 +26,7 @@ public class SMS {
     	  try {
               int randomNumber = (int)(Math.random() * 90000) + 10000;
               String textMessage = "인증번호는 " + randomNumber + "입니다.";
+              System.out.println(textMessage);
 
               Message message = new Message();
               message.setFrom("01095173408");
