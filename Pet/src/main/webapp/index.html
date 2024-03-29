@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +13,10 @@
 			</div>
 			<nav>
 				<ul>
+
 					<li><a id="login-button" href="login.html">로그인</a></li>
-					<li><a id="logout-button" href="./api/logout">로그아웃</a></li>
+					<li id="username-container"><span id="username-greeting"></span>
+						<a id="logout-button" href="./api/logout">로그아웃</a></li>
 					<li><a href="signupform.jsp">회원가입</a></li>
 				</ul>
 			</nav>
@@ -43,9 +44,16 @@
 </body>
 <script>
 	let loginStatus = getUrlParameter("login");
+	const username = getUrlParameter("username");
 	if (loginStatus === "success") {
 		document.getElementById("login-button").style.display = "none";
 		document.getElementById("logout-button").style.display = "block";
+
+		// 사용자 이름 표시
+		const usernameGreeting = document.getElementById("username-greeting");
+		if (username) {
+			usernameGreeting.textContent = `${username}님 반갑습니다!`;
+		}
 	} else {
 		document.getElementById("login-button").style.display = "block";
 		document.getElementById("logout-button").style.display = "none";
