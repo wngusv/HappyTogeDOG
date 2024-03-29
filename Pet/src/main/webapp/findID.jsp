@@ -29,17 +29,17 @@ document.addEventListener('DOMContentLoaded', function () {
     
     function sendVerificationRequest() {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api/sendSMS', true); // 서버의 적절한 URL로 설정해야 합니다.
+        xhr.open('POST', '/api/sendSMS', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function() {
             if(xhr.readyState == 4 && xhr.status == 200) {
-                // 요청 성공 시 처리할 코드
                 console.log(xhr.responseText);
             }
         };
-        var data = JSON.stringify({name: nameInput.value, phone: phoneInput.value});
+        var data = JSON.stringify({ phone: phoneInput.value });
         xhr.send(data);
     }
+
 
 });
 </script>

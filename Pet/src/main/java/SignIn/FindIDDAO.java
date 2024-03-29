@@ -10,7 +10,7 @@ import Util.MyWebContextListener;
 public class FindIDDAO {
 
 	public String findID(String name, String phone) {
-		// 본인인증 숫자랑 일치하는지 확인후 본인인증 번호랑 일치하면 디비로 들어가기
+		// TODO: 본인인증 숫자랑 일치하는지 확인후 본인인증 번호랑 일치하면 디비로 들어가기
 		
 		
 		
