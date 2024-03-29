@@ -26,25 +26,25 @@
       <div class="container">
          <form action="ProcessSignupServlet" method="post">
             <div class="form-group">
-               <label for="id">아이디</label> <input type="text" id="id" name="id"
+               <label for="id">아이디</label> <input type="text" id="id" maxlength="10" name="id"
                   required>
                <button type="button" id="checkDuplicate">중복확인</button>
             </div>
             <div class="form-group">
                <label for="password">비밀번호</label> <input type="password"
-                  id="password" name="password" required>
+                  id="password" maxlength="20" name="password" required>
             </div>
             <div class="form-group">
                <label for="confirmPassword">비밀번호 확인</label> <input type="password"
-                  id="confirmPassword" name="confirmPassword" required>
+                  id="confirmPassword" maxlength="20" name="confirmPassword" required>
             </div>
             <div class="form-group">
                <label for="name">이름</label> <input type="text" id="name"
                   name="name" required>
             </div>
             <div class="form-group">
-               <label for="phone">전화번호</label> <input type="text" id="phone"
-                  name="phone" required>
+               <label for="phone">전화번호</label> <input type="text" maxlength="11" id="phone"
+                  name="phone" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                <button type="button" id="verifyPhone">본인인증</button>
             </div>
             <div class="form-group">
