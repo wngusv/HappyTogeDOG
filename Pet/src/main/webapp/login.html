@@ -37,6 +37,15 @@ input[type="submit"] {
 	cursor: pointer;
 }
 </style>
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 아이디찾기 버튼에 클릭 이벤트 리스너 추가
+        document.getElementById('findID').addEventListener('click', function() {
+            // "아이디 찾기" 페이지로 이동
+            window.location.href = 'findID.jsp'; // 아이디 찾기 페이지의 URL로 변경해야 함
+        });
+    });
+    </script>
 </head>
 <body>
 	<div class="login-wrapper">
