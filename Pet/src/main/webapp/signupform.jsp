@@ -54,7 +54,7 @@
 
 <section class="signup-form">
    <div class="container">
-      <form action="ProcessSignupServlet" method="post">
+      <form action="ProcessSignupServlet" method="post" onsubmit="return comparePasswords()">
          <div class="form-group">
             <label for="id">아이디</label> <input type="text" id="id" maxlength="10" name="id" required>
             <button type="button" id="checkDuplicate">중복확인</button>
@@ -85,6 +85,16 @@
    </div>
 </section>
 
+<!-- 비밀번호 불일치 모달 -->
+<div id="passwordMismatchModal" class="modal">
+   <div class="modal-content">
+       <h2>비밀번호가 일치하지 않습니다</h2>
+       <button type="button" onclick="closePasswordMismatchModal()">확인</button>
+   </div>
+</div>
+
+
+
 <!-- 본인인증 다이얼로그 HTML -->
 <div id="phoneVerificationModal" class="modal">
     <div class="modal-content">
@@ -95,6 +105,8 @@
         <button type="button" onclick="closeModal()">취소</button>
     </div>
 </div>
+
+
 
 <footer>
    <div class="container">
@@ -170,24 +182,24 @@ function verifyCode() {
 }
 
 
-    document.getElementById('verifyPhone').addEventListener('click', openModal);
+//    document.getElementById('verifyPhone').addEventListener('click', openModal);
     
  // 본인인증 버튼 상태를 토글하는 함수
-    function toggleVerifyPhoneButton() {
-        var phoneInput = document.getElementById('phone').value;
-        var verifyPhoneButton = document.getElementById('verifyPhone');
+//    function toggleVerifyPhoneButton() {
+//        var phoneInput = document.getElementById('phone').value;
+//        var verifyPhoneButton = document.getElementById('verifyPhone');
         // 전화번호 입력이 정확히 11자리 and 모든 문자가 숫자로만 구성된 경우에 참
-        verifyPhoneButton.disabled = !(phoneInput.length === 11 && /^\d+$/.test(phoneInput));
-    }
+//        verifyPhoneButton.disabled = !(phoneInput.length === 11 && /^\d+$/.test(phoneInput));
+//    }
 
     // 전화번호 입력 변경시 이벤트 리스너
-    document.getElementById('phone').addEventListener('input', toggleVerifyPhoneButton);
+//    document.getElementById('phone').addEventListener('input', toggleVerifyPhoneButton);
 
     // 페이지 로드시 버튼 상태를 올바르게 설정하기 위해 초기 호출
-    toggleVerifyPhoneButton();
+//    toggleVerifyPhoneButton();
 
-    // 기존 본인인증 버튼에 대한 이벤트 리스너
-    document.getElementById('verifyPhone').addEventListener('click', openModal);
+    // 기존 본인인	증 버튼에 대한 이벤트 리스너
+//    document.getElementById('verifyPhone').addEventListener('click', openModal);
     
     // 중복 확인 버튼을 클릭했을 때 실행될 함수
     function checkDuplicateClick() {
@@ -210,6 +222,32 @@ function verifyCode() {
     }
 
     document.getElementById('checkDuplicate').addEventListener('click', checkDuplicateClick);
+
+// 비밀번호 일치 여부 확인 함수
+function comparePasswords() {
+    var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+        // 비밀번호와 비밀번호 확인이 일치하지 않을 때
+        openPasswordMismatchModal();
+        return false; // 제출 중단
+    }
+
+    return true; // 비밀번호가 일치하므로 제출 계속
+}
+
+// 다이얼로그 열기 함수
+function openPasswordMismatchModal() {
+    document.getElementById("passwordMismatchModal").style.display = "block";
+}
+
+// 비밀번호 불일치 모달 닫기 함수
+function closePasswordMismatchModal() {
+    var modal = document.getElementById("passwordMismatchModal");
+    modal.style.display = "none"; // 모달 숨기기
+}
+
 </script>
 </body>
 </html>
