@@ -58,6 +58,7 @@
          <div class="form-group">
             <label for="id">아이디</label> <input type="text" id="id" maxlength="10" name="id" required>
             <button type="button" id="checkDuplicate">중복확인</button>
+            <span id="duplicateResult" class="gray-text"></span>
          </div>
          <div class="form-group">
             <label for="password">비밀번호</label> <input type="password" id="password" maxlength="20" name="password" required>
@@ -157,6 +158,28 @@
 
     // 기존 본인인증 버튼에 대한 이벤트 리스너
     document.getElementById('verifyPhone').addEventListener('click', openModal);
+    
+    // 중복 확인 버튼을 클릭했을 때 실행될 함수
+    function checkDuplicateClick() {
+        var id = document.getElementById('id').value; // 아이디 입력란의 값 가져오기
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'CheckIDServlet', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var resp = xhr.responseText;
+                    document.getElementById('duplicateResult').textContent = resp; // 결과를 화면에 표시
+                } else {
+                    console.error('서버 오류:', xhr.status);
+                }
+            }
+        };
+        xhr.send('id=' + id); // 아이디를 서버로 전송
+    }
+
+    document.getElementById('checkDuplicate').addEventListener('click', checkDuplicateClick);
 </script>
 </body>
 </html>
