@@ -29,6 +29,11 @@
         border: 1px solid #888;
         width: 80%; /* Could be more or less, depending on screen size */
     }
+
+    /* 회색 글씨 스타일 */
+    .gray-text {
+        color: #888;
+    }
 </style>
 </head>
 <body>
@@ -83,7 +88,7 @@
     <div class="modal-content">
         <h2>본인 인증</h2>
         <p>인증번호를 입력하세요:</p>
-        <input type="text" id="verificationCode">
+        <input type="text" id="verificationCode" class="gray-text" placeholder="5자리 숫자를 입력하세요.">
         <button type="button" onclick="verifyCode()">확인</button>
         <button type="button" onclick="closeModal()">취소</button>
     </div>
@@ -117,11 +122,13 @@
     // 다이얼로그 열기 함수
     function openModal() {
         document.getElementById('phoneVerificationModal').style.display = 'block';
+        document.getElementById('verificationCode').classList.remove('gray-text');
     }
 
     // 다이얼로그 닫기 함수
     function closeModal() {
         document.getElementById('phoneVerificationModal').style.display = 'none';
+        document.getElementById('verificationCode').classList.add('gray-text');
     }
 
     // 인증번호 검증 함수
