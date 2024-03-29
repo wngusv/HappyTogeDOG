@@ -31,6 +31,7 @@ public class SMS {
         return this.messageService.sendOne(new SingleMessageSendingRequest(message));
     }
 
+
     /*
     // 메인 메소드
     public static void main(String[] args) {
