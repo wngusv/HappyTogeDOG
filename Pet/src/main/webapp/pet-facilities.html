@@ -20,12 +20,25 @@
     </header>
 
     <main>
+        
         <div class="container">
             <section class="strays-info">
                 <h2>지역 반려동물 시설</h2>
+                <div id="map" style="width:500px;height:400px;"></div>
             </section>
         </div>
     </main>
+    <div id="map" style="width:500px;height:400px;"></div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	d4948263d9bbfca4b09376e303d5e533"></script>
+	<script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+	</script>
 
     <footer>
         <div class="container">
@@ -33,4 +46,6 @@
         </div>
     </footer>
 </body>
+
+
 </html>

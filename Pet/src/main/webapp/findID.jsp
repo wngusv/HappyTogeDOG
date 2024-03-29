@@ -13,9 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var phoneInput = document.getElementById('phone');
     var certificationButton = document.getElementById('certificationNumber');
 
-    // 입력 필드에 이벤트 리스너 추가
+    // 이벤트 리스너 추가
     nameInput.addEventListener('input', toggleCertificationButton);
     phoneInput.addEventListener('input', toggleCertificationButton);
+    certificationButton.addEventListener('click', sendVerificationRequest);
 
     // 처음에 버튼 상태 설정
     toggleCertificationButton();
@@ -25,11 +26,27 @@ document.addEventListener('DOMContentLoaded', function () {
         // 이름 입력란에 값이 있고, 전화번호 입력란의 길이가 11자리 숫자인지 확인
         certificationButton.disabled = !nameInput.value.trim() || !(phoneInput.value.length === 11 && /^\d+$/.test(phoneInput.value));
     }
+    
+    function sendVerificationRequest() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/sendSMS', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        var data = JSON.stringify({ phone: phoneInput.value });
+        xhr.send(data);
+    }
+
+
 });
 </script>
 </head>
 <body>
 <h2>아이디 찾기</h2>
+<form method="post" action="api/findId" id="findId-form">
  <label for="name">이름</label> 
  <input type="text" id="name" name="name" required>
  
@@ -40,5 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
  <p>인증번호:</p>
  <input type="text" id="checkNumber" name="checkNumber" class="gray-text" placeholder="5자리 숫자를 입력하세요." required />
+ <h2>아이디 찾기 결과</h2>
+<% String findId = (String) request.getAttribute("findId"); %>
+<% if (findId != null) { %>
+    <p>찾은 아이디: <%= findId %></p>
+<% } else { %>
+    <p>아이디를 찾을 수 없습니다.</p>
+<% } %>
 </body>
 </html>
