@@ -8,30 +8,26 @@
 <script>
 // 페이지가 로드될 때 함수를 실행
 document.addEventListener('DOMContentLoaded', function () {
-    var nameInput = document.getElementById('name');
+	var nameInput = document.getElementById('name');
     var phoneInput = document.getElementById('phone');
     var certificationButton = document.getElementById('certificationNumber');
     var checkNumberInput = document.getElementById('checkNumber');
     var checkButton = document.getElementById('check');
 
-    // 이벤트 리스너 추가
-    nameInput.addEventListener('input', toggleCertificationButton);
-    phoneInput.addEventListener('input', toggleCertificationButton);
-    certificationButton.addEventListener('click', sendVerificationRequest);
-    checkNumberInput.addEventListener('input', toggleCheckButton);
+    function updateButtonStates() {
+        var isNameFilled = nameInput.value.trim().length > 0;
+        var isPhoneCorrect = phoneInput.value.length === 11 && /^\d+$/.test(phoneInput.value);
+        var isCodeCorrect = checkNumberInput.value.length === 5 && /^\d+$/.test(checkNumberInput.value);
 
-    // 처음에 버튼 상태 설정
-    toggleCertificationButton();
-    toggleCheckButton();
-	
-    
-    function toggleCertificationButton() {
-        certificationButton.disabled = !nameInput.value.trim() || !(phoneInput.value.length === 11 && /^\d+$/.test(phoneInput.value));
+        certificationButton.disabled = !(isNameFilled && isPhoneCorrect);
+        checkButton.disabled = !isCodeCorrect;
     }
-    
-    function toggleCheckButton() {
-        checkButton.disabled = !(checkNumberInput.value.length === 5 && /^\d+$/.test(checkNumberInput.value));
-    }
+
+    nameInput.addEventListener('input', updateButtonStates);
+    phoneInput.addEventListener('input', updateButtonStates);
+    checkNumberInput.addEventListener('input', updateButtonStates);
+
+    updateButtonStates();
     
     function sendVerificationRequest() {
         var xhr = new XMLHttpRequest();
@@ -47,6 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function verifyCode() {
+    	var userName = document.getElementById('name').value;
+        var userPhone = document.getElementById('phone').value;
         var userCode = document.getElementById('checkNumber').value;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'VerifyCodeServlet_ID', true);
@@ -56,11 +54,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert(xhr.responseText);
             }
         };
-        xhr.send('code=' + userCode);
+     // 여기에 userName과 userPhone을 포함합니다.
+        var postData = 'code=' + encodeURIComponent(userCode) +
+                       '&name=' + encodeURIComponent(userName) +
+                       '&phone=' + encodeURIComponent(userPhone);
+        xhr.send(postData);
     }
 
-    document.getElementById('check').addEventListener('click', verifyCode);
-
+    
+    certificationButton.addEventListener('click', sendVerificationRequest);
+    checkButton.addEventListener('click', verifyCode);
     // ...
 });
 </script>

@@ -27,6 +27,8 @@ public class FindIDDAO {
 				if (rs.next()) {
 					String id = rs.getString("id");
 					return id; // id 반환
+				}else {
+					return null;
 				} 
 			}
 		} catch (SQLException e) {
