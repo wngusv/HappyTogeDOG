@@ -23,14 +23,36 @@
         <div class="container">
             <section class="strays-info">
                 <h2>지역 유기견 보호센터</h2>
+                <div id="shelters"></div>
             </section>
         </div>
     </main>
-
+	
     <footer>
         <div class="container">
             <p>&copy; 2024 Pet. 모든 권리 보유.</p>
         </div>
     </footer>
+    <script>
+        // API 요청 함수
+        async function fetchShelters() {
+            const url = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido?numOfRows=10&pageNo=1&serviceKey=0tRr5MoRdNxPxSkeGUb2m4ShjZ026SsFQD%2FTbVpE8yeAMHJU1kZyfHaMiAsD5bpT62J9fluKxvzaTdH2R3%2FDEA%3D%3D`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.text(); // XML 또는 JSON 응답을 기대함
+                // 응답 데이터 처리 로직 (여기서는 단순히 텍스트로 처리)
+                document.getElementById('shelters').innerText = data;
+            } catch (error) {
+                console.error('API fetch error:', error);
+                document.getElementById('shelters').innerText = 'Failed to load data.';
+            }
+        }
+
+        // 페이지가 로드되면 API 요청
+        window.onload = function() {
+            fetchShelters();
+        };
+    </script>
 </body>
 </html>
