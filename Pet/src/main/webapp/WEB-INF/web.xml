@@ -23,4 +23,15 @@
     <url-pattern>/ProcessSignupServlet</url-pattern>
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>SendSmsServlet</servlet-name>
+    <servlet-class>SMS.SendSmsServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>SendSmsServlet</servlet-name>
+    <url-pattern>/SendSmsServlet</url-pattern>
+</servlet-mapping>
+
+
+
 </web-app>

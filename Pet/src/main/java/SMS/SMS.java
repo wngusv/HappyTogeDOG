@@ -15,28 +15,20 @@ public class SMS {
         this.messageService = NurigoApp.INSTANCE.initialize("NCSKIZHZFDZGQKXZ", "BH28ZNFRERVOMLBYBFVEUMPIGP05UJPV", "https://api.coolsms.co.kr");
     }
 
-    public SingleMessageSentResponse sendSMS() {
-        // SMS 메시지를 생성합니다.
+    // 전화번호를 매개변수로 받는 sendSMS 메서드
+    public SingleMessageSentResponse sendSMS(String phoneNumber) {
         Message message = new Message();
-        message.setFrom("01023229753"); // 발신번호
-        message.setTo("01023229753");   // 수신번호 (실제로는 사용자 입력값을 사용)
+        message.setFrom("01023229753"); // 발신번호, 실제 발신 가능한 번호로 설정해야 함
+        message.setTo(phoneNumber); // 사용자로부터 전달받은 수신번호
 
-        // 5자리 랜덤 숫자 생성 및 설정
-        int randomNumber = (int)(Math.random() * 90000) + 10000; // 10000 ~ 99999 사이의 숫자
+        // 5자리 랜덤 숫자 생성
+        int randomNumber = (int)(Math.random() * 90000) + 10000;
         String textMessage = "인증번호는 " + randomNumber + "입니다.";
-        System.out.println(textMessage);
         message.setText(textMessage);
 
-        // 메시지를 발송하고 응답을 받습니다.
+        // 메시지 발송 및 결과 반환
         return this.messageService.sendOne(new SingleMessageSendingRequest(message));
     }
 
 
-    /*
-    // 메인 메소드
-    public static void main(String[] args) {
-        SMS sms = new SMS();
-        SingleMessageSentResponse smsResponse = sms.sendSMS();
-        System.out.println(smsResponse);
-    }*/
 }

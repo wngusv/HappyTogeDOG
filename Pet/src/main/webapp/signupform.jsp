@@ -69,7 +69,7 @@
          </div>
          <div class="form-group">
             <label for="phone">전화번호</label> <input type="text" maxlength="11" id="phone" name="phone" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-            <button type="button" id="verifyPhone">본인인증</button>
+            <button type="button" id="verifyPhone" onclick="sendSMS()">본인인증</button>
          </div>
          <div class="form-group">
             <label for="address">주소</label>
@@ -102,6 +102,22 @@
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+function sendSMS() {
+    var phoneNumber = document.getElementById("phone").value;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "SendSmsServlet?phone=" + phoneNumber, true);
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            // 성공적으로 SMS 발송 요청을 처리했을 때의 로직
+            alert("인증번호가 발송되었습니다.");
+        } else {
+            // 에러 처리
+            alert("SMS 발송에 실패했습니다.");
+        }
+    };
+    xhr.send();
+}
+
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -132,11 +148,25 @@
     }
 
     // 인증번호 검증 함수
-    function verifyCode() {
-        var code = document.getElementById('verificationCode').value;
-        console.log("Entered Verification Code: ", code);
-        closeModal();
-    }
+function verifyCode() {
+    var code = document.getElementById('verificationCode').value;
+    
+    // AJAX 요청 생성 및 전송
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "VerifyCodeServlet", true); // VerifyCodeServlet는 인증번호 검증을 처리하는 서블릿의 URL
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // 서버로부터의 응답 처리
+            alert(this.responseText); // 예: "인증되었습니다." 또는 "인증번호가 일치하지 않습니다."
+            if (this.responseText.includes("인증되었습니다")) {
+                closeModal(); // 인증 성공 시 다이얼로그 닫기
+            }
+        }
+    };
+    xhr.send("code=" + code); // POST 요청의 본문에 인증번호 포함
+}
+
 
     document.getElementById('verifyPhone').addEventListener('click', openModal);
     
