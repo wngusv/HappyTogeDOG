@@ -32,6 +32,14 @@
     <url-pattern>/SendSmsServlet</url-pattern>
 </servlet-mapping>
 
-
+<!-- VerifyCodeServlet 정의와 매핑 추가 -->
+<servlet>
+    <servlet-name>VerifyCodeServlet</servlet-name>
+    <servlet-class>SMS.VerifyCodeServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>VerifyCodeServlet</servlet-name>
+    <url-pattern>/VerifyCodeServlet</url-pattern>
+</servlet-mapping>
 
 </web-app>

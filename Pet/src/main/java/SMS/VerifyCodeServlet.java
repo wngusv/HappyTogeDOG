@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class VerifyCodeServlet {
-	// Servlet 예시
+public class VerifyCodeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    // 세션에서 저장된 인증번호 가져오기
 	    HttpSession session = request.getSession();
