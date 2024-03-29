@@ -31,7 +31,7 @@ public class LoginAPIServlet extends HttpServlet {
 				String redirectUrl = "../index.html?login=success&username=" + URLEncoder.encode(user.getName(), "UTF-8");
 				resp.sendRedirect(redirectUrl);
 			} else {
-				resp.sendRedirect("../login.html");
+				  resp.sendRedirect("../login.html?loginStatus=fail");
 			}
 
 		} catch (SQLException e) {
