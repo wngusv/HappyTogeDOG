@@ -24,9 +24,31 @@
 			<section class="strays-info">
 				<h2>지역 유기견 보호센터</h2>
 				<div id="shelters"></div>
+				<div id="region-list">
+					<a href="#" class="region-link" data-region="all">전체</a>
+					<a href="#" class="region-link" data-region="seoul">서울</a>
+					<a href="#" class="region-link" data-region="busan">부산</a>
+					<a href="#" class="region-link" data-region="daegu">대구</a>
+					<a href="#" class="region-link" data-region="incheon">인천</a>
+					<a href="#" class="region-link" data-region="gwangju">광주</a>
+					<a href="#" class="region-link" data-region="daejeon">대전</a>
+					<a href="#" class="region-link" data-region="ulsan">울산</a>
+					<a href="#" class="region-link" data-region="sejong">세종</a>
+					<a href="#" class="region-link" data-region="gyeonggi">경기</a>
+					<a href="#" class="region-link" data-region="gyeongnam">경남</a>
+					<a href="#" class="region-link" data-region="gyeongbuk">경북</a>
+					<a href="#" class="region-link" data-region="chungnam">충남</a>
+					<a href="#" class="region-link" data-region="chungbuk">충북</a>
+					<a href="#" class="region-link" data-region="jeonnam">전남</a>
+					<a href="#" class="region-link" data-region="jeonbuk">전북</a>
+					<a href="#" class="region-link" data-region="gangwon">강원</a>
+					<a href="#" class="region-link" data-region="jeju">제주</a>
+					<!-- 기타 지역 옵션들 -->
+				</div>
 				<div id="shelter-info"></div>
 			</section>
 		</div>
+
 	</main>
 
 	<footer>
@@ -35,39 +57,69 @@
 		</div>
 	</footer>
 	<script>
-	        var xhr = new XMLHttpRequest();
-	        var url = 'http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo'; /* API URL */
-	        var serviceKey = '0tRr5MoRdNxPxSkeGUb2m4ShjZ026SsFQD%2FTbVpE8yeAMHJU1kZyfHaMiAsD5bpT62J9fluKxvzaTdH2R3%2FDEA%3D%3D'; /* 서비스 키 */
-	        var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + encodeURIComponent(serviceKey); /* 서비스 키 */
-	        queryParams += '&' + encodeURIComponent('care_reg_no') + '=' + encodeURIComponent(''); /**/
-	        queryParams += '&' + encodeURIComponent('care_nm') + '=' + encodeURIComponent(''); /**/
-	        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000'); /**/
-	        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-	        queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
+		var xhr = new XMLHttpRequest();
+		var url = 'http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo'; /* API URL */
+		var serviceKey = '0tRr5MoRdNxPxSkeGUb2m4ShjZ026SsFQD%2FTbVpE8yeAMHJU1kZyfHaMiAsD5bpT62J9fluKxvzaTdH2R3%2FDEA%3D%3D'; /* 서비스 키 */
+		var queryParams = '?' + encodeURIComponent('serviceKey') + '='
+				+ serviceKey; /* 서비스 키 */
+		queryParams += '&' + encodeURIComponent('numOfRows') + '='
+				+ encodeURIComponent('1000'); /*표현할 개수*/
+		queryParams += '&' + encodeURIComponent('pageNo') + '='
+				+ encodeURIComponent('1'); /*페이지 수*/
+		queryParams += '&' + encodeURIComponent('_type') + '='
+				+ encodeURIComponent('json'); /**/
 
-	        xhr.open('GET', url + queryParams);
-	        xhr.onreadystatechange = function () {
-	            if (this.readyState == 4 && this.status == 200) {
-	                var responseData = JSON.parse(this.responseText);
-	                displayShelterInfo(responseData.response.body.items.item);
-	            }
-	        };
+		xhr.open('GET', url + queryParams);
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var responseData = JSON.parse(this.responseText);
+				displayShelterInfo(responseData.response.body.items.item);
+			}
+		};
 
-	        xhr.send('');
+		xhr.send('');
 
-	        function displayShelterInfo(shelters) {
-	            var shelterInfoDiv = document.getElementById('shelter-info');
-	            shelterInfoDiv.innerHTML = ''; // 이전 내용 초기화
+		function displayShelterInfo(shelters) {
+			var shelterInfoDiv = document.getElementById('shelter-info');
+			shelterInfoDiv.innerHTML = ''; // 이전 내용 초기화
 
-	            shelters.forEach(function(shelter) {
-	                var shelterElement = document.createElement('div');
-	                shelterElement.innerHTML = '<p>보호소 이름: ' + shelter.careNm + '</p>' +
-	                                           '<p>관리기관명: ' + shelter.orgNm + '</p>' +
-	                                           '<p>전화번호: ' + shelter.careTel + '</p>' +
-	                                           '<p>주소: ' + shelter.careAddr + '</p>'; // 필요한 정보 추가 가능
-	                shelterInfoDiv.appendChild(shelterElement);
-	            });
-	        }
-	    </script>
+			// shelters 배열에 있는 각 보호소 정보를 표시하는 함수
+			shelters.forEach(function(shelter) {
+				// div 요소 생성
+				var shelterElement = document.createElement('div');
+				shelterElement.classList.add('rounded-border');
+				shelterElement.innerHTML = '<p>보호소 이름: ' + shelter.careNm
+						+ '</p>' + '<p>주소: ' + shelter.careAddr + '</p>'
+						+ '<p>전화번호: ' + shelter.careTel + '</p>';
+
+				// 추가 정보를 감싸는 div 요소 생성
+				var additionalInfoDiv = document.createElement('div');
+				additionalInfoDiv.className = 'additional-info';
+				additionalInfoDiv.style.display = 'none'; // 초기에는 추가 정보를 감추도록 설정
+
+				// 추가 정보를 추가
+				additionalInfoDiv.innerHTML = '<p>관리기관명: ' + shelter.orgNm
+						+ '</p>'; // 추가 정보 필드에 따라 수정 가능
+
+				// 추가 정보를 표시하는 div 요소를 shelterElement에 추가
+				shelterElement.appendChild(additionalInfoDiv);
+
+				// shelterInfoDiv에 shelterElement 추가
+				shelterInfoDiv.appendChild(shelterElement);
+
+				// div 요소 클릭 시 추가 정보 펼쳐지도록 설정
+				shelterElement.addEventListener('click', function() {
+					// 추가 정보를 토글하여 보이거나 감추기
+					if (additionalInfoDiv.style.display === 'none') {
+						additionalInfoDiv.style.display = 'block';
+						shelterElement.classList.add('expanded');
+					} else {
+						additionalInfoDiv.style.display = 'none';
+						shelterElement.classList.remove('expanded');
+					}
+				});
+			});
+		}
+	</script>
 </body>
 </html>
