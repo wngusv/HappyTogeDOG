@@ -9,6 +9,8 @@ import java.io.IOException;
 
 @WebServlet("/api/sendSMS")
 public class SendSmsServlet extends HttpServlet {
+	private SMS smsService = new SMS();
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -29,7 +31,7 @@ public class SendSmsServlet extends HttpServlet {
 		String phoneNumber = json.getString("phone");
 
 		try {
-			SMS smsService = new SMS();
+			
 			int randomNumber = smsService.sendSMS(phoneNumber);
 
 			if (randomNumber == -1) {

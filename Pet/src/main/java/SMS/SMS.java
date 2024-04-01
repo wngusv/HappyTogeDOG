@@ -1,5 +1,10 @@
 package SMS;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
@@ -9,11 +14,20 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 public class SMS {
 
     private final DefaultMessageService messageService;
-
+    private static Properties properties = new Properties();
+    
     public SMS() {
+    	System.out.println("sms 프로퍼티 설정 파일을 읽습니다.");
+    	InputStream inputStream = SMS.class.getResourceAsStream("api.properties");
+    	try (BufferedInputStream br = new BufferedInputStream(inputStream)) {
+			properties.load(br);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+    	
         try {
             // API 초기화
-            this.messageService = NurigoApp.INSTANCE.initialize("NCSTNMSLB6IIG3HA", "QSLAI9UIBAAUZQDVD5ALZOOG0UBGD3DN", "https://api.coolsms.co.kr");
+            this.messageService = NurigoApp.INSTANCE.initialize(properties.getProperty("KEY"), properties.getProperty("SECRET"), properties.getProperty("URL"));
             System.out.println("SMS service initialized successfully.");
         } catch (Exception e) {
             System.err.println("Error initializing SMS service: " + e.getMessage());
@@ -29,7 +43,7 @@ public class SMS {
               System.out.println(textMessage);
 
               Message message = new Message();
-              message.setFrom("01095173408");
+              message.setFrom( properties.getProperty("PHONE"));
 
               // 전화번호 설정을 확인
               if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
