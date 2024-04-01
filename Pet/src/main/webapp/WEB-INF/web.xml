@@ -13,6 +13,9 @@
   <listener>
   	<listener-class>Util.MyWebContextListener</listener-class>
   </listener>
+  <listener>
+  	<listener-class>Util.LocalStrayListUpdateListener</listener-class>
+  </listener>
   
    <servlet>
     <servlet-name>ProcessSignupServlet</servlet-name>
