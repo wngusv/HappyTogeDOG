@@ -2,6 +2,9 @@ package Util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -9,13 +12,17 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
-public class MyWebContextListener implements ServletContextListener{
+import LocalStrays.Animal;
+import LocalStrays.AnimalServlet;
+
+public class MyWebContextListener implements ServletContextListener {
 	private static DataSource dataSource;
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		initDataSource();
 		System.out.println("데이터베이스 연결 완료");
+
 	}
 
 	private void initDataSource() {

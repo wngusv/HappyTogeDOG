@@ -1,61 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>Pet</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-  </welcome-file-list>
-  
-  <listener>
-  	<listener-class>Util.MyWebContextListener</listener-class>
-  </listener>
-  
-   <servlet>
-    <servlet-name>ProcessSignupServlet</servlet-name>
-    <servlet-class>SignUp.ProcessSignupServlet</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>ProcessSignupServlet</servlet-name>
-    <url-pattern>/ProcessSignupServlet</url-pattern>
-</servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>Pet</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+	</welcome-file-list>
 
-<servlet>
-    <servlet-name>SendSmsServlet</servlet-name>
-    <servlet-class>SMS.SendSmsServlet</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>SendSmsServlet</servlet-name>
-    <url-pattern>/SendSmsServlet</url-pattern>
-</servlet-mapping>
+	<listener>
+		<listener-class>Util.MyWebContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>Util.LocalStrayListUpdateListener</listener-class>
+	</listener>
 
-<!-- VerifyCodeServlet 정의와 매핑 추가 -->
-<servlet>
-    <servlet-name>VerifyCodeServlet</servlet-name>
-    <servlet-class>SMS.VerifyCodeServlet</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>VerifyCodeServlet</servlet-name>
-    <url-pattern>/VerifyCodeServlet</url-pattern>
-</servlet-mapping>
-<servlet>
-    <servlet-name>VerifyCodeServlet_ID</servlet-name>
-    <servlet-class>SMS.VerifyCodeServlet_ID</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>VerifyCodeServlet_ID</servlet-name>
-    <url-pattern>/VerifyCodeServlet_ID</url-pattern>
-</servlet-mapping>
-<servlet>
-    <servlet-name>VerifyCodeServlet_PW</servlet-name>
-    <servlet-class>SMS.VerifyCodeServlet_PW</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>VerifyCodeServlet_PW</servlet-name>
-    <url-pattern>/VerifyCodeServlet_PW</url-pattern>
-</servlet-mapping>
+	<servlet>
+		<servlet-name>ProcessSignupServlet</servlet-name>
+		<servlet-class>SignUp.ProcessSignupServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProcessSignupServlet</servlet-name>
+		<url-pattern>/ProcessSignupServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SendSmsServlet</servlet-name>
+		<servlet-class>SMS.SendSmsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SendSmsServlet</servlet-name>
+		<url-pattern>/SendSmsServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- VerifyCodeServlet 정의와 매핑 추가 -->
+	<servlet>
+		<servlet-name>VerifyCodeServlet</servlet-name>
+		<servlet-class>SMS.VerifyCodeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VerifyCodeServlet</servlet-name>
+		<url-pattern>/VerifyCodeServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>VerifyCodeServlet_ID</servlet-name>
+		<servlet-class>SMS.VerifyCodeServlet_ID</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VerifyCodeServlet_ID</servlet-name>
+		<url-pattern>/VerifyCodeServlet_ID</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>VerifyCodeServlet_PW</servlet-name>
+		<servlet-class>SMS.VerifyCodeServlet_PW</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VerifyCodeServlet_PW</servlet-name>
+		<url-pattern>/VerifyCodeServlet_PW</url-pattern>
+	</servlet-mapping>
 
 </web-app>
