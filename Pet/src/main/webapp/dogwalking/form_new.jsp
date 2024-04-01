@@ -19,7 +19,7 @@ function previewImage(input) {
 </script>
 </head>
 <body>
-    <h1>산책 알바 구하기 입력폼</h1>
+    <h1>산책  알바 구하기 입력폼</h1>
     <form method="post" action="board_new_send.jsp" enctype="multipart/form-data">
         <table>
             <tr>
