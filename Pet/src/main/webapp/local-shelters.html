@@ -62,7 +62,7 @@
 						class="region-link" data-region="전라남도">전남</a> <a href="#"
 						class="region-link" data-region="전라북도">전북</a> <a href="#"
 						class="region-link" data-region="강원도">강원</a> <a href="#"
-						class="region-link" data-region="jeju">제주</a>
+						class="region-link" data-region="제주">제주</a>
 				</div>
 				<div id="shelter-info"></div>
 			</section>
@@ -75,7 +75,6 @@
 			<p>&copy; 2024 Pet. 모든 권리 보유.</p>
 		</div>
 	</footer>
-	/*지도*/
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533"></script>
 	<script>
@@ -83,7 +82,7 @@
 		var container = document.getElementById('map');
 		var options = {
 			center : new kakao.maps.LatLng(33.450701, 126.570667),
-			level : 3
+			level : 5
 		};
 
 		var map = new kakao.maps.Map(container, options);
@@ -113,47 +112,73 @@
 
 		xhr.send('');
 
+		var markers = []; // 마커를 담을 배열
+
 		function displayShelterInfo(shelters) {
-			var shelterInfoDiv = document.getElementById('shelter-info');
-			shelterInfoDiv.innerHTML = ''; // 이전 내용 초기화
+		    var shelterInfoDiv = document.getElementById('shelter-info');
+		    shelterInfoDiv.innerHTML = ''; // 이전 내용 초기화
 
-			// shelters 배열에 있는 각 보호소 정보를 표시하는 함수
-			shelters.forEach(function(shelter) {
-				// div 요소 생성
-				var shelterElement = document.createElement('div');
-				shelterElement.classList.add('rounded-border');
-				shelterElement.innerHTML = '<p>보호소 이름: ' + shelter.careNm
-						+ '</p>' + '<p>주소: ' + shelter.careAddr + '</p>'
-						+ '<p>전화번호: ' + shelter.careTel + '</p>';
+		    // 이전에 추가된 모든 마커를 제거합니다.
+		    markers.forEach(function(marker) {
+		        marker.setMap(null);
+		    });
+		    // markers 배열을 비워줍니다.
+		    markers = [];
 
-				// 추가 정보를 감싸는 div 요소 생성
-				var additionalInfoDiv = document.createElement('div');
-				additionalInfoDiv.className = 'additional-info';
-				additionalInfoDiv.style.display = 'none'; // 초기에는 추가 정보를 감추도록 설정
+		    // shelters 배열에 있는 각 보호소 정보를 표시하는 함수
+		    shelters.forEach(function(shelter) {
+		        // div 요소 생성
+		        var shelterElement = document.createElement('div');
+		        shelterElement.classList.add('rounded-border');
+		        shelterElement.innerHTML = '<p>보호소 이름: ' + shelter.careNm
+		                + '</p>' + '<p>주소: ' + shelter.careAddr + '</p>'
+		                + '<p>전화번호: ' + shelter.careTel + '</p>';
 
-				// 추가 정보를 추가
-				additionalInfoDiv.innerHTML = '<p>관리기관명: ' + shelter.orgNm
-						+ '</p>'; // 추가 정보 필드에 따라 수정 가능
+		        // 추가 정보를 감싸는 div 요소 생성
+		        var additionalInfoDiv = document.createElement('div');
+		        additionalInfoDiv.className = 'additional-info';
+		        additionalInfoDiv.style.display = 'none'; // 초기에는 추가 정보를 감추도록 설정
 
-				// 추가 정보를 표시하는 div 요소를 shelterElement에 추가
-				shelterElement.appendChild(additionalInfoDiv);
+		        // 추가 정보를 추가
+		        additionalInfoDiv.innerHTML = '<p>관리기관명: ' + shelter.orgNm
+		                + '</p>'; // 추가 정보 필드에 따라 수정 가능
 
-				// shelterInfoDiv에 shelterElement 추가
-				shelterInfoDiv.appendChild(shelterElement);
+		        // 추가 정보를 표시하는 div 요소를 shelterElement에 추가
+		        shelterElement.appendChild(additionalInfoDiv);
 
-				// div 요소 클릭 시 추가 정보 펼쳐지도록 설정
-				shelterElement.addEventListener('click', function() {
-					// 추가 정보를 토글하여 보이거나 감추기
-					if (additionalInfoDiv.style.display === 'none') {
-						additionalInfoDiv.style.display = 'block';
-						shelterElement.classList.add('expanded');
-					} else {
-						additionalInfoDiv.style.display = 'none';
-						shelterElement.classList.remove('expanded');
-					}
-				});
-			});
+		        // shelterInfoDiv에 shelterElement 추가
+		        shelterInfoDiv.appendChild(shelterElement);
+
+		        // div 요소 클릭 시 추가 정보 펼쳐지도록 설정
+		        shelterElement.addEventListener('click', function() {
+		            // 추가 정보를 토글하여 보이거나 감추기
+		            if (additionalInfoDiv.style.display === 'none') {
+		                additionalInfoDiv.style.display = 'block';
+		                shelterElement.classList.add('expanded');
+		            } else {
+		                additionalInfoDiv.style.display = 'none';
+		                shelterElement.classList.remove('expanded');
+		            }
+		        });
+
+		        // 보호소의 위도와 경도 정보를 가져와서 지도에 마커로 표시
+		        var lat = parseFloat(shelter.lat); // 보호소의 위도 정보
+		        var lng = parseFloat(shelter.lng); // 보호소의 경도 정보
+
+		        // 마커 생성
+		        var markerPosition = new kakao.maps.LatLng(lat, lng);
+		        var marker = new kakao.maps.Marker({
+		            position: markerPosition
+		        });
+
+		        // 마커를 지도에 표시
+		        marker.setMap(map);
+
+		        // 생성된 마커를 markers 배열에 추가합니다.
+		        markers.push(marker);
+		    });
 		}
+
 		// 특정 지역에 해당하는 보호소 정보를 추출하는 함수
 		function filterSheltersByRegion(shelters, region) {
 			// 특정 지역에 해당하는 보호소만 추출하여 반환합니다.
