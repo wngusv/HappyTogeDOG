@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import LocalSite.LocalGovernment;
+import LocalSite.LocalGovernmentJsonParser;
 
 @WebServlet("/AnimalServlet")
 public class AnimalServlet extends HttpServlet {
@@ -26,10 +30,14 @@ public class AnimalServlet extends HttpServlet {
 	private static final String BUSAN_CODE = "6260000";
 
 	private static List<Animal> allAnimalList;
+	private static List<LocalGovernment> localGovernmentList;
 
 	static {
 		try {
 			allAnimalList = getAllAnimal();
+			localGovernmentList = getLocalGovernmentList();
+			System.out.println(allAnimalList);
+
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,6 +58,7 @@ public class AnimalServlet extends HttpServlet {
 
 		// Animal 객체 리스트를 JSP 페이지로 전달
 		request.setAttribute("animalList", allAnimalList);
+		request.setAttribute("localGovernmentList", localGovernmentList);
 
 		// content type 및 character encoding 설정
 		response.setContentType("text/html;charset=UTF-8");
@@ -58,14 +67,40 @@ public class AnimalServlet extends HttpServlet {
 		request.getRequestDispatcher("/local-strays.jsp").forward(request, response);
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String localGovernment = req.getParameter("localGovernment");
+		if (localGovernment.equals("all")) {
+			req.setAttribute("animalList", allAnimalList);
+
+		} else {
+			// 해당 지역의 동물들을 가져옵니다.
+			List<Animal> animalList = getAnimalsByLocalGovernment(localGovernment);
+
+			// 동물 객체 리스트를 JSP 페이지로 전달
+			req.setAttribute("animalList", animalList);
+		}
+		req.setAttribute("localGovernmentList", localGovernmentList);
+		// content type 및 character encoding 설정
+		resp.setContentType("text/html;charset=UTF-8");
+
+		// JSP 페이지로 forward
+		req.getRequestDispatcher("/local-strays.jsp").forward(req, resp);
+	}
+
+	private static List<Animal> getAnimalsByLocalGovernment(String localGovernment)
+			throws UnsupportedEncodingException, MalformedURLException, IOException, ProtocolException {
+		List<Animal> animalsInLocalGovernment = new ArrayList<>();
+
+		for (Animal animal : allAnimalList) {
+			if (animal.getOrgNm().contains(localGovernment)) {
+				animalsInLocalGovernment.add(animal);
+			}
+		}
+
+		return animalsInLocalGovernment;
+	}
 
 	private static List<Animal> getAllAnimal()
 			throws UnsupportedEncodingException, MalformedURLException, IOException, ProtocolException {
@@ -117,5 +152,32 @@ public class AnimalServlet extends HttpServlet {
 
 		List<Animal> animalList = AnimalResponseParser.parseJsonResponse(jsonData.toString());
 		return animalList;
+	}
+
+	private static List<LocalGovernment> getLocalGovernmentList()
+			throws UnsupportedEncodingException, MalformedURLException, IOException, ProtocolException {
+		StringBuilder urlBuilder = new StringBuilder(
+				"http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sigungu"); /* URL */
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY); /* Service Key */
+		urlBuilder.append("&" + URLEncoder.encode("upr_cd", "UTF-8") + "="
+				+ URLEncoder.encode(BUSAN_CODE, "UTF-8")); /* 시군구 상위코드(시도코드) (입력 시 데이터 O, 미입력 시 데이터 X) */
+		urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "="
+				+ URLEncoder.encode("json", "UTF-8")); /* xml(기본값) 또는 json */
+		URL url = new URL(urlBuilder.toString());
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		if (conn.getResponseCode() != 200) {
+			throw new RuntimeException("HTTP error code: " + conn.getResponseCode());
+		}
+		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		StringBuilder responseContent = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			responseContent.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+		return LocalGovernmentJsonParser.parseJsonResponse(responseContent.toString());
 	}
 }
