@@ -9,15 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Util.LocalStrayListUpdateListener;
+
 @WebServlet("/AnimalDetailServlet")
 public class AnimalDetailServlet extends HttpServlet {
-	List<Animal> allAnimalList = AnimalServlet.allAnimalList;
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String desertionNo = req.getParameter("desertionNo");
-		for(Animal ani : allAnimalList) {
-			if(ani.getDesertionNo().equals(desertionNo)) {
+		List<Animal> allAnimalList = LocalStrayListUpdateListener.getAllAnimalList();
+
+		for (Animal ani : allAnimalList) {
+			if (ani.getDesertionNo().equals(desertionNo)) {
 				req.setAttribute("animal", ani);
 			}
 		}
