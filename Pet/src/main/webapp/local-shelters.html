@@ -25,25 +25,24 @@
 				<h2>지역 유기견 보호센터</h2>
 				<div id="shelters"></div>
 				<div id="region-list">
-					<a href="#" class="region-link" data-region="all">전체</a>
-					<a href="#" class="region-link" data-region="seoul">서울</a>
-					<a href="#" class="region-link" data-region="busan">부산</a>
-					<a href="#" class="region-link" data-region="daegu">대구</a>
-					<a href="#" class="region-link" data-region="incheon">인천</a>
-					<a href="#" class="region-link" data-region="gwangju">광주</a>
-					<a href="#" class="region-link" data-region="daejeon">대전</a>
-					<a href="#" class="region-link" data-region="ulsan">울산</a>
-					<a href="#" class="region-link" data-region="sejong">세종</a>
-					<a href="#" class="region-link" data-region="gyeonggi">경기</a>
-					<a href="#" class="region-link" data-region="gyeongnam">경남</a>
-					<a href="#" class="region-link" data-region="gyeongbuk">경북</a>
-					<a href="#" class="region-link" data-region="chungnam">충남</a>
-					<a href="#" class="region-link" data-region="chungbuk">충북</a>
-					<a href="#" class="region-link" data-region="jeonnam">전남</a>
-					<a href="#" class="region-link" data-region="jeonbuk">전북</a>
-					<a href="#" class="region-link" data-region="gangwon">강원</a>
+					<a href="#" class="region-link" data-region="">전체</a>
+					<a href="#" class="region-link" data-region="서울특별시">서울</a>
+					<a href="#" class="region-link" data-region="부산광역시">부산</a>
+					<a href="#" class="region-link" data-region="대구광역시">대구</a>
+					<a href="#" class="region-link" data-region="인천광역시">인천</a>
+					<a href="#" class="region-link" data-region="광주광역시">광주</a>
+					<a href="#" class="region-link" data-region="대전광역시">대전</a>
+					<a href="#" class="region-link" data-region="울산광역시">울산</a>
+					<a href="#" class="region-link" data-region="세종">세종</a>
+					<a href="#" class="region-link" data-region="경기도">경기</a>
+					<a href="#" class="region-link" data-region="경상남도">경남</a>
+					<a href="#" class="region-link" data-region="경상북도">경북</a>
+					<a href="#" class="region-link" data-region="충청남도">충남</a>
+					<a href="#" class="region-link" data-region="충청북도">충북</a>
+					<a href="#" class="region-link" data-region="전라남도">전남</a>
+					<a href="#" class="region-link" data-region="전라북도">전북</a>
+					<a href="#" class="region-link" data-region="강원도">강원</a>
 					<a href="#" class="region-link" data-region="jeju">제주</a>
-					<!-- 기타 지역 옵션들 -->
 				</div>
 				<div id="shelter-info"></div>
 			</section>
@@ -73,7 +72,8 @@
 		xhr.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				var responseData = JSON.parse(this.responseText);
-				displayShelterInfo(responseData.response.body.items.item);
+				var shelters = responseData.response.body.items.item;
+				displayShelterInfo(shelters);
 			}
 		};
 
@@ -119,6 +119,41 @@
 					}
 				});
 			});
+		}
+	// 특정 지역에 해당하는 보호소 정보를 추출하는 함수
+	function filterSheltersByRegion(shelters, region) {
+			// 특정 지역에 해당하는 보호소만 추출하여 반환합니다.
+			return shelters.filter(function(shelter) {
+				// 보호소 주소에 해당 지역이 포함되어 있는지 확인합니다.
+				return shelter.careAddr.indexOf(region) !== -1;
+			});
+		}
+
+		// 지역 링크에 클릭 이벤트 리스너 추가
+		var regionLinks = document.querySelectorAll('.region-link');
+		regionLinks.forEach(function(link) {
+			link.addEventListener('click', function(event) {
+				event.preventDefault(); // 기본 동작(페이지 새로고침)을 방지합니다.
+				var region = this.getAttribute('data-region');
+				// 특정 지역에 해당하는 보호소 정보를 표시합니다.
+				displaySheltersByRegion(region);
+			});
+		});
+
+		function displaySheltersByRegion(region) {
+			// 보호소 정보를 가져와서 필터링합니다.
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', url + queryParams);
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var responseData = JSON.parse(this.responseText);
+					var shelters = responseData.response.body.items.item;
+					var regionShelters = filterSheltersByRegion(shelters, region);
+					// 추출된 보호소 정보를 표시합니다.
+					displayShelterInfo(regionShelters);
+				}
+			};
+			xhr.send('');
 		}
 	</script>
 </body>
