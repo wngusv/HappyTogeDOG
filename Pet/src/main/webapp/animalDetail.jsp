@@ -13,8 +13,13 @@
 	border-radius: 5px;
 	padding: 20px;
 	margin: 10px;
+	text-align: center; /* 가운데 정렬 */
+	margin: 0 auto; /* 수평 가운데 정렬 */
+	width: 50%; /* 내용의 너비를 설정합니다. */
 }
 </style>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533"></script>
 </head>
 <body>
 	<div class="animal-details">
@@ -71,9 +76,13 @@
 		<p>
 			<strong>Care Tel:</strong>
 			<%=animal.getCareTel()%></p>
+		<div id="map" style="width: 500px; height: 400px;"></div>
+		<p id="careAddress"><%=animal.getCareAddr()%>
+			<%=animal.getCareAddr().replaceAll("\\([^)]*\\)", "")%>
+		</p>
+
+		<!-- 주소를 감추고 JavaScript에서 사용하기 위해 추가 -->
 		<p>
-			<strong>Care Addr:</strong>
-			<%=animal.getCareAddr()%></p>
 		<p>
 			<strong>Org Name:</strong>
 			<%=animal.getOrgNm()%></p>
@@ -84,5 +93,32 @@
 			<strong>Office Tel:</strong>
 			<%=animal.getOfficetel()%></p>
 	</div>
+	<%-- 	<%=animal.getCareAddr()%> --%>
+	<script>
+    var mapContainer = document.getElementById('map');
+    var address = '<%=animal.getCareAddr().replaceAll("\\([^)]*\\)", "").trim().replace("'", "\\'")%>
+		';
+
+		// 주소를 좌표로 변환하는 함수
+		var geocoder = new kakao.maps.services.Geocoder();
+		geocoder.addressSearch(address, function(result, status) {
+			if (status === kakao.maps.services.Status.OK) {
+				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+				// 지도 초기화
+				var map = new kakao.maps.Map(mapContainer, {
+					center : coords,
+					level : 3
+				});
+
+				// 마커 생성 및 추가
+				var marker = new kakao.maps.Marker({
+					position : coords
+				});
+				marker.setMap(map);
+			}
+		});
+	</script>
 </body>
+
 </html>

@@ -26,8 +26,8 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 	private static final String BUSAN_CODE = "6260000";
 	private static final long UPDATE_INTERVAL = 60 * 60 * 1000;
 
-	public static List<Animal> allAnimalList;
-	public static List<LocalGovernment> localGovernmentList;
+	private static List<Animal> allAnimalList;
+	private static List<LocalGovernment> localGovernmentList;
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
