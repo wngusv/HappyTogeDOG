@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import LocalSite.LocalGovernment;
 import LocalSite.LocalGovernmentJsonParser;
+import lombok.Getter;
 
+@Getter
 @WebServlet("/AnimalServlet")
 public class AnimalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,14 +31,13 @@ public class AnimalServlet extends HttpServlet {
 	private static final String API_KEY = "9tP0rrmdgYvkDyrkZFzOXRhcivDyQrpntkl/4XCMaH207D5iwNA7sDGOipABXA18dCTX9Bykv5qYyKj44fQl2g==";
 	private static final String BUSAN_CODE = "6260000";
 
-	private static List<Animal> allAnimalList;
+	public static List<Animal> allAnimalList;
 	private static List<LocalGovernment> localGovernmentList;
 
 	static {
 		try {
 			allAnimalList = getAllAnimal();
 			localGovernmentList = getLocalGovernmentList();
-			System.out.println(allAnimalList);
 
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -53,11 +54,22 @@ public class AnimalServlet extends HttpServlet {
 		}
 	}
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String localGovernment = request.getParameter("orgName");
+		if (localGovernment == null || localGovernment.equals("all")) {
+			request.setAttribute("animalList", allAnimalList);
+
+		} else {
+
+			List<Animal> animalList = getAnimalsByLocalGovernment(localGovernment);
+
+			// 동물 객체 리스트를 JSP 페이지로 전달
+			request.setAttribute("animalList", animalList);
+		}
 
 		// Animal 객체 리스트를 JSP 페이지로 전달
-		request.setAttribute("animalList", allAnimalList);
 		request.setAttribute("localGovernmentList", localGovernmentList);
 
 		// content type 및 character encoding 설정
@@ -66,27 +78,6 @@ public class AnimalServlet extends HttpServlet {
 		// JSP 페이지로 forward
 		request.getRequestDispatcher("/local-strays.jsp").forward(request, response);
 
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String localGovernment = req.getParameter("localGovernment");
-		if (localGovernment.equals("all")) {
-			req.setAttribute("animalList", allAnimalList);
-
-		} else {
-			// 해당 지역의 동물들을 가져옵니다.
-			List<Animal> animalList = getAnimalsByLocalGovernment(localGovernment);
-
-			// 동물 객체 리스트를 JSP 페이지로 전달
-			req.setAttribute("animalList", animalList);
-		}
-		req.setAttribute("localGovernmentList", localGovernmentList);
-		// content type 및 character encoding 설정
-		resp.setContentType("text/html;charset=UTF-8");
-
-		// JSP 페이지로 forward
-		req.getRequestDispatcher("/local-strays.jsp").forward(req, resp);
 	}
 
 	private static List<Animal> getAnimalsByLocalGovernment(String localGovernment)
