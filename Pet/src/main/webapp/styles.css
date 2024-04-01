@@ -73,9 +73,3 @@ footer {
     margin-top: 20px;
 }
 
-/*지역 유기견 보호센터 테두리*/
-.rounded-border {
-    border-radius: 10px; 
-    border: 1px solid #ccc; 
-    cursor: pointer;
-}
