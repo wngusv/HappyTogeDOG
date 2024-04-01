@@ -7,15 +7,9 @@ import java.sql.SQLException;
 
 import Util.MyWebContextListener;
 
-public class FindIDDAO {
+public class FindIDDAO { // id랑 pw 찾는 dao인데,, 지금 이름 바꾸면 다른 클래스 수정하다가 깃허브 부숴질 것 같아서.. 아직 안 바꿈 
 
 	public String findID(String name, String phone) {
-		// TODO: 본인인증 숫자랑 일치하는지 확인후 본인인증 번호랑 일치하면 디비로 들어가기
-		
-		
-		
-		
-		
 		
 		
 		String sql = "SELECT id FROM user where user_name = ? and phone = ? ";
@@ -27,6 +21,29 @@ public class FindIDDAO {
 				if (rs.next()) {
 					String id = rs.getString("id");
 					return id; // id 반환
+				}else {
+					return null;
+				} 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	public String findPW(String name, String phone) {
+		
+		
+		String sql = "SELECT pw FROM user where user_name = ? and phone = ? ";
+		try (Connection conn = MyWebContextListener.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, name);
+			stmt.setString(2, phone);
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					String pw = rs.getString("pw");
+					return pw; // id 반환
 				}else {
 					return null;
 				} 
