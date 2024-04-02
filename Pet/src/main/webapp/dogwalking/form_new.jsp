@@ -3,94 +3,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>산책 알바 구하기</title>
-<script>
-function previewImage(input) {
-    var file = input.files[0];
-    if (file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('preview').src = e.target.result;
+    <meta charset="UTF-8">
+    <title>산책 알바 구하기</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <style>
+        /* Add any additional styles here */
+        #preview {
+            max-width: 200px;
+            max-height: 200px;
         }
-        reader.readAsDataURL(file);
-    }
-}
-</script>
+    </style>
 </head>
 <body>
 <%
     String userId = (String)session.getAttribute("userId");
     User user = null;
     if(userId != null) {
-        user = UserDAO.getUserById(userId); // UserDAO에서 해당 메서드 구현 필요
+        user = UserDAO.getUserById(userId);
     }
 %>
-    <h1>산책  알바 구하기 입력폼</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">산책 알바 구하기 입력폼</h1>
     <form method="post" action="board_new_send.jsp" enctype="multipart/form-data">
-        <table>
-            <tr>
-                <td>제목: <input type="text" placeholder="제목" name="title" maxlength="20" value=""></td>
-            </tr>
-            <tr>
-                <td>견종(크기):
-                    <select name="dogSize">
-                        <option value="small">소형견(7kg이하)</option>
-                        <option value="medium">중형견(8kg이상)</option>
-                        <option value="large">대형견(16kg이상)</option>
-                        <option value="xlarge">초대형견(45kg이상)</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>요일:
-                    <select name="day">
-                        <option value="weekday">평일</option>
-                        <option value="weekend">주말</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>시간:
-                    <select name="time">
-                        <option value="morning">오전</option>
-                        <option value="afternoon">오후</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>픽업위치: <input type="text" placeholder="픽업위치" name="pickupLocation" value="<%= user != null ? user.getAddress() + ", " + user.getAddress_detail() : "" %>"></td>
-            </tr>
-            <tr>
-                <td>시급: <input type="number" placeholder="시급" name="hourlyRate"></td>
-            </tr>
-            <tr>
-                <td>소개글: <textarea placeholder="소개글" name="introduction" maxlength="2048" style="height:150px;"></textarea></td>
-            </tr>
-            <tr>
-                <td>강아지 사진: <input type="file" name="dogPhoto" onchange="previewImage(this);"></td>
-            </tr>
-            <tr>
-                <td><img id="preview" src="#" alt="사진 미리보기" style="display:none; max-width: 200px; max-height: 200px;"></td>
-            </tr>
-        </table>
+        <div class="form-group">
+            <label for="title">제목:</label>
+            <input type="text" class="form-control" id="title" placeholder="제목" name="title" maxlength="20" value="">
+        </div>
+        <div class="form-group">
+            <label for="dogSize">견종(크기):</label>
+            <select class="form-control" id="dogSize" name="dogSize">
+                <option value="small">소형견(7kg이하)</option>
+                <option value="medium">중형견(8kg이상)</option>
+                <option value="large">대형견(16kg이상)</option>
+                <option value="xlarge">초대형견(45kg이상)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="day">요일:</label>
+            <select class="form-control" id="day" name="day">
+                <option value="weekday">평일</option>
+                <option value="weekend">주말</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="time">시간:</label>
+            <select class="form-control" id="time" name="time">
+                <option value="morning">오전</option>
+                <option value="afternoon">오후</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="pickupLocation">픽업위치:</label><br>
+            <input type="text" class="form-control mb-2" id="sample6_postcode" placeholder="우편번호">
+            <button type="button" class="btn btn-primary mb-2" onclick="sample6_execDaumPostcode()">우편번호 찾기</button><br>
+            <input type="text" class="form-control mb-2" id="sample6_address" placeholder="주소" value="<%= user != null ? user.getAddress() : "" %>" readonly>
+            <input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" value="<%= user != null ? user.getAddress_detail() : "" %>">
+        </div>
+        <div class="form-group">
+            <label for="hourlyRate">시급:</label>
+            <input type="number" class="form-control" id="hourlyRate" placeholder="시급" name="hourlyRate">
+        </div>
+        <div class="form-group">
+            <label for="introduction">소개글:</label>
+            <textarea class="form-control" id="introduction" placeholder="소개글" name="introduction" maxlength="2048" style="height:150px;"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="dogPhoto">강아지 사진:</label>
+            <input type="file" class="form-control-file" id="dogPhoto" name="dogPhoto" onchange="previewImage(this);">
+            <img id="preview" src="#" alt="사진 미리보기" style="display:none;">
+        </div>
         <hr>
-        <input type="submit" value="등록하기">
+        <button type="submit" class="btn btn-primary">등록하기</button>
     </form>
-    <script>
-        // 이미지 미리보기를 위한 스크립트
-        function previewImage(input) {
-            var file = input.files[0];
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var preview = document.getElementById('preview');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                }
-                reader.readAsDataURL(file);
+</div>
+<script>
+    function previewImage(input) {
+        var file = input.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var preview = document.getElementById('preview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
             }
+            reader.readAsDataURL(file);
         }
-    </script>
+    }
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById('sample6_address').value = addr;
+                document.getElementById('sample6_detailAddress').focus();
+            }
+        }).open();
+    }
+</script>
 </body>
 </html>
