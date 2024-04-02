@@ -52,26 +52,6 @@
 }
 </style>
 </head>
-<<<<<<< HEAD
-<body style= "padding-top:150px;">
-	<header>
-		<div class="container">
-			<h1>지역 유기동물 정보</h1>
-			<nav>
-				<ul>
-					<li><a href="index.html">홈으로</a></li>
-					<li><a href="signupform.jsp">회원가입</a></li>
-					<li><a id="login-button" href="login.html">로그인</a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
-	<main>
-		<div class="container">
-			<section class="strays-info">
-				<h2>우리 지역의 유기동물들</h2>
-			</section>
-=======
 <body style="padding-top: 150px;">
    <header>
       <div class="container">
@@ -90,8 +70,6 @@
          <section class="strays-info">
             <h2>우리 지역의 유기동물들</h2>
          </section>
->>>>>>> branch 'main' of https://github.com/wngusv/pet.git
-
          <div class="local-government-buttons">
             <a href="/AnimalServlet?orgName=all">전체</a>
             <%
@@ -103,13 +81,6 @@
             }
             %>
          </div>
-         <form id="stateForm">
-            <input type="radio" id="all" name="state" value="all"> <label
-               for="all">전체</label> <input type="radio" id="notice" name="state"
-               value="notice"> <label for="notice">공고</label> <input
-               type="radio" id="protect" name="state" value="protect"> <label
-               for="protect">보호</label>
-         </form>
 
          <div class="card-container">
             <%
@@ -125,9 +96,9 @@
                      <img src="<%=animal.getPopfile()%>" alt="동물 이미지">
                   </a>
                   <div class="card-details">
-                     <p>
-                        <strong>Desertion No:</strong>
-                        <%=animal.getDesertionNo()%></p>
+<!--                      <p> -->
+<!--                         <strong>Desertion No:</strong> -->
+<%--                         <%=animal.getDesertionNo()%></p> --%>
                      <p>
                         <strong>Happen Date:</strong>
                         <%=animal.getHappenDt()%></p>
