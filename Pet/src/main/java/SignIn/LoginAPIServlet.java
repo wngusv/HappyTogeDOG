@@ -28,10 +28,10 @@ public class LoginAPIServlet extends HttpServlet {
 				session.setAttribute("userName", user.getName());
 
 				// 로그인 정보를 URL 파라미터로 전달
-				String redirectUrl = "../index.html?login=success&username=" + URLEncoder.encode(user.getName(), "UTF-8");
+				String redirectUrl = "../index.jsp" ;
 				resp.sendRedirect(redirectUrl);
 			} else {
-				  resp.sendRedirect("../login.html?loginStatus=fail");
+				  resp.sendRedirect("../login.html");
 			}
 
 		} catch (SQLException e) {

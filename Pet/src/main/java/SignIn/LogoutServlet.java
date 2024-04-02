@@ -16,10 +16,11 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 세션에서 로그인 정보를 삭제합니다.
         HttpSession session = req.getSession();
+        session.removeAttribute("userId");
         session.removeAttribute("username");
 
         // **메인 페이지로 이동합니다.**
-        String redirectUrl = "../index.html";
+        String redirectUrl = "../index.jsp";
         resp.sendRedirect(redirectUrl);
     }
 }
