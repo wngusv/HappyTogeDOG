@@ -24,6 +24,11 @@
 	width: 50vw; /* 가로 너비 조절 */
 	height: 400px; /* 높이 설정 */
 }
+.map-border {
+    border-radius: 10px; /* 테두리의 둥근 정도를 설정합니다. */
+    border: 1px solid #ccc; /* 테두리의 선 스타일과 색상을 설정합니다. */
+    overflow: hidden; /* 내용이 넘치는 경우를 방지하기 위해 오버플로 속성을 숨깁니다. */
+}
 </style>
 </head>
 <body>
@@ -53,7 +58,9 @@
 		<div class="container" style="padding-top: 150px;">
 			<section class="strays-info">
 				<h2>지역 유기견 보호센터</h2>
+				<div id="map-container" class = "map-border">
 				<div id="map" style="width: 500px; height: 400px;"></div>
+				</div>
 				<div id="shelters"></div>
 				<div id="region-list">
 					<a href="#" class="region-link" data-region="">전체</a> <a href="#"
