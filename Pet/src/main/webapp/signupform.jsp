@@ -190,7 +190,7 @@ function verifyCode() {
         var verifyPhoneButton = document.getElementById('verifyPhone');
         // 전화번호 입력이 정확히 11자리 and 모든 문자가 숫자로만 구성된 경우에 참
         verifyPhoneButton.disabled = !(phoneInput.length === 11 && /^\d+$/.test(phoneInput));
-//    }
+    }
 
     // 전화번호 입력 변경시 이벤트 리스너
     document.getElementById('phone').addEventListener('input', toggleVerifyPhoneButton);
