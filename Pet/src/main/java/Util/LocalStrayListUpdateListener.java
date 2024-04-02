@@ -9,6 +9,9 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,6 +30,9 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 	private static final long UPDATE_INTERVAL = 60 * 60 * 1000;
 
 	private static List<Animal> allAnimalList;
+	private static List<Animal> noticeAnimalList;
+	private static List<Animal> protectAnimalList;
+	
 	private static List<LocalGovernment> localGovernmentList;
 
 	@Override
@@ -53,11 +59,29 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 		try {
 			allAnimalList = makeAllAnimalList();
 			localGovernmentList = makeLocalGovernmentList();
+			sortAnimalList(allAnimalList);
+			
 			System.out.println("AllAnimalUpdate");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+
+
+	private static void sortAnimalList(List<Animal> allAnimalList) {
+	    // 오늘 날짜 String 형태로 설정
+	    String todayDateString = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+
+	    for (Animal animal : allAnimalList) {
+	        if (animal.getNoticeEdt().compareTo(todayDateString) >= 0) {
+	            noticeAnimalList.add(animal);  // NoticeEdt가 오늘 날짜보다 크거나 같으면 공고 중 동물 목록에 추가
+	        } else {
+	            protectAnimalList.add(animal);  // NoticeEdt가 오늘 날짜보다 작으면 보호 중 동물 목록에 추가
+	        }
+	    }
+	}
+
 
 	public static List<Animal> makeAllAnimalList()
 			throws UnsupportedEncodingException, MalformedURLException, IOException, ProtocolException {
