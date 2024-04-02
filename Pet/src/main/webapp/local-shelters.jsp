@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,9 +36,17 @@
 	<header>
 		<nav>
 			<ul>
-				<li><a href="index.jsp">홈으로</a></li>
+				<c:choose>
+					<c:when test="${sessionScope.userId != null}">
+						<li id="username-container"><span id="username-greeting">
+								안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
+							href="./api/logout">로그아웃</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a id="login-button" href="login.jsp">로그인</a></li>
+					</c:otherwise>
+				</c:choose>
 				<li><a href="signupform.jsp">회원가입</a></li>
-				<li><a id="login-button" href="login.jsp">로그인</a></li>
 			</ul>
 		</nav>
 		<section class="menu">

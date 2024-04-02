@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +57,6 @@
 	border-right: 0;
 }
 
-
 .wrap {
 	position: relative;
 	border-radius: 5px;
@@ -108,25 +109,33 @@
 </head>
 <body style="padding-top: 150px;">
 	<header>
-			<nav>
-				<ul>
-					<li><a href="index.jsp">홈으로</a></li>
-					<li><a href="signupform.jsp">회원가입</a></li>
-					<li><a id="login-button" href="login.jsp">로그인</a></li>
-				</ul>
-			</nav>
+		<nav>
+			<ul>
+				<c:choose>
+					<c:when test="${sessionScope.userId != null}">
+						<li id="username-container"><span id="username-greeting">
+								안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
+							href="./api/logout">로그아웃</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a id="login-button" href="login.jsp">로그인</a></li>
+					</c:otherwise>
+				</c:choose>
+				<li><a href="signupform.jsp">회원가입</a></li>
+			</ul>
+		</nav>
 		<section class="menu">
-      <div class="container" style="padding-top: 8px;">
-        <ul>
-          <li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
-          <li><a href="pet-facilities.jsp">반려동물 시설</a></li>
-          <li><a href="/AnimalServlet">지역 유기동물</a></li>
-          <li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
-          <li><a href="donations.jsp">기부</a></li>
-          <li><a href="board.jsp">게시판</a></li>
-        </ul>
-      </div>
-    </section>
+			<div class="container" style="padding-top: 8px;">
+				<ul>
+					<li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
+					<li><a href="pet-facilities.jsp">반려동물 시설</a></li>
+					<li><a href="/AnimalServlet">지역 유기동물</a></li>
+					<li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
+					<li><a href="donations.jsp">기부</a></li>
+					<li><a href="board.jsp">게시판</a></li>
+				</ul>
+			</div>
+		</section>
 	</header>
 
 	<main>
@@ -198,48 +207,50 @@
 		}
 
 		function displayPlaces(places) {
-		    var bounds = new kakao.maps.LatLngBounds();
-		    removeAllMarkers();
-		    for (var i = 0; i < places.length; i++) {
-		        (function(place) {
-		            var placePosition = new kakao.maps.LatLng(place.y, place.x);
-		            var marker = addMarker(placePosition);
+			var bounds = new kakao.maps.LatLngBounds();
+			removeAllMarkers();
+			for (var i = 0; i < places.length; i++) {
+				(function(place) {
+					var placePosition = new kakao.maps.LatLng(place.y, place.x);
+					var marker = addMarker(placePosition);
 
-		            var content = '<div class="wrap">' + 
-		                '    <div class="info">' + 
-		                '        <div class="title">' + 
-		                '            ' + place.place_name + 
-		                '            <div class="close" onclick="closeOverlay(overlay)" title="닫기">X</div>' + 
-		                '        </div>' + 
-		                '        <div class="body">' + 
-		                '            <div class="desc">' + 
-		                '                <div class="ellipsis">' + place.address_name + '</div>' +
-		                '                <div><a href="' + place.place_url + '" target="_blank" class="link">더보기</a></div>' + 
-		                '            </div>' + 
-		                '        </div>' + 
-		                '    </div>' +    
-		                '</div>';
+					var content = '<div class="wrap">'
+							+ '    <div class="info">'
+							+ '        <div class="title">'
+							+ '            '
+							+ place.place_name
+							+ '            <div class="close" onclick="closeOverlay(overlay)" title="닫기">X</div>'
+							+ '        </div>'
+							+ '        <div class="body">'
+							+ '            <div class="desc">'
+							+ '                <div class="ellipsis">'
+							+ place.address_name
+							+ '</div>'
+							+ '                <div><a href="' + place.place_url + '" target="_blank" class="link">더보기</a></div>'
+							+ '            </div>' + '        </div>'
+							+ '    </div>' + '</div>';
 
-		            var overlay = new kakao.maps.CustomOverlay({
-		                content: content,
-		                map: null,
-		                position: marker.getPosition()
-		            });
+					var overlay = new kakao.maps.CustomOverlay({
+						content : content,
+						map : null,
+						position : marker.getPosition()
+					});
 
-		            // 닫기 버튼의 onclick 이벤트에서 overlay를 인자로 전달합니다.
-		            content = content.replace('closeOverlay(overlay)', 'closeOverlay(overlay' + i + ')');
-		            overlay.setContent(content);
+					// 닫기 버튼의 onclick 이벤트에서 overlay를 인자로 전달합니다.
+					content = content.replace('closeOverlay(overlay)',
+							'closeOverlay(overlay' + i + ')');
+					overlay.setContent(content);
 
-		            window['overlay' + i] = overlay;
+					window['overlay' + i] = overlay;
 
-		            kakao.maps.event.addListener(marker, 'click', function() {
-		                overlay.setMap(map);
-		            });
+					kakao.maps.event.addListener(marker, 'click', function() {
+						overlay.setMap(map);
+					});
 
-		            bounds.extend(placePosition);
-		        })(places[i]);
-		    }
-		    map.setBounds(bounds);
+					bounds.extend(placePosition);
+				})(places[i]);
+			}
+			map.setBounds(bounds);
 		}
 
 		function addMarker(position) {
