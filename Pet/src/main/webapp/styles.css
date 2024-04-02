@@ -11,10 +11,14 @@ body {
 }
 
 header {
+    position: fixed;
+    top: 0;
+    width: 100%;
     background: #333;
     color: #fff;
     padding: 20px 0;
 }
+
 
 header .logo {
     float: left;
@@ -66,10 +70,14 @@ header nav ul li a {
 }
 
 footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     background: #333;
     color: #fff;
-    text-align: center;
     padding: 20px 0;
-    margin-top: 20px;
+    text-align: center;
+    z-index: 999; /* 다른 요소들 위에 푸터를 레이어링하기 위해 z-index 값을 설정합니다. */
 }
+
 
