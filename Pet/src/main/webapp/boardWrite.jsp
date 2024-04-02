@@ -26,6 +26,7 @@
                 style="width:100%" >
             </td>
         </tr>
+        
         <tr>
             <td colspan="2" height=400>
                 <textarea placeholder="내용을 입력하세요." style="width: 100%; height: 100%"></textarea>
@@ -39,8 +40,8 @@
         </tr>
         <tr>
             <td colspan="2" align=right>
-                <input type="button" value="글쓰기">
-                <input type="button" value="목록으로">
+                <input type="button" value="글쓰기" onclick="location.href='board.jsp';"> <%-- TODO: 디비에 저장시키고 게시판으로 넘어가게 하기 --%>
+                <input type="button" value="목록으로" onclick="location.href='board.jsp';">
             </td>
         </tr>
     </table>
