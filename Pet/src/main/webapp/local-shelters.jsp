@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,9 +31,9 @@
 			<h1>지역 유기견 보호센터</h1>
 			<nav>
 				<ul>
-					<li><a href="index.html">홈으로</a></li>
+					<li><a href="index.jsp">홈으로</a></li>
 					<li><a href="signupform.jsp">회원가입</a></li>
-					<li><a id="login-button" href="login.html">로그인</a></li>
+					<li><a id="login-button" href="login.jsp">로그인</a></li>
 				</ul>
 			</nav>
 		</div>

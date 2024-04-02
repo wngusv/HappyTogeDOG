@@ -1,19 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>기부</title>
+    <title>산책 아르바이트</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>기부</h1>
+            <h1>산책  아르바이트</h1>
             <nav>
                 <ul>
-                    <li><a href="index.html">홈으로</a></li>
+                    <li><a href="index.jsp">홈으로</a></li>
                     <li><a href="signupform.jsp">회원가입</a></li>
-                    <li><a id="login-button" href="login.html">로그인</a></li>
+                    <li><a id="login-button" href="login.jsp">로그인</a></li>
                 </ul>
             </nav>
         </div>
@@ -22,7 +23,9 @@
     <main>
         <div class="container">
             <section class="strays-info">
-                <h2>기부</h2>
+                <h2>산책 아르바이트</h2>
+                <!-- 글쓰기 버튼 추가 -->
+                <button onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
             </section>
         </div>
     </main>
