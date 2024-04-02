@@ -123,21 +123,23 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    function sendSMS() {
-        var phoneNumber = document.getElementById("phone").value;
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "SendSmsServlet?phone=" + phoneNumber, true);
-        xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                // 성공적으로 SMS 발송 요청을 처리했을 때의 로직
-                alert("인증번호가 발송되었습니다.");
-            } else {
-                // 에러 처리
-                alert("SMS 발송에 실패했습니다.");
-            }
-        };
-        xhr.send();
-    }
+function sendSMS() {
+    var phoneNumber = document.getElementById("phone").value;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/sendSMS', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4 && xhr.status == 200) {
+            // 성공적으로 SMS 발송 요청을 처리했을 때의 로직
+            alert("인증번호가 발송되었습니다.");
+        } else if(xhr.readyState == 4) {
+            // 에러 처리
+            alert("SMS 발송에 실패했습니다.");
+        }
+    };
+    var data = JSON.stringify({ phone: phoneNumber });
+    xhr.send(data);
+}
 
     function sample6_execDaumPostcode() {
         new daum.Postcode({
