@@ -1,5 +1,10 @@
 package SMS;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
@@ -9,32 +14,54 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 public class SMS {
 
     private final DefaultMessageService messageService;
-
+    private static Properties properties = new Properties();
+    
     public SMS() {
-        // API 초기화
-        this.messageService = NurigoApp.INSTANCE.initialize("NCSKIZHZFDZGQKXZ", "BH28ZNFRERVOMLBYBFVEUMPIGP05UJPV", "https://api.coolsms.co.kr");
+    	System.out.println("sms 프로퍼티 설정 파일을 읽습니다.");
+    	InputStream inputStream = SMS.class.getResourceAsStream("api.properties");
+    	try (BufferedInputStream br = new BufferedInputStream(inputStream)) {
+			properties.load(br);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+    	
+        try {
+            // API 초기화
+            this.messageService = NurigoApp.INSTANCE.initialize(properties.getProperty("KEY"), properties.getProperty("SECRET"), properties.getProperty("URL"));
+            System.out.println("SMS service initialized successfully.");
+        } catch (Exception e) {
+            System.err.println("Error initializing SMS service: " + e.getMessage());
+            throw new RuntimeException(e); // 초기화 실패시 앱 실행을 중단
+        }
     }
 
-    public SingleMessageSentResponse sendSMS() {
-        // SMS 메시지를 생성합니다.
-        Message message = new Message();
-        message.setFrom("01023229753"); // 발신번호
-        message.setTo("01023229753");   // 수신번호 (실제로는 사용자 입력값을 사용)
+    // 전화번호를 매개변수로 받는 sendSMS 메서드
+    public int sendSMS(String phoneNumber) {
+    	  try {
+              int randomNumber = (int)(Math.random() * 90000) + 10000;
+              String textMessage = "인증번호는 " + randomNumber + "입니다.";
+              System.out.println(textMessage);
 
-        // 5자리 랜덤 숫자 생성 및 설정
-        int randomNumber = (int)(Math.random() * 90000) + 10000; // 10000 ~ 99999 사이의 숫자
-        String textMessage = "인증번호는 " + randomNumber + "입니다.";
-        System.out.println(textMessage);
-        message.setText(textMessage);
+              Message message = new Message();
+              message.setFrom( properties.getProperty("PHONE"));
 
-        // 메시지를 발송하고 응답을 받습니다.
-        return this.messageService.sendOne(new SingleMessageSendingRequest(message));
+              // 전화번호 설정을 확인
+              if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+                  System.err.println("Phone number is null or empty.");
+                  return -1;
+              }
+              message.setTo(phoneNumber);
+
+              message.setText(textMessage);
+              this.messageService.sendOne(new SingleMessageSendingRequest(message));
+
+              return randomNumber;
+          } catch (Exception e) {
+              System.err.println("Error sending SMS: " + e.getMessage());
+              return -1;
+          }
     }
 
-    // 메인 메소드
-    public static void main(String[] args) {
-        SMS sms = new SMS();
-        SingleMessageSentResponse smsResponse = sms.sendSMS();
-        System.out.println(smsResponse);
-    }
+
+
 }

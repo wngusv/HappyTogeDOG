@@ -1,6 +1,7 @@
 package SignIn;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -17,18 +18,20 @@ public class LoginAPIServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String username = req.getParameter("userName");
+		String userId = req.getParameter("userId");
 		String password = req.getParameter("userPassword");
 		try {
-			if (loginDao.checkLogin(username, password)) {
+			User user = loginDao.checkLogin(userId, password);
+			if (user != null) {
 				HttpSession session = req.getSession();
-				session.setAttribute("username", username);
+				session.setAttribute("userId", user.getId());
+				session.setAttribute("userName", user.getName());
 
 				// 로그인 정보를 URL 파라미터로 전달
-				String redirectUrl = "../index.html?login=success";
+				String redirectUrl = "../index.jsp" ;
 				resp.sendRedirect(redirectUrl);
 			} else {
-				resp.sendRedirect("../login.html");
+				  resp.sendRedirect("../login.html");
 			}
 
 		} catch (SQLException e) {

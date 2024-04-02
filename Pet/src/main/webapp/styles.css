@@ -11,9 +11,13 @@ body {
 }
 
 header {
+    position: fixed;
+    top: 0;
+    width: 100%;
     background: #333;
     color: #fff;
     padding: 20px 0;
+    z-index: 999; /* 다른 요소들 위에 헤더를 표시하기 위해 z-index 값을 설정합니다. */
 }
 
 header .logo {
@@ -34,6 +38,7 @@ header nav ul {
     padding: 0;
 }
 
+
 header nav ul li {
     display: inline;
     margin-left: 20px;
@@ -44,15 +49,19 @@ header nav ul li a {
     text-decoration: none;
 }
 
+
+
 .menu {
-    background: #f4f4f4;
+    background: #333;
     padding: 20px 0;
+    
 }
 
 .menu ul {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 5;
+    height: 30px;
 }
 
 .menu ul li {
@@ -60,15 +69,28 @@ header nav ul li a {
 }
 
 .menu ul li a {
-    color: #333;
+    color: #ffffff;
     text-decoration: none;
     padding: 10px 20px;
 }
 
-footer {
-    background: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 20px;
+ul li a:hover {
+    color: black;
+    background-color: rgb(248, 248, 142);
+    border-radius: 50px; 
 }
+
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+
+
