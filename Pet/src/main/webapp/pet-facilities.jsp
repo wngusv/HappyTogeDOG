@@ -116,7 +116,7 @@ footer {
 }
 </style>
 </head>
-<body>
+<body style="padding-top: 150px;">
 	<header>
 		<div class="container">
 			<h1>지역 반려동물 시설</h1>
