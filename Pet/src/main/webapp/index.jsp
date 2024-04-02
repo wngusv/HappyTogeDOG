@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,7 @@
 			<nav>
 				<ul>
 
-					<li><a id="login-button" href="login.html">로그인</a></li>
+					<li><a id="login-button" href="login.jsp">로그인</a></li>
 					<li id="username-container"><span id="username-greeting"></span>
 						<a id="logout-button" href="./api/logout">로그아웃</a></li>
 					<li><a href="signupform.jsp">회원가입</a></li>
@@ -26,12 +27,12 @@
 	<section class="menu">
 		<div class="container">
 			<ul>
-				<li><a href="walk-jobs.html">산책 아르바이트</a></li>
-				<li><a href="pet-facilities.html">반려동물 시설</a></li>
+				<li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
+				<li><a href="pet-facilities.jsp">반려동물 시설</a></li>
 				<li><a href="/AnimalServlet">지역 유기동물</a></li>
-				<li><a href="local-shelters.html">지역 유기견 보호센터</a></li>
-				<li><a href="donations.html">기부</a></li>
-				<li><a href="board.html">게시판</a></li>
+				<li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
+				<li><a href="donations.jsp">기부</a></li>
+				<li><a href="board.jsp">게시판</a></li>
 			</ul>
 		</div>
 	</section>
