@@ -7,7 +7,7 @@
     <title>산책 아르바이트</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-<body>
+<body style="padding-top: 150px;">
     <header>
         <div class="container">
             <h1>산책 아르바이트</h1>
