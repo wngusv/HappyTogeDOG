@@ -39,8 +39,8 @@
         </tr>
         <tr>
             <td colspan="2" align=right>
-                <input type="button" value="글쓰기">
-                <input type="button" value="목록으로">
+                <input type="button" value="글쓰기" onclick="location.href='board.jsp';"> <%-- TODO: 디비에 저장시키고 게시판으로 넘어가게 하기 --%>
+                <input type="button" value="목록으로" onclick="location.href='board.jsp';">
             </td>
         </tr>
     </table>
