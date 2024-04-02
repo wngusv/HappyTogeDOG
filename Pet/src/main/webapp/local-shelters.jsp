@@ -19,7 +19,10 @@
 /*지도*/
 
 #map {
+
    position: fixed;
+   border: 2px solid #ccc; 
+   border-radius: 10px; 
    top: 50%;
    right: 230px; /* 우측 여백 설정 */
    transform: translateY(-50%);
