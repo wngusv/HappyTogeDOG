@@ -26,6 +26,7 @@
                 style="width:100%" >
             </td>
         </tr>
+        
         <tr>
             <td colspan="2" height=400>
                 <textarea placeholder="내용을 입력하세요." style="width: 100%; height: 100%"></textarea>

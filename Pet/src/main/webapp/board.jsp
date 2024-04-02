@@ -65,7 +65,7 @@
 			</div>
 		</div>
 	</header>
-
+ 
 	<main>
 		<div class="container">
 			<section class="strays-info">
