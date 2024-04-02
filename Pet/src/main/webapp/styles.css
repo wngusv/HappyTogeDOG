@@ -80,6 +80,9 @@ header nav ul li a {
     border-radius: 50px; 
 }
 
+.region-link a:hover {
+	color: olive;
+}
 
 footer {
     position: fixed;
