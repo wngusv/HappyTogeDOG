@@ -71,14 +71,15 @@
 			<section class="strays-info">
 				<h2>본인동네 자유게시판(ex.부산진구 자유게시판)</h2>
 				<input type="text" name="find"> <input type="button"
-					value="검색"> <input type="button" value="글쓰기" onclick="location.href='boardWrite.jsp';">
+					value="검색"> <input type="button" value="작성한 글보기" onclick="location.href='boardWrite.jsp';"> <%-- 내가 쓴 글 목록들 보여주는 곳으로 이동시키기... --%>
+					 <input type="button" value="글쓰기" onclick="location.href='boardWrite.jsp';">
 				<!-- 부트스트랩을 사용한 테이블 스타일 -->
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th width=100><select>
 									<option>소통</option>
-									<option>실종</option>
+									<option>긴급</option>
 							</select></th>
 							<th>제목</th>
 							<th>아이디</th>

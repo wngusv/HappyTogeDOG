@@ -52,7 +52,7 @@
 }
 </style>
 </head>
-<body>
+<body style= "padding-top:150px;">
 	<header>
 		<div class="container">
 			<h1>지역 유기동물 정보</h1>

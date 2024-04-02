@@ -17,7 +17,7 @@
             <td width=50>
                 <select>
                     <option>소통</option>
-                    <option>실종</option>
+                    <option>긴급</option>
                 </select>
             </td>
             <td >
