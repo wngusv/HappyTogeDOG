@@ -82,6 +82,13 @@
 				}
 				%>
 			</div>
+			<form id="stateForm">
+				<input type="radio" id="all" name="state" value="all"> <label
+					for="all">전체</label> <input type="radio" id="notice" name="state"
+					value="notice"> <label for="notice">공고</label> <input
+					type="radio" id="protect" name="state" value="protect"> <label
+					for="protect">보호</label>
+			</form>
 
 			<div class="card-container">
 				<%

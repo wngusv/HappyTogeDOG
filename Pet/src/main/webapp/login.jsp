@@ -67,13 +67,5 @@ input[type="submit"] {
 			<button type="button" id="findPW">비밀번호찾기</button>
 		</form>
 	</div>
-	<script>
-		// URL의 쿼리스트링에서 loginStatus가 fail인 경우 실패 알림을 표시
-		const urlParams = new URLSearchParams(window.location.search);
-		if (urlParams.has('loginStatus')
-				&& urlParams.get('loginStatus') === 'fail') {
-			document.getElementById('login-error').innerText = "로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.";
-		}
-	</script>
 </body>
 </html>
