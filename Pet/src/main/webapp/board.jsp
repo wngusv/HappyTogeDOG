@@ -25,7 +25,7 @@
 	margin-left: 10px; /* 링크들 사이의 간격 설정 */
 }
 </style>
-<body>
+<body style="padding-top:150px;">
 	<header>
 		<div class="container">
 			<h1>게시판</h1>
