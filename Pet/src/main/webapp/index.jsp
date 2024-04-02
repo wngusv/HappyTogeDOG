@@ -34,8 +34,6 @@ prefix="c"%>
           </ul>
         </nav>
       </div>
-    </header>
-
     <section class="menu">
       <div class="container">
         <ul>
@@ -48,6 +46,8 @@ prefix="c"%>
         </ul>
       </div>
     </section>
+    </header>
+
 
     <footer>
       <div class="container">

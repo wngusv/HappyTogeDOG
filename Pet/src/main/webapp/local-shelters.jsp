@@ -24,6 +24,7 @@
 	width: 50vw; /* 가로 너비 조절 */
 	height: 400px; /* 높이 설정 */
 }
+
 </style>
 </head>
 <body>
@@ -41,7 +42,7 @@
 	</header>
 
 	<main>
-		<div class="container">
+		<div class="container" style = "padding-top: 150px;">
 			<section class="strays-info">
 				<h2>지역 유기견 보호센터</h2>
 				<div id="map" style="width: 500px; height: 400px;"></div>
