@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,9 +22,19 @@
 			<h1>기부</h1>
 			<nav>
 				<ul>
-					<li><a href="index.jsp">홈으로</a></li>
-					<li><a href="signupform.jsp">회원가입</a></li>
-					<li><a id="login-button" href="login.jsp">로그인</a></li>
+					<c:choose>
+						<c:when test="${sessionScope.userId != null}">
+							<!-- 로그인된 경우: 사용자 이름과 로그아웃 버튼만 표시 -->
+							<li id="username-container"><span id="username-greeting">
+									안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
+								href="./api/logout">로그아웃</a></li>
+						</c:when>
+						<c:otherwise>
+							<!-- 로그인되지 않은 경우: 로그인 및 회원가입 링크 표시 -->
+							<li><a id="login-button" href="login.jsp">로그인</a></li>
+							<li><a href="signupform.jsp">회원가입</a></li>
+						</c:otherwise>
+					</c:choose>
 				</ul>
 			</nav>
 		</div>
