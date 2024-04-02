@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,23 +10,34 @@
 <body>
     <header>
         <div class="container">
-            <h1>산책  아르바이트</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.jsp">홈으로</a></li>
-                    <li><a href="signupform.jsp">회원가입</a></li>
-                    <li><a id="login-button" href="login.jsp">로그인</a></li>
-                </ul>
-            </nav>
-        </div>
+            <h1>산책 아르바이트</h1>
+</div>
+        <nav>
+          <ul>
+            <c:choose>
+              <c:when test="${sessionScope.userId != null}">
+                <li id="username-container">
+                  <span id="username-greeting">
+                    안녕하세요, ${sessionScope.userName}님!
+                  </span>
+                  <a id="logout-button" href="./api/logout">로그아웃</a>
+                </li>
+              </c:when>
+              <c:otherwise>
+                <li><a id="login-button" href="login.jsp">로그인</a></li>
+              </c:otherwise>
+            </c:choose>
+            <li><a href="signupform.jsp">회원가입</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
     <main>
         <div class="container">
             <section class="strays-info">
                 <h2>산책 아르바이트</h2>
-                <!-- 글쓰기 버튼 추가 -->
-                <button onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
+                    <button onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
             </section>
         </div>
     </main>

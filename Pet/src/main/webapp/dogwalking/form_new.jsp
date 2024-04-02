@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*,Util.MyWebContextListener,dao.UserDAO,SignIn.User"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +19,13 @@ function previewImage(input) {
 </script>
 </head>
 <body>
+<%
+    String userId = (String)session.getAttribute("userId");
+    User user = null;
+    if(userId != null) {
+        user = UserDAO.getUserById(userId); // UserDAO에서 해당 메서드 구현 필요
+    }
+%>
     <h1>산책  알바 구하기 입력폼</h1>
     <form method="post" action="board_new_send.jsp" enctype="multipart/form-data">
         <table>
@@ -52,7 +59,7 @@ function previewImage(input) {
                 </td>
             </tr>
             <tr>
-                <td>픽업위치: <input type="text" placeholder="픽업위치" name="pickupLocation"></td>
+                <td>픽업위치: <input type="text" placeholder="픽업위치" name="pickupLocation" value="<%= user != null ? user.getAddress() + ", " + user.getAddress_detail() : "" %>"></td>
             </tr>
             <tr>
                 <td>시급: <input type="number" placeholder="시급" name="hourlyRate"></td>
