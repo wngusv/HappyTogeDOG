@@ -24,25 +24,33 @@
 	width: 50vw; /* 가로 너비 조절 */
 	height: 400px; /* 높이 설정 */
 }
-
 </style>
 </head>
 <body>
 	<header>
-		<div class="container">
-			<h1>지역 유기견 보호센터</h1>
-			<nav>
+		<nav>
+			<ul>
+				<li><a href="index.jsp">홈으로</a></li>
+				<li><a href="signupform.jsp">회원가입</a></li>
+				<li><a id="login-button" href="login.jsp">로그인</a></li>
+			</ul>
+		</nav>
+		<section class="menu">
+			<div class="container">
 				<ul>
-					<li><a href="index.jsp">홈으로</a></li>
-					<li><a href="signupform.jsp">회원가입</a></li>
-					<li><a id="login-button" href="login.jsp">로그인</a></li>
+					<li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
+					<li><a href="pet-facilities.jsp">반려동물 시설</a></li>
+					<li><a href="/AnimalServlet">지역 유기동물</a></li>
+					<li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
+					<li><a href="donations.jsp">기부</a></li>
+					<li><a href="board.jsp">게시판</a></li>
 				</ul>
-			</nav>
-		</div>
+			</div>
+		</section>
 	</header>
 
 	<main>
-		<div class="container" style = "padding-top: 150px;">
+		<div class="container" style="padding-top: 150px;">
 			<section class="strays-info">
 				<h2>지역 유기견 보호센터</h2>
 				<div id="map" style="width: 500px; height: 400px;"></div>
