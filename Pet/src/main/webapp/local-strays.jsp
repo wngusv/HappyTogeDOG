@@ -61,7 +61,7 @@
 			</ul>
 		</nav>
 		<section class="menu">
-			<div class="container">
+			<div class="container" style="padding-top: 8px;">
 				<ul>
 					<li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
 					<li><a href="pet-facilities.jsp">반려동물 시설</a></li>
