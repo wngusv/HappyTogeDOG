@@ -80,6 +80,7 @@
 							<th width=100><select>
 									<option>소통</option>
 									<option>긴급</option>
+									<option>후기</option>
 							</select></th>
 							<th>제목</th>
 							<th>아이디</th>

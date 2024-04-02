@@ -6,7 +6,20 @@
     <meta charset="UTF-8">
     <title>게시판</title>
 </head>
+<script>
+	// < 업로드용 폼 화면 > 
+	function validateForm(form){
+		if(form.title.value == ""){
+			alert("제목을 입력하세여")
+			form.title.focus();
+			return false;
+		}
+	}
+</script>
 <body>
+<!-- UploadProcess.do 아직 안 만들어써여 -->
+ <form name="writeForm" method="post"enctype="multipart/form-data" action="UploadProcess.do" onsubmit="return validateForm(this);">
+    <!-- 파일을 업로드하기 위해 enctype을 multipart/form-data로 설정 -->
     <table border="1" width=500>
         <tr>
             <th colspan="2">
@@ -14,36 +27,39 @@
             </th>
         </tr>
         <tr>
+       
             <td width=50>
-                <select>
-                    <option>소통</option>
-                    <option>긴급</option>
+                <select name="category">
+                    <option value="communication">소통</option>
+                    <option value="urgent">긴급</option>
+                    <option value="review">후기</option>
                 </select>
             </td>
             <td >
-                <input type="text" placeholder="제목을 입력하세요."
-                maxlength=20
-                style="width:100%" >
+               <input type="text" name="title" placeholder="제목을 입력하세요."
+                maxlength="20"
+                style="width:100%">
             </td>
         </tr>
         
         <tr>
             <td colspan="2" height=400>
-                <textarea placeholder="내용을 입력하세요." style="width: 100%; height: 100%"></textarea>
+               <textarea name="content" placeholder="내용을 입력하세요." style="width: 100%; height: 100%"></textarea>
             </td>
         </tr>
         <tr>
             <td >첨부 파일</td>
             <td >
-                <input type="file" name="file"/>
+                <input type="file" name="attachedFile"/>
             </td>
         </tr>
         <tr>
             <td colspan="2" align=right>
-                <input type="button" value="글쓰기" onclick="location.href='board.jsp';"> <%-- TODO: 디비에 저장시키고 게시판으로 넘어가게 하기 --%>
+                <input type="submit" value="글쓰기">
                 <input type="button" value="목록으로" onclick="location.href='board.jsp';">
             </td>
         </tr>
     </table>
+</form>
 </body>
 </html>
