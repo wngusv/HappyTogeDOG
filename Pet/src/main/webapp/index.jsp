@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c"%>
@@ -33,8 +34,6 @@ prefix="c"%>
           </ul>
         </nav>
       </div>
-    </header>
-
     <section class="menu">
       <div class="container">
         <ul>
@@ -47,6 +46,8 @@ prefix="c"%>
         </ul>
       </div>
     </section>
+    </header>
+
 
     <footer>
       <div class="container">
