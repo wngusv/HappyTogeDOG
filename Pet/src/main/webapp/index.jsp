@@ -12,7 +12,7 @@ prefix="c"%>
   <body>
     <header>
       <div class="container">
-        <div class="logo">
+        <div class="logo">	
           <h1>메인페이지</h1>
         </div>
         <nav>
