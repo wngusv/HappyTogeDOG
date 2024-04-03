@@ -71,6 +71,7 @@
         <div class="form-group">
             <label for="dogPhoto">강아지 사진:</label>
             <input type="file" class="form-control-file" id="dogPhoto" name="dogPhoto" accept="image/*" onchange="previewImage(this);">
+            <small class="form-text text-muted">이미지 파일만(jpg, png) 첨부 가능합니다. (각 파일 2MB 이하)</small>
             <img id="preview" src="#" alt="사진 미리보기" style="display:none;">
         </div>
         <hr>

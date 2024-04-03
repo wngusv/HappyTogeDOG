@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*,Util.MyWebContextListener,dao.UserDAO,SignIn.User"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -49,17 +49,12 @@
                     <!-- 게시글 목록 추가 -->
             <h1>게시글 목록</h1>
             <% 
-            try {
-                // DB 연결 및 쿼리 실행 코드
-                String dbURL = "jdbc:mysql://192.168.0.106:3306/pet";
-                String dbUsername = "wngus";
-                String dbPassword = "wngus";
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
-                String query = "SELECT * FROM pet.dogwalker ORDER BY num DESC";
-                PreparedStatement ps = connection.prepareStatement(query);
-                ResultSet rs = ps.executeQuery();
-            %>
+                try {
+                    Connection connection = Util.MyWebContextListener.getConnection();
+                    String query = "SELECT * FROM pet.dogwalker ORDER BY num DESC";
+                    PreparedStatement ps = connection.prepareStatement(query);
+                    ResultSet rs = ps.executeQuery();
+                %>
             <table border="1">
                 <tr>
                     <td>번호</td>
