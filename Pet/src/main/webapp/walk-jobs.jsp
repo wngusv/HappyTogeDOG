@@ -69,7 +69,7 @@
                 <% while (rs.next()) { %>
                 <tr>
                     <td><%= rs.getInt("num") %></td>
-                    <td><a href="dogwalking/form_send.jsp?num=<%= rs.getInt("num") %>"><%= rs.getString("title") %></a></td>
+                    <td><a href="dogwalking/dogwalking_board_read.jsp?num=<%= rs.getInt("num") %>"><%= rs.getString("title") %></a></td>
                     <td><%= rs.getTimestamp("today_date") %></td>
                 </tr>
                 <% } %>

@@ -57,8 +57,8 @@
             <label for="pickupLocation">픽업위치:</label><br>
             <input type="text" class="form-control mb-2" id="sample6_postcode" placeholder="우편번호">
             <button type="button" class="btn btn-primary mb-2" onclick="sample6_execDaumPostcode()">우편번호 찾기</button><br>
-            <input type="text" class="form-control mb-2" id="sample6_address" placeholder="주소" value="<%= user != null ? user.getAddress() : "" %>" readonly>
-            <input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" value="<%= user != null ? user.getAddress_detail() : "" %>">
+            <input type="text" class="form-control mb-2" id="sample6_address" placeholder="주소" value="<%= user != null ? user.getAddress() : "" %>" name="sample6_address" readonly>
+            <input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" value="<%= user != null ? user.getAddress_detail() : "" %>" name="sample6_detailAddress">
         </div>
         <div class="form-group">
             <label for="pay">시급:</label>
@@ -70,7 +70,7 @@
         </div>
         <div class="form-group">
             <label for="dogPhoto">강아지 사진:</label>
-            <input type="file" class="form-control-file" id="dogPhoto" name="dogPhoto" onchange="previewImage(this);">
+            <input type="file" class="form-control-file" id="dogPhoto" name="dogPhoto" accept="image/*" onchange="previewImage(this);">
             <img id="preview" src="#" alt="사진 미리보기" style="display:none;">
         </div>
         <hr>
