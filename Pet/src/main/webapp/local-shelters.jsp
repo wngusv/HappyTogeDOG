@@ -17,8 +17,12 @@
    margin-right: 0 auto;
 }
 /*지도*/
+
 #map {
+
    position: fixed;
+   border: 2px solid #ccc; 
+   border-radius: 10px; 
    top: 50%;
    right: 230px; /* 우측 여백 설정 */
    transform: translateY(-50%);
@@ -40,6 +44,13 @@
     .region-link:hover {
         color: #007bff; /* 호버시 색상 변경 */
     }
+	#region-list {
+		margin-bottom: 20px;
+	}
+    .rounded-border {
+   margin-bottom: 10px; /* 푸터와의 간격 설정 */
+}
+
 </style>
 </head>
 <body>
@@ -73,11 +84,13 @@
       </section>
    </header>
 
-   <main>
+   <main style="margin-bottom: 150px;">
       <div class="container" style="padding-top: 150px;">
          <section class="strays-info">
             <h2>지역 유기견 보호센터</h2>
+              <div id="map-container">
             <div id="map" style="width: 500px; height: 400px;"></div>
+            </div>
             <div id="shelters"></div>
             <div id="region-list">
                <a href="#" class="region-link" data-region="">전체</a> <a href="#"
