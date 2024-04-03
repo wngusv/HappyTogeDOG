@@ -7,6 +7,7 @@
 </head>
 <body>
     <div id="map" style="width: 800px; height: 800px;"></div>
+    <button onclick="getCarDirection()">경로 가져오기</button>
     <script>
         var mapContainer = document.getElementById('map'),
         mapOption = {
