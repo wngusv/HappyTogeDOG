@@ -50,5 +50,6 @@
         }
     }
 %>
+<a href="/walk-jobs.jsp">목록으로 돌아가기</a>
 </body>
 </html>
