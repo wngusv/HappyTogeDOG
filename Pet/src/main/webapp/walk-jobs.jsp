@@ -66,13 +66,21 @@
             <table border="1">
                 <tr>
                     <td>번호</td>
+                    <td>근무지</td>
                     <td>제목</td>
+                    <td>근무 요일</td>
+                    <td>근무 시간</td>
+                    <td>급여</td>
                     <td>작성일</td>
                 </tr>
                 <% while (rs.next()) { %>
                 <tr>
                     <td><%= rs.getInt("num") %></td>
+                    <td><%= rs.getString("address") %></td>
                     <td><a href="dogwalking/dogwalking_board_read.jsp?num=<%= rs.getInt("num") %>"><%= rs.getString("title") %></a></td>
+                    <td><%= rs.getString("day") %></td>
+                    <td><%= rs.getString("time") %></td>
+                    <td><%= rs.getInt("pay") %></td>
                     <td><%= rs.getTimestamp("today_date") %></td>
                 </tr>
                 <% } %>
