@@ -140,7 +140,7 @@
 						<tr>
 							<td><%=rs.getString("category")%></td>
 							<td><a
-								href="게시글 읽을 수 있는 주소 만ㄷ들어서 넣기?idx=<%=rs.getInt("idx")%>"><%=rs.getString("title")%></a></td>
+								href="boardReading.jsp?idx=<%=rs.getInt("idx")%>"><%=rs.getString("title")%></a></td>
 							<td><%=rs.getString("id")%></td>
 							<td><%=rs.getTimestamp("postdate").toString()%></td>
 						</tr>

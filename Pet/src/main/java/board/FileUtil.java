@@ -23,7 +23,7 @@ public class FileUtil {
 		return originalFileName;
 	}
 	
-	// 파일명 변경 메소드
+	// 파일명 변경 메소드  ..?
 	public static String renameFile(String sDirectory, String fileName) {
 	    int lastDotIndex = fileName.lastIndexOf(".");
 	    String ext = ""; // 확장자 기본값은 빈 문자열로 설정
