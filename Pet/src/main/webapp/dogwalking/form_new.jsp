@@ -25,7 +25,7 @@
 %>
 <div class="container mt-5">
     <h1 class="mb-4">산책 알바 구하기 입력폼</h1>
-    <form method="post" action="board_new_send.jsp" enctype="multipart/form-data">
+    <form method="post" action="form_send.jsp" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">제목:</label>
             <input type="text" class="form-control" id="title" placeholder="제목" name="title" maxlength="20" value="">
@@ -33,24 +33,24 @@
         <div class="form-group">
             <label for="dogSize">견종(크기):</label>
             <select class="form-control" id="dogSize" name="dogSize">
-                <option value="small">소형견(7kg이하)</option>
-                <option value="medium">중형견(8kg이상)</option>
-                <option value="large">대형견(16kg이상)</option>
-                <option value="xlarge">초대형견(45kg이상)</option>
+                <option value="소형견(7kg이하)">소형견(7kg이하)</option>
+                <option value="중형견(8kg이상)">중형견(8kg이상)</option>
+                <option value="대형견(16kg이상)">대형견(16kg이상)</option>
+                <option value="초대형견(45kg이상)">초대형견(45kg이상)</option>
             </select>
         </div>
         <div class="form-group">
             <label for="day">요일:</label>
             <select class="form-control" id="day" name="day">
-                <option value="weekday">평일</option>
-                <option value="weekend">주말</option>
+                <option value="평일">평일</option>
+                <option value="주말">주말</option>
             </select>
         </div>
         <div class="form-group">
             <label for="time">시간:</label>
             <select class="form-control" id="time" name="time">
-                <option value="morning">오전</option>
-                <option value="afternoon">오후</option>
+                <option value="오전">오전</option>
+                <option value="오후">오후</option>
             </select>
         </div>
         <div class="form-group">
@@ -61,8 +61,8 @@
             <input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" value="<%= user != null ? user.getAddress_detail() : "" %>">
         </div>
         <div class="form-group">
-            <label for="hourlyRate">시급:</label>
-            <input type="number" class="form-control" id="hourlyRate" placeholder="시급" name="hourlyRate">
+            <label for="pay">시급:</label>
+            <input type="number" class="form-control" id="pay" placeholder="시급" name="pay">
         </div>
         <div class="form-group">
             <label for="introduction">소개글:</label>
