@@ -1,13 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>ê²½ë¡œ ë”°ë¼ ì§€ë„ì— ì„  ê·¸ë¦¬ê¸°</title>
+<meta charset="EUC-KR">
+    <title>°æ·Î µû¶ó Áöµµ¿¡ ¼± ±×¸®±â</title>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533"></script>
 </head>
 <body>
     <div id="map" style="width: 800px; height: 800px;"></div>
-    <button onclick="getCarDirection()">ê²½ë¡œ ê°€ì ¸ì˜¤ê¸°</button>
+    <button onclick="getCarDirection()">°æ·Î °¡Á®¿À±â</button>
     <script>
         var mapContainer = document.getElementById('map'),
         mapOption = {
@@ -21,48 +23,48 @@
         };
 
         async function getCarDirection() {
-            const REST_API_KEY = '34e2bb850a0e53f95ba5999f444deded';
+            const REST_API_KEY = '338d403a243e055727945750ef6920a1';
+            // È£Ãâ¹æ½ÄÀÇ URLÀ» ÀÔ·ÂÇÕ´Ï´Ù.
             const url = 'https://apis-navi.kakaomobility.com/v1/directions';
+
+           // Ãâ¹ßÁö(origin), ¸ñÀûÁö(destination)ÀÇ ÁÂÇ¥¸¦ ¹®ÀÚ¿­·Î º¯È¯ÇÕ´Ï´Ù.
             const origin = `${pointObj.startPoint.lng},${pointObj.startPoint.lat}`; 
             const destination = `${pointObj.endPoint.lng},${pointObj.endPoint.lat}`;
             
+            // ¿äÃ» Çì´õ¸¦ Ãß°¡ÇÕ´Ï´Ù.
             const headers = {
               Authorization: `KakaoAK ${REST_API_KEY}`,
               'Content-Type': 'application/json'
             };
+          
+            // Ç¥3ÀÇ ¿äÃ» ÆÄ¶ó¹ÌÅÍ¿¡ ÇÊ¼ö°ªÀ» Àû¾îÁİ´Ï´Ù.
             const queryParams = new URLSearchParams({
               origin: origin,
               destination: destination
             });
-            const requestUrl = `${url}?${queryParams}`;
-            let data;
+            
+            const requestUrl = `${url}?${queryParams}`; // ÆÄ¶ó¹ÌÅÍ±îÁö Æ÷ÇÔµÈ ÀüÃ¼ URL
 
             try {
-              const response = await fetch(requestUrl, { method: 'GET', headers: headers });
-              if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-              data = await response.json();
+              const response = await fetch(requestUrl, {
+                method: 'GET',
+                headers: headers
+              });
+
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              const data = await response.json();
+              
+              console.log(data)
             } catch (error) {
               console.error('Error:', error);
-              return; // Early exit on error
             }
-
-            // Using the received data to draw a polyline
-            const linePath = data.routes[0].sections.map(section => 
-                section.vertexes.filter((_, index) => index % 2 === 0)
-                .map((vertex, index, arr) => new kakao.maps.LatLng(arr[index + 1], vertex))
-            ).flat();
-
-            var polyline = new kakao.maps.Polyline({
-              path: linePath,
-              strokeWeight: 5,
-              strokeColor: '#000000',
-              strokeOpacity: 0.7,
-              strokeStyle: 'solid'
-            }); 
-            polyline.setMap(map);
-        }
-
-        getCarDirection();
+          }
     </script>
+</body>
+</html>
+
 </body>
 </html>
