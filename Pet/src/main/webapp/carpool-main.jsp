@@ -64,4 +64,5 @@
 			window.open(jspUrl, "_blank", popupOptions);
 		}
 	</script>
+	
 </body></html>
