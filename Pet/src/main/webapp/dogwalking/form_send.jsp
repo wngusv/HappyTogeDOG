@@ -62,9 +62,9 @@ try {
     psmt.executeUpdate();
 
     // 성공 시, 게시글 목록 페이지로 리다이렉트
-    response.sendRedirect("walk-jobs.jsp");
+    response.sendRedirect("/walk-jobs.jsp");
 } catch (Exception ex) {
-    out.println("오류가 발생했습니다. 오류 메시지 : " + ex.getMessage());
+    out.println("오류가 발생했습니다. 오류 메시지: " + ex.getMessage());
     ex.printStackTrace();
 }
 %>
