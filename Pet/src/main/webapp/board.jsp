@@ -85,11 +85,18 @@
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
-							<th width=100><select>
-									<option>소통</option>
-									<option>긴급</option>
-									<option>후기</option>
-							</select></th>
+							<th width=100>
+								<!-- 카테고리 선택 폼 -->
+								<form action="board.jsp" method="get">
+									<select name="categoryFilter" onchange="this.form.submit()">
+										<option value="">--</option>
+										<option value="소통">소통</option>
+										<option value="긴급">긴급</option>
+										<option value="후기">후기</option>
+									</select>
+								</form>
+
+							</th>
 							<th>제목</th>
 							<th>아이디</th>
 							<th>작성시간</th>
@@ -99,10 +106,36 @@
 					<tbody>
 						<!-- 테이블 데이터 행 -->
 						<%
-						String sql = "SELECT idx,category, title, id, postdate FROM board";
-						try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-							try (ResultSet rs = stmt.executeQuery();) {
-								while (rs.next()) {
+						  int pagee = 1;
+					    int pageeSize = 10;
+					    if(request.getParameter("pagee") != null){
+					        pagee = Integer.parseInt(request.getParameter("pagee"));
+					    }
+					    
+    String categoryFilter = request.getParameter("categoryFilter");
+    String sql = "SELECT idx, category, title, id, postdate FROM board";
+
+    // categoryFilter 값이 비어있지 않으면 WHERE 절 추가
+    if (categoryFilter != null && !categoryFilter.isEmpty()) {
+        sql += " WHERE category = ?";
+    }
+    sql += " ORDER BY postdate DESC LIMIT ?, ?";
+
+    try (Connection conn = MyWebContextListener.getConnection(); 
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        // categoryFilter 값이 비어있지 않으면 파라미터 설정
+        if (categoryFilter != null && !categoryFilter.isEmpty()) {
+            stmt.setString(1, categoryFilter);
+            stmt.setInt(2, (pagee-1) * pageeSize);
+            stmt.setInt(3, pageeSize);
+        } else {
+            stmt.setInt(1, (pagee-1) * pageeSize);
+            stmt.setInt(2, pageeSize);
+        }
+
+        try (ResultSet rs = stmt.executeQuery();) {
+            while (rs.next()) {
 						%>
 						<tr>
 							<td><%=rs.getString("category")%></td>
@@ -123,6 +156,38 @@
 
 					</tbody>
 				</table>
+				<%
+    // 총 게시물 수 계산하기 위한 쿼리
+    String countSql = "SELECT COUNT(*) FROM board";
+    if (categoryFilter != null && !categoryFilter.isEmpty()) {
+        countSql += " WHERE category = ?";
+    }
+    try (Connection conn = MyWebContextListener.getConnection(); 
+         PreparedStatement stmt = conn.prepareStatement(countSql)) {
+
+        if (categoryFilter != null && !categoryFilter.isEmpty()) {
+            stmt.setString(1, categoryFilter);
+        }
+
+        try (ResultSet rs = stmt.executeQuery();) {
+            if (rs.next()) {
+                int totalPosts = rs.getInt(1);
+                int totalPages = (int) Math.ceil((double) totalPosts / pageeSize);
+
+                for(int i = 1; i <= totalPages; i++){
+                    if(pagee == i){
+                        out.print("<b>" + i + "</b> "); // 현재 페이지 강조
+                    } else {
+                        out.print("<a href='board.jsp?pagee=" + i + "'>" + i + "</a> ");
+                    }
+                }
+            }
+        }
+    } catch (Exception ex) {
+        out.println("오류가 발생했습니다: " + ex.getMessage());
+    }
+%>
+				
 			</section>
 
 		</div>
