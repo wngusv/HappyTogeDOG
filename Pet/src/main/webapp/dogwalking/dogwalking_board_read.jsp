@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*"%>
+<%@ page import="java.sql.*, Util.MyWebContextListener" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +11,7 @@
     String num = request.getParameter("num");
     if(num != null && !num.isEmpty()) {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.0.106:3306/pet", "wngus", "wngus");
+        	Connection conn = MyWebContextListener.getConnection();
             String query = "SELECT * FROM dogwalker WHERE num = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, Integer.parseInt(num));
