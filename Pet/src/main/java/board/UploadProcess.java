@@ -25,7 +25,7 @@ public class UploadProcess extends HttpServlet{
 			String originalFileName = FileUtil.uploadFile(req, saveDirectory);
 			String saveFileName = FileUtil.renameFile(saveDirectory, originalFileName);
 			insertMyFile(req, originalFileName, saveFileName);
-			resp.sendRedirect("board.jsp"); // 파일리스트 제이에스피...??????????
+			resp.sendRedirect("board.jsp"); 
 		} catch(Exception e) {
 			e.printStackTrace();
 			req.setAttribute("errorMessage", "파일 업로드 오류");
@@ -47,7 +47,7 @@ public class UploadProcess extends HttpServlet{
 		
 		 // 세션에서 사용자 ID 가져오기
 	    HttpSession session = req.getSession();
-	    String userId = (String) session.getAttribute("userId"); // 'loggedInUserId'는 세션에 저장된 사용자 ID의 키입니다.
+	    String userId = (String) session.getAttribute("userId"); 
 	    // DTO에 사용자 ID 설정
 	    dto.setId(userId);
 	    

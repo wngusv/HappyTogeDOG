@@ -1,3 +1,7 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="Util.MyWebContextListener"%>
+<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -25,7 +29,7 @@
 	margin-left: 10px; /* 링크들 사이의 간격 설정 */
 }
 </style>
-<body style="padding-top:150px;">
+<body style="padding-top: 150px;">
 	<header>
 		<div class="container">
 			<h1>게시판</h1>
@@ -65,14 +69,18 @@
 			</div>
 		</div>
 	</header>
- 
+
+
 	<main>
 		<div class="container">
 			<section class="strays-info">
 				<h2>본인동네 자유게시판(ex.부산진구 자유게시판)</h2>
 				<input type="text" name="find"> <input type="button"
-					value="검색"> <input type="button" value="작성한 글보기" onclick="location.href='boardWrite.jsp';"> <%-- 내가 쓴 글 목록들 보여주는 곳으로 이동시키기... --%>
-					 <input type="button" value="글쓰기" onclick="location.href='boardWrite.jsp';">
+					value="검색"> <input type="button" value="작성한 글보기"
+					onclick="location.href='boardWrite.jsp';">
+				<%-- 내가 쓴 글 목록들 보여주는 곳으로 이동시키기... --%>
+				<input type="button" value="글쓰기"
+					onclick="location.href='boardWrite.jsp';">
 				<!-- 부트스트랩을 사용한 테이블 스타일 -->
 				<table class="table table-striped table-hover">
 					<thead>
@@ -85,15 +93,38 @@
 							<th>제목</th>
 							<th>아이디</th>
 							<th>작성시간</th>
-							<th>좋아요</th>
+							<!-- <th>좋아요</th> 일단 언젠가..-->
 						</tr>
 					</thead>
 					<tbody>
 						<!-- 테이블 데이터 행 -->
+						<%
+						String sql = "SELECT idx,category, title, id, postdate FROM board";
+						try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+							try (ResultSet rs = stmt.executeQuery();) {
+								while (rs.next()) {
+						%>
+						<tr>
+							<td><%=rs.getString("category")%></td>
+							<td><a
+								href="게시글 읽을 수 있는 주소 만ㄷ들어서 넣기?idx=<%=rs.getInt("idx")%>"><%=rs.getString("title")%></a></td>
+							<td><%=rs.getString("id")%></td>
+							<td><%=rs.getTimestamp("postdate").toString()%></td>
+						</tr>
+
+						<%
+						}
+						}
+
+						} catch (Exception ex) {
+						out.println("오류가 발생했습니다. " + ex.getMessage());
+						}
+						%>
+
 					</tbody>
 				</table>
 			</section>
-			
+
 		</div>
 	</main>
 
