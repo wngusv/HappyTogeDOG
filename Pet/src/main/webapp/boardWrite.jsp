@@ -17,8 +17,7 @@
 	}
 </script>
 <body>
-<!-- UploadProcess.do 아직 안 만들어써여 -->
- <form name="writeForm" method="post"enctype="multipart/form-data" action="UploadProcess.do" onsubmit="return validateForm(this);">
+ <form name="writeForm" method="post"enctype="multipart/form-data" action="/UploadProcess.do" onsubmit="return validateForm(this);">
     <!-- 파일을 업로드하기 위해 enctype을 multipart/form-data로 설정 -->
     <table border="1" width=500>
         <tr>
@@ -30,9 +29,9 @@
        
             <td width=50>
                 <select name="category">
-                    <option value="communication">소통</option>
-                    <option value="urgent">긴급</option>
-                    <option value="review">후기</option>
+                    <option value="소통">소통</option>
+                    <option value="긴급">긴급</option>
+                    <option value="후기">후기</option>
                 </select>
             </td>
             <td >
@@ -50,7 +49,7 @@
         <tr>
             <td >첨부 파일</td>
             <td >
-                <input type="file" name="attachedFile"/>
+                <input type="file" name="oFile"/>
             </td>
         </tr>
         <tr>
