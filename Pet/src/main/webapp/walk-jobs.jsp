@@ -1,60 +1,68 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*,Util.MyWebContextListener,dao.UserDAO,SignIn.User"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*, Util.MyWebContextListener" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
     <title>산책 아르바이트</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body style="padding-top: 150px;">
-    <header>
-        <nav>
-          <ul>
+<header>
+    <nav>
+        <ul>
             <c:choose>
-              <c:when test="${sessionScope.userId != null}">
-                <li id="username-container">
-                  <span id="username-greeting">
-                    안녕하세요, ${sessionScope.userName}님!
-                  </span>
-                  <a id="logout-button" href="./api/logout">로그아웃</a>
-                </li>
-              </c:when>
-              <c:otherwise>
-                <li><a id="login-button" href="login.jsp">로그인</a></li>
-              </c:otherwise>
+                <c:when test="${sessionScope.userId != null}">
+                    <li id="username-container">
+                        <span id="username-greeting">
+                            안녕하세요, ${sessionScope.userName}님!
+                        </span>
+                        <a id="logout-button" href="./api/logout">로그아웃</a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li><a id="login-button" href="login.jsp">로그인</a></li>
+                </c:otherwise>
             </c:choose>
             <li><a href="signupform.jsp">회원가입</a></li>
-          </ul>
-        </nav>
-      <section class="menu">
-      <div class="container" style="padding-top: 8px;">
-        <ul>
-          <li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
-          <li><a href="pet-facilities.jsp">반려동물 시설</a></li>
-          <li><a href="/AnimalServlet">지역 유기동물</a></li>
-          <li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
-          <li><a href="donations.jsp">기부</a></li>
-          <li><a href="board.jsp">게시판</a></li>
         </ul>
-      </div>
+    </nav>
+    <section class="menu">
+        <div class="container" style="padding-top: 8px;">
+            <ul>
+                <li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
+                <li><a href="pet-facilities.jsp">반려동물 시설</a></li>
+                <li><a href="/AnimalServlet">지역 유기동물</a></li>
+                <li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
+                <li><a href="donations.jsp">기부</a></li>
+                <li><a href="board.jsp">게시판</a></li>
+            </ul>
+        </div>
     </section>
-    </header>
+</header>
 
-    <main>
-        <div class="container">
-            <section class="strays-info">
-                <h2>산책 아르바이트</h2>
-                    <button onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
-                    <!-- 게시글 목록 추가 -->
+<main>
+    <div class="container">
+        <section class="strays-info">
+            <h2>산책 아르바이트</h2>
+            <button onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
             <h1>게시글 목록</h1>
             <% 
                 try {
-                    Connection connection = Util.MyWebContextListener.getConnection();
-                    String query = "SELECT * FROM pet.dogwalker ORDER BY num DESC";
+                    Connection connection = MyWebContextListener.getConnection();
+                    int recordsPerPage = 10;
+                    int currentPage = 1;
+                    if (request.getParameter("currentPage") != null) {
+                        currentPage = Integer.parseInt(request.getParameter("currentPage"));
+                    }
+                    int start = (currentPage - 1) * recordsPerPage;
+                    String query = "SELECT * FROM pet.dogwalker ORDER BY num DESC LIMIT ?, ?";
                     PreparedStatement ps = connection.prepareStatement(query);
+                    ps.setInt(1, start);
+                    ps.setInt(2, recordsPerPage);
                     ResultSet rs = ps.executeQuery();
-                %>
+            %>
             <table border="1">
                 <tr>
                     <td>번호</td>
@@ -69,20 +77,46 @@
                 </tr>
                 <% } %>
             </table>
-            <%
-            } catch (Exception e) {
-                out.println("오류가 발생했습니다. 오류 메시지: " + e.getMessage());
-            }
+            <% 
+                // 페이징 처리
+                String countQuery = "SELECT COUNT(*) AS total FROM pet.dogwalker";
+                PreparedStatement countPs = connection.prepareStatement(countQuery);
+                ResultSet countRs = countPs.executeQuery();
+                countRs.next();
+                int totalRecords = countRs.getInt("total");
+                int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
             %>
-            </section>
-            
-        </div>
-    </main>
+            <div class="pagination">
+                <% if(currentPage > 1) { %>
+                <a href="walk-jobs.jsp?currentPage=<%= currentPage - 1 %>">이전</a>
+                <% } %>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Pet. 모든 권리 보유.</p>
-        </div>
-    </footer>
+                <% for(int i = 1; i <= totalPages; i++) { %>
+                <% if(i == currentPage) { %>
+                <span class="current"><%= i %></span>
+                <% } else { %>
+                <a href="walk-jobs.jsp?currentPage=<%= i %>"><%= i %></a>
+                <% } %>
+                <% } %>
+
+                <% if(currentPage < totalPages) { %>
+                <a href="walk-jobs.jsp?currentPage=<%= currentPage + 1 %>">다음</a>
+                <% } %>
+            </div>
+            <%
+                } catch (Exception e) {
+                    out.println("오류가 발생했습니다. 오류 메시지: " + e.getMessage());
+                }
+            %>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024 Pet. 모든 권리 보유.</p>
+    </div>
+</footer>
+
 </body>
 </html>
