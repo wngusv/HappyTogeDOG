@@ -18,6 +18,7 @@ public class WritingDAO {
 			stmt.setString(1, dto.getTitle());
 			System.out.println("카테고리: " + dto.getCategory());
 			stmt.setString(2, dto.getCategory());
+			System.out.println("내용: " + dto.getContent());
 			stmt.setString(3, dto.getContent());
 			stmt.setString(4, dto.getOfile());
 			stmt.setString(5, dto.getSfile());

@@ -36,10 +36,12 @@ public class UploadProcess extends HttpServlet{
 	private void insertMyFile(HttpServletRequest req, String oFileName, String sFileName) {
 		String title = req.getParameter("title");
 		String category = req.getParameter("category");
+		String content = req.getParameter("content");
 		
 		WritingDTO dto = new WritingDTO();
 		dto.setTitle(title);
 		dto.setCategory(category);
+		dto.setContent(content);
 		dto.setOfile(oFileName);
 		dto.setSfile(sFileName);
 		
