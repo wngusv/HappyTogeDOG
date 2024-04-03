@@ -1,4 +1,4 @@
-<%@page import="java.sql.*"%>
+<%@ page import="java.sql.*, Util.MyWebContextListener" %>
 <%@page import="java.io.File"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
@@ -42,7 +42,7 @@ try {
     String file_route = "/uploads/" + fileRealName; // 상대 경로 저장
 
     // DB 연결 및 SQL 쿼리 실행
-    Connection connection = DriverManager.getConnection("jdbc:mysql://192.168.0.106:3306/pet", "wngus", "wngus");
+    Connection connection = MyWebContextListener.getConnection();
     String insertQuery = "INSERT INTO pet.dogwalker(num, title, size, day, time, address, address_detail, pay, content, today_date, fileName, fileRealName, file_route) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     PreparedStatement psmt = connection.prepareStatement(insertQuery);
     psmt.setInt(1, num);
