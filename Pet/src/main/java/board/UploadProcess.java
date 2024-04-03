@@ -45,7 +45,7 @@ public class UploadProcess extends HttpServlet{
 		
 		 // 세션에서 사용자 ID 가져오기
 	    HttpSession session = req.getSession();
-	    String userId = (String) session.getAttribute("loggedInUserId"); // 'loggedInUserId'는 세션에 저장된 사용자 ID의 키입니다.
+	    String userId = (String) session.getAttribute("userId"); // 'loggedInUserId'는 세션에 저장된 사용자 ID의 키입니다.
 	    // DTO에 사용자 ID 설정
 	    dto.setId(userId);
 	    
