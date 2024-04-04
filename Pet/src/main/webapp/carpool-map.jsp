@@ -201,23 +201,24 @@
 		<div id="map" style="width: 100%; height: 400px;"></div>
 
 		<div id="menu_wrap" class="bg_white">
-			<div class="option">
-				<div>
-					<form onsubmit="searchPlaces(); return false;">
-						키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15">
-						<button type="submit">검색하기</button>
-					</form>
-				</div>
-			</div>
-			<hr>
-			<ul id="placesList"></ul>
-			<div id="pagination"></div>
-		</div>
-	</div>
+    <div class="option">
+        <div>
+            출발지 : <input type="text" id="startInput" size="15">
+            <button onclick="searchPlaces('start')">검색</button>
+        </div>
+        <div>
+            도착지 : <input type="text" id="endInput" size="15">
+            <button onclick="searchPlaces('end')">검색</button>
+		<button onclick="getCarDirection()">경로 찾기</button>
+        </div>
+    </div>
+    <hr>
+    <ul id="placesList"></ul>
+    <div id="pagination"></div>
+</div>
 
 	<div id="search">
-		출발지: <span id="startPoint"></span><br> 도착지: <span id="endPoint"></span><br>
-		<button onclick="getCarDirection()">경로 찾기</button>
+	
 	</div>
 
 	<script>
@@ -233,17 +234,18 @@
         var startPoint = {}, endPoint = {};
         var startMarker, endMarker, polyline;
 
-        function searchPlaces() {
-            var keyword = document.getElementById('keyword').value;
-            if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                alert('키워드를 입력해주세요!');
-                return false;
-            }
-            // 검색 전에 기존 검색 결과 및 마커 초기화
-           // removeAllChildNodes(document.getElementById('placesList'));
-            removeMarker();
+        function searchPlaces(type) {
+            var inputId = type === 'start' ? 'startInput' : 'endInput';
+            var inputElement = document.getElementById(inputId);
+            if (inputElement && inputElement.value.trim() !== '') {
+                var keyword = inputElement.value;
+                // 검색 로직을 여기에 구현
+                removeMarker();
 
-            ps.keywordSearch(keyword, placesSearchCB); 
+                ps.keywordSearch(keyword, placesSearchCB); 
+            } else {
+                alert('키워드를 입력해주세요!');
+            }
         }
 
         function placesSearchCB(data, status, pagination) {
@@ -336,7 +338,7 @@
         function setStartPoint(position, title) {
             if(startMarker) startMarker.setMap(null);
             startPoint = {lat: position.getLat(), lng: position.getLng()};
-            document.getElementById('startPoint').innerText = title;
+            document.getElementById('startInput').innerText = title;
             startMarker = new kakao.maps.Marker({
                 map: map,
                 position: position
@@ -350,13 +352,12 @@
         function setEndPoint(position, title) {
             if(endMarker) endMarker.setMap(null);
             endPoint = {lat: position.getLat(), lng: position.getLng()};
-            document.getElementById('endPoint').innerText = title;
+            document.getElementById('endInput').innerText = title;
             endMarker = new kakao.maps.Marker({
                 map: map,
                 position: position
             });
 
-            getCarDirection(); // 경로 탐색
         }
 
         // 검색 결과 및 마커 초기화 함수
