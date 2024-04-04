@@ -31,45 +31,11 @@
 </style>
 <body style="padding-top: 150px;">
 	<header>
-		<div class="container">
-			<h1>게시판</h1>
-			<nav>
-				<ul>
-					<c:choose>
-						<c:when test="${sessionScope.userId != null}">
-							<!-- 로그인된 경우: 사용자 이름과 로그아웃 버튼만 표시 -->
-							<li id="username-container"><span id="username-greeting">
-									안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
-								href="./api/logout">로그아웃</a></li>
-						</c:when>
-						<c:otherwise>
-							<!-- 로그인되지 않은 경우: 로그인 및 회원가입 링크 표시 -->
-							<li><a id="login-button" href="login.jsp">로그인</a></li>
-							<li><a href="signupform.jsp">회원가입</a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</nav>
-			<!-- SNS 공유 버튼 -->
-			<div class="sns-go">
-				<ul class="social-links">
-					<li><a href="#"
-						onclick="javascript:window.open('http://share.naver.com/web/shareView.nhn?url=' +encodeURIComponent(document.URL)+'&title='+encodeURIComponent(document.title), 'naversharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-						target="_blank" alt="Share on Naver"><img
-							src="./images/sns_naver.png" width="40" alt="네이버 블로그 공유"></a></li>
-					<li><a href="#"
-						onclick="javascript:window.open('http://band.us/plugin/share?body='+encodeURIComponent(document.title)+encodeURIComponent('\r\n')+encodeURIComponent(document.URL)+'&route='+encodeURIComponent(document.URL), 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"
-						target="_blank" alt="네이버 밴드 공유하기"><img
-							src="./images/naverband.png" width="40px" alt='네이버 밴드 공유'></a></li>
-					<li><a href="#"
-						onclick="javascript:window.open('https://www.facebook.com/sharer/sharer.php?u=' +encodeURIComponent(document.URL)+'&t='+encodeURIComponent(document.title), 'facebooksharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-						target="_blank" alt="Share on Facebook"><img
-							src="./images/sns_face.png" width="40" alt="페이스북 공유"></a></li>
-				</ul>
-			</div>
-		</div>
+		<%
+		request.setAttribute("pageTitle", "게시판");
+		%>
+		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
-
 
 	<main>
 		<div class="container">
