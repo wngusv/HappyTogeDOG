@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
-@WebServlet(urlPatterns = "/initServlet", loadOnStartup = 1)
+@WebServlet(urlPatterns = "/initServlet", loadOnStartup = 1) // 웹 시작 될때 자동 실행 
 public class InitServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
