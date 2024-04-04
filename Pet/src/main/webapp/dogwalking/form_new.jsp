@@ -55,7 +55,6 @@
         </div>
         <div class="form-group">
             <label for="pickupLocation">픽업위치:</label><br>
-            <input type="text" class="form-control mb-2" id="sample6_postcode" placeholder="우편번호">
             <button type="button" class="btn btn-primary mb-2" onclick="sample6_execDaumPostcode()">우편번호 찾기</button><br>
             <input type="text" class="form-control mb-2" id="sample6_address" placeholder="주소" value="<%= user != null ? user.getAddress() : "" %>" name="sample6_address" readonly>
             <input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" value="<%= user != null ? user.getAddress_detail() : "" %>" name="sample6_detailAddress">
