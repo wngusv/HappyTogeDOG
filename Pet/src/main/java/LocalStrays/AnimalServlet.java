@@ -24,13 +24,17 @@ public class AnimalServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String sessionLocate = (String) request.getSession().getAttribute("locate");
-		String localGovernment = request.getParameter("orgName");
+		String localGovernment = null;
+		localGovernment = request.getParameter("orgName");
 		// 로그인을 해서 로그인 지역이 저장되있을때
 		if (sessionLocate != null) {
 			if (LocalStrayListUpdateListener.checkLocalGovernmentList(localGovernment)) {
 				List<Animal> animalList = getAnimalsByLocalGovernment(localGovernment);
 				request.setAttribute("animalList", animalList);
 				request.setAttribute("nowLocate", localGovernment);
+			} else if (localGovernment != null && localGovernment.equals("all")) {
+				request.setAttribute("animalList", LocalStrayListUpdateListener.getAllAnimalList());
+				request.setAttribute("nowLocate", "우리 지역");
 			} else {
 				if (LocalStrayListUpdateListener.checkLocalGovernmentList(sessionLocate)) {
 					List<Animal> animalList = getAnimalsByLocalGovernment(sessionLocate);
