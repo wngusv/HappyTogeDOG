@@ -24,7 +24,7 @@ public class UploadProcess extends HttpServlet{
 			String saveDirectory = getServletContext().getRealPath("/Upload");
 			String originalFileName = FileUtil.uploadFile(req, saveDirectory);
 			String saveFileName = FileUtil.renameFile(saveDirectory, originalFileName);
-			insertMyFile(req, originalFileName, saveFileName);
+			insertMyFile(req,  resp,originalFileName, saveFileName);
 			resp.sendRedirect("board.jsp"); 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -33,28 +33,34 @@ public class UploadProcess extends HttpServlet{
 		}
 	}
 	
-	private void insertMyFile(HttpServletRequest req, String oFileName, String sFileName) {
-		String title = req.getParameter("title");
-		String category = req.getParameter("category");
-		String content = req.getParameter("content");
-		
-		WritingDTO dto = new WritingDTO();
-		dto.setTitle(title);
-		dto.setCategory(category);
-		dto.setContent(content);
-		dto.setOfile(oFileName);
-		dto.setSfile(sFileName);
-		
-		 // 세션에서 사용자 ID 가져오기
+	private void insertMyFile(HttpServletRequest req, HttpServletResponse resp,String oFileName, String sFileName) throws ServletException, IOException {
+	    // 세션에서 사용자 ID 가져오기
 	    HttpSession session = req.getSession();
 	    String userId = (String) session.getAttribute("userId"); 
-	    // DTO에 사용자 ID 설정
-	    dto.setId(userId);
+
+	    if (userId == null) {
+	    	 // 사용자가 로그인하지 않은 경우 처리
+	        req.setAttribute("errorMessage", "로그인을 해주세요.");
+	        req.getRequestDispatcher("login.jsp").forward(req, resp);
+	        return;
+	    }
+
+	    String title = req.getParameter("title");
+	    String category = req.getParameter("category");
+	    String content = req.getParameter("content");
 	    
-		
-		WritingDAO dao = new WritingDAO();
-		dao.insertFile(dto);
+	    WritingDTO dto = new WritingDTO();
+	    dto.setTitle(title);
+	    dto.setCategory(category);
+	    dto.setContent(content);
+	    dto.setOfile(oFileName);
+	    dto.setSfile(sFileName);
+	    dto.setId(userId); // DTO에 사용자 ID 설정
+	    
+	    WritingDAO dao = new WritingDAO();
+	    dao.insertFile(dto);
 	}
+
 	
 	
 }

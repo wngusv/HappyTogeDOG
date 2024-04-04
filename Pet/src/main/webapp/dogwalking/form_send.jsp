@@ -53,13 +53,29 @@ try {
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     String formattedDate = sdf.format(today_date);
     
-    String fileName = multipartRequest.getOriginalFileName("dogPhoto");
-    String fileRealName = multipartRequest.getFilesystemName("dogPhoto");
-    String file_route = "/uploads/" + fileRealName; // 상대 경로 저장
+    String fileName1 = multipartRequest.getOriginalFileName("dogPhoto1");
+    String fileRealName1 = multipartRequest.getFilesystemName("dogPhoto1");
+    String file_route1 = "/uploads/" + fileRealName1; // 상대 경로 저장
+    
+    String fileName2 = multipartRequest.getOriginalFileName("dogPhoto2");
+    String fileRealName2 = multipartRequest.getFilesystemName("dogPhoto2");
+    String file_route2 = "/uploads/" + fileRealName2; // 상대 경로 저장
+    
+    String fileName3 = multipartRequest.getOriginalFileName("dogPhoto3");
+    String fileRealName3 = multipartRequest.getFilesystemName("dogPhoto3");
+    String file_route3 = "/uploads/" + fileRealName3; // 상대 경로 저장
+    
+    String fileName4 = multipartRequest.getOriginalFileName("dogPhoto4");
+    String fileRealName4 = multipartRequest.getFilesystemName("dogPhoto4");
+    String file_route4 = "/uploads/" + fileRealName4; // 상대 경로 저장
+    
+    String fileName5 = multipartRequest.getOriginalFileName("dogPhoto5");
+    String fileRealName5 = multipartRequest.getFilesystemName("dogPhoto5");
+    String file_route5 = "/uploads/" + fileRealName5; // 상대 경로 저장
 
     // DB 연결 및 SQL 쿼리 실행
     Connection connection = MyWebContextListener.getConnection();
-    String insertQuery = "INSERT INTO pet.dogwalker(num, id, title, size, day, time, address, address_detail, pay, content, today_date, fileName, fileRealName, file_route) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    String insertQuery = "INSERT INTO pet.dogwalker(num, id, title, size, day, time, address, address_detail, pay, content, today_date, fileName1, fileRealName1, file_route1, fileName2, fileRealName2, file_route2 ,fileName3, fileRealName3, file_route3, fileName4, fileRealName4, file_route4, fileName5, fileRealName5, file_route5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     PreparedStatement psmt = connection.prepareStatement(insertQuery);
     psmt.setInt(1, num);
     psmt.setString(2, id);
@@ -72,9 +88,21 @@ try {
     psmt.setInt(9, pay);
     psmt.setString(10, content);
     psmt.setTimestamp(11, today_date);
-    psmt.setString(12, fileName);
-    psmt.setString(13, fileRealName);
-    psmt.setString(14, file_route);
+    psmt.setString(12, fileName1);
+    psmt.setString(13, fileRealName1);
+    psmt.setString(14, file_route1);
+    psmt.setString(15, fileName2);
+    psmt.setString(16, fileRealName2);
+    psmt.setString(17, file_route2);
+    psmt.setString(18, fileName3);
+    psmt.setString(19, fileRealName3);
+    psmt.setString(20, file_route3);
+    psmt.setString(21, fileName4);
+    psmt.setString(22, fileRealName4);
+    psmt.setString(23, file_route4);
+    psmt.setString(24, fileName5);
+    psmt.setString(25, fileRealName5);
+    psmt.setString(26, file_route5);
 
     psmt.executeUpdate();
 

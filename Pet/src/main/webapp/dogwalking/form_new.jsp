@@ -67,29 +67,50 @@
             <label for="introduction">소개글:</label>
             <textarea class="form-control" id="introduction" placeholder="소개글" name="introduction" maxlength="2048" style="height:150px;"></textarea>
         </div>
-        <div class="form-group">
-            <label for="dogPhoto">강아지 사진:</label>
-            <input type="file" class="form-control-file" id="dogPhoto" name="dogPhoto" accept="image/*" onchange="previewImage(this);">
-            <small class="form-text text-muted">이미지 파일만(jpg, png) 첨부 가능합니다. (각 파일 2MB 이하)</small>
-            <img id="preview" src="#" alt="사진 미리보기" style="display:none;">
-        </div>
+<div class="form-group">
+    <label for="dogPhoto">강아지 사진 (최대 5개까지):<small class="form-text text-muted">이미지 파일만(jpg, png) 첨부 가능합니다. (각 파일 2MB 이하)</small></label><br>
+    <input type="file" name="dogPhoto1" accept="image/*" multiple onchange="previewImage(this, 'preview1');"><br>
+    <div id="preview1" style="display: none;"></div>
+    <input type="file" name="dogPhoto2" accept="image/*" multiple onchange="previewImage(this, 'preview2');"><br>
+    <div id="preview2" style="display: none;"></div>
+    <input type="file" name="dogPhoto3" accept="image/*" multiple onchange="previewImage(this, 'preview3');"><br>
+    <div id="preview3" style="display: none;"></div>
+    <input type="file" name="dogPhoto4" accept="image/*" multiple onchange="previewImage(this, 'preview4');"><br>
+    <div id="preview4" style="display: none;"></div>
+    <input type="file" name="dogPhoto5" accept="image/*" multiple onchange="previewImage(this, 'preview5');"><br>
+    <div id="preview5" style="display: none;"></div>
+    
+</div>
         <hr>
         <button type="submit" class="btn btn-primary">등록하기</button>
     </form>
 </div>
 <script>
-    function previewImage(input) {
-        var file = input.files[0];
+function previewImage(input, previewId) {
+    var preview = document.getElementById(previewId);
+    while (preview.firstChild) {
+        preview.removeChild(preview.firstChild);
+    }
+    
+    Array.from(input.files).slice(0, 5).forEach(function(file) {
         if (file) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                var preview = document.getElementById('preview');
-                preview.src = e.target.result;
-                preview.style.display = 'block';
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '200px';
+                img.style.maxHeight = '200px';
+                img.style.marginRight = '10px';
+                preview.appendChild(img);
             }
             reader.readAsDataURL(file);
         }
-    }
+    });
+    preview.style.display = 'block';
+}
+
+
+
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
