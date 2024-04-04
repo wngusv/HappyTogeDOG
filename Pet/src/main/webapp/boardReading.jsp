@@ -142,9 +142,16 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 <script>
+var userId = '<%= (session.getAttribute("userId") != null) ? session.getAttribute("userId") : "" %>';
 var postIdx = <%=idx%>; // 게시글 idx
 
 function sendReaction(postId, type) {
+	 // 로그인하지 않은 경우 알림을 표시하고 함수 실행을 중단합니다.
+    if (userId === "") {
+        alert("로그인 후 이용 가능합니다.");
+        return;
+    }
+	 
     fetch('/comment.do', {
         method: 'POST',
         headers: {
@@ -173,6 +180,12 @@ function sendReaction(postId, type) {
 			.addEventListener(
 					'click',
 					function() {
+						 // 로그인 체크
+				        if (userId === "") {
+				            alert("로그인 후 이용 가능합니다.");
+				            return;
+				        }
+						 
 						var suggestionCount = parseInt(document
 								.getElementById('suggestion-count').textContent);
 						var notRecommendedButton = document
@@ -204,6 +217,12 @@ function sendReaction(postId, type) {
 			.addEventListener(
 					'click',
 					function() {
+						 // 로그인 체크
+				        if (userId === "") {
+				            alert("로그인 후 이용 가능합니다.");
+				            return;
+				        }
+						 
 						var notRecommendedCount = parseInt(document
 								.getElementById('notRecommended-count').textContent);
 						var suggestionButton = document

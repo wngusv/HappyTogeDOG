@@ -69,13 +69,6 @@ public class comment extends HttpServlet { // 유저가 쓴 댓글 action으로 
 				e.printStackTrace();
 			}
 
-//			// 성공 또는 오류 메시지를 클라이언트에게 보냅니다.
-//			resp.setContentType("application/json");
-//			PrintWriter out = resp.getWriter();
-//			out.print("{ \"status\": \"success\" }");
-//			out.flush();
-//	        // 댓글 내용 받아오기 => 나중에!
-//	        String comment = req.getParameter("comment");
 		} else {
 			// 로그인하지 않은 경우, 로그인 페이지나 메시지 표시 등의 처리
 		}
