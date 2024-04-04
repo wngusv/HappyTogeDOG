@@ -37,11 +37,36 @@
     </div>
     <div>
         <h2>내가 쓴 글 보기</h2>
-        <p><a href="내가_쓴_글_목록_페이지.jsp">내가 쓴 글 목록 보기</a></p>
+        <table border="1">
+            <tr>
+                <th>제목</th>
+                <th>작성 날짜</th>
+                <th>수정</th>
+                <th>삭제</th>
+            </tr>
+            <% 
+            // 사용자가 작성한 글 가져오기
+            String userPostsQuery = "SELECT * FROM dogwalker WHERE id = '" + userId + "'";
+            ResultSet userPostsRs = stmt.executeQuery(userPostsQuery);
+            while (userPostsRs.next()) {
+                int postId = userPostsRs.getInt("num");
+                String title = userPostsRs.getString("title");
+                String todayDate = userPostsRs.getString("today_date");
+            %>
+            <tr>
+                <td><a href="EditPost.jsp?postId=<%= postId %>"><%= title %></a></td>
+                <td><%= todayDate %></td>
+                <td><a href="EditPost.jsp?postId=<%= postId %>">수정</a></td>
+                <td><a href="DeletePost.jsp?postId=<%= postId %>">삭제</a></td>
+            </tr>
+            <% 
+            }
+            userPostsRs.close();
+            %>
+        </table>
     </div>
     <div>
         <h2>내 채팅방 보기</h2>
-        <p><a href="내_채팅방_목록_페이지.jsp">내 채팅방 목록 보기</a></p>
     </div>
     <% 
         } else {
