@@ -59,6 +59,39 @@
 </style>
 </head>
 <body>
+<%
+String idxx = request.getParameter("idx");
+int recommendationCount = 0;
+int notRecommendationCount = 0;
+
+// 데이터베이스에서 추천 횟수를 가져오는 쿼리
+String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
+// 데이터베이스에서 비추천 횟수를 가져오는 쿼리
+String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
+
+try (Connection conn = MyWebContextListener.getConnection();
+     PreparedStatement psmtRec = conn.prepareStatement(sqlRec);
+     PreparedStatement psmtNotRec = conn.prepareStatement(sqlNotRec)) {
+
+    psmtRec.setInt(1, Integer.parseInt(idxx));
+    psmtNotRec.setInt(1, Integer.parseInt(idxx));
+
+    try (ResultSet rsRec = psmtRec.executeQuery()) {
+        if (rsRec.next()) {
+            recommendationCount = rsRec.getInt("rec_count");
+        }
+    }
+
+    try (ResultSet rsNotRec = psmtNotRec.executeQuery()) {
+        if (rsNotRec.next()) {
+            notRecommendationCount = rsNotRec.getInt("not_rec_count");
+        }
+    }
+} catch (SQLException e) {
+    e.printStackTrace();
+}
+%>
+
 	<div class="container mt-5">
 		<div class="card">
 			<div class="card-body">
@@ -93,20 +126,16 @@
 				%>
 				<div class="reactions">
 					<!-- 추천 버튼 -->
-					<button id="suggestion-button" class="reaction-button"
-						data-clicked="false">
-						<img src="images/추천.PNG" alt="추천"
-							style="height: 20px; width: 20px;">
-					</button>
-					<span id="suggestion-count" class="reaction-count">0</span>
+<button id="suggestion-button" class="reaction-button" data-clicked="false">
+    <img src="images/추천.PNG" alt="추천" style="height: 20px; width: 20px;">
+</button>
+<span id="suggestion-count" class="reaction-count"><%= recommendationCount %></span>
 
-					<!-- 비추천 버튼 -->
-					<button id="notRecommended-button" class="reaction-button"
-						data-clicked="false">
-						<img src="images/비추천.PNG" alt="비추천"
-							style="height: 20px; width: 20px;">
-					</button>
-					<span id="notRecommended-count" class="reaction-count">0</span>
+<!-- 비추천 버튼 -->
+<button id="notRecommended-button" class="reaction-button" data-clicked="false">
+    <img src="images/비추천.PNG" alt="비추천" style="height: 20px; width: 20px;">
+</button>
+<span id="notRecommended-count" class="reaction-count"><%= notRecommendationCount %></span>
 				</div>
 
 				<!-- 댓글쓰기 버튼 추가 -->
