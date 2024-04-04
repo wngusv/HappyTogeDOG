@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>Insert title here</title>
+<title>메인페이지</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
 .floating-banner {
@@ -38,6 +38,7 @@
 							<li id="username-container"><span id="username-greeting">
 									안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
 								href="./api/logout">로그아웃</a></li>
+							<li><a href="mypage.jsp">마이페이지</a></li>
 						</c:when>
 						<c:otherwise>
 							<li><a id="login-button" href="login.jsp">로그인</a></li>
@@ -117,18 +118,5 @@
 			getLocation();
 		}
 	};
-// 	var animalLink = document.querySelector('a[href="/AnimalServlet"]');
-//     if (animalLink) {
-//         animalLink.addEventListener('click', function(event) {
-//             event.preventDefault(); // 기본 동작 방지
-
-//             if (${sessionScope.locate != null}) {
-//                 var orgName = "${sessionScope.locate}";
-//                 window.location.href = "/AnimalServlet?orgName=" + encodeURIComponent(orgName);
-//             } else {
-//             	window.location.href = "/AnimalServlet";
-//             }
-//         });
-//     }
 </script>
 </html>
