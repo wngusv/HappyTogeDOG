@@ -27,9 +27,14 @@
 					<th>작성자</th>
 					<th>등록 시간</th>
 				</tr>
-				<c:forEach items="${posts}" var="post">
-					<p>${post.id}:${post.title} - ${post.userId}</p>
-				</c:forEach>
+				 <c:forEach items="${posts}" var="post">
+                <tr>
+                    <td>${post.title}</td>
+                    <td>${post.userId}</td>
+                    <td>${post.createdAt}</td>
+                </tr>
+            </c:forEach>
+
 			</table>
 		</div>
 	</main>

@@ -20,7 +20,8 @@ public class ShowPostsServlet extends HttpServlet {
 
         // 게시글 목록을 request 속성에 저장 후 JSP로 포워드
         request.setAttribute("posts", posts);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/showPosts.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/carpool-main.jsp");
         dispatcher.forward(request, response);
+
     }
 }
