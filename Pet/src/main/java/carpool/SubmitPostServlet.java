@@ -26,7 +26,7 @@ public class SubmitPostServlet extends HttpServlet {
 		String requestData = sb.toString();
 
 		// JSON 문자열을 BoardData 자바 객체로 변환
-		BoardData boardData = gson.fromJson(requestData, BoardData.class);
+		Post boardData = gson.fromJson(requestData, Post.class);
 
 		// TODO: postData 객체를 사용하여 필요한 로직 처리
 
