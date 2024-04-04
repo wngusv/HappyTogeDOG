@@ -20,7 +20,7 @@
 .map_wrap {
 	position: relative;
 	width: 100%;
-	height: 350px;
+	height: 600px; /* 수정된 높이 */
 }
 
 #category {
@@ -124,16 +124,21 @@
 				<h2>지역 반려동물 시설</h2>
 			</section>
 		</div>
-		<div class="map_wrap">
-			<div id="map"
-				style="width: 500px; height: 300px; position: relative; overflow: hidden;"></div>
-			<ul id="category">
-				<li id="동물병원">동물병원</li>
-				<li id="애견용품">애견용품</li>
-				<li id="애견유치원">애견유치원</li>
-				<li id="애견카페">애견카페</li>
-				<li id="애견장례식장">애견장례식장</li>
-			</ul>
+		<div class="container"> <!-- Bootstrap 그리드 시스템 사용 -->
+			<div class="row justify-content-center"> <!-- 가운데 정렬 -->
+				<div class="col-lg-8"> <!-- 큰 화면에서 너비를 8만큼 설정 -->
+					<div class="map_wrap">
+						<div id="map" style="width: 100%; height: 500px; position: relative; overflow: hidden;"></div> <!-- 수정된 높이 -->
+						<ul id="category">
+							<li id="동물병원">동물병원</li>
+							<li id="애견용품">애견용품</li>
+							<li id="애견유치원">애견유치원</li>
+							<li id="애견카페">애견카페</li>
+							<li id="애견장례식장">애견장례식장</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</main>
 
