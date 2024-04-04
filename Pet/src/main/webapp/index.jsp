@@ -55,6 +55,7 @@
 					<li><a href="pet-facilities.jsp">반려동물 시설</a></li>
 					<li><a href="/AnimalServlet">지역 유기동물</a></li>
 					<li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
+					<li><a href="carpool-main.jsp">반려견 카풀</a></li>
 					<li><a href="donations.jsp">기부</a></li>
 					<li><a href="board.jsp">게시판</a></li>
 				</ul>
