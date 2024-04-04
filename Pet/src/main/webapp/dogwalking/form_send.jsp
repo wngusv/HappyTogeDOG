@@ -6,6 +6,7 @@
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+
 <%
 try {
     // 인코딩 UTF-8 설정
@@ -24,7 +25,7 @@ try {
     // 파일 업로드 처리
     int maxSize = 100 * 1024 * 1024; // 최대 업로드 파일 크기
     MultipartRequest multipartRequest = new MultipartRequest(request, uploadDir, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-
+    String id = (String) session.getAttribute("userId"); 
     // MultipartRequest 객체에서 데이터 추출
     String title = multipartRequest.getParameter("title");
     String size = multipartRequest.getParameter("dogSize");
@@ -49,21 +50,22 @@ try {
 
     // DB 연결 및 SQL 쿼리 실행
     Connection connection = MyWebContextListener.getConnection();
-    String insertQuery = "INSERT INTO pet.dogwalker(num, title, size, day, time, address, address_detail, pay, content, today_date, fileName, fileRealName, file_route) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    String insertQuery = "INSERT INTO pet.dogwalker(num, id, title, size, day, time, address, address_detail, pay, content, today_date, fileName, fileRealName, file_route) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     PreparedStatement psmt = connection.prepareStatement(insertQuery);
     psmt.setInt(1, num);
-    psmt.setString(2, title);
-    psmt.setString(3, size);
-    psmt.setString(4, day);
-    psmt.setString(5, time);
-    psmt.setString(6, address);
-    psmt.setString(7, address_detail);
-    psmt.setInt(8, pay);
-    psmt.setString(9, content);
-    psmt.setTimestamp(10, today_date);
-    psmt.setString(11, fileName);
-    psmt.setString(12, fileRealName);
-    psmt.setString(13, file_route);
+    psmt.setString(2, id);
+    psmt.setString(3, title);
+    psmt.setString(4, size);
+    psmt.setString(5, day);
+    psmt.setString(6, time);
+    psmt.setString(7, address);
+    psmt.setString(8, address_detail);
+    psmt.setInt(9, pay);
+    psmt.setString(10, content);
+    psmt.setTimestamp(11, today_date);
+    psmt.setString(12, fileName);
+    psmt.setString(13, fileRealName);
+    psmt.setString(14, file_route);
 
     psmt.executeUpdate();
 
