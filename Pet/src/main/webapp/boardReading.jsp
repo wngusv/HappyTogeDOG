@@ -56,41 +56,64 @@
 	margin-left: 5px;
 	font-size: 0.8rem;
 }
+
+#print {
+	float: right; /* 버튼을 오른쪽으로 정렬 */
+	padding: 5px 10px; /* 패딩을 조정하여 버튼 크기를 조절 */
+	font-size: 0.9rem; /* 글자 크기 줄이기 */
+	margin-top: 20px; /* 상단 여백 */
+}
+
+/* 공유 버튼 및 인쇄 버튼 컨테이너 스타일 */
+.print-container {
+	text-align: right;
+	margin-top: 20px;
+}
+
+.print-container a, .print-container input {
+	display: inline-block; /* 인라인 블록으로 설정 */
+	margin-right: 10px; /* 오른쪽 여백 */
+}
+
+/* 반응 버튼과 카운트를 가운데 정렬 */
+.reactions {
+	text-align: center;
+}
 </style>
 </head>
 <body>
-<%
-String idxx = request.getParameter("idx");
-int recommendationCount = 0;
-int notRecommendationCount = 0;
+	<%
+	String idxx = request.getParameter("idx");
+	int recommendationCount = 0;
+	int notRecommendationCount = 0;
 
-// 데이터베이스에서 추천 횟수를 가져오는 쿼리
-String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
-// 데이터베이스에서 비추천 횟수를 가져오는 쿼리
-String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
+	// 데이터베이스에서 추천 횟수를 가져오는 쿼리
+	String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
+	// 데이터베이스에서 비추천 횟수를 가져오는 쿼리
+	String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
 
-try (Connection conn = MyWebContextListener.getConnection();
-     PreparedStatement psmtRec = conn.prepareStatement(sqlRec);
-     PreparedStatement psmtNotRec = conn.prepareStatement(sqlNotRec)) {
+	try (Connection conn = MyWebContextListener.getConnection();
+			PreparedStatement psmtRec = conn.prepareStatement(sqlRec);
+			PreparedStatement psmtNotRec = conn.prepareStatement(sqlNotRec)) {
 
-    psmtRec.setInt(1, Integer.parseInt(idxx));
-    psmtNotRec.setInt(1, Integer.parseInt(idxx));
+		psmtRec.setInt(1, Integer.parseInt(idxx));
+		psmtNotRec.setInt(1, Integer.parseInt(idxx));
 
-    try (ResultSet rsRec = psmtRec.executeQuery()) {
-        if (rsRec.next()) {
-            recommendationCount = rsRec.getInt("rec_count");
-        }
-    }
+		try (ResultSet rsRec = psmtRec.executeQuery()) {
+			if (rsRec.next()) {
+		recommendationCount = rsRec.getInt("rec_count");
+			}
+		}
 
-    try (ResultSet rsNotRec = psmtNotRec.executeQuery()) {
-        if (rsNotRec.next()) {
-            notRecommendationCount = rsNotRec.getInt("not_rec_count");
-        }
-    }
-} catch (SQLException e) {
-    e.printStackTrace();
-}
-%>
+		try (ResultSet rsNotRec = psmtNotRec.executeQuery()) {
+			if (rsNotRec.next()) {
+		notRecommendationCount = rsNotRec.getInt("not_rec_count");
+			}
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	%>
 
 	<div class="container mt-5">
 		<div class="card">
@@ -124,20 +147,46 @@ try (Connection conn = MyWebContextListener.getConnection();
 				<%
 				}
 				%>
+
 				<div class="reactions">
 					<!-- 추천 버튼 -->
-<button id="suggestion-button" class="reaction-button" data-clicked="false">
-    <img src="images/추천.PNG" alt="추천" style="height: 20px; width: 20px;">
-</button>
-<span id="suggestion-count" class="reaction-count"><%= recommendationCount %></span>
+					<button id="suggestion-button" class="reaction-button"
+						data-clicked="false">
+						<img src="images/추천.PNG" alt="추천"
+							style="height: 20px; width: 20px;">
+					</button>
+					<span id="suggestion-count" class="reaction-count"><%=recommendationCount%></span>
 
-<!-- 비추천 버튼 -->
-<button id="notRecommended-button" class="reaction-button" data-clicked="false">
-    <img src="images/비추천.PNG" alt="비추천" style="height: 20px; width: 20px;">
-</button>
-<span id="notRecommended-count" class="reaction-count"><%= notRecommendationCount %></span>
+					<!-- 비추천 버튼 -->
+					<button id="notRecommended-button" class="reaction-button"
+						data-clicked="false">
+						<img src="images/비추천.PNG" alt="비추천"
+							style="height: 20px; width: 20px;">
+					</button>
+					<span id="notRecommended-count" class="reaction-count"><%=notRecommendationCount%></span>
+
+
 				</div>
 
+				<!-- 공유, 인쇄 버튼 추가 -->
+				<div class="print-container">
+					<a href="#"
+						onclick="javascript:window.open('http://share.naver.com/web/shareView.nhn?url=' +encodeURIComponent(document.URL)+'&title='+encodeURIComponent(document.title), 'naversharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+						target="_blank" alt="Share on Naver"><img
+						src="images/네이버 블로그 로고.PNG" width="25" alt="네이버 블로그 공유"></a> <a
+						href="#"
+						onclick="javascript:window.open('http://band.us/plugin/share?body='+encodeURIComponent(document.title)+encodeURIComponent('\r\n')+encodeURIComponent(document.URL)+'&route='+encodeURIComponent(document.URL), 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"
+						target="_blank" alt="네이버 밴드 공유하기"><img
+						src="images/네이버 밴드 로고.PNG" width="25px" alt='네이버 밴드 공유'></a> <a
+						href="#"
+						onclick="javascript:window.open('https://www.facebook.com/sharer/sharer.php?u=' +encodeURIComponent(document.URL)+'&t='+encodeURIComponent(document.title), 'facebooksharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+						target="_blank" alt="Share on Facebook"><img
+						src="images/페북 로고.jpg" width="25" alt="페이스북 공유"></a>
+						 <a href="#"
+						onclick="window.print(); return false;"><img
+						src="images/인쇄.png" width="25" alt="인쇄"> </a>
+				</div>
+				<br>
 				<!-- 댓글쓰기 버튼 추가 -->
 				<div class="comment-section">
 					<!-- 댓글 입력 폼 -->
@@ -169,9 +218,10 @@ try (Connection conn = MyWebContextListener.getConnection();
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 </body>
 <script>
-var userId = '<%= (session.getAttribute("userId") != null) ? session.getAttribute("userId") : "" %>';
+var userId = '<%=(session.getAttribute("userId") != null) ? session.getAttribute("userId") : ""%>';
 var postIdx = <%=idx%>; // 게시글 idx
 
 function sendReaction(postId, type) {
