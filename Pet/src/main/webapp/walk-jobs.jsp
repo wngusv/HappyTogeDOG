@@ -22,15 +22,16 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <c:choose>
-                        <c:when test="${sessionScope.userId != null}">
-                            <span class="nav-link">안녕하세요, ${sessionScope.userName}님!</span>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="nav-item">
-                                <a class="nav-link" href="login.jsp">로그인</a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
+						<c:when test="${sessionScope.userId != null}">
+							<li id="username-container"><span id="username-greeting">
+									안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
+								href="./api/logout">로그아웃</a></li>
+							<li><a href="mypage.jsp">마이페이지</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a id="login-button" href="login.jsp">로그인</a></li>
+						</c:otherwise>
+					</c:choose>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="signupform.jsp">회원가입</a>
