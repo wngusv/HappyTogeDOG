@@ -142,6 +142,31 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 <script>
+var postIdx = <%=idx%>; // 게시글 idx
+
+function sendReaction(postId, type) {
+    fetch('/comment.do', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'type=' + type + '&postIdx=' + postId
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === 'success') {
+            // 성공적으로 처리되었을 때의 로직
+            console.log('Reaction updated successfully');
+        } else {
+            // 에러 처리
+            console.error('Failed to update reaction');
+        }
+    })
+    .catch(error => {
+        // 네트워크 오류 처리
+        console.error('Error:', error);
+    });
+}
 	// 추천 버튼 클릭 이벤트 리스너
 	document
 			.getElementById('suggestion-button')
@@ -169,6 +194,8 @@
 						this.setAttribute('data-clicked', !suggestionClicked);
 						document.getElementById('suggestion-count').textContent = !suggestionClicked ? suggestionCount + 1
 								: suggestionCount - 1;
+						
+						sendReaction(postIdx, '추천');
 					});
 
 	// 비추천 버튼 클릭 이벤트 리스너
@@ -199,6 +226,8 @@
 								!notRecommendedClicked);
 						document.getElementById('notRecommended-count').textContent = !notRecommendedClicked ? notRecommendedCount + 1
 								: notRecommendedCount - 1;
+						
+						sendReaction(postIdx, '비추천');
 					});
 </script>
 
