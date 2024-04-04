@@ -28,6 +28,7 @@ public class comment extends HttpServlet { // 유저가 쓴 댓글 action으로 
 	        // 여기서 'comment'는 <textarea> 태그의 name 속성값.
 
 	        // TODO: 댓글 처리 로직 구현 (예: 데이터베이스에 저장)
+	        String sql = "INSERT"
 	        // 예를 들어, CommentDAO 클래스의 메서드를 호출하여 댓글을 저장할 수 있습니다.
 	        
 	        // 게시글 보기 페이지로 리다이렉트

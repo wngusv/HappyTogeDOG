@@ -30,6 +30,32 @@
 .post-image {
 	margin-top: 20px; /* 이미지 상단 여백 */
 }
+/* 버튼 스타일 */
+.reaction-button {
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	outline: none;
+	padding: 5px;
+}
+
+/* 활성화된 버튼의 스타일 */
+.reaction-button.active img {
+	border: 2px solid #007bff;
+	border-radius: 50%;
+}
+
+/* 횟수 라벨 스타일 */
+.reaction-count {
+	display: inline-block;
+	min-width: 20px;
+	padding: 2px 5px;
+	text-align: center;
+	background-color: #f0f0f0;
+	border-radius: 10px;
+	margin-left: 5px;
+	font-size: 0.8rem;
+}
 </style>
 </head>
 <body>
@@ -65,7 +91,24 @@
 				<%
 				}
 				%>
-				<br>
+				<div class="reactions">
+					<!-- 추천 버튼 -->
+					<button id="suggestion-button" class="reaction-button"
+						data-clicked="false">
+						<img src="images/추천.PNG" alt="추천"
+							style="height: 20px; width: 20px;">
+					</button>
+					<span id="suggestion-count" class="reaction-count">0</span>
+
+					<!-- 비추천 버튼 -->
+					<button id="notRecommended-button" class="reaction-button"
+						data-clicked="false">
+						<img src="images/비추천.PNG" alt="비추천"
+							style="height: 20px; width: 20px;">
+					</button>
+					<span id="notRecommended-count" class="reaction-count">0</span>
+				</div>
+
 				<!-- 댓글쓰기 버튼 추가 -->
 				<div class="comment-section">
 					<!-- 댓글 입력 폼 -->
@@ -98,4 +141,66 @@
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+<script>
+	// 추천 버튼 클릭 이벤트 리스너
+	document
+			.getElementById('suggestion-button')
+			.addEventListener(
+					'click',
+					function() {
+						var suggestionCount = parseInt(document
+								.getElementById('suggestion-count').textContent);
+						var notRecommendedButton = document
+								.getElementById('notRecommended-button');
+						var notRecommendedCount = parseInt(document
+								.getElementById('notRecommended-count').textContent);
+
+						var suggestionClicked = this
+								.getAttribute('data-clicked') === 'true';
+						var notRecommendedClicked = notRecommendedButton
+								.getAttribute('data-clicked') === 'true';
+
+						if (notRecommendedClicked) {
+							notRecommendedButton.setAttribute('data-clicked',
+									false);
+							document.getElementById('notRecommended-count').textContent = notRecommendedCount - 1;
+						}
+
+						this.setAttribute('data-clicked', !suggestionClicked);
+						document.getElementById('suggestion-count').textContent = !suggestionClicked ? suggestionCount + 1
+								: suggestionCount - 1;
+					});
+
+	// 비추천 버튼 클릭 이벤트 리스너
+	document
+			.getElementById('notRecommended-button')
+			.addEventListener(
+					'click',
+					function() {
+						var notRecommendedCount = parseInt(document
+								.getElementById('notRecommended-count').textContent);
+						var suggestionButton = document
+								.getElementById('suggestion-button');
+						var suggestionCount = parseInt(document
+								.getElementById('suggestion-count').textContent);
+
+						var notRecommendedClicked = this
+								.getAttribute('data-clicked') === 'true';
+						var suggestionClicked = suggestionButton
+								.getAttribute('data-clicked') === 'true';
+
+						if (suggestionClicked) {
+							suggestionButton
+									.setAttribute('data-clicked', false);
+							document.getElementById('suggestion-count').textContent = suggestionCount - 1;
+						}
+
+						this.setAttribute('data-clicked',
+								!notRecommendedClicked);
+						document.getElementById('notRecommended-count').textContent = !notRecommendedClicked ? notRecommendedCount + 1
+								: notRecommendedCount - 1;
+					});
+</script>
+
+
 </html>
