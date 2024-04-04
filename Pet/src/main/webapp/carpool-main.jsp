@@ -1,12 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ä«Ç® ¸ÞÀÎ</title>
+<title>ì¹´í’€ ë©”ì¸</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
+
 
 </head>
 <body>
@@ -18,49 +19,49 @@
 				<c:choose>
 					<c:when test="${sessionScope.userId != null}">
 						<li id="username-container"><span id="username-greeting">
-								¾È³çÇÏ¼¼¿ä, ${sessionScope.userName}´Ô! </span> <a id="logout-button"
-							href="./api/logout">·Î±×¾Æ¿ô</a></li>
+								ì•ˆë…•í•˜ì„¸ìš”, ${sessionScope.userName}ë‹˜! </span> <a id="logout-button"
+							href="./api/logout">ë¡œê·¸ì•„ì›ƒ</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a id="login-button" href="login.jsp">·Î±×ÀÎ</a></li>
+						<li><a id="login-button" href="login.jsp">ë¡œê·¸ì¸</a></li>
 					</c:otherwise>
 				</c:choose>
-				<li><a href="signupform.jsp">È¸¿ø°¡ÀÔ</a></li>
+				<li><a href="signupform.jsp">íšŒì›ê°€ìž…</a></li>
 			</ul>
 		</nav>
 		<section class="menu">
 			<div class="container" style="padding-top: 8px;">
 				<ul>
-					<li><a href="walk-jobs.jsp">»êÃ¥ ¾Æ¸£¹ÙÀÌÆ®</a></li>
-					<li><a href="pet-facilities.jsp">¹Ý·Áµ¿¹° ½Ã¼³</a></li>
-					<li><a href="/AnimalServlet">Áö¿ª À¯±âµ¿¹°</a></li>
-					<li><a href="local-shelters.jsp">Áö¿ª À¯±â°ß º¸È£¼¾ÅÍ</a></li>
-					<li><a href="donations.jsp">±âºÎ</a></li>
-					<li><a href="board.jsp">°Ô½ÃÆÇ</a></li>
+					<li><a href="walk-jobs.jsp">ì‚°ì±… ì•„ë¥´ë°”ì´íŠ¸</a></li>
+					<li><a href="pet-facilities.jsp">ë°˜ë ¤ë™ë¬¼ ì‹œì„¤</a></li>
+					<li><a href="/AnimalServlet">ì§€ì—­ ìœ ê¸°ë™ë¬¼</a></li>
+					<li><a href="local-shelters.jsp">ì§€ì—­ ìœ ê¸°ê²¬ ë³´í˜¸ì„¼í„°</a></li>
+					<li><a href="donations.jsp">ê¸°ë¶€</a></li>
+					<li><a href="board.jsp">ê²Œì‹œíŒ</a></li>
 				</ul>
 			</div>
 		</section>
 	</header>
 	<main>
 		<div class="container">
-			<button onclick="openPopup()">Ä«Ç® ¸ðÁý</button>
+			<button onclick="openPopup()">ì¹´í’€ ëª¨ì§‘</button>
 		</div>
 	</main>
 
 	<footer>
 		<div class="container">
-			<p>&copy; 2024 Pet. ¸ðµç ±Ç¸® º¸À¯.</p>
+			<p>&copy; 2024 Pet. ëª¨ë“  ê¶Œë¦¬ ë³´ìœ .</p>
 		</div>
 	</footer>
 	<script>
 		function openPopup() {
-			// ÆË¾÷ Ã¢À» ¿­±â À§ÇÑ ¿É¼Ç ¼³Á¤
+			// íŒì—… ì°½ì„ ì—´ê¸° ìœ„í•œ ì˜µì…˜ ì„¤ì •
 			var popupOptions = "width=600,height=400,top=100,left=100";
 
-			// JSP ÆÄÀÏÀÌ À§Ä¡ÇÑ °æ·Î
+			// JSP íŒŒì¼ì´ ìœ„ì¹˜í•œ ê²½ë¡œ
 			var jspUrl = "carpool-map.jsp";
 
-			// ÆË¾÷ Ã¢ ¿­±â
+			// íŒì—… ì°½ ì—´ê¸°
 			window.open(jspUrl, "_blank", popupOptions);
 		}
 	</script>
