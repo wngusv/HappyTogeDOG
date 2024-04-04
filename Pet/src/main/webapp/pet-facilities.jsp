@@ -111,40 +111,11 @@
 </head>
 <body style="padding-top: 150px;">
 	<header>
-<<<<<<< HEAD
 		<%
 		request.setAttribute("pageTitle", "반려동물 시설");
 		%>
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
-=======
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">지역 반려동물 시설</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><c:choose>
-							<c:when test="${sessionScope.userId != null}">
-								<li id="username-container"><span id="username-greeting">
-										안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
-									href="./api/logout">로그아웃</a></li>
-								<li><a href="mypage.jsp">마이페이지</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a id="login-button" href="login.jsp">로그인</a></li>
-								<li><a href="signupform.jsp">회원가입</a></li>
-							</c:otherwise>
-						</c:choose>
-				</ul>
-			</div>
-		</nav>
-
->>>>>>> branch 'main' of https://github.com/wngusv/pet.git
 	</header>
 
 	<main>
