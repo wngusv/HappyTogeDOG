@@ -1,5 +1,7 @@
+
 <%@ page import="java.sql.*, Util.MyWebContextListener" %>
 <%@page import="java.io.File"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -36,7 +38,11 @@ try {
         pay = Integer.parseInt(payStr); // 문자열이 null이나 빈 문자열이 아닐 때만 파싱
     }
     String content = multipartRequest.getParameter("introduction");
+    
     Timestamp today_date = new Timestamp(System.currentTimeMillis());
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    String formattedDate = sdf.format(today_date);
+    
     String fileName = multipartRequest.getOriginalFileName("dogPhoto");
     String fileRealName = multipartRequest.getFilesystemName("dogPhoto");
     String file_route = "/uploads/" + fileRealName; // 상대 경로 저장
@@ -68,4 +74,3 @@ try {
     ex.printStackTrace();
 }
 %>
-
