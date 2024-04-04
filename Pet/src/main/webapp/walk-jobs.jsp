@@ -84,8 +84,16 @@
 						<button type="button" class="btn btn-secondary filter-btn"
 							data-filter="세종">세종</button>
 					</div>
-					<button class="btn btn-primary float-right mb-3"
-						onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
+					<c:choose>
+						<c:when test="${sessionScope.userId != null}">
+							<button class="btn btn-primary float-right mb-3"
+								onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
+						</c:when>
+						<c:otherwise>
+							<button class="btn btn-primary float-right mb-3"
+								onclick="alert('로그인 후 이용해주세요.'); location.href='login.jsp'">글쓰기</button>
+						</c:otherwise>
+					</c:choose>
 					<div class="table-responsive">
 						<table class="table table-striped table-bordered">
 							<thead class="thead-dark">

@@ -28,6 +28,11 @@ try {
     String id = (String) session.getAttribute("userId"); 
     // MultipartRequest 객체에서 데이터 추출
     String title = multipartRequest.getParameter("title");
+    if (title == null || title.trim().isEmpty()) {
+        // 제목을 입력하지 않았을 때
+        out.println("<script>alert('제목을 입력하세요.');history.back();</script>");
+        return; // 처리 중단
+    }
     String size = multipartRequest.getParameter("dogSize");
     String day = multipartRequest.getParameter("day");
     String time = multipartRequest.getParameter("time");
@@ -37,6 +42,10 @@ try {
     int pay = 0; // 초기화
     if (payStr != null && !payStr.isEmpty()) {
         pay = Integer.parseInt(payStr); // 문자열이 null이나 빈 문자열이 아닐 때만 파싱
+    } else {
+        // 시급을 입력하지 않았을 때
+        out.println("<script>alert('시급을 입력하세요.');history.back();</script>");
+        return; // 처리 중단
     }
     String content = multipartRequest.getParameter("introduction");
     
