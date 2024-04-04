@@ -58,39 +58,15 @@
 </style>
 <body style="padding-top: 150px;">
 	<header>
-		<nav>
-				<ul>
-					<c:choose>
-						<c:when test="${sessionScope.userId != null}">
-							<li id="username-container"><span id="username-greeting">
-									안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
-								href="./api/logout">로그아웃</a></li>
-							<li><a href="mypage.jsp">마이페이지</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a id="login-button" href="login.jsp">로그인</a></li>
-							<li><a href="signupform.jsp">회원가입</a></li>
-					</c:otherwise>
-					</c:choose>
-				</ul>
-			</nav>
-		<section class="menu">
-			<div class="container" style="padding-top: 8px;">
-				<ul>
-					<li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
-					<li><a href="pet-facilities.jsp">반려동물 시설</a></li>
-					<li><a href="/AnimalServlet">지역 유기동물</a></li>
-					<li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
-					<li><a href="donations.jsp">기부</a></li>
-					<li><a href="board.jsp">게시판</a></li>
-				</ul>
-			</div>
-		</section>
+		<%
+		request.setAttribute("pageTitle", "지역 유기동물");
+		%>
+		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 	<main>
 		<div class="container">
 			<section class="strays-info">
-				<h2>${requestScope.nowLocate}의 유기동물들</h2>
+				<h2>${requestScope.nowLocate}의유기동물들</h2>
 			</section>
 
 			<div class="local-government-buttons">
@@ -102,13 +78,6 @@
 						href="/AnimalServlet?orgName=${government.getOrgdownNm()}">${government.getOrgdownNm()}</a>
 				</c:forEach>
 			</div>
-			<!-- 			<form id="stateForm"> -->
-			<!-- 				<input type="radio" id="all" name="state" value="all"> <label -->
-			<!-- 					for="all">전체</label> <input type="radio" id="notice" name="state" -->
-			<!-- 					value="notice"> <label for="notice">공고</label> <input -->
-			<!-- 					type="radio" id="protect" name="state" value="protect"> <label -->
-			<!-- 					for="protect">보호</label> -->
-			<!-- 			</form> -->
 
 			<div class="card-container">
 				<%
@@ -205,24 +174,26 @@
 
 </body>
 <script>
-window.onload = function() {
-    var nowLocate = "${requestScope.nowLocate}";
+	window.onload = function() {
+		var nowLocate = "${requestScope.nowLocate}";
 
-    var buttons = document.getElementsByClassName('local-government-button');
-    for (var i = 0; i < buttons.length; i++) {
-        var button = buttons[i];
-        if (button.id.trim() === nowLocate.trim()) {
-            button.classList.add('highlight');
-        }
-    }
+		var buttons = document
+				.getElementsByClassName('local-government-button');
+		for (var i = 0; i < buttons.length; i++) {
+			var button = buttons[i];
+			if (button.id.trim() === nowLocate.trim()) {
+				button.classList.add('highlight');
+			}
+		}
 
-    // "우리 지역"일 경우 "전체" 버튼에 테두리 추가
-    if (nowLocate.trim() === "우리 지역") {
-        var allButton = document.querySelector('.local-government-buttons a[href="/AnimalServlet?orgName=all"]');
-        if (allButton) {
-            allButton.classList.add('highlight');
-        }
-    }
-};
+		// "우리 지역"일 경우 "전체" 버튼에 테두리 추가
+		if (nowLocate.trim() === "우리 지역") {
+			var allButton = document
+					.querySelector('.local-government-buttons a[href="/AnimalServlet?orgName=all"]');
+			if (allButton) {
+				allButton.classList.add('highlight');
+			}
+		}
+	};
 </script>
 </html>

@@ -109,34 +109,10 @@
 </head>
 <body style="padding-top: 150px;">
 	<header>
-		<nav>
-				<ul>
-					<c:choose>
-						<c:when test="${sessionScope.userId != null}">
-							<li id="username-container"><span id="username-greeting">
-									안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
-								href="./api/logout">로그아웃</a></li>
-							<li><a href="mypage.jsp">마이페이지</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a id="login-button" href="login.jsp">로그인</a></li>
-						</c:otherwise>
-					</c:choose>
-					<li><a href="signupform.jsp">회원가입</a></li>
-				</ul>
-			</nav>
-		<section class="menu">
-			<div class="container" style="padding-top: 8px;">
-				<ul>
-					<li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
-					<li><a href="pet-facilities.jsp">반려동물 시설</a></li>
-					<li><a href="/AnimalServlet">지역 유기동물</a></li>
-					<li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
-					<li><a href="donations.jsp">기부</a></li>
-					<li><a href="board.jsp">게시판</a></li>
-				</ul>
-			</div>
-		</section>
+		<%
+		request.setAttribute("pageTitle", "반려동물 시설");
+		%>
+		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 
 	<main>

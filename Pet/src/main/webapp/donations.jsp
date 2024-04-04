@@ -17,27 +17,11 @@
 </style>
 </head>
 <body>
-	<header>
-		<div class="container">
-			<h1>기부</h1>
-			<nav>
-				<ul>
-					<c:choose>
-						<c:when test="${sessionScope.userId != null}">
-							<!-- 로그인된 경우: 사용자 이름과 로그아웃 버튼만 표시 -->
-							<li id="username-container"><span id="username-greeting">
-									안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
-								href="./api/logout">로그아웃</a></li>
-						</c:when>
-						<c:otherwise>
-							<!-- 로그인되지 않은 경우: 로그인 및 회원가입 링크 표시 -->
-							<li><a id="login-button" href="login.jsp">로그인</a></li>
-							<li><a href="signupform.jsp">회원가입</a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</nav>
-		</div>
+		<header>
+		<%
+		request.setAttribute("pageTitle", "기부");
+		%>
+		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 
 	<main>
