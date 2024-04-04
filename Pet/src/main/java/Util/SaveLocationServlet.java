@@ -24,7 +24,6 @@ public class SaveLocationServlet extends HttpServlet {
             double latitude = Double.parseDouble(request.getParameter("latitude"));
             double longitude = Double.parseDouble(request.getParameter("longitude"));
             String address = getAddressFromKakaoMapAPI(latitude, longitude);
-            System.out.println(address);
             String region2DepthName = parseRegion2DepthName(address);
             HttpSession session = request.getSession();
             
