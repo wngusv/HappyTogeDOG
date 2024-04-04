@@ -58,7 +58,7 @@
 			var popupOptions = "width=600,height=400,top=100,left=100";
 
 			// JSP 파일이 위치한 경로
-			var jspUrl = "carpool-test.jsp";
+			var jspUrl = "carpool-map.jsp";
 
 			// 팝업 창 열기
 			window.open(jspUrl, "_blank", popupOptions);
