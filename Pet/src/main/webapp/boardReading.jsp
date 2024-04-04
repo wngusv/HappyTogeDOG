@@ -142,12 +142,50 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 <script>
+var userId = '<%= (session.getAttribute("userId") != null) ? session.getAttribute("userId") : "" %>';
+var postIdx = <%=idx%>; // 게시글 idx
+
+function sendReaction(postId, type) {
+	 // 로그인하지 않은 경우 알림을 표시하고 함수 실행을 중단합니다.
+    if (userId === "") {
+        alert("로그인 후 이용 가능합니다.");
+        return;
+    }
+	 
+    fetch('/comment.do', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'type=' + type + '&postIdx=' + postId
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === 'success') {
+            // 성공적으로 처리되었을 때의 로직
+            console.log('Reaction updated successfully');
+        } else {
+            // 에러 처리
+            console.error('Failed to update reaction');
+        }
+    })
+    .catch(error => {
+        // 네트워크 오류 처리
+        console.error('Error:', error);
+    });
+}
 	// 추천 버튼 클릭 이벤트 리스너
 	document
 			.getElementById('suggestion-button')
 			.addEventListener(
 					'click',
 					function() {
+						 // 로그인 체크
+				        if (userId === "") {
+				            alert("로그인 후 이용 가능합니다.");
+				            return;
+				        }
+						 
 						var suggestionCount = parseInt(document
 								.getElementById('suggestion-count').textContent);
 						var notRecommendedButton = document
@@ -169,6 +207,8 @@
 						this.setAttribute('data-clicked', !suggestionClicked);
 						document.getElementById('suggestion-count').textContent = !suggestionClicked ? suggestionCount + 1
 								: suggestionCount - 1;
+						
+						sendReaction(postIdx, '추천');
 					});
 
 	// 비추천 버튼 클릭 이벤트 리스너
@@ -177,6 +217,12 @@
 			.addEventListener(
 					'click',
 					function() {
+						 // 로그인 체크
+				        if (userId === "") {
+				            alert("로그인 후 이용 가능합니다.");
+				            return;
+				        }
+						 
 						var notRecommendedCount = parseInt(document
 								.getElementById('notRecommended-count').textContent);
 						var suggestionButton = document
@@ -199,6 +245,8 @@
 								!notRecommendedClicked);
 						document.getElementById('notRecommended-count').textContent = !notRecommendedClicked ? notRecommendedCount + 1
 								: notRecommendedCount - 1;
+						
+						sendReaction(postIdx, '비추천');
 					});
 </script>
 
