@@ -201,17 +201,17 @@
 					<button id="suggestion-button" class="reaction-button"
 						data-clicked="false">
 						<img src="images/추천.PNG" alt="추천"
-							style="height: 20px; width: 20px;">
+							style="height: 40px; width: 40px;">
 					</button>
-					<span id="suggestion-count" class="reaction-count"><%=recommendationCount%></span>
+					<span id="suggestion-count" class="reaction-count"  style="font-size: 20px;"><%=recommendationCount%></span>
 
 					<!-- 비추천 버튼 -->
 					<button id="notRecommended-button" class="reaction-button"
 						data-clicked="false">
 						<img src="images/비추천.PNG" alt="비추천"
-							style="height: 20px; width: 20px;">
+							style="height: 40px; width: 40px;">
 					</button>
-					<span id="notRecommended-count" class="reaction-count"><%=notRecommendationCount%></span>
+					<span id="notRecommended-count" class="reaction-count"  style="font-size: 20px;"><%=notRecommendationCount%></span>
 
 
 				</div>
