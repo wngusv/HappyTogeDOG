@@ -66,7 +66,7 @@
 	<main>
 		<div class="container">
 			<section class="strays-info">
-				<h2>${requestScope.nowLocate}의유기동물들</h2>
+				<h2>${requestScope.nowLocate}의 유기동물들</h2>
 			</section>
 
 			<div class="local-government-buttons">
