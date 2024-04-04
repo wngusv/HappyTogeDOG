@@ -110,20 +110,21 @@
 <body style="padding-top: 150px;">
 	<header>
 		<nav>
-			<ul>
-				<c:choose>
-					<c:when test="${sessionScope.userId != null}">
-						<li id="username-container"><span id="username-greeting">
-								안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
-							href="./api/logout">로그아웃</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a id="login-button" href="login.jsp">로그인</a></li>
-					</c:otherwise>
-				</c:choose>
-				<li><a href="signupform.jsp">회원가입</a></li>
-			</ul>
-		</nav>
+				<ul>
+					<c:choose>
+						<c:when test="${sessionScope.userId != null}">
+							<li id="username-container"><span id="username-greeting">
+									안녕하세요, ${sessionScope.userName}님! </span> <a id="logout-button"
+								href="./api/logout">로그아웃</a></li>
+							<li><a href="mypage.jsp">마이페이지</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a id="login-button" href="login.jsp">로그인</a></li>
+						</c:otherwise>
+					</c:choose>
+					<li><a href="signupform.jsp">회원가입</a></li>
+				</ul>
+			</nav>
 		<section class="menu">
 			<div class="container" style="padding-top: 8px;">
 				<ul>
