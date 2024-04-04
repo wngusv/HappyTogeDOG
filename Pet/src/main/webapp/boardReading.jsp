@@ -1,7 +1,10 @@
+<%@page import="board.contentDAO"%>
 <%@page import="Util.MyWebContextListener"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
+<%@page import="java.util.List"%>
+<%@page import="board.contentDTO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -161,6 +164,11 @@
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
+
+	String postIdx = request.getParameter("idx");
+	contentDAO dao = new contentDAO();
+	List<contentDTO> commentsList = dao.selectContents(postIdx);
+	request.setAttribute("commentsList", commentsList);
 	%>
 
 	<div class="container mt-5">
@@ -203,7 +211,8 @@
 						<img src="images/추천.PNG" alt="추천"
 							style="height: 40px; width: 40px;">
 					</button>
-					<span id="suggestion-count" class="reaction-count"  style="font-size: 20px;"><%=recommendationCount%></span>
+					<span id="suggestion-count" class="reaction-count"
+						style="font-size: 20px;"><%=recommendationCount%></span>
 
 					<!-- 비추천 버튼 -->
 					<button id="notRecommended-button" class="reaction-button"
@@ -211,7 +220,8 @@
 						<img src="images/비추천.PNG" alt="비추천"
 							style="height: 40px; width: 40px;">
 					</button>
-					<span id="notRecommended-count" class="reaction-count"  style="font-size: 20px;"><%=notRecommendationCount%></span>
+					<span id="notRecommended-count" class="reaction-count"
+						style="font-size: 20px;"><%=notRecommendationCount%></span>
 
 
 				</div>
@@ -254,6 +264,36 @@
 						<button type="submit" class="btn btn-primary mt-2">등록</button>
 					</form>
 				</div>
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">사용자 이름</th>
+							<th scope="col">댓글</th>
+							<th scope="col">날짜</th>
+							<th scope="col">좋아요</th>
+							<th scope="col">싫어요</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+						List<contentDTO> comments = (List<contentDTO>) request.getAttribute("commentsList");
+						if (comments != null) {
+							for (contentDTO comment : comments) {
+						%>
+						<tr>
+							<td><%=comment.getId()%></td>
+							<td><%=comment.getContent()%></td>
+							<td><%=comment.getContent_time()%></td>
+							<td><%=comment.getLike()%></td>
+							<td><%=comment.getDislike()%></td>
+						</tr>
+						<%
+						}
+						}
+						%>
+					</tbody>
+				</table>
 
 				<%
 				}
