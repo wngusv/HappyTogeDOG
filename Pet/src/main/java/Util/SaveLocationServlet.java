@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,12 +23,12 @@ public class SaveLocationServlet extends HttpServlet {
         try {
             double latitude = Double.parseDouble(request.getParameter("latitude"));
             double longitude = Double.parseDouble(request.getParameter("longitude"));
-            System.out.println(latitude);
-            System.out.println(longitude);
             String address = getAddressFromKakaoMapAPI(latitude, longitude);
             System.out.println(address);
             String region2DepthName = parseRegion2DepthName(address);
-            System.out.println(region2DepthName);
+            HttpSession session = request.getSession();
+            
+            session.setAttribute("locate", region2DepthName);
             // 여기서 address를 원하는 작업에 활용
 
         } catch (Exception e) {

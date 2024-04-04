@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class LocalGovernment {
-	private String uprCd;
-	private String orgCd;
-	private String orgdownNm;
+	private String uprCd; //시도 코드
+	private String orgCd; //시군구 코드
+	private String orgdownNm; //시군구 이름
 
 	@Override
 	public String toString() {

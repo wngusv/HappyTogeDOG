@@ -8,21 +8,21 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
-	.floating-banner {
-		position: fixed;
-		top: 180px;
-		right: 20px;
-		background-color: #f50057;
-		color: white;
-		padding: 10px;
-		border-radius: 5px;
-		cursor: pointer;
-		z-index: 1000;
-	}
+.floating-banner {
+	position: fixed;
+	top: 180px;
+	right: 20px;
+	background-color: #f50057;
+	color: white;
+	padding: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	z-index: 1000;
+}
 
-	.floating-banner:hover {
-		background-color: #c51162;
-	}
+.floating-banner:hover {
+	background-color: #c51162;
+}
 </style>
 </head>
 <body>
@@ -61,9 +61,8 @@
 		</section>
 	</header>
 
-	<div class="floating-banner" onclick="window.location.href='donations.jsp';">
-			기부
-	</div>
+	<div class="floating-banner"
+		onclick="window.location.href='donations.jsp';">기부</div>
 
 	<footer>
 		<div class="container">
@@ -118,5 +117,18 @@
 			getLocation();
 		}
 	};
+// 	var animalLink = document.querySelector('a[href="/AnimalServlet"]');
+//     if (animalLink) {
+//         animalLink.addEventListener('click', function(event) {
+//             event.preventDefault(); // 기본 동작 방지
+
+//             if (${sessionScope.locate != null}) {
+//                 var orgName = "${sessionScope.locate}";
+//                 window.location.href = "/AnimalServlet?orgName=" + encodeURIComponent(orgName);
+//             } else {
+//             	window.location.href = "/AnimalServlet";
+//             }
+//         });
+//     }
 </script>
 </html>

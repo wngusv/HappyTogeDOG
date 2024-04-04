@@ -199,6 +199,16 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 		conn.disconnect();
 		return LocalGovernmentJsonParser.parseJsonResponse(responseContent.toString());
 	}
+	
+	public static boolean checkLocalGovernmentList(String locate) {
+		for(LocalGovernment LGL : localGovernmentList) {
+			if(LGL.getOrgdownNm().equals(locate)) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
 
 	public static List<Animal> getAllAnimalList() {
 		return allAnimalList;

@@ -18,6 +18,7 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.removeAttribute("userId");
         session.removeAttribute("username");
+        session.removeAttribute("locate");
 
         // **메인 페이지로 이동합니다.**
         String redirectUrl = "../index.jsp";

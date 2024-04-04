@@ -51,6 +51,10 @@
 .local-government-buttons a:hover {
 	color: aqua; /* 마우스 호버 시 링크 색상 변경 */
 }
+
+.local-government-button.highlight {
+	border: 2px solid black;
+}
 </style>
 <body style="padding-top: 150px;">
 	<header>
@@ -85,19 +89,17 @@
 	<main>
 		<div class="container">
 			<section class="strays-info">
-				<h2>우리 지역의 유기동물들</h2>
+				<h2>${requestScope.nowLocate}의유기동물들</h2>
 			</section>
 
 			<div class="local-government-buttons">
-				<a href="/AnimalServlet?orgName=all">전체</a>
-				<%
-				List<LocalGovernment> localGovernmentList = (List<LocalGovernment>) request.getAttribute("localGovernmentList");
-				for (LocalGovernment government : localGovernmentList) {
-				%>
-				<a href="/AnimalServlet?orgName=<%=government.getOrgdownNm()%>"><%=government.getOrgdownNm()%></a>
-				<%
-				}
-				%>
+				<a href="/AnimalServlet?orgName=all" class="local-government-button">전체</a>
+				<c:forEach var="government"
+					items="${requestScope.localGovernmentList}">
+					<c:set var="buttonId" value="${government.getOrgdownNm()}" />
+					<a id="${buttonId}" class="local-government-button"
+						href="/AnimalServlet?orgName=${government.getOrgdownNm()}">${government.getOrgdownNm()}</a>
+				</c:forEach>
 			</div>
 			<!-- 			<form id="stateForm"> -->
 			<!-- 				<input type="radio" id="all" name="state" value="all"> <label -->
@@ -199,6 +201,27 @@
 		</div>
 	</footer>
 
-</body>
 
+</body>
+<script>
+window.onload = function() {
+    var nowLocate = "${requestScope.nowLocate}";
+
+    var buttons = document.getElementsByClassName('local-government-button');
+    for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
+        if (button.id.trim() === nowLocate.trim()) {
+            button.classList.add('highlight');
+        }
+    }
+
+    // "우리 지역"일 경우 "전체" 버튼에 테두리 추가
+    if (nowLocate.trim() === "우리 지역") {
+        var allButton = document.querySelector('.local-government-buttons a[href="/AnimalServlet?orgName=all"]');
+        if (allButton) {
+            allButton.classList.add('highlight');
+        }
+    }
+};
+</script>
 </html>
