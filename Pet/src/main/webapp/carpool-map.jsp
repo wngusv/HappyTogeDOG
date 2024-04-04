@@ -197,31 +197,40 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533&libraries=services"></script>
 </head>
 <body>
+
 	<div class="map_wrap">
 		<div id="map" style="width: 100%; height: 400px;"></div>
 
 		<div id="menu_wrap" class="bg_white">
-    <div class="option">
-        <div>
-            출발지 : <input type="text" id="startInput" size="15">
-            <button onclick="searchPlaces('start')">검색</button>
-        </div>
-        <div>
-            도착지 : <input type="text" id="endInput" size="15">
-            <button onclick="searchPlaces('end')">검색</button>
-		<button onclick="getCarDirection()">경로 찾기</button>
-        </div>
-    </div>
-    <hr>
-    <ul id="placesList"></ul>
-    <div id="pagination"></div>
-</div>
+			<div class="option">
+				<div>
+					출발지 : <input type="text" id="startInput" size="15">
+					<button onclick="searchPlaces('start')">검색</button>
+				</div>
+				<div>
+					도착지 : <input type="text" id="endInput" size="15">
+					<button onclick="searchPlaces('end')">검색</button>
+					<button onclick="getCarDirection()">경로 찾기</button>
+				</div>
+			</div>
+			<hr>
+			<ul id="placesList"></ul>
+			<div id="pagination"></div>
+		</div>
 
-	<div id="search">
-	
-	</div>
+		<div id="search"></div>
 
-	<script>
+		<script>
+		function createMarkerImage(src, size) {
+		    return new kakao.maps.MarkerImage(src, size);
+		}
+
+		// 출발지 마커 이미지 설정
+		var startMarkerImage = createMarkerImage('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png', new kakao.maps.Size(33, 33));
+
+		// 도착지 마커 이미지 설정
+		var endMarkerImage = createMarkerImage('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png', new kakao.maps.Size(33, 33));
+		
         var mapContainer = document.getElementById('map'), 
             mapOption = {
                 center: new kakao.maps.LatLng(37.566826, 126.9786567), 
@@ -236,6 +245,7 @@
 
         function searchPlaces(type) {
             var inputId = type === 'start' ? 'startInput' : 'endInput';
+            currentSearchType = type; // 현재 검색 유형 업데이트
             var inputElement = document.getElementById(inputId);
             if (inputElement && inputElement.value.trim() !== '') {
                 var keyword = inputElement.value;
@@ -309,11 +319,11 @@
 
                 (function(marker, title, position) {
                     kakao.maps.event.addListener(marker, 'click', function() {
-                        selectPlace(position, title);
+                        selectPlace(position, title, currentSearchType); // 'currentSearchType' 사용
                     });
 
-                    itemEl.onclick = function () {
-                        selectPlace(position, title);
+                    itemEl.onclick = function() {
+                        selectPlace(position, title, currentSearchType); // 'currentSearchType' 사용
                     };
                 })(marker, places[i].place_name, placePosition);
 
@@ -325,48 +335,37 @@
             map.setBounds(bounds);
         }
 
-        // 장소 선택 로직을 개선
-        function selectPlace(position, title) {
-            if (!startPoint.lat) { // 출발지 설정
-                setStartPoint(position, title);
-            } else if (!endPoint.lat) { // 도착지 설정
-                setEndPoint(position, title);
+        function selectPlace(position, title, type) {
+            var inputId = type === 'start' ? 'startInput' : 'endInput';
+            document.getElementById(inputId).value = title; // 입력란에 타이틀 표시
+
+            // 이미 정의된 마커 이미지를 바탕으로 적절한 이미지 선택
+            var markerImage = type === 'start' ? startMarkerImage : endMarkerImage;
+
+            // 기존 마커가 있으면 지도에서 제거
+            if (type === 'start' && startMarker) startMarker.setMap(null);
+            if (type === 'end' && endMarker) endMarker.setMap(null);
+
+            // 새 마커 생성
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: position,
+                image: markerImage // 마커 이미지 설정
+            });
+
+            // 전역 변수에 마커와 위치 정보 저장
+            if (type === 'start') {
+                startMarker = marker;
+                startPoint = {lat: position.getLat(), lng: position.getLng()};
+            } else {
+                endMarker = marker;
+                endPoint = {lat: position.getLat(), lng: position.getLng()};
             }
         }
-        
-        // 출발지 설정
-        function setStartPoint(position, title) {
-            if(startMarker) startMarker.setMap(null);
-            startPoint = {lat: position.getLat(), lng: position.getLng()};
-            document.getElementById('startInput').innerText = title;
-            startMarker = new kakao.maps.Marker({
-                map: map,
-                position: position
-            });
 
-            // 출발지 설정 후 검색 결과 초기화
-            clearSearchResults();
-        }
 
-        // 도착지 설정
-        function setEndPoint(position, title) {
-            if(endMarker) endMarker.setMap(null);
-            endPoint = {lat: position.getLat(), lng: position.getLng()};
-            document.getElementById('endInput').innerText = title;
-            endMarker = new kakao.maps.Marker({
-                map: map,
-                position: position
-            });
+      
 
-        }
-
-        // 검색 결과 및 마커 초기화 함수
-        function clearSearchResults() {
-            removeAllChildNodes(document.getElementById('placesList'));
-            removeMarker();
-            document.getElementById('keyword').value = ''; // 키워드 입력 필드도 초기화
-        }
-        
         function getListItem(index, places) {
 
             var el = document.createElement('li'),
@@ -432,18 +431,26 @@
                 startLng = startPoint.lng,
                 endLat = endPoint.lat,
                 endLng = endPoint.lng;
-
+			
+            markers.forEach(function(marker) {
+                if (marker !== startMarker && marker !== endMarker) {
+                    marker.setMap(null);
+                }
+            });
+            
             // 시작점과 끝점에 마커를 표시합니다. (필요하다면 이전 마커는 지웁니다)
             if(startMarker) startMarker.setMap(null);
             if(endMarker) endMarker.setMap(null);
 
             startMarker = new kakao.maps.Marker({
                 position: new kakao.maps.LatLng(startLat, startLng),
+                image: startMarkerImage,
                 map: map
             });
 
             endMarker = new kakao.maps.Marker({
                 position: new kakao.maps.LatLng(endLat, endLng),
+                image: endMarkerImage,
                 map: map
             });
 
@@ -490,8 +497,7 @@
         }
 
         
+        
     </script>
-
-
 </body>
 </html>

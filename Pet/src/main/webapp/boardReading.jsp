@@ -79,6 +79,54 @@
 .reactions {
 	text-align: center;
 }
+
+/* 댓글 입력 섹션 스타일 */
+.comment-section {
+	border: 1px solid #ddd; /* 테두리 */
+	padding: 15px; /* 내부 패딩 */
+	background-color: #f9f9f9; /* 배경색 */
+	margin-top: 30px; /* 위 여백 */
+}
+
+/* 댓글 작성자 아이디 라벨 스타일 */
+.comment-section .user-id {
+	background-color: #007bff; /* 배경색 */
+	color: white; /* 텍스트 색상 */
+	padding: 5px 10px; /* 패딩 */
+	border-radius: 15px; /* 라벨 모서리 둥글기 */
+	font-size: 0.8rem; /* 폰트 크기 */
+	display: inline-block; /* 인라인 블록 요소로 변경 */
+	margin-bottom: 10px; /* 아래 여백 */
+}
+
+/* 댓글 입력 박스 스타일 */
+.comment-section textarea {
+	width: 100%; /* 너비 100% */
+	border: none; /* 테두리 없앰 */
+	border-radius: 4px; /* 모서리 둥글기 */
+	margin-top: 5px; /* 위 여백 */
+	padding: 10px; /* 내부 패딩 */
+	font-size: 1rem; /* 폰트 크기 */
+}
+
+/* 댓글 입력 박스 포커스 시 */
+.comment-section textarea:focus {
+	outline: none; /* 포커스 아웃라인 제거 */
+	box-shadow: 0 0 5px rgba(81, 203, 238, 1); /* 그림자 효과 */
+}
+
+/* 댓글 작성 버튼 스타일 */
+.comment-section button {
+	float: right; /* 오른쪽 정렬 */
+	background-color: gray; /* 배경색 */
+	color: white; /* 텍스트 색상 */
+	border: none; /* 테두리 없앰 */
+	border-radius: 3px; /* 모서리 둥글기 */
+	padding: 5px 15px; /* 패딩 */
+	margin-top: 18px; /* 위 여백 */
+	font-size: 0.7rem; /* 폰트 크기 */
+	cursor: pointer; /* 커서 포인터 모양 */
+}
 </style>
 </head>
 <body>
@@ -181,20 +229,29 @@
 						href="#"
 						onclick="javascript:window.open('https://www.facebook.com/sharer/sharer.php?u=' +encodeURIComponent(document.URL)+'&t='+encodeURIComponent(document.title), 'facebooksharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
 						target="_blank" alt="Share on Facebook"><img
-						src="images/페북 로고.jpg" width="25" alt="페이스북 공유"></a>
-						 <a href="#"
+						src="images/페북 로고.jpg" width="25" alt="페이스북 공유"></a> <a href="#"
 						onclick="window.print(); return false;"><img
 						src="images/인쇄.png" width="25" alt="인쇄"> </a>
 				</div>
 				<br>
-				<!-- 댓글쓰기 버튼 추가 -->
+				<!-- 댓글 섹션 -->
 				<div class="comment-section">
 					<!-- 댓글 입력 폼 -->
-					<form action="/comment.do" method="post">
-						<label for="comment-input">댓글</label>
+					<form action="/commentContent.do" method="post">
+						<%
+						String userId = (String) session.getAttribute("userId");
+						%>
+						<div class="user-id">
+							<%=userId != null ? userId : "로그인 후 사용 가능합니다."%>
+							<!-- 사용자 아이디 표시 -->
+						</div>
+						<!-- postIdx를 전송하기 위한 숨겨진 필드 -->
+						<input type="hidden" name="postIdx" value="<%=idx%>">
+
 						<textarea id="comment-input" name="comment" class="form-control"
-							rows="3"></textarea>
-						<button type="submit" class="btn btn-primary mt-2">댓글쓰기</button>
+							rows="3" placeholder="댓글을 입력하세요..."></textarea>
+
+						<button type="submit" class="btn btn-primary mt-2">등록</button>
 					</form>
 				</div>
 
