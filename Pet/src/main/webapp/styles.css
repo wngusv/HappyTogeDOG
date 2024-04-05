@@ -75,4 +75,23 @@ header nav ul li a {
 
 
 
+/* Floating Banner CSS */
+.floating-banner {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+
+
+.floating-banner:hover {
+    background-color: #555; /* 마우스 호버시 배경색 변경 */
+}
+
+
 

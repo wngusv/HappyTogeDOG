@@ -64,15 +64,19 @@
             padding: 20px;
             margin-top: 20px;
         }
+        
+
 </style>
 </head>
 
 <body>
 
 	<header>
+
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container">
 				<a class="navbar-brand" href="#"><c:out value="${pageTitle}" /></a>
+				<a class="navbar-brand" href="index.jsp"><c:out value="홈" /></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -91,8 +95,7 @@
 								</c:when>
 								<c:otherwise>
 									<li><a id="login-button" href="login.jsp">로그인</a></li>
-									<li class="nav-item"><a class="nav-link"
-										href="signupform.jsp">회원가입</a></li>
+									<li><a id="login-button" href="signupform.jsp">회원가입</a></li>
 								</c:otherwise>
 							</c:choose></li>
 					</ul>
