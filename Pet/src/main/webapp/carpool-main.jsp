@@ -30,7 +30,7 @@
 </header>
 <main>
     <div class="container">
-        <button id="carpoolButton" style="margin-top: 200px;">카풀 모집</button>
+        <button onclick="checklogin();" style="margin-top: 200px;">카풀 모집</button>
         <h2>게시글 목록</h2>
         <c:forEach items="${posts}" var="post">
             <div class="rounded-border" onclick="window.location.href='/viewPost?id=${post.id}';"
@@ -48,9 +48,16 @@
     </div>
 </footer>
 <script>
-        document.getElementById("carpoolButton").addEventListener("click", function() {
-            window.location.href = 'carpool-map.jsp';
-        });
+       	function checklogin() {
+       		var login = '<%= session.getAttribute("userId")%>';
+       		if (login == "null" || login == "") {
+                   alert("로그인이 필요합니다.")
+       			window.location.href = 'login.jsp';
+                   return;
+            } 
+               window.location.href = 'carpool-map.jsp';
+       	} 
+       
 </script>
 </body>
 </html>

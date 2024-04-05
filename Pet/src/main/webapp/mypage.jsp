@@ -53,7 +53,16 @@
                 <td><a href="/mypage/ViewPost.jsp?postId=<%= postId %>"><%= title %></a></td>
                 <td><%= todayDate %></td>
                 <td><a href="/mypage/EditPost.jsp?postId=<%= postId %>">수정</a></td>
-                <td><a href="/mypage/DeletePost.jsp?postId=<%= postId %>">삭제</a></td>
+                <td><a href="#" onclick="confirmDelete('<%= postId %>')">삭제</a></td>
+
+<script>
+    function confirmDelete(postId) {
+        var confirmResult = confirm("정말로 삭제하시겠습니까?");
+        if (confirmResult) {
+            window.location.href = "/mypage/DeletePost.jsp?postId=" + postId;
+        }
+    }
+</script>
             </tr>
             <% 
             }

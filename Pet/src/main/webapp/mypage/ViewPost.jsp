@@ -106,7 +106,17 @@
         </div>
         <div>
             <a href="/mypage/EditPost.jsp?postId=<%= postId %>" class="btn btn-primary">수정</a>
-            <a href="/mypage/DeletePost.jsp?postId=<%= postId %>" class="btn btn-danger">삭제</a>
+            <a href="#" onclick="confirmDelete('<%= postId %>')" class="btn btn-danger">삭제</a>
+
+
+<script>
+    function confirmDelete(postId) {
+        var confirmResult = confirm("정말로 삭제하시겠습니까?");
+        if (confirmResult) {
+            window.location.href = "/mypage/DeletePost.jsp?postId=" + postId;
+        }
+    }
+</script>
         </div>
     </div>
 </div>
