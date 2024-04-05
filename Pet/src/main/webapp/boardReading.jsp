@@ -345,7 +345,7 @@
 									onclick="handleReaction(<%= comment.getNum() %>, '좋아요')">
 									<img src="images/강아지좋아요.PNG" alt="좋아요"
 										style="height: 30px; width: 30px;">
-								</button> <%=comment.getLike()%>
+								</button>  <span id="like-count-<%=comment.getNum()%>"><%=comment.getLike()%></span>
 							</td>
 
 							<td>
@@ -353,7 +353,7 @@
 									onclick="handleReaction(<%= comment.getNum() %>, '싫어요')">
 									<img src="images/강아지싫어요.PNG" alt="싫어요"
 										style="height: 30px; width: 30px;">
-								</button> <%=comment.getDislike()%>
+								</button>  <span id="dislike-count-<%=comment.getNum()%>"><%=comment.getDislike()%></span>
 							</td>
 
 						</tr>
@@ -421,18 +421,15 @@ function sendReaction(postId, type) {
 }
 	
 function handleReaction(commentNum, reactionType) {
-	 // 사용자가 로그인하지 않은 경우 알림 표시
     if (!userId) {
         alert("로그인 후 사용 가능합니다.");
+        window.location.href = 'login.jsp';
         return;
     }
-	 
-    // reactionType '좋아요', '싫어요'
-   var url = '/likeOrDislike.do';
-var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType + '&postIdx=' + postIdx;
 
+    var url = '/likeOrDislike.do';
+    var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType + '&postIdx=' + postIdx;
 
-    // AJAX 요청 보내기
     fetch(url, {
         method: 'POST',
         headers: {
@@ -443,8 +440,8 @@ var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType + '&po
     .then(response => response.json())
     .then(data => {
         if(data.status === 'success') {
-            // 성공 처리
-            console.log(reactionType + ' updated successfully for comment ' + commentNum);
+            // 성공 처리: 업데이트된 좋아요와 싫어요 카운트로 페이지를 업데이트
+            updateReactionCount(commentNum, data.newLikeCount, data.newDislikeCount);
         } else {
             // 실패 처리
             console.error('Failed to update ' + reactionType);
@@ -455,6 +452,20 @@ var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType + '&po
         console.error('Error:', error);
     });
 }
+
+function updateReactionCount(commentNum, newLikeCount, newDislikeCount) {
+    // 댓글에 대한 좋아요와 싫어요 카운트 업데이트
+    var likeCountElement = document.getElementById('like-count-' + commentNum);
+    var dislikeCountElement = document.getElementById('dislike-count-' + commentNum);
+
+    if (likeCountElement) {
+        likeCountElement.innerText = newLikeCount;
+    }
+    if (dislikeCountElement) {
+        dislikeCountElement.innerText = newDislikeCount;
+    }
+}
+
 
 function validateCommentForm() {
     var comment = document.getElementById('comment-input').value.trim();
