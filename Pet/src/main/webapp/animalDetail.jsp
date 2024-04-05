@@ -17,6 +17,9 @@
 	margin: 0 auto; /* 수평 가운데 정렬 */
 	width: 50%; /* 내용의 너비를 설정합니다. */
 }
+#img{
+	width: 90%;
+}
 </style>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533&libraries=services"></script>
@@ -27,7 +30,7 @@
 		<%
 		Animal animal = (Animal) request.getAttribute("animal");
 		%>
-		<img src="<%=animal.getPopfile()%>" alt="동물 이미지" />
+		<img id= "img" src="<%=animal.getPopfile()%>" alt="동물 이미지" />
 		<p>
 			<strong>Desertion No:</strong>
 			<%=animal.getDesertionNo()%>

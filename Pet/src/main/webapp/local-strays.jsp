@@ -39,6 +39,7 @@
 
 .local-government-buttons {
 	padding: 20px;
+	text-align: center;
 }
 
 .local-government-buttons a {
