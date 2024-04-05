@@ -6,8 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
+var userId = '<%= session.getAttribute("userId") %>';
+if (userId) {
 var chatRoomNum = <%=request.getParameter("chatRoom")%>;
-console.log(chatRoomNum);
 var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/ChatingServer?chatRoom="+chatRoomNum);
 	var chatWindow, chatMessage, chatId;
 
@@ -74,6 +75,9 @@ var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/Ch
 		}
 		chatWindow.scrollTop = chatWindow.srollHeight;
 	};
+} else{
+	alert("로그인 후 채팅 가능합니다.");
+}
 </script>
 <style>
 #chatWindow {
