@@ -16,6 +16,7 @@
 	cursor: pointer; /* 마우스 오버 시 포인터 모양으로 변경 */
 	margin: 0 auto; /* 상단과 하단 마진을 0으로, 좌우 마진을 자동으로 설정하여 중앙 정렬 */
 }
+
 .rounded-border:hover {
 	border-color: #007bff; /* 호버 시 테두리 색상 변경 */
 }
@@ -33,23 +34,15 @@
 			<button onclick="openPopup()" style="margin-top: 200px;">카풀
 				모집</button>
 			<h2>게시글 목록</h2>
-			<div class="rounded-border">
-				<table>
-					<tr>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>등록 시간</th>
-					</tr>
-					<c:forEach items="${posts}" var="post">
-						<tr onclick="window.location.href='/carpool-viewpost.jsp?id=${post.id}';"
-							style="cursor: pointer;">
-							<td>${post.title}</td>
-							<td>${post.userId}</td>
-							<td>${post.createdAt}</td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
+			<c:forEach items="${posts}" var="post">
+				<div class="rounded-border"
+					onclick="window.location.href='/viewPost?id=${post.id}';"
+					style="cursor: pointer; margin-bottom: 10px; padding: 10px;">
+					<p>제목: ${post.title}</p>
+					<p>작성자: ${post.userId}</p>
+					<p>등록 시간: ${post.createdAt}</p>
+				</div>
+			</c:forEach>
 
 		</div>
 	</main>
