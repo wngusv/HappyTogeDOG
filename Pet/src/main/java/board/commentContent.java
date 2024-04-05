@@ -33,6 +33,8 @@ public class commentContent extends HttpServlet {
 				pstmt.setString(3, comment);
 				pstmt.executeUpdate();
 				
+				response.sendRedirect("boardReading.jsp?idx=" + postIdx);
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
