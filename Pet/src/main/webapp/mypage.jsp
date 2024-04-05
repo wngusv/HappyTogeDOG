@@ -51,8 +51,8 @@
             <tr>
                 <td><a href="/mypage/ViewPost.jsp?postId=<%= postId %>"><%= title %></a></td>
                 <td><%= todayDate %></td>
-                <td><a href="EditPost.jsp?postId=<%= postId %>">수정</a></td>
-                <td><a href="DeletePost.jsp?postId=<%= postId %>">삭제</a></td>
+                <td><a href="/mypage/EditPost.jsp?postId=<%= postId %>">수정</a></td>
+                <td><a href="/mypage/DeletePost.jsp?postId=<%= postId %>">삭제</a></td>
             </tr>
             <% 
             }
