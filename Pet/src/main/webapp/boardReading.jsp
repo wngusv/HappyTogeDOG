@@ -139,11 +139,11 @@
 
 /* 클래스를 통해 열 너비를 조정 */
 .col-user {
-	width: 10%;
+	width: 13%;
 }
 
 .col-comment {
-	width: 50%;
+	width: 57%;
 }
 
 .col-date {
