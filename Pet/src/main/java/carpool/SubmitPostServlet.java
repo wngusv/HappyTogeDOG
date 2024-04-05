@@ -2,13 +2,17 @@ package carpool;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.google.gson.Gson;
 
 @WebServlet("/submit-post")
@@ -35,7 +39,11 @@ public class SubmitPostServlet extends HttpServlet {
         if (posts == null) {
             posts = new ArrayList<>(); // 게시글 목록이 없으면 새로 생성
         }
-
+        newPost.setId(posts.size()+1);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd HH:mm");
+        Date currentDate = new Date();
+        String formattedDateTime = dateFormat.format(currentDate);
+        newPost.setCreatedAt(formattedDateTime);
         // 새 게시글 추가
         posts.add(newPost);
 

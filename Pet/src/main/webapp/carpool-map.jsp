@@ -524,7 +524,7 @@
 				var content = document.getElementById('content').value;
 				var mapState = getMapState(); // 지도 상태 수집
 				var userId = "<%= session.getAttribute("userId") %>";
-
+				
 				fetch('/submit-post', {
 					method: 'POST',
 					headers: {
@@ -533,8 +533,8 @@
 					body: JSON.stringify({
 						title: title,
 						content: content,
-						mapState: mapState,
-						id: userId
+						//mapState: mapState,
+						userId: userId
 					})
 				})
 					.then(response => response.json())

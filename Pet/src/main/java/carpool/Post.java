@@ -10,5 +10,5 @@ public class Post {
 	private String title;
 	private String content;
 	private String userId; // 작성자 ID
-	private long createdAt; // 생성 시간
+	private String createdAt; // 생성 시간
 }
