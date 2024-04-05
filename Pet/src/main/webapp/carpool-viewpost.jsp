@@ -29,6 +29,12 @@
     justify-content: center; /* 가로 중앙 정렬 */
     
 }
+#postTitle {
+	margin-left: 380px;
+}
+#postUser {
+	margin-left: 380px;
+}
 </style>
 	
 </head>
