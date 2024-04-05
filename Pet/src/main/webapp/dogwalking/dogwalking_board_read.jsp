@@ -91,25 +91,36 @@
                 </tr>
             </tbody>
         </table>
-        <div class="row">
+<div class="row">
+            <% if (fileName1 != null && !fileName1.isEmpty()) { %>
             <div class="col-md-2">
                 <img src="<%= fileRoute1 %>" class="img-fluid" alt="Dog Photo1">
             </div>
+            <% } %>
+            <% if (fileName2 != null && !fileName2.isEmpty()) { %>
             <div class="col-md-2">
                 <img src="<%= fileRoute2 %>" class="img-fluid" alt="Dog Photo2">
             </div>
+            <% } %>
+            <% if (fileName3 != null && !fileName3.isEmpty()) { %>
             <div class="col-md-2">
                 <img src="<%= fileRoute3 %>" class="img-fluid" alt="Dog Photo3">
             </div>
+            <% } %>
+            <% if (fileName4 != null && !fileName4.isEmpty()) { %>
             <div class="col-md-2">
                 <img src="<%= fileRoute4 %>" class="img-fluid" alt="Dog Photo4">
             </div>
+            <% } %>
+            <% if (fileName5 != null && !fileName5.isEmpty()) { %>
             <div class="col-md-2">
                 <img src="<%= fileRoute5 %>" class="img-fluid" alt="Dog Photo5">
             </div>
+            <% } %>
         </div>
     </div>
 </div>
+
 
 <%
             }
