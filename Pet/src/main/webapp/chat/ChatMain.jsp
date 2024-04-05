@@ -8,21 +8,20 @@
 </head>
 <body>
 	<script>
-		function chatWinOpen() {
-			var id = document.getElementById("chatId");
-			if (id.value == "") {
-				alert("아이디를 입력 후 채팅창을 열어주세요.");
-				id.focus();
-				return;
-			}
-			window.open("/chat/ChatWindow.jsp?chatId=" + id.value, "",
-					"width=350,height=410");
-			id.value = "";
-		}
-	</script>
-	<h2>웹소켓 채팅 - 아이디 적용해서 채팅창 띄워주기</h2>
-	아이디:
-	<input type="text" id="chatId" />
-	<button onclick="chatWinOpen();">채팅 참여</button>
+        // Function to open chat window
+        function chatWinOpen() {
+            var id = '<%= session.getAttribute("userId") %>'; // Note the single quotes around the JSP expression
+            if (id === null || id === '') {
+                alert("로그인 후 채팅창을 열어주세요.");
+                return;
+            }
+            window.open("/chat/ChatWindow.jsp?chatId=" + id, "", "width=350,height=410");
+        }
+
+        // Call the function immediately when the page loads
+        window.onload = function() {
+            chatWinOpen();
+        };
+    </script>
 </body>
 </html>

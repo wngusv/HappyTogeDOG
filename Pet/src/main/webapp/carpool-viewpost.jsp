@@ -35,8 +35,20 @@
     <div id="postContent"><%=post.getContent()%></div>
     
     <div id="map"></div>
-	<button>채팅</button>
+    <% request.setAttribute("chatRoomNum", post.getId()); %>
+    <a href="#" onclick="chatWinOpen();">채팅하기</a>
 <script>
+
+// Function to open chat window
+function chatWinOpen() {
+    var id = '<%= session.getAttribute("userId") %>'; // Note the single quotes around the JSP expression
+    if (id === "null" || id === '') {
+        alert("로그인 후 채팅창을 열어주세요.");
+        return;
+    }
+    // If id is available (user logged in), proceed to open the chat window
+    window.open("/chat/ChatWindow.jsp?chatId=" + id +"&chatRoom="+"<%=post.getId()%>", "", "width=350,height=410");
+}
 // 서버로부터 받아온 mapState 정보를 JavaScript 객체로 파싱합니다.
 var mapState = JSON.parse('<%=post.getMapstate()%>');
 
