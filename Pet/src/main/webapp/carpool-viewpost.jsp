@@ -47,6 +47,8 @@
     if (post != null) {
     %>
     <!-- 게시물의 내용을 표시합니다. -->
+	<div id="postTitle"> 제목 : <%=post.getTitle()%></div>
+	<div id="postUser"> 아이디 : <%=post.getUserId() %></div>
     <div id="map-container">
         <div id="map"></div>
     </div>
