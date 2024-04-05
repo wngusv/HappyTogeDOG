@@ -28,7 +28,7 @@
 #menu_wrap {
 	position: absolute;
 	top: 0;
-	left: 0;
+	left: 0;;
 	bottom: 0;
 	width: 250px;
 	margin: 10px 0 30px 10px;
@@ -42,7 +42,7 @@
 
 .bg_white {
 	background: #fff;
-	height: 350px;
+	height: 500px;
 }
 
 #menu_wrap hr {
@@ -63,6 +63,10 @@
 
 #menu_wrap .option button {
 	margin-left: 5px;
+}
+
+#placesList {
+	padding-left: 0;
 }
 
 #placesList li {
@@ -205,7 +209,7 @@
 		%>
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
-	<div id="map" style="width: 50%; height: 400px;"></div>
+	<div id="map" style="width: 100%; height: 400px;"></div>
 	<div id="postForm">
 		<input type="text" id="title" placeholder="제목" /><br>
 		<textarea id="content" placeholder="내용"></textarea>
@@ -222,6 +226,7 @@
 				도착지 : <input type="text" id="endInput" size="15">
 				<button onclick="searchPlaces('end')">검색</button>
 				<button onclick="getCarDirection()">경로 찾기</button>
+				<button onclick="resetMap()">초기화</button>
 			</div>
 		</div>
 		<hr>
@@ -419,6 +424,39 @@
 				markers.push(marker);  // 배열에 생성된 마커를 추가합니다
 
 				return marker;
+			}
+			function resetMap() {
+			    // 마커 제거
+			    if (startMarker) {
+			        startMarker.setMap(null);
+			        startMarker = null;
+			    }
+			    if (endMarker) {
+			        endMarker.setMap(null);
+			        endMarker = null;
+			    }
+
+			    // 폴리라인 제거
+			    if (polyline) {
+			        polyline.setMap(null);
+			        polyline = null;
+			    }
+
+			    // 지도 중심을 초기 위치로 설정하고 줌 레벨을 재설정
+			    var initialCenter = new kakao.maps.LatLng(37.566826, 126.9786567);
+			    map.setCenter(initialCenter);
+			    map.setLevel(3);
+
+			    // 검색 결과와 페이지네이션 클리어
+			    document.getElementById('placesList').innerHTML = '';
+			    document.getElementById('pagination').innerHTML = '';
+			    
+			    // 검색 입력 필드 초기화
+			    document.getElementById('startInput').value = '';
+			    document.getElementById('endInput').value = '';
+
+			    // 경로 데이터 초기화
+			    pathData = [];
 			}
 
 

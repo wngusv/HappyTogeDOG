@@ -11,7 +11,7 @@
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533&libraries=services"></script>
 <style>
 #map {
-    width: 30%;
+    width: 100%;
     height: 400px;
 }
 </style>
