@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>카풀 게시글</title>
+<link rel="stylesheet" href="styles.css">
 <script type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533&libraries=services"></script>
 <style>
@@ -15,9 +16,9 @@
     height: 400px;
 }
 </style>
-
+	
 </head>
-<body>
+<body style="padding-top: 150px;">
 <header>
     <%
         request.setAttribute("pageTitle", "반려견 카풀");

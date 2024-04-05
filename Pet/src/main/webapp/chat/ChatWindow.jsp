@@ -40,6 +40,7 @@
 		// 웹소켓이 닫혔을 때 실행
 		webSocket.onclose = function(event) {
 			chatWindow.innerHTML += "웹소켓 서버가 종료되었습니다.<br>";
+			window.close();
 		}
 
 		webSocket.onerror = function(event) {

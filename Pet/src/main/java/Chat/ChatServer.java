@@ -1,13 +1,13 @@
 package Chat;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
+import javax.websocket.CloseReason;
+import javax.websocket.CloseReason.CloseCodes;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -22,11 +22,30 @@ public class ChatServer {
 
 	@OnOpen
 	public void onOpen(Session session) {
-		String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
-		String chatId = session.getRequestParameterMap().get("userId").get(0);
-		System.out.println(chatId);
-		chatRooms.computeIfAbsent(chatRoom, k -> new HashSet<>()).add(session);
-		System.out.println("웹소켓 연결: " + session.getId() + ", 채팅방: " + chatRoom);
+	    String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
+	    String chatId = session.getRequestParameterMap().get("userId").get(0);
+	    System.out.println(chatId);
+	    
+	    // Check if the chat room already contains a session associated with the user's ID
+	    if (chatRooms.containsKey(chatRoom)) {
+	        Set<Session> clients = chatRooms.get(chatRoom);
+	        for (Session client : clients) {
+	            String existingChatId = client.getRequestParameterMap().get("userId").get(0);
+	            if (existingChatId.equals(chatId)) {
+	                try {
+	                    // Reject the new connection
+	                    session.close(new CloseReason(CloseCodes.UNEXPECTED_CONDITION, "Another session with the same ID already exists in this chat room."));
+	                    return;
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+	    }
+	    
+	    // If no existing session with the same ID found, add the new session to the chat room
+	    chatRooms.computeIfAbsent(chatRoom, k -> new HashSet<>()).add(session);
+	    System.out.println("웹소켓 연결: " + session.getId() + ", 채팅방: " + chatRoom);
 	}
 
 	@OnMessage
