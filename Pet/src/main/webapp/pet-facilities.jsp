@@ -22,7 +22,7 @@
 .map_wrap {
 	position: relative;
 	width: 100%;
-	height: 600px; /* 수정된 높이 */
+	height: 600px;
 }
 
 #category {
@@ -128,7 +128,7 @@
 		</div>
 		<div class="container"> <!-- Bootstrap 그리드 시스템 사용 -->
 			<div class="row justify-content-center"> <!-- 가운데 정렬 -->
-				<div class="col-lg-8"> <!-- 큰 화면에서 너비를 8만큼 설정 -->
+				<div class="col-lg-10">
 					<div class="map_wrap">
 						<div id="map" style="width: 100%; height: 500px; position: relative; overflow: hidden;"></div> <!-- 수정된 높이 -->
 						<ul id="category">
@@ -257,23 +257,44 @@
 		}
 
 		function setCurrentLocation() {
-			if (navigator.geolocation) {
-				navigator.geolocation
-						.getCurrentPosition(
-								function(position) {
-									var lat = position.coords.latitude, lon = position.coords.longitude;
-									var locPosition = new kakao.maps.LatLng(
-											lat, lon);
-									map.setCenter(locPosition);
-									addMarker(locPosition);
-								},
-								function(error) {
-									console
-											.error("Geolocation access is denied.");
-								});
-			} else {
-				alert("This browser doesn't support geolocation.");
-			}
+		    if (navigator.geolocation) {
+		        navigator.geolocation.getCurrentPosition(function(position) {
+		            var lat = position.coords.latitude,
+		                lon = position.coords.longitude;
+		            var locPosition = new kakao.maps.LatLng(lat, lon);
+		            map.setCenter(locPosition);
+		            addMarker(locPosition);
+		            displayMarker(locPosition, '<div style="padding:5px;">내위치</div>'); // 위치 정보가 확인되면 인포윈도우를 엽니다.
+		        }, function(error) {
+		            console.error("Geolocation access is denied.");
+		            var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+		            displayMarker(locPosition, 'geolocation을 사용할수 없어요..');
+		        });
+		    } else {
+		        alert("This browser doesn't support geolocation.");
+		        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+		        displayMarker(locPosition, 'geolocation을 사용할수 없어요..');
+		    }
+		}
+
+		function displayMarker(locPosition, message) {
+		    var marker = new kakao.maps.Marker({
+		        map: map,
+		        position: locPosition
+		    });
+
+		    var iwContent = message,
+		        iwRemoveable = true;
+
+		    var infowindow = new kakao.maps.InfoWindow({
+		        content: iwContent,
+		        removable: iwRemoveable
+		    });
+
+		    // 인포윈도우의 가로 길이를 조절합니다.
+		    infowindow.setContent('<div style="padding:5px; width:150px;">' + iwContent + '</div>');
+
+		    infowindow.open(map, marker);
 		}
 
 		function initMap() {
