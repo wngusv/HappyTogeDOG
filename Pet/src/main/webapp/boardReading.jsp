@@ -302,7 +302,7 @@
 				<!-- 댓글 섹션 -->
 				<div class="comment-section">
 					<!-- 댓글 입력 폼 -->
-					<form action="/commentContent.do" method="post">
+					<form action="/commentContent.do" method="post" onsubmit="return validateCommentForm()">
 						<%
 						String userId = (String) session.getAttribute("userId");
 						%>
@@ -450,6 +450,14 @@ var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType + '&po
     });
 }
 
+function validateCommentForm() {
+    var commentInput = document.getElementById("comment-input").value.trim();
+    if (commentInput === "") {
+        alert("댓글을 입력하세요.");
+        return false; // 폼 제출 취소
+    }
+    return true; // 폼 제출 진행
+}
 
 </script>
 
