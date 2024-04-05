@@ -30,7 +30,7 @@ public class likeOrDislike extends HttpServlet {
 			System.out.println("postIdx: " + postIdxStr); // 로그 출력
 
 			int num = Integer.parseInt(req.getParameter("commentNum")); // 댓글 pk
-			String type = req.getParameter("reactionType"); // '좋아요' 또는 '싫어요' 문자열이 뭐냐???????????????
+			String type = req.getParameter("reactionType"); 
 			int postIdx = Integer.parseInt(req.getParameter("postIdx")); // 게시글 Idx
 
 			// 데이터베이스 연결과 로직을 처리합니다.
@@ -73,6 +73,19 @@ public class likeOrDislike extends HttpServlet {
 							insertStmt.setString(3, type);
 							insertStmt.executeUpdate();
 						}
+					}
+					String likeCountSql = "UPDATE comment_content\r\n"
+							+ "SET `like` = (SELECT COUNT(*)\r\n"
+							+ "              FROM comment_likeordislike\r\n"
+							+ "              WHERE comment_likeordislike.num = comment_content.num AND type = '좋아요');";
+					String dislikeCountSql =  "UPDATE comment_content\r\n"
+							+ "SET `dislike` = (SELECT COUNT(*)\r\n"
+							+ "                 FROM comment_likeordislike\r\n"
+							+ "                 WHERE comment_likeordislike.num = comment_content.num AND type = '싫어요')";
+					try (PreparedStatement pstmt1 = conn.prepareStatement(likeCountSql);
+							PreparedStatement pstmt2 = conn.prepareStatement(dislikeCountSql);) {
+						pstmt1.executeUpdate();
+						pstmt2.executeUpdate();
 					}
 				}
 

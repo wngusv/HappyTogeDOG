@@ -421,6 +421,12 @@ function sendReaction(postId, type) {
 }
 	
 function handleReaction(commentNum, reactionType) {
+	 // 사용자가 로그인하지 않은 경우 알림 표시
+    if (!userId) {
+        alert("로그인 후 사용 가능합니다.");
+        return;
+    }
+	 
     // reactionType '좋아요', '싫어요'
    var url = '/likeOrDislike.do';
 var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType + '&postIdx=' + postIdx;
@@ -451,12 +457,19 @@ var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType + '&po
 }
 
 function validateCommentForm() {
-    var commentInput = document.getElementById("comment-input").value.trim();
-    if (commentInput === "") {
-        alert("댓글을 입력하세요.");
-        return false; // 폼 제출 취소
+    var comment = document.getElementById('comment-input').value.trim();
+
+    // 사용자가 로그인하지 않았거나 댓글 입력란이 비어있는 경우
+    if (!userId) {
+        alert("로그인 후 이용 가능합니다.");
+        window.location.href = 'login.jsp';
+        return false; // 폼 제출 중단
+    } else if (!comment) {
+        alert("댓글을 입력해주세요.");
+        return false; // 폼 제출 중단
     }
-    return true; // 폼 제출 진행
+
+    return true; // 유효성 검증 통과, 폼 제출 계속
 }
 
 </script>
