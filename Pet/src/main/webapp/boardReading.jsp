@@ -15,27 +15,6 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 	rel="stylesheet">
 <style>
-.table-fixed {
-  table-layout: fixed;
-  width: 100%; /* 테이블 전체 너비를 지정 */
-}
-
-/* 각 열의 너비를 설정 */
-.table-fixed .col-user {
-  width: 20%; /* 사용자 이름 열의 너비 */
-}
-
-.table-fixed .col-comment {
-  width: 50%; /* 댓글 내용 열의 너비 */
-}
-
-.table-fixed .col-date {
-  width: 20%; /* 날짜 열의 너비 */
-}
-
-.table-fixed .col-like, .table-fixed .col-dislike {
-  width: 5%; /* 좋아요와 싫어요 열의 너비 */
-}
 .post-title {
 	font-size: 2rem; /* 제목 크기 */
 	color: #007bff; /* 제목 색상 */
@@ -151,58 +130,81 @@
 	font-size: 0.7rem; /* 폰트 크기 */
 	cursor: pointer; /* 커서 포인터 모양 */
 }
+
+/* 부트스트랩 클래스에 적용되는 스타일을 오버라이드하기 위한 CSS */
+.table-fixed {
+	table-layout: fixed;
+	width: 100%;
+}
+
+/* 클래스를 통해 열 너비를 조정 */
+.col-user {
+	width: 10%;
+}
+
+.col-comment {
+	width: 50%;
+}
+
+.col-date {
+	width: 15%;
+}
+
+.col-like, .col-dislike {
+	width: 10%;
+}
 </style>
 </head>
 <body>
 	<%
-    String idx = request.getParameter("idx");
-    int recommendationCount = 0;
-    int notRecommendationCount = 0;
+	String idx = request.getParameter("idx");
+	int recommendationCount = 0;
+	int notRecommendationCount = 0;
 
-    if (idx != null && !idx.isEmpty()) {
-        try {
-            int postIdx = Integer.parseInt(idx);
+	if (idx != null && !idx.isEmpty()) {
+		try {
+			int postIdx = Integer.parseInt(idx);
 
-            String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
-            String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
+			String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
+			String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
 
-            try (Connection conn = MyWebContextListener.getConnection();
-                 PreparedStatement psmtRec = conn.prepareStatement(sqlRec);
-                 PreparedStatement psmtNotRec = conn.prepareStatement(sqlNotRec)) {
+			try (Connection conn = MyWebContextListener.getConnection();
+			PreparedStatement psmtRec = conn.prepareStatement(sqlRec);
+			PreparedStatement psmtNotRec = conn.prepareStatement(sqlNotRec)) {
 
-                psmtRec.setInt(1, postIdx);
-                psmtNotRec.setInt(1, postIdx);
+		psmtRec.setInt(1, postIdx);
+		psmtNotRec.setInt(1, postIdx);
 
-                try (ResultSet rsRec = psmtRec.executeQuery()) {
-                    if (rsRec.next()) {
-                        recommendationCount = rsRec.getInt("rec_count");
-                    }
-                }
+		try (ResultSet rsRec = psmtRec.executeQuery()) {
+			if (rsRec.next()) {
+				recommendationCount = rsRec.getInt("rec_count");
+			}
+		}
 
-                try (ResultSet rsNotRec = psmtNotRec.executeQuery()) {
-                    if (rsNotRec.next()) {
-                        notRecommendationCount = rsNotRec.getInt("not_rec_count");
-                    }
-                }
-            }
+		try (ResultSet rsNotRec = psmtNotRec.executeQuery()) {
+			if (rsNotRec.next()) {
+				notRecommendationCount = rsNotRec.getInt("not_rec_count");
+			}
+		}
+			}
 
-            contentDAO dao = new contentDAO();
-            List<contentDTO> commentsList = dao.selectContents(String.valueOf(postIdx));
-            request.setAttribute("commentsList", commentsList);
+			contentDAO dao = new contentDAO();
+			List<contentDTO> commentsList = dao.selectContents(String.valueOf(postIdx));
+			request.setAttribute("commentsList", commentsList);
 
-        } catch (NumberFormatException e) {
-            // 숫자 변환 실패 시의 오류 처리
-            e.printStackTrace();
-            // 예: 오류 페이지로 리디렉션 또는 오류 메시지 출력
-        } catch (SQLException e) {
-            // SQL 예외 처리
-            e.printStackTrace();
-        }
-    } else {
-        // idxx가 null이거나 비어 있는 경우의 처리
-        // 예: 오류 페이지로 리디렉션 또는 오류 메시지 출력
-    }
-%>
+		} catch (NumberFormatException e) {
+			// 숫자 변환 실패 시의 오류 처리
+			e.printStackTrace();
+			// 예: 오류 페이지로 리디렉션 또는 오류 메시지 출력
+		} catch (SQLException e) {
+			// SQL 예외 처리
+			e.printStackTrace();
+		}
+	} else {
+		// idxx가 null이거나 비어 있는 경우의 처리
+		// 예: 오류 페이지로 리디렉션 또는 오류 메시지 출력
+	}
+	%>
 
 
 	<div class="container mt-5">
@@ -302,11 +304,11 @@
 				<table class="table table-fixed">
 					<thead>
 						<tr>
-							<th scope="col">사용자 이름</th>
-							<th scope="col">댓글</th>
-							<th scope="col">날짜</th>
-							<th scope="col">좋아요</th>
-							<th scope="col">싫어요</th>
+							<th class="col-user">사용자 이름</th>
+							<th class="col-comment">댓글</th>
+							<th class="col-date">날짜</th>
+							<th class="col-like">좋아요</th>
+							<th class="col-dislike">싫어요</th>
 						</tr>
 					</thead>
 					<tbody>
