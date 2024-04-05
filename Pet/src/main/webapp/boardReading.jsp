@@ -153,6 +153,13 @@
 .col-like, .col-dislike {
 	width: 10%;
 }
+
+/* 버튼 포커스 시 테두리 제거 */
+.reaction-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 </style>
 </head>
 <body>
@@ -160,10 +167,11 @@
 	String idx = request.getParameter("idx");
 	int recommendationCount = 0;
 	int notRecommendationCount = 0;
+	int postIdx = 0;
 
 	if (idx != null && !idx.isEmpty()) {
 		try {
-			int postIdx = Integer.parseInt(idx);
+			postIdx = Integer.parseInt(idx);
 
 			String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
 			String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
@@ -242,25 +250,32 @@
 
 				<div class="reactions">
 					<!-- 추천 버튼 -->
-					<button id="suggestion-button" class="reaction-button"
-						data-clicked="false">
-						<img src="images/강아지추천.PNG" alt="추천"
-							style="height: 50px; width: 50px;">
-					</button>
+					<form action="/comment.do" method="post" style="display: inline;">
+						<input type="hidden" name="action" value="추천"> <input
+							type="hidden" name="postIdx" value="<%=postIdx%>">
+						<button type="submit" id="suggestion-button"
+							class="reaction-button">
+							<img src="images/강아지추천.PNG" alt="추천"
+								style="height: 50px; width: 50px;">
+						</button>
+					</form>
 					<span id="suggestion-count" class="reaction-count"
 						style="font-size: 20px;"><%=recommendationCount%></span>
 
 					<!-- 비추천 버튼 -->
-					<button id="notRecommended-button" class="reaction-button"
-						data-clicked="false">
-						<img src="images/강아지비추천.PNG" alt="비추천"
-							style="height: 50px; width: 50px;">
-					</button>
+					<form action="/comment.do" method="post" style="display: inline;">
+						<input type="hidden" name="action" value="비추천"> <input
+							type="hidden" name="postIdx" value="<%=postIdx%>">
+						<button type="submit" id="notRecommended-button"
+							class="reaction-button">
+							<img src="images/강아지비추천.PNG" alt="비추천"
+								style="height: 50px; width: 50px;">
+						</button>
+					</form>
 					<span id="notRecommended-count" class="reaction-count"
 						style="font-size: 20px;"><%=notRecommendationCount%></span>
-
-
 				</div>
+
 
 				<!-- 공유, 인쇄 버튼 추가 -->
 				<div class="print-container">
@@ -322,19 +337,21 @@
 							<td><%=comment.getContent()%></td>
 							<td><%=comment.getContent_time()%></td>
 							<td>
-								<button type="button" class="reaction-button" onclick="handleLike(<%=comment.getId()%>)">
+								<button type="button" class="reaction-button"
+									onclick="handleReaction(<%=comment.getNum()%>, '좋아요')">
 									<img src="images/강아지좋아요.PNG" alt="좋아요"
-									style="height: 30px; width: 30px;">
-							</button><%=comment.getLike()%>
+										style="height: 30px; width: 30px;">
+								</button> <%=comment.getLike()%>
 							</td>
 
 							<td>
 								<button type="button" class="reaction-button"
-									onclick="handleDislike(<%=comment.getId()%>)">
+									onclick="handleReaction(<%=comment.getNum()%>, '싫어요')">
 									<img src="images/강아지싫어요.PNG" alt="싫어요"
-									style="height: 30px; width: 30px;">
-								</button><%=comment.getDislike()%>
+										style="height: 30px; width: 30px;">
+								</button> <%=comment.getDislike()%>
 							</td>
+
 						</tr>
 						<%
 						}
@@ -398,80 +415,37 @@ function sendReaction(postId, type) {
         console.error('Error:', error);
     });
 }
-	// 추천 버튼 클릭 이벤트 리스너
-	document
-			.getElementById('suggestion-button')
-			.addEventListener(
-					'click',
-					function() {
-						 // 로그인 체크
-				        if (userId === "") {
-				            alert("로그인 후 이용 가능합니다.");
-				            return;
-				        }
-						 
-						var suggestionCount = parseInt(document
-								.getElementById('suggestion-count').textContent);
-						var notRecommendedButton = document
-								.getElementById('notRecommended-button');
-						var notRecommendedCount = parseInt(document
-								.getElementById('notRecommended-count').textContent);
+	
+	function handleReaction(commentNum, reactionType) {
+		  // reactionType '좋아요', '싫어요'
+		  var url = '/likeOrDislike.do'; // 좋아요 싫어요 눌렀을 때 db에 들어가는 서블릿 만들어서 URL
+		  var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType;
+		  
+		  // AJAX 요청을 보내거나 form을 이용해 서버에 전송
+		  // 예: AJAX 요청의 경우
+		  fetch(url, {
+		    method: 'POST',
+		    headers: {
+		      'Content-Type': 'application/x-www-form-urlencoded'
+		    },
+		    body: params
+		  })
+		  .then(response => response.json())
+		  .then(data => {
+		    if(data.status === 'success') {
+		      // 성공적으로 처리되었을 때의 로직
+		      console.log(reactionType + ' updated successfully for comment ' + commentNum);
+		    } else {
+		      // 에러 처리
+		      console.error('Failed to update ' + reactionType);
+		    }
+		  })
+		  .catch(error => {
+		    // 네트워크 오류 처리
+		    console.error('Error:', error);
+		  });
+		}
 
-						var suggestionClicked = this
-								.getAttribute('data-clicked') === 'true';
-						var notRecommendedClicked = notRecommendedButton
-								.getAttribute('data-clicked') === 'true';
-
-						if (notRecommendedClicked) {
-							notRecommendedButton.setAttribute('data-clicked',
-									false);
-							document.getElementById('notRecommended-count').textContent = notRecommendedCount - 1;
-						}
-
-						this.setAttribute('data-clicked', !suggestionClicked);
-						document.getElementById('suggestion-count').textContent = !suggestionClicked ? suggestionCount + 1
-								: suggestionCount - 1;
-						
-						sendReaction(postIdx, '추천');
-					});
-
-	// 비추천 버튼 클릭 이벤트 리스너
-	document
-			.getElementById('notRecommended-button')
-			.addEventListener(
-					'click',
-					function() {
-						 // 로그인 체크
-				        if (userId === "") {
-				            alert("로그인 후 이용 가능합니다.");
-				            return;
-				        }
-						 
-						var notRecommendedCount = parseInt(document
-								.getElementById('notRecommended-count').textContent);
-						var suggestionButton = document
-								.getElementById('suggestion-button');
-						var suggestionCount = parseInt(document
-								.getElementById('suggestion-count').textContent);
-
-						var notRecommendedClicked = this
-								.getAttribute('data-clicked') === 'true';
-						var suggestionClicked = suggestionButton
-								.getAttribute('data-clicked') === 'true';
-
-						if (suggestionClicked) {
-							suggestionButton
-									.setAttribute('data-clicked', false);
-							document.getElementById('suggestion-count').textContent = suggestionCount - 1;
-						}
-
-						this.setAttribute('data-clicked',
-								!notRecommendedClicked);
-						document.getElementById('notRecommended-count').textContent = !notRecommendedClicked ? notRecommendedCount + 1
-								: notRecommendedCount - 1;
-						
-						sendReaction(postIdx, '비추천');
-					});
 </script>
 
 

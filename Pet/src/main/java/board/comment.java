@@ -25,16 +25,13 @@ public class comment extends HttpServlet { // 유저가 쓴 댓글 action으로 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		String userId = (String) session.getAttribute("userId");
-		// User user = null; 유저 안 만들어도 될 것 같기둥..
 
 		if (userId != null) {
-			// user = UserDAO.getUserById(userId); // 공감한 유저 아이디
-
 			int postIdx = Integer.parseInt(req.getParameter("postIdx")); // 게시글 Idx
-			String type = req.getParameter("type"); // '추천' 또는 '비추천' 문자열
+			String type = req.getParameter("action");
+			// '추천' 또는 '비추천' 문자열
 
 			// 데이터베이스 연결과 로직을 처리합니다.
-			// 예: DB에 추천/비추천 상태 업데이트(insert or update)
 			String checkSql = "SELECT * FROM comment WHERE post_idx = ? AND id = ?";
 
 			try (Connection conn = MyWebContextListener.getConnection();
@@ -45,13 +42,25 @@ public class comment extends HttpServlet { // 유저가 쓴 댓글 action으로 
 
 				try (ResultSet rs = checkStmt.executeQuery()) {
 					if (rs.next()) {
-						// 이미 추천/비추천이 있다면, 업데이트 처리
-						String updateSql = "UPDATE comment SET type = ? WHERE post_idx = ? AND id = ?";
-						try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-							updateStmt.setString(1, type);
-							updateStmt.setInt(2, postIdx);
-							updateStmt.setString(3, userId);
-							updateStmt.executeUpdate();
+						String existingType = rs.getString("type");
+						// Null 체크
+						if (existingType == null || existingType.equals(type)) {
+							// 추천/비추천이 없거나 같은 타입이면 삭제
+							String deleteSql = "DELETE FROM comment WHERE post_idx = ? AND id = ?";
+							try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+								deleteStmt.setInt(1, postIdx);
+								deleteStmt.setString(2, userId);
+								deleteStmt.executeUpdate();
+							}
+						} else {
+							// 다른 타입이면 업데이트
+							String updateSql = "UPDATE comment SET type = ? WHERE post_idx = ? AND id = ?";
+							try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+								updateStmt.setString(1, type);
+								updateStmt.setInt(2, postIdx);
+								updateStmt.setString(3, userId);
+								updateStmt.executeUpdate();
+							}
 						}
 					} else {
 						// 추천/비추천이 없다면, 새로 추가
@@ -64,13 +73,17 @@ public class comment extends HttpServlet { // 유저가 쓴 댓글 action으로 
 						}
 					}
 				}
-				
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 
+			// 처리 후 게시글 읽기 페이지로 리다이렉트
+			resp.sendRedirect("boardReading.jsp?idx=" + postIdx);
 		} else {
 			// 로그인하지 않은 경우, 로그인 페이지나 메시지 표시 등의 처리
+			// 예: 로그인 페이지로 리다이렉트
+			resp.sendRedirect("login.jsp");
 		}
 	}
 
