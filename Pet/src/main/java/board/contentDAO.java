@@ -24,6 +24,7 @@ public class contentDAO {
 	        try (ResultSet rs = pst.executeQuery()) {
 	            while (rs.next()) {
 	                contentDTO dto = new contentDTO(); // 각 댓글에 대한 새 DTO 객체 생성
+	                dto.setNum(String.valueOf(rs.getInt("num")));
 	                dto.setId(rs.getString("id"));
 	                dto.setContent(rs.getString("content"));
 	                dto.setContent_time(rs.getTimestamp("content_time").toString());

@@ -17,8 +17,6 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 
-	<div class="floating-banner"
-		onclick="window.location.href='donations.jsp';">기부</div>
 
 	<footer>
 		<div class="container">

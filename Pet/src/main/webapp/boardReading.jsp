@@ -5,6 +5,7 @@
 <%@ page import="java.sql.*"%>
 <%@page import="java.util.List"%>
 <%@page import="board.contentDTO"%>
+<%@ include file="/floating-banner.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -175,6 +176,7 @@
 
 			String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
 			String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
+			
 
 			try (Connection conn = MyWebContextListener.getConnection();
 			PreparedStatement psmtRec = conn.prepareStatement(sqlRec);
@@ -212,6 +214,8 @@
 		// idxx가 null이거나 비어 있는 경우의 처리
 		// 예: 오류 페이지로 리디렉션 또는 오류 메시지 출력
 	}
+	
+	
 	%>
 
 
@@ -298,7 +302,7 @@
 				<!-- 댓글 섹션 -->
 				<div class="comment-section">
 					<!-- 댓글 입력 폼 -->
-					<form action="/commentContent.do" method="post">
+					<form action="/commentContent.do" method="post" onsubmit="return validateCommentForm()">
 						<%
 						String userId = (String) session.getAttribute("userId");
 						%>
@@ -338,7 +342,7 @@
 							<td><%=comment.getContent_time()%></td>
 							<td>
 								<button type="button" class="reaction-button"
-									onclick="handleReaction(<%=comment.getNum()%>, '좋아요')">
+									onclick="handleReaction(<%= comment.getNum() %>, '좋아요')">
 									<img src="images/강아지좋아요.PNG" alt="좋아요"
 										style="height: 30px; width: 30px;">
 								</button> <%=comment.getLike()%>
@@ -346,7 +350,7 @@
 
 							<td>
 								<button type="button" class="reaction-button"
-									onclick="handleReaction(<%=comment.getNum()%>, '싫어요')">
+									onclick="handleReaction(<%= comment.getNum() %>, '싫어요')">
 									<img src="images/강아지싫어요.PNG" alt="싫어요"
 										style="height: 30px; width: 30px;">
 								</button> <%=comment.getDislike()%>
@@ -416,35 +420,44 @@ function sendReaction(postId, type) {
     });
 }
 	
-	function handleReaction(commentNum, reactionType) {
-		  // reactionType '좋아요', '싫어요'
-		  var url = '/likeOrDislike.do'; // 좋아요 싫어요 눌렀을 때 db에 들어가는 서블릿 만들어서 URL
-		  var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType;
-		  
-		  // AJAX 요청을 보내거나 form을 이용해 서버에 전송
-		  // 예: AJAX 요청의 경우
-		  fetch(url, {
-		    method: 'POST',
-		    headers: {
-		      'Content-Type': 'application/x-www-form-urlencoded'
-		    },
-		    body: params
-		  })
-		  .then(response => response.json())
-		  .then(data => {
-		    if(data.status === 'success') {
-		      // 성공적으로 처리되었을 때의 로직
-		      console.log(reactionType + ' updated successfully for comment ' + commentNum);
-		    } else {
-		      // 에러 처리
-		      console.error('Failed to update ' + reactionType);
-		    }
-		  })
-		  .catch(error => {
-		    // 네트워크 오류 처리
-		    console.error('Error:', error);
-		  });
-		}
+function handleReaction(commentNum, reactionType) {
+    // reactionType '좋아요', '싫어요'
+   var url = '/likeOrDislike.do';
+var params = 'commentNum=' + commentNum + '&reactionType=' + reactionType + '&postIdx=' + postIdx;
+
+
+    // AJAX 요청 보내기
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === 'success') {
+            // 성공 처리
+            console.log(reactionType + ' updated successfully for comment ' + commentNum);
+        } else {
+            // 실패 처리
+            console.error('Failed to update ' + reactionType);
+        }
+    })
+    .catch(error => {
+        // 네트워크 오류 처리
+        console.error('Error:', error);
+    });
+}
+
+function validateCommentForm() {
+    var commentInput = document.getElementById("comment-input").value.trim();
+    if (commentInput === "") {
+        alert("댓글을 입력하세요.");
+        return false; // 폼 제출 취소
+    }
+    return true; // 폼 제출 진행
+}
 
 </script>
 
