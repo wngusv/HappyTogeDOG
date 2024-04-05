@@ -5,6 +5,7 @@
 <%@ page import="java.sql.*"%>
 <%@page import="java.util.List"%>
 <%@page import="board.contentDTO"%>
+<%@ include file="/floating-banner.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
