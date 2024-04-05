@@ -5,7 +5,7 @@
 <%@ page import="java.sql.*"%>
 <%@page import="java.util.List"%>
 <%@page import="board.contentDTO"%>
-<%@ include file="/floating-banner.jsp" %>
+<%@ include file="/floating-banner.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -157,10 +157,9 @@
 
 /* 버튼 포커스 시 테두리 제거 */
 .reaction-button:focus {
-    outline: none;
-    box-shadow: none;
+	outline: none;
+	box-shadow: none;
 }
-
 </style>
 </head>
 <body>
@@ -176,7 +175,6 @@
 
 			String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
 			String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
-			
 
 			try (Connection conn = MyWebContextListener.getConnection();
 			PreparedStatement psmtRec = conn.prepareStatement(sqlRec);
@@ -214,8 +212,6 @@
 		// idxx가 null이거나 비어 있는 경우의 처리
 		// 예: 오류 페이지로 리디렉션 또는 오류 메시지 출력
 	}
-	
-	
 	%>
 
 
@@ -299,10 +295,12 @@
 						src="images/인쇄.png" width="25" alt="인쇄"> </a>
 				</div>
 				<br>
+
 				<!-- 댓글 섹션 -->
 				<div class="comment-section">
 					<!-- 댓글 입력 폼 -->
-					<form action="/commentContent.do" method="post" onsubmit="return validateCommentForm()">
+					<form action="/commentContent.do" method="post"
+						onsubmit="return validateCommentForm()">
 						<%
 						String userId = (String) session.getAttribute("userId");
 						%>
@@ -315,10 +313,14 @@
 
 						<textarea id="comment-input" name="comment" class="form-control"
 							rows="3" placeholder="댓글을 입력하세요..."></textarea>
-
+						<br>
 						<button type="submit" class="btn btn-primary mt-2">등록</button>
 					</form>
 				</div>
+
+				<br>
+				<button type="button" onclick="sortComments('latest')">최신순</button>
+				<button type="button" onclick="sortComments('mostLiked')">좋아요순</button>
 
 				<table class="table table-fixed">
 					<thead>
@@ -342,18 +344,18 @@
 							<td><%=comment.getContent_time()%></td>
 							<td>
 								<button type="button" class="reaction-button"
-									onclick="handleReaction(<%= comment.getNum() %>, '좋아요')">
+									onclick="handleReaction(<%=comment.getNum()%>, '좋아요')">
 									<img src="images/강아지좋아요.PNG" alt="좋아요"
 										style="height: 30px; width: 30px;">
-								</button>  <span id="like-count-<%=comment.getNum()%>"><%=comment.getLike()%></span>
+								</button> <span id="like-count-<%=comment.getNum()%>"><%=comment.getLike()%></span>
 							</td>
 
 							<td>
 								<button type="button" class="reaction-button"
-									onclick="handleReaction(<%= comment.getNum() %>, '싫어요')">
+									onclick="handleReaction(<%=comment.getNum()%>, '싫어요')">
 									<img src="images/강아지싫어요.PNG" alt="싫어요"
 										style="height: 30px; width: 30px;">
-								</button>  <span id="dislike-count-<%=comment.getNum()%>"><%=comment.getDislike()%></span>
+								</button> <span id="dislike-count-<%=comment.getNum()%>"><%=comment.getDislike()%></span>
 							</td>
 
 						</tr>
@@ -389,6 +391,50 @@
 <script>
 var userId = '<%=(session.getAttribute("userId") != null) ? session.getAttribute("userId") : ""%>';
 var postIdx = <%=idx%>; // 게시글 idx
+
+//댓글 정렬 요청을 보내고 응답을 처리하는 함수
+function sortComments(orderType) {
+    fetch('/commentSortServlet.do', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'orderType=' + orderType + '&postIdx=' + postIdx
+    })
+    .then(response => response.json())
+    .then(data => {
+        updateTable(data); // 테이블 업데이트 함수 호출
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// 테이블을 업데이트하는 함수
+function updateTable(comments) {
+    var tableBody = document.querySelector('.table.table-fixed tbody');
+    tableBody.innerHTML = ''; // 기존 테이블 내용을 비웁니다.
+
+    comments.forEach(comment => {
+        var row = '<tr>' +
+                    '<td>' + comment.id + '</td>' +
+                    '<td>' + comment.content + '</td>' +
+                    '<td>' + comment.content_time + '</td>' +
+                    '<td>' +
+                        '<button type="button" class="reaction-button" onclick="handleReaction(' + comment.num + ', \'좋아요\')">' +
+                            '<img src="images/강아지좋아요.PNG" alt="좋아요" style="height: 30px; width: 30px;">' +
+                        '</button>' + 
+                        '<span id="like-count-' + comment.num + '">' + comment.like + '</span>' +
+                    '</td>' +
+                    '<td>' +
+                        '<button type="button" class="reaction-button" onclick="handleReaction(' + comment.num + ', \'싫어요\')">' +
+                            '<img src="images/강아지싫어요.PNG" alt="싫어요" style="height: 30px; width: 30px;">' +
+                        '</button>' +
+                        '<span id="dislike-count-' + comment.num + '">' + comment.dislike + '</span>' +
+                    '</td>' +
+                  '</tr>';
+        tableBody.innerHTML += row; // 새로운 행을 테이블에 추가합니다.
+    });
+}
+
 
 function sendReaction(postId, type) {
 	 // 로그인하지 않은 경우 알림을 표시하고 함수 실행을 중단합니다.
