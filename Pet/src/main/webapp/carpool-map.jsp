@@ -533,8 +533,8 @@
 					body: JSON.stringify({
 						title: title,
 						content: content,
-						//mapState: mapState,
-						//id: userId
+						mapState: mapState,
+						id: userId
 					})
 				})
 					.then(response => response.json())
