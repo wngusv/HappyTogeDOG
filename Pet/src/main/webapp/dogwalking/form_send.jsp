@@ -8,7 +8,9 @@
 
 
 <%
-try {
+String insertQuery = "INSERT INTO pet.dogwalker(num, id, title, size, day, time, address, address_detail, pay, content, today_date, fileName1, fileRealName1, file_route1, fileName2, fileRealName2, file_route2 ,fileName3, fileRealName3, file_route3, fileName4, fileRealName4, file_route4, fileName5, fileRealName5, file_route5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+try (Connection connection = MyWebContextListener.getConnection();
+		PreparedStatement psmt = connection.prepareStatement(insertQuery);) {
     // 인코딩 UTF-8 설정
     request.setCharacterEncoding("UTF-8");
     
@@ -74,9 +76,9 @@ try {
     String file_route5 = "/uploads/" + fileRealName5; // 상대 경로 저장
 
     // DB 연결 및 SQL 쿼리 실행
-    Connection connection = MyWebContextListener.getConnection();
-    String insertQuery = "INSERT INTO pet.dogwalker(num, id, title, size, day, time, address, address_detail, pay, content, today_date, fileName1, fileRealName1, file_route1, fileName2, fileRealName2, file_route2 ,fileName3, fileRealName3, file_route3, fileName4, fileRealName4, file_route4, fileName5, fileRealName5, file_route5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    PreparedStatement psmt = connection.prepareStatement(insertQuery);
+    
+    
+    
     psmt.setInt(1, num);
     psmt.setString(2, id);
     psmt.setString(3, title);

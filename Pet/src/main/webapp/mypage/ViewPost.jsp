@@ -21,11 +21,12 @@
 </head>
 <body>
 <%
-    String num = request.getParameter("num");
-    if(num != null && !num.isEmpty()) {
+    String postId = request.getParameter("postId");
+    if(postId != null && !postId.isEmpty()) {
     	String query = "SELECT * FROM dogwalker WHERE num = ?";
-        try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query);) {
-            pstmt.setInt(1, Integer.parseInt(num));
+    	try (Connection conn = MyWebContextListener.getConnection();
+        		PreparedStatement pstmt = conn.prepareStatement(query);){
+            pstmt.setInt(1, Integer.parseInt(postId));
             ResultSet rs = pstmt.executeQuery();
             if(rs.next()) {
                 String title = rs.getString("title");
@@ -38,19 +39,14 @@
                 String content = rs.getString("content");
                 Timestamp todayDate = rs.getTimestamp("today_date");
                 String fileName1 = rs.getString("fileName1");
-                String fileRealName1 = rs.getString("fileRealName1");
                 String fileRoute1 = rs.getString("file_route1");
                 String fileName2 = rs.getString("fileName2");
-                String fileRealName2 = rs.getString("fileRealName2");
                 String fileRoute2 = rs.getString("file_route2");
                 String fileName3 = rs.getString("fileName3");
-                String fileRealName3 = rs.getString("fileRealName3");
                 String fileRoute3 = rs.getString("file_route3");
                 String fileName4 = rs.getString("fileName4");
-                String fileRealName4 = rs.getString("fileRealName4");
                 String fileRoute4 = rs.getString("file_route4");
                 String fileName5 = rs.getString("fileName5");
-                String fileRealName5 = rs.getString("fileRealName5");
                 String fileRoute5 = rs.getString("file_route5");
 %>
 <div class="card">
@@ -61,7 +57,7 @@
                     <th scope="row">제목</th>
                     <td><%= title %></td>
                 </tr>
-                 <tr>
+                <tr>
                     <th scope="row">작성 날짜</th>
                     <td><%= todayDate %></td>
                 </tr>
@@ -107,6 +103,10 @@
             <div class="col-md-2">
                 <img src="<%= fileRoute5 %>" class="img-fluid" alt="Dog Photo5">
             </div>
+        </div>
+        <div>
+            <a href="/mypage/EditPost.jsp?postId=<%= postId %>" class="btn btn-primary">수정</a>
+            <a href="/mypage/DeletePost.jsp?postId=<%= postId %>" class="btn btn-danger">삭제</a>
         </div>
     </div>
 </div>

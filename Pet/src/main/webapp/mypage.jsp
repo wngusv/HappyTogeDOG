@@ -10,14 +10,9 @@
 <body>
     <h1>마이페이지</h1>
     <% 
-    try {
-
+    try (Connection connection = MyWebContextListener.getConnection();) {
         String userId = (String) session.getAttribute("userId");
-        
-        // DB 연결
-        Connection connection = MyWebContextListener.getConnection();
         Statement stmt = connection.createStatement();
-        
         // 회원 정보 가져오기
         String userInfoQuery = "SELECT * FROM pet.user WHERE id = '" + userId + "'";
         ResultSet userInfoRs = stmt.executeQuery(userInfoQuery);
@@ -54,7 +49,7 @@
                 String todayDate = userPostsRs.getString("today_date");
             %>
             <tr>
-                <td><a href="EditPost.jsp?postId=<%= postId %>"><%= title %></a></td>
+                <td><a href="/mypage/ViewPost.jsp?postId=<%= postId %>"><%= title %></a></td>
                 <td><%= todayDate %></td>
                 <td><a href="EditPost.jsp?postId=<%= postId %>">수정</a></td>
                 <td><a href="DeletePost.jsp?postId=<%= postId %>">삭제</a></td>

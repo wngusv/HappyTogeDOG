@@ -87,8 +87,8 @@
 							</thead>
 							<tbody>
 								<%
-								try {
-									Connection connection = MyWebContextListener.getConnection();
+								try (Connection connection = MyWebContextListener.getConnection();) {
+									
 									int recordsPerPage = 10;
 									int currentPage = 1;
 									if (request.getParameter("currentPage") != null) {
@@ -123,7 +123,7 @@
 										href="dogwalking/dogwalking_board_read.jsp?num=<%=rs.getInt("num")%>"><%=rs.getString("title")%></a></td>
 									<td><%=rs.getString("day")%></td>
 									<td><%=rs.getString("time")%></td>
-									<td><%=rs.getInt("pay")%></td>
+									<td><%=rs.getInt("pay")%> 원</td>
 									<td><%=rs.getTimestamp("today_date")%></td>
 								</tr>
 								<%
