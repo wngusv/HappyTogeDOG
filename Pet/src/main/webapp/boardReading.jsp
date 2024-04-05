@@ -244,8 +244,8 @@
 					<!-- 추천 버튼 -->
 					<button id="suggestion-button" class="reaction-button"
 						data-clicked="false">
-						<img src="images/추천.PNG" alt="추천"
-							style="height: 40px; width: 40px;">
+						<img src="images/강아지추천.PNG" alt="추천"
+							style="height: 50px; width: 50px;">
 					</button>
 					<span id="suggestion-count" class="reaction-count"
 						style="font-size: 20px;"><%=recommendationCount%></span>
@@ -253,8 +253,8 @@
 					<!-- 비추천 버튼 -->
 					<button id="notRecommended-button" class="reaction-button"
 						data-clicked="false">
-						<img src="images/비추천.PNG" alt="비추천"
-							style="height: 40px; width: 40px;">
+						<img src="images/강아지비추천.PNG" alt="비추천"
+							style="height: 50px; width: 50px;">
 					</button>
 					<span id="notRecommended-count" class="reaction-count"
 						style="font-size: 20px;"><%=notRecommendationCount%></span>
@@ -321,8 +321,20 @@
 							<td><%=comment.getId()%></td>
 							<td><%=comment.getContent()%></td>
 							<td><%=comment.getContent_time()%></td>
-							<td><%=comment.getLike()%></td>
-							<td><%=comment.getDislike()%></td>
+							<td>
+								<button type="button" class="reaction-button" onclick="handleLike(<%=comment.getId()%>)">
+									<img src="images/강아지좋아요.PNG" alt="좋아요"
+									style="height: 30px; width: 30px;">
+							</button><%=comment.getLike()%>
+							</td>
+
+							<td>
+								<button type="button" class="reaction-button"
+									onclick="handleDislike(<%=comment.getId()%>)">
+									<img src="images/강아지싫어요.PNG" alt="싫어요"
+									style="height: 30px; width: 30px;">
+								</button><%=comment.getDislike()%>
+							</td>
 						</tr>
 						<%
 						}
