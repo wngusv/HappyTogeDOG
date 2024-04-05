@@ -15,6 +15,27 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 	rel="stylesheet">
 <style>
+.table-fixed {
+  table-layout: fixed;
+  width: 100%; /* 테이블 전체 너비를 지정 */
+}
+
+/* 각 열의 너비를 설정 */
+.table-fixed .col-user {
+  width: 20%; /* 사용자 이름 열의 너비 */
+}
+
+.table-fixed .col-comment {
+  width: 50%; /* 댓글 내용 열의 너비 */
+}
+
+.table-fixed .col-date {
+  width: 20%; /* 날짜 열의 너비 */
+}
+
+.table-fixed .col-like, .table-fixed .col-dislike {
+  width: 5%; /* 좋아요와 싫어요 열의 너비 */
+}
 .post-title {
 	font-size: 2rem; /* 제목 크기 */
 	color: #007bff; /* 제목 색상 */
@@ -134,48 +155,61 @@
 </head>
 <body>
 	<%
-	String idxx = request.getParameter("idx");
-	int recommendationCount = 0;
-	int notRecommendationCount = 0;
+    String idx = request.getParameter("idx");
+    int recommendationCount = 0;
+    int notRecommendationCount = 0;
 
-	// 데이터베이스에서 추천 횟수를 가져오는 쿼리
-	String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
-	// 데이터베이스에서 비추천 횟수를 가져오는 쿼리
-	String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
+    if (idx != null && !idx.isEmpty()) {
+        try {
+            int postIdx = Integer.parseInt(idx);
 
-	try (Connection conn = MyWebContextListener.getConnection();
-			PreparedStatement psmtRec = conn.prepareStatement(sqlRec);
-			PreparedStatement psmtNotRec = conn.prepareStatement(sqlNotRec)) {
+            String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
+            String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
 
-		psmtRec.setInt(1, Integer.parseInt(idxx));
-		psmtNotRec.setInt(1, Integer.parseInt(idxx));
+            try (Connection conn = MyWebContextListener.getConnection();
+                 PreparedStatement psmtRec = conn.prepareStatement(sqlRec);
+                 PreparedStatement psmtNotRec = conn.prepareStatement(sqlNotRec)) {
 
-		try (ResultSet rsRec = psmtRec.executeQuery()) {
-			if (rsRec.next()) {
-		recommendationCount = rsRec.getInt("rec_count");
-			}
-		}
+                psmtRec.setInt(1, postIdx);
+                psmtNotRec.setInt(1, postIdx);
 
-		try (ResultSet rsNotRec = psmtNotRec.executeQuery()) {
-			if (rsNotRec.next()) {
-		notRecommendationCount = rsNotRec.getInt("not_rec_count");
-			}
-		}
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
+                try (ResultSet rsRec = psmtRec.executeQuery()) {
+                    if (rsRec.next()) {
+                        recommendationCount = rsRec.getInt("rec_count");
+                    }
+                }
 
-	String postIdx = request.getParameter("idx");
-	contentDAO dao = new contentDAO();
-	List<contentDTO> commentsList = dao.selectContents(postIdx);
-	request.setAttribute("commentsList", commentsList);
-	%>
+                try (ResultSet rsNotRec = psmtNotRec.executeQuery()) {
+                    if (rsNotRec.next()) {
+                        notRecommendationCount = rsNotRec.getInt("not_rec_count");
+                    }
+                }
+            }
+
+            contentDAO dao = new contentDAO();
+            List<contentDTO> commentsList = dao.selectContents(String.valueOf(postIdx));
+            request.setAttribute("commentsList", commentsList);
+
+        } catch (NumberFormatException e) {
+            // 숫자 변환 실패 시의 오류 처리
+            e.printStackTrace();
+            // 예: 오류 페이지로 리디렉션 또는 오류 메시지 출력
+        } catch (SQLException e) {
+            // SQL 예외 처리
+            e.printStackTrace();
+        }
+    } else {
+        // idxx가 null이거나 비어 있는 경우의 처리
+        // 예: 오류 페이지로 리디렉션 또는 오류 메시지 출력
+    }
+%>
+
 
 	<div class="container mt-5">
 		<div class="card">
 			<div class="card-body">
 				<%
-				String idx = request.getParameter("idx");
+				// String idx = request.getParameter("idx");
 				if (idx != null && !idx.isEmpty()) {
 					String sql = "SELECT * FROM board WHERE idx = ?";
 					try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement psmt = conn.prepareStatement(sql)) {
@@ -265,7 +299,7 @@
 					</form>
 				</div>
 
-				<table class="table">
+				<table class="table table-fixed">
 					<thead>
 						<tr>
 							<th scope="col">사용자 이름</th>
