@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -22,6 +23,8 @@ public class ChatServer {
 	@OnOpen
 	public void onOpen(Session session) {
 		String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
+		String chatId = session.getRequestParameterMap().get("userId").get(0);
+		System.out.println(chatId);
 		chatRooms.computeIfAbsent(chatRoom, k -> new HashSet<>()).add(session);
 		System.out.println("웹소켓 연결: " + session.getId() + ", 채팅방: " + chatRoom);
 	}

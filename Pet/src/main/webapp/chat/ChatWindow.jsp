@@ -6,19 +6,67 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-var userId = '<%= session.getAttribute("userId") %>';
-if (userId) {
-var chatRoomNum = <%=request.getParameter("chatRoom")%>;
-var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/ChatingServer?chatRoom="+chatRoomNum);
+
 	var chatWindow, chatMessage, chatId;
 
 	// 채팅창이 열리면 대화창, 메시지 입력창, 아이디 표시란으로 사용할 DOM 객체 저장
 	// 윈도우가 로드되면 실행할 익명 함수
+	
 	window.onload = function() {
+		if (checkLoginStatus()) {
+			chatId = document.getElementById("chatId").value;
+	        establishWebSocket(); // Establish WebSocket connection if the user is logged in
+	    }
 		chatWindow = document.getElementById("chatWindow");
 		chatMessage = document.getElementById("chatMessage");
-		chatId = document.getElementById("chatId").value;
 	};
+	function checkLoginStatus() {
+	    var checkedLogin = '<%= session.getAttribute("userId") %>';
+	    if (checkedLogin === "null" || checkedLogin === '') {
+	        alert("비정상적인 접속입니다.");
+	        return false; // Return false to prevent further execution
+	    }
+	    return true; // Return true if the user is logged in
+	}
+	function establishWebSocket() {
+	    var chatRoomNum = '<%=request.getParameter("chatRoom")%>';
+	    var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/ChatingServer?chatRoom="+chatRoomNum+"&userId="+chatId);
+	    // The rest of your WebSocket setup code...
+		// 웹소켓 서버에 연결되었을 때 실행
+		webSocket.onopen = function(event) {
+			chatWindow.innerHTML += "웹소켓 서버에 연결되었습니다.<br>";
+		};
+
+		// 웹소켓이 닫혔을 때 실행
+		webSocket.onclose = function(event) {
+			chatWindow.innerHTML += "웹소켓 서버가 종료되었습니다.<br>";
+		}
+
+		webSocket.onerror = function(event) {
+			alert(event.data);
+			chatWindow.innerHTML += "채팅 중 에러가 발생하였습니다.<br>";
+		}
+
+		// 메시지를 받았을 때 실행
+		webSocket.onmessage = function(event) {
+			var message = event.data.split("|"); // 대화명과 메시지 분리
+			var sender = message[0];
+			var content = message[1];
+			if (content != "") {
+				if (content.match("/")) { // 귓속말
+					if (content.match(("/" + chatId))) { // 나에게 보낸 메시지만 출력
+						var temp = content.replace(("/" + chatId), "[귓속말]: ");
+						chatWindow.innerHTML += "<div>" + sender + "" + temp
+								+ "</div>";
+					}
+				} else { // 일반 대화
+					chatWindow.innerHTML += "<div>" + sender + ": " + content
+							+ "</div>";
+				}
+			}
+			chatWindow.scrollTop = chatWindow.srollHeight;
+		};
+	}
 
 	// 메시지 전송
 	function sendMessage() {
@@ -41,43 +89,7 @@ var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/Ch
 		}
 	}
 
-	// 웹소켓 서버에 연결되었을 때 실행
-	webSocket.onopen = function(event) {
-		chatWindow.innerHTML += "웹소켓 서버에 연결되었습니다.<br>";
-	};
 
-	// 웹소켓이 닫혔을 때 실행
-	webSocket.onclose = function(event) {
-		chatWindow.innerHTML += "웹소켓 서버가 종료되었습니다.<br>";
-	}
-
-	webSocket.onerror = function(event) {
-		alert(event.data);
-		chatWindow.innerHTML += "채팅 중 에러가 발생하였습니다.<br>";
-	}
-
-	// 메시지를 받았을 때 실행
-	webSocket.onmessage = function(event) {
-		var message = event.data.split("|"); // 대화명과 메시지 분리
-		var sender = message[0];
-		var content = message[1];
-		if (content != "") {
-			if (content.match("/")) { // 귓속말
-				if (content.match(("/" + chatId))) { // 나에게 보낸 메시지만 출력
-					var temp = content.replace(("/" + chatId), "[귓속말]: ");
-					chatWindow.innerHTML += "<div>" + sender + "" + temp
-							+ "</div>";
-				}
-			} else { // 일반 대화
-				chatWindow.innerHTML += "<div>" + sender + ": " + content
-						+ "</div>";
-			}
-		}
-		chatWindow.scrollTop = chatWindow.srollHeight;
-	};
-} else{
-	alert("로그인 후 채팅 가능합니다.");
-}
 </script>
 <style>
 #chatWindow {
