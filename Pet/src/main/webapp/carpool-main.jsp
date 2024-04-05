@@ -8,6 +8,18 @@
 <meta charset="UTF-8">
 <title>카풀 메인</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
+<style>
+.rounded-border {
+	width: 50vw; /* 요소의 너비를 뷰포트 너비의 40%로 설정 */
+	border-radius: 10px; /* 요소의 모서리를 둥글게 */
+	border: 1px solid #ccc; /* 경계선 스타일 설정 */
+	cursor: pointer; /* 마우스 오버 시 포인터 모양으로 변경 */
+	margin: 0 auto; /* 상단과 하단 마진을 0으로, 좌우 마진을 자동으로 설정하여 중앙 정렬 */
+}
+.rounded-border:hover {
+	border-color: #007bff; /* 호버 시 테두리 색상 변경 */
+}
+</style>
 </head>
 <body>
 	<header>
@@ -21,21 +33,24 @@
 			<button onclick="openPopup()" style="margin-top: 200px;">카풀
 				모집</button>
 			<h2>게시글 목록</h2>
-			<table>
-				<tr>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>등록 시간</th>
-				</tr>
-				 <c:forEach items="${posts}" var="post">
-                <tr>
-                    <td>${post.title}</td>
-                    <td>${post.userId}</td>
-                    <td>${post.createdAt}</td>
-                </tr>
-            </c:forEach>
+			<div class="rounded-border">
+				<table>
+					<tr>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>등록 시간</th>
+					</tr>
+					<c:forEach items="${posts}" var="post">
+						<tr onclick="window.location.href='/carpool-viewpost.jsp?id=${post.id}';"
+							style="cursor: pointer;">
+							<td>${post.title}</td>
+							<td>${post.userId}</td>
+							<td>${post.createdAt}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
 
-			</table>
 		</div>
 	</main>
 	<footer>

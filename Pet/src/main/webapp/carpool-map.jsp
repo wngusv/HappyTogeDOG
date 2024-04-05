@@ -533,7 +533,7 @@
 					body: JSON.stringify({
 						title: title,
 						content: content,
-						//mapState: mapState,
+						mapState: mapState,
 						userId: userId
 					})
 				})
