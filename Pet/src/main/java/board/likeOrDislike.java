@@ -74,6 +74,19 @@ public class likeOrDislike extends HttpServlet {
 							insertStmt.executeUpdate();
 						}
 					}
+					String likeCountSql = "UPDATE comment_content\r\n"
+							+ "SET `like` = (SELECT COUNT(*)\r\n"
+							+ "              FROM comment_likeordislike\r\n"
+							+ "              WHERE comment_likeordislike.num = comment_content.num AND type = '좋아요');";
+					String dislikeCountSql =  "UPDATE comment_content\r\n"
+							+ "SET `dislike` = (SELECT COUNT(*)\r\n"
+							+ "                 FROM comment_likeordislike\r\n"
+							+ "                 WHERE comment_likeordislike.num = comment_content.num AND type = '싫어요')";
+					try (PreparedStatement pstmt1 = conn.prepareStatement(likeCountSql);
+							PreparedStatement pstmt2 = conn.prepareStatement(dislikeCountSql);) {
+						pstmt1.executeUpdate();
+						pstmt2.executeUpdate();
+					}
 				}
 
 			} catch (SQLException e) {

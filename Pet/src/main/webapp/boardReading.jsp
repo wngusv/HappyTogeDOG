@@ -462,7 +462,7 @@ function validateCommentForm() {
     // 사용자가 로그인하지 않았거나 댓글 입력란이 비어있는 경우
     if (!userId) {
         alert("로그인 후 이용 가능합니다.");
-        window.location.href = 'login.jsp'; // 로그인 페이지로 리디렉트
+        window.location.href = 'login.jsp';
         return false; // 폼 제출 중단
     } else if (!comment) {
         alert("댓글을 입력해주세요.");
