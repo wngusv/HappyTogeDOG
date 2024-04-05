@@ -7,6 +7,53 @@
 <meta charset="UTF-8">
 <title>경로 따라 지도에 선 그리기 및 장소 검색</title>
 <style>
+#postForm {
+	margin: 20px auto; /* 수평 가운데 정렬 */
+	width: 60%; /* 폼 너비 설정 */
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+}
+
+#postForm input[type="text"], #postForm textarea {
+	width: calc(100% - 10px); /* 입력 필드 너비 설정 */
+	margin-bottom: 10px; /* 입력 필드 아래 여백 설정 */
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box; /* 입력 내용에 패딩과 테두리를 포함시킵니다. */
+}
+
+#postForm button {
+	margin-top: 20px;
+	padding: 10px 20px;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	float: right; /* 버튼을 오른쪽으로 정렬 */
+}
+
+#postForm button:hover {
+	background-color: #45a049;
+}
+
+#map-container {
+	width: 100%; /* 가로 중앙 정렬을 위해 전체 너비를 사용합니다. */
+	display: flex;
+	justify-content: center; /* 가로 중앙 정렬 */
+}
+
+#map {
+	width: 60%; /* 지도의 너비를 조정합니다. */
+	height: 400px;
+	border-radius: 10px;
+	 border: 1px solid #ccc;
+	
+}
+
 .map_wrap, .map_wrap * {
 	margin: 0;
 	padding: 0;
@@ -209,7 +256,9 @@
 		%>
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
-	<div id="map" style="width: 100%; height: 400px;"></div>
+	<div id="map-container">
+		<div id="map"></div>
+	</div>
 	<div id="postForm">
 		<input type="text" id="title" placeholder="제목" /><br>
 		<textarea id="content" placeholder="내용"></textarea>

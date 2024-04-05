@@ -28,7 +28,7 @@
     %>
     <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 </header>
-<main>
+<main>	
     <div class="container">
         <button onclick="checklogin();" style="margin-top: 200px;">카풀 모집</button>
         <h2>게시글 목록</h2>
