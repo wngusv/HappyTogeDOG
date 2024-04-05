@@ -76,7 +76,7 @@
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container">
 				<a class="navbar-brand" href="#"><c:out value="${pageTitle}" /></a>
-				<a class="navbar-brand" href="index.jsp"><c:out value="홈" /></a>
+				<a class="navbar-brand" href="index.jsp"><c:out value="     홈" /></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, Util.MyWebContextListener"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/floating-banner.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
