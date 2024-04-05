@@ -23,6 +23,12 @@
     border-radius: 10px;
     border: 1px solid #ccc;
 }
+#content-container {
+    width: 100%; /* 가로 중앙 정렬을 위해 전체 너비를 사용합니다. */
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    
+}
 </style>
 	
 </head>
@@ -44,7 +50,9 @@
     <div id="map-container">
         <div id="map"></div>
     </div>
+    <div id="content-container">
     <div id="postContent"><%=post.getContent()%></div>
+    </div>
     <% request.setAttribute("chatRoomNum", post.getId()); %>
     <a href="#" onclick="chatWinOpen();">채팅하기</a>
 <script>
