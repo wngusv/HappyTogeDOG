@@ -197,7 +197,7 @@
         String fileRoute4 = "/uploads/" + fileName4;
         String fileRoute5 = "/uploads/" + fileName5;
 
-            String query = "UPDATE pet.dogwalker SET title=?, size=?, day=?, time=?, address=?, address_detail=?, pay=?, content=?, fileName1=?, fileRealName1=?, file_route1=?, fileName2=?, fileRealName2=?, file_route2=?, fileName3=?, fileRealName3=?, file_route3=?, fileName4=?, fileRealName4=?, file_route4=?, fileName5=?, fileRealName5=?, file_route5=? WHERE num=?";
+            String query = "UPDATE pet.dogwalker SET title=?, size=?, day=?, time=?, address=?, address_detail=?, pay=?, content=?, fileName1=?, fileRealName1=?, file_route1=?, fileName2=?, fileRealName2=?, file_route2=?, fileName3=?, fileRealName3=?, file_route3=?, fileName4=?, fileRealName4=?, file_route4=?, fileName5=?, fileRealName5?, file_route5=? WHERE num=?";
         try (Connection conn = MyWebContextListener.getConnection();
         		PreparedStatement pstmt = conn.prepareStatement(query);){
             pstmt.setString(1, title);
