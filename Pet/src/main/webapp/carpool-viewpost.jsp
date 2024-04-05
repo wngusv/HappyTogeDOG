@@ -10,9 +10,17 @@
 <script type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533&libraries=services"></script>
 <style>
+#map-container {
+    width: 100%; /* 가로 중앙 정렬을 위해 전체 너비를 사용합니다. */
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+}
+
 #map {
-    width: 100%;
+    width: 60%; /* 수정된 너비 */
     height: 400px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
 }
 </style>
 
@@ -32,9 +40,10 @@
     if (post != null) {
     %>
     <!-- 게시물의 내용을 표시합니다. -->
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
     <div id="postContent"><%=post.getContent()%></div>
-    
-    <div id="map"></div>
     <% request.setAttribute("chatRoomNum", post.getId()); %>
     <a href="#" onclick="chatWinOpen();">채팅하기</a>
 <script>

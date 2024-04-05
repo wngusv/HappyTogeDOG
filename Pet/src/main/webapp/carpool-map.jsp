@@ -47,7 +47,7 @@
 }
 
 #map {
-	width: 60%; /* 지도의 너비를 조정합니다. */
+	width: 60%; 
 	height: 400px;
 	border-radius: 10px;
 	 border: 1px solid #ccc;
