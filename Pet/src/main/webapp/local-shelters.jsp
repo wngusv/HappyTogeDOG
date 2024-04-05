@@ -16,6 +16,9 @@
    cursor: pointer;
    margin-right: 0 auto;
 }
+.rounded-border:hover {
+	border-color: #007bff; /* 호버 시 테두리 색상 변경 */
+}
 /*지도*/
 
 #map {
