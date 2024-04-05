@@ -30,7 +30,7 @@ public class likeOrDislike extends HttpServlet {
 			System.out.println("postIdx: " + postIdxStr); // 로그 출력
 
 			int num = Integer.parseInt(req.getParameter("commentNum")); // 댓글 pk
-			String type = req.getParameter("reactionType"); // '좋아요' 또는 '싫어요' 문자열이 뭐냐???????????????
+			String type = req.getParameter("reactionType"); 
 			int postIdx = Integer.parseInt(req.getParameter("postIdx")); // 게시글 Idx
 
 			// 데이터베이스 연결과 로직을 처리합니다.
