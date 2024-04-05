@@ -41,7 +41,7 @@
             </tr>
             <% 
             // 사용자가 작성한 글 가져오기
-            String userPostsQuery = "SELECT * FROM dogwalker WHERE id = '" + userId + "'";
+            String userPostsQuery = "SELECT * FROM dogwalker WHERE id = '" + userId + "' ORDER BY today_date DESC";
             ResultSet userPostsRs = stmt.executeQuery(userPostsQuery);
             while (userPostsRs.next()) {
                 int postId = userPostsRs.getInt("num");
