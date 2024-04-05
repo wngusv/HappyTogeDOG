@@ -14,7 +14,7 @@ public class contentDAO {
 	private List<contentDTO> contents = new ArrayList<>();
 	
 	public List<contentDTO> selectContents(String post_idx){
-	    String sql = "SELECT * FROM comment_content WHERE post_idx = ?";
+	    String sql = "SELECT * FROM comment_content WHERE post_idx = ? ORDER BY content_time DESC";
 	    List<contentDTO> contents = new ArrayList<>(); // 댓글 목록 초기화
 
 	    try(Connection conn = MyWebContextListener.getConnection();

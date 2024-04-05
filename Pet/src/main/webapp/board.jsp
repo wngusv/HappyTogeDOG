@@ -5,7 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="/floating-banner.jsp" %>
+<%@ include file="/floating-banner.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,41 +73,47 @@
 					<tbody>
 						<!-- 테이블 데이터 행 -->
 						<%
-						  int pagee = 1;
-					    int pageeSize = 10;
-					    if(request.getParameter("pagee") != null){
-					        pagee = Integer.parseInt(request.getParameter("pagee"));
-					    }
-					    
-    String categoryFilter = request.getParameter("categoryFilter");
-    String sql = "SELECT idx, category, title, id, postdate FROM board";
+						int pagee = 1;
+						int pageeSize = 10;
+						if (request.getParameter("pagee") != null) {
+							pagee = Integer.parseInt(request.getParameter("pagee"));
+						}
 
-    // categoryFilter 값이 비어있지 않으면 WHERE 절 추가
-    if (categoryFilter != null && !categoryFilter.isEmpty()) {
-        sql += " WHERE category = ?";
-    }
-    sql += " ORDER BY postdate DESC LIMIT ?, ?";
+						String categoryFilter = request.getParameter("categoryFilter");
+						String sql = "SELECT b.idx, b.category, b.title, b.id, b.postdate, COUNT(c.num) AS comment_count " + "FROM board b "
+								+ "LEFT JOIN comment_content c ON b.idx = c.post_idx ";
 
-    try (Connection conn = MyWebContextListener.getConnection(); 
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+						// categoryFilter 값이 비어있지 않으면 WHERE 절 추가
+						if (categoryFilter != null && !categoryFilter.isEmpty()) {
+							sql += "WHERE b.category = ? ";
+						}
 
-        // categoryFilter 값이 비어있지 않으면 파라미터 설정
-        if (categoryFilter != null && !categoryFilter.isEmpty()) {
-            stmt.setString(1, categoryFilter);
-            stmt.setInt(2, (pagee-1) * pageeSize);
-            stmt.setInt(3, pageeSize);
-        } else {
-            stmt.setInt(1, (pagee-1) * pageeSize);
-            stmt.setInt(2, pageeSize);
-        }
+						sql += "GROUP BY b.idx " + "ORDER BY b.postdate DESC " + "LIMIT ?, ?";
 
-        try (ResultSet rs = stmt.executeQuery();) {
-            while (rs.next()) {
+						try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+							// categoryFilter 값이 비어있지 않으면 파라미터 설정
+							if (categoryFilter != null && !categoryFilter.isEmpty()) {
+								stmt.setString(1, categoryFilter);
+								stmt.setInt(2, (pagee - 1) * pageeSize);
+								stmt.setInt(3, pageeSize);
+							} else {
+								stmt.setInt(1, (pagee - 1) * pageeSize);
+								stmt.setInt(2, pageeSize);
+							}
+
+							try (ResultSet rs = stmt.executeQuery();) {
+								while (rs.next()) {
 						%>
 						<tr>
 							<td><%=rs.getString("category")%></td>
-							<td><a
-								href="boardReading.jsp?idx=<%=rs.getInt("idx")%>"><%=rs.getString("title")%></a></td>
+							<td><a href="boardReading.jsp?idx=<%=rs.getInt("idx")%>">
+									<%=rs.getString("title")%> <%
+ if (rs.getInt("comment_count") > 0) {
+ %> (<%=rs.getInt("comment_count")%>) <%
+ }
+ %>
+							</a></td>
 							<td><%=rs.getString("id")%></td>
 							<td><%=rs.getTimestamp("postdate").toString()%></td>
 						</tr>
@@ -124,37 +130,36 @@
 					</tbody>
 				</table>
 				<%
-    // 총 게시물 수 계산하기 위한 쿼리
-    String countSql = "SELECT COUNT(*) FROM board";
-    if (categoryFilter != null && !categoryFilter.isEmpty()) {
-        countSql += " WHERE category = ?";
-    }
-    try (Connection conn = MyWebContextListener.getConnection(); 
-         PreparedStatement stmt = conn.prepareStatement(countSql)) {
+				// 총 게시물 수 계산하기 위한 쿼리
+				String countSql = "SELECT COUNT(*) FROM board";
+				if (categoryFilter != null && !categoryFilter.isEmpty()) {
+					countSql += " WHERE category = ?";
+				}
+				try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(countSql)) {
 
-        if (categoryFilter != null && !categoryFilter.isEmpty()) {
-            stmt.setString(1, categoryFilter);
-        }
+					if (categoryFilter != null && !categoryFilter.isEmpty()) {
+						stmt.setString(1, categoryFilter);
+					}
 
-        try (ResultSet rs = stmt.executeQuery();) {
-            if (rs.next()) {
-                int totalPosts = rs.getInt(1);
-                int totalPages = (int) Math.ceil((double) totalPosts / pageeSize);
+					try (ResultSet rs = stmt.executeQuery();) {
+						if (rs.next()) {
+					int totalPosts = rs.getInt(1);
+					int totalPages = (int) Math.ceil((double) totalPosts / pageeSize);
 
-                for(int i = 1; i <= totalPages; i++){
-                    if(pagee == i){
-                        out.print("<b>" + i + "</b> "); // 현재 페이지 강조
-                    } else {
-                        out.print("<a href='board.jsp?pagee=" + i + "'>" + i + "</a> ");
-                    }
-                }
-            }
-        }
-    } catch (Exception ex) {
-        out.println("오류가 발생했습니다: " + ex.getMessage());
-    }
-%>
-				
+					for (int i = 1; i <= totalPages; i++) {
+						if (pagee == i) {
+							out.print("<b>" + i + "</b> "); // 현재 페이지 강조
+						} else {
+							out.print("<a href='board.jsp?pagee=" + i + "'>" + i + "</a> ");
+						}
+					}
+						}
+					}
+				} catch (Exception ex) {
+					out.println("오류가 발생했습니다: " + ex.getMessage());
+				}
+				%>
+
 			</section>
 
 		</div>
