@@ -15,8 +15,15 @@
     height: 400px;
 }
 </style>
+
 </head>
 <body>
+<header>
+    <%
+        request.setAttribute("pageTitle", "반려견 카풀");
+    %>
+    <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
+</header>
 
     <%
     Post post = (Post) request.getAttribute("selectedPost");
@@ -28,7 +35,7 @@
     <div id="postContent"><%=post.getContent()%></div>
     
     <div id="map"></div>
-
+	<button>채팅</button>
 <script>
 // 서버로부터 받아온 mapState 정보를 JavaScript 객체로 파싱합니다.
 var mapState = JSON.parse('<%=post.getMapstate()%>');
@@ -60,17 +67,26 @@ function initMap() {
 
     // 폴리라인 지도에 표시
     polyline.setMap(map);
+	
+ // 마커 이미지의 주소와 크기를 정의합니다
+    var startImageUrl = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png';
+    var endImageUrl = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png';
+    var imageSize = new kakao.maps.Size(33, 33); // 마커 이미지의 크기
 
-    // 시작점 마커 생성 및 지도에 표시
+    // 출발지와 도착지 마커 이미지를 생성합니다
+    var startMarkerImage = new kakao.maps.MarkerImage(startImageUrl, imageSize);
+    var endMarkerImage = new kakao.maps.MarkerImage(endImageUrl, imageSize);
+    
     var startMarker = new kakao.maps.Marker({
         position: new kakao.maps.LatLng(mapState.startPoint.lat, mapState.startPoint.lng), // 시작점 위치
-        map: map // 지도 객체
+        map: map, // 지도 객체
+        image: startMarkerImage
     });
 
-    // 종료점 마커 생성 및 지도에 표시
     var endMarker = new kakao.maps.Marker({
         position: new kakao.maps.LatLng(mapState.endPoint.lat, mapState.endPoint.lng), // 종료점 위치
-        map: map // 지도 객체
+        map: map, // 지도 객체
+        image: endMarkerImage
     });
 }
 
