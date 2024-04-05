@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>경로 따라 지도에 선 그리기 및 장소 검색</title>
+<link rel="stylesheet" href="styles.css">
 <style>
 #postForm {
 	margin: 20px auto; /* 수평 가운데 정렬 */
@@ -249,7 +250,7 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533&libraries=services"></script>
 </head>
 
-<body>
+<body style="padding-top: 150px;">
 	<header>
 		<%
 		request.setAttribute("pageTitle", "카풀 등록");
