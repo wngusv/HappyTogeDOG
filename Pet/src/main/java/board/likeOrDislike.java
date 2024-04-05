@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Util.MyWebContextListener;
+import org.json.JSONObject; // JSON 라이브러리
 
 @WebServlet("/likeOrDislike.do")
 public class likeOrDislike extends HttpServlet {
@@ -86,6 +87,30 @@ public class likeOrDislike extends HttpServlet {
 							PreparedStatement pstmt2 = conn.prepareStatement(dislikeCountSql);) {
 						pstmt1.executeUpdate();
 						pstmt2.executeUpdate();
+						
+						// 최신 카운트 조회
+						int newLikeCount = 0;
+						int newDislikeCount = 0;
+						String countQuery = "SELECT `like`, `dislike` FROM comment_content WHERE num = ?";
+						try (PreparedStatement countStmt = conn.prepareStatement(countQuery)) {
+						    countStmt.setInt(1, num);
+						    try (ResultSet countRs = countStmt.executeQuery()) {
+						        if (countRs.next()) {
+						            newLikeCount = countRs.getInt("like");
+						            newDislikeCount = countRs.getInt("dislike");
+						        }
+						    }
+						}
+
+						// JSON 형식으로 응답 반환
+						resp.setContentType("application/json");
+						resp.setCharacterEncoding("UTF-8");
+						JSONObject jsonResponse = new JSONObject();
+						jsonResponse.put("status", "success");
+						jsonResponse.put("newLikeCount", newLikeCount);
+						jsonResponse.put("newDislikeCount", newDislikeCount);
+						resp.getWriter().write(jsonResponse.toString());
+
 					}
 				}
 
@@ -93,8 +118,6 @@ public class likeOrDislike extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// 처리 후 게시글 읽기 페이지로 리다이렉트
-			resp.sendRedirect("boardReading.jsp?idx=" + postIdx);
 		} else {
 			// 로그인하지 않은 경우, 로그인 페이지나 메시지 표시 등의 처리
 			// 예: 로그인 페이지로 리다이렉트
