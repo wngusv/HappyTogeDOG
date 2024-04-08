@@ -257,10 +257,18 @@
     	        additionalInfoDiv.className = 'additional-info';
     	        additionalInfoDiv.style.display = 'none'; // 초기에는 추가 정보를 감추도록 설정
     	        additionalInfoDiv.innerHTML = '<p>관리기관명: ' + shelter.orgNm + '</p>' +
-                '<p>평일 운영시간: ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>' +
-                '<p>주말 운영시간: ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>' +
-                '<p>휴무일: ' + shelter.closeDay + '</p>';
-    	        							
+                '<p>평일 운영시간: ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>';
+                if (shelter.weekendOprStime && shelter.weekendOprEtime) {
+                	additionalInfoDiv.innerHTML += '<p>주말 운영시간: ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>';
+                } else {
+                	additionalInfoDiv.innerHTML += '<p>주말 운영시간: 미운영</p>';
+                }
+
+                if (shelter.closeDay === 0) {
+                	additionalInfoDiv.innerHTML += '<p>휴무일: ' + (shelter.closeDay === 0 ? "없음" : shelter.closeDay) + '</p>';
+                } else {
+                	additionalInfoDiv.innerHTML += '<p>휴무일: 없음</p>';
+                }
     	        							
     	        shelterElement.appendChild(additionalInfoDiv);
     	        shelterInfoDiv.appendChild(shelterElement);
