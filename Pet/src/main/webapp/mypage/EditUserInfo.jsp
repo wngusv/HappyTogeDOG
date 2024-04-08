@@ -55,13 +55,10 @@
         </div>
         <div>
             <label for="address">주소:</label>
-<<<<<<< HEAD
             <input type="text" id="address" name="address" value="<%= address %>">
             <button class="btn btn-outline-secondary" type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
-=======
             <input type="text" id="address" name="address" value="<%= address %>"readonly>
             <button type="button" onclick="openAddressSearchWindow()">주소 수정</button>
->>>>>>> branch 'main' of https://github.com/wngusv/pet.git
         </div>
         <div>
             <label for="addressDetail">상세 주소:</label>
@@ -77,7 +74,6 @@
         out.println("오류가 발생했습니다. 오류 메시지: " + e.getMessage());
     }
     %>
-<<<<<<< HEAD
 <script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -98,7 +94,6 @@
         }).open();
     }
 </script>
-=======
     <script>
         function sample6_execDaumPostcode() {
             new daum.Postcode({
@@ -116,6 +111,5 @@
             }).open();
         }
     </script>
->>>>>>> branch 'main' of https://github.com/wngusv/pet.git
 </body>
 </html>
