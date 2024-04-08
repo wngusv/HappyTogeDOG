@@ -29,7 +29,6 @@
 	height: 100px; /* 높이를 조정하여 중앙 정렬을 더 잘 보여줄 수 있습니다 */
 	margin-bottom: 10px;
 	padding: 10px;
-	cursor: pointer;
 }
 </style>
 </head>

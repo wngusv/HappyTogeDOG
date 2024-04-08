@@ -256,8 +256,12 @@
     	        var additionalInfoDiv = document.createElement('div');
     	        additionalInfoDiv.className = 'additional-info';
     	        additionalInfoDiv.style.display = 'none'; // 초기에는 추가 정보를 감추도록 설정
-    	        additionalInfoDiv.innerHTML = '<p>관리기관명: ' + shelter.orgNm + '</p>';
-
+    	        additionalInfoDiv.innerHTML = '<p>관리기관명: ' + shelter.orgNm + '</p>' +
+                '<p>평일 운영시간: ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>' +
+                '<p>주말 운영시간: ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>' +
+                '<p>휴무일: ' + shelter.closeDay + '</p>';
+    	        							
+    	        							
     	        shelterElement.appendChild(additionalInfoDiv);
     	        shelterInfoDiv.appendChild(shelterElement);
 
