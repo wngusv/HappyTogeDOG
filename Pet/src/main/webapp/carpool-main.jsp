@@ -30,8 +30,8 @@
 </header>
 <main>	
     <div class="container">
-        <button onclick="checklogin();" style="margin-top: 200px;">카풀 모집</button>
-        <h2>게시글 목록</h2>
+        <button onclick="checklogin();" style="float: right; margin-top: 200px;">카풀 모집</button>
+        <h2 style="margin-top: 200px;">반려견 카풀</h2>
         <c:forEach items="${posts}" var="post">
             <div class="rounded-border" onclick="window.location.href='/viewPost?id=${post.id}';"
                 style="cursor: pointer; margin-bottom: 10px; padding: 10px;">
@@ -44,7 +44,6 @@
 </main>
 <footer>
     <div class="container">
-        <p>&copy; 2024 Pet. 모든 권리 보유.</p>
     </div>
 </footer>
 <script>
