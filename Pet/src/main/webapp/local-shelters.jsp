@@ -18,7 +18,7 @@
    margin-right: 0 auto;
 }
 .rounded-border:hover {
-	border-color: #007bff; /* 호버 시 테두리 색상 변경 */
+   border-color: #007bff; /* 호버 시 테두리 색상 변경 */
 }
 /*지도*/
 
@@ -48,9 +48,9 @@
     .region-link:hover {
         color: #007bff; /* 호버시 색상 변경 */
     }
-	#region-list {
-		margin-bottom: 20px;
-	}
+   #region-list {
+      margin-bottom: 20px;
+   }
     .rounded-border {
    margin-bottom: 10px; /* 푸터와의 간격 설정 */
 }
@@ -58,12 +58,12 @@
 </style>
 </head>
 <body>
-   	<header>
-		<%
-		request.setAttribute("pageTitle", "지역 유기견 보호센터");
-		%>
-		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
-	</header>
+      <header>
+      <%
+      request.setAttribute("pageTitle", "지역 유기견 보호센터");
+      %>
+      <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
+   </header>
 
    <main style="margin-bottom: 150px;">
       <div class="container" style="padding-top: 150px;">
