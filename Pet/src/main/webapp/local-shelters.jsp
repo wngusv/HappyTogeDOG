@@ -94,9 +94,10 @@
                   class="region-link" data-region="제주">제주</a>
             </div>
             <div id="shelter-info"></div>
-         </section>
+				<button id="prevPageButton">이전 페이지</button>
+				<button id="nextPageButton">다음 페이지</button>
+			</section>
       </div>
-
    </main>
 
    <footer>
@@ -121,25 +122,48 @@
       var xhr = new XMLHttpRequest();
       var url = 'http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo'; /* API URL */
       var serviceKey = '0tRr5MoRdNxPxSkeGUb2m4ShjZ026SsFQD%2FTbVpE8yeAMHJU1kZyfHaMiAsD5bpT62J9fluKxvzaTdH2R3%2FDEA%3D%3D'; /* 서비스 키 */
-      var queryParams = '?' + encodeURIComponent('serviceKey') + '='
-            + serviceKey; /* 서비스 키 */
-      queryParams += '&' + encodeURIComponent('numOfRows') + '='
-            + encodeURIComponent('1000'); /*표현할 개수*/
-      queryParams += '&' + encodeURIComponent('pageNo') + '='
-            + encodeURIComponent('1'); /*페이지 수*/
-      queryParams += '&' + encodeURIComponent('_type') + '='
-            + encodeURIComponent('json'); /**/
+   // 페이지 번호 초기화
+      var currentPage = 1;
+      
+      window.onload = function() {
+    	    fetchData(currentPage);
+    	};
 
-      xhr.open('GET', url + queryParams);
-      xhr.onreadystatechange = function() {
-         if (this.readyState == 4 && this.status == 200) {
-            var responseData = JSON.parse(this.responseText);
-            var shelters = responseData.response.body.items.item;
-            displayShelterInfo(shelters);
-         }
-      };
+      // 다음 페이지로 이동
+      function nextPage() {
+          currentPage++;
+          fetchData(currentPage);
+      }
 
-      xhr.send('');
+      // 이전 페이지로 이동
+      function prevPage() {
+          if (currentPage > 1) {
+              currentPage--;
+              fetchData(currentPage);
+          }
+      }
+
+      // 데이터 요청 함수
+      function fetchData(pageNo) {
+          var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + serviceKey;
+          queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('5'); // 한 페이지당 10개 항목
+          queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent(pageNo); // 업데이트된 페이지 번호
+          queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json');
+
+          xhr.open('GET', url + queryParams);
+          xhr.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  var responseData = JSON.parse(this.responseText);
+                  var shelters = responseData.response.body.items.item;
+                  displayShelterInfo(shelters);
+              }
+          };
+          xhr.send();
+      }
+
+      // 이전/다음 페이지 버튼에 이벤트 리스너 추가
+      document.getElementById('nextPageButton').addEventListener('click', nextPage);
+      document.getElementById('prevPageButton').addEventListener('click', prevPage);
 
       var markers = []; // 마커를 담을 배열
 

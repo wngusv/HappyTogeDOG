@@ -67,8 +67,7 @@
 	</footer>
 	<script>
        	function checklogin() {
-       		var login = '<%=session.getAttribute("userId")%>
-		';
+       		var login = '<%=session.getAttribute("userId")%>';
 			if (login == "null" || login == "") {
 				alert("로그인이 필요합니다.")
 				window.location.href = 'login.jsp';
