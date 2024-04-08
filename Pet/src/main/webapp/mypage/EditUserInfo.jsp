@@ -36,7 +36,6 @@
             String address = userInfoRs.getString("address");
             String addressDetail = userInfoRs.getString("address_detail");
     %>
-    <form action="/mypage/UpdateUserInfo.jsp" method="post">
         <div>
             <label for="id">아이디:</label>
             <input type="text" id="id" name="id" value="<%= id %>" readonly>
@@ -53,7 +52,6 @@
         <div>
             <label for="phone">핸드폰:</label>
             <input type="text" id="phone" name="phone" value="<%= phone %>"readonly>
-            <button type="button" onclick="openEditWindow('phone')">수정</button>
         </div>
         <div>
             <label for="address">주소:</label>
@@ -64,8 +62,6 @@
             <label for="addressDetail">상세 주소:</label>
             <input type="text" id="addressDetail" name="addressDetail" value="<%= addressDetail %>"readonly>
         </div>
-        <button type="submit">저장</button>
-    </form>
     <a href="/mypage.jsp">취소</a>
     <% 
         } else {

@@ -39,7 +39,6 @@
                 if (updatedRows > 0) {
     %>
     <h3>비밀번호가 성공적으로 변경되었습니다.</h3>
-    <p><a href="/mypage.jsp">마이페이지로 돌아가기</a></p>
     <%
                 } else {
     %>
