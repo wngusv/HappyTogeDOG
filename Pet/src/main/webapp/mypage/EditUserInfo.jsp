@@ -55,8 +55,6 @@
         </div>
         <div>
             <label for="address">주소:</label>
-            <input type="text" id="address" name="address" value="<%= address %>">
-            <button class="btn btn-outline-secondary" type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
             <input type="text" id="address" name="address" value="<%= address %>"readonly>
             <button type="button" onclick="openAddressSearchWindow()">주소 수정</button>
         </div>
