@@ -86,6 +86,16 @@
     <!-- 급여가 높은 순으로 정렬하는 버튼, 필터 조건을 URL에 추가 -->
     <a href="walk-jobs.jsp?sortBy=pay&filterLocation=<%=request.getParameter("filterLocation") != null ? URLEncoder.encode(request.getParameter("filterLocation"), "UTF-8") : ""%>&filterDay=<%=request.getParameter("filterDay") != null ? URLEncoder.encode(request.getParameter("filterDay"), "UTF-8") : ""%>&filterTime=<%=request.getParameter("filterTime") != null ? URLEncoder.encode(request.getParameter("filterTime"), "UTF-8") : ""%>&filterSize=<%=request.getParameter("filterSize") != null ? URLEncoder.encode(request.getParameter("filterSize"), "UTF-8") : ""%>" class="btn btn-primary">급여 높은 순</a>
 
+<c:choose>
+						<c:when test="${sessionScope.userId != null}">
+							<button class="btn btn-primary float-right mb-3"
+								onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
+						</c:when>
+						<c:otherwise>
+							<button class="btn btn-primary float-right mb-3"
+								onclick="alert('로그인 후 이용해주세요.'); location.href='login.jsp'">글쓰기</button>
+						</c:otherwise>
+					</c:choose>
 </div>
 					<div class="table-responsive">
 						<table class="table table-striped table-bordered">

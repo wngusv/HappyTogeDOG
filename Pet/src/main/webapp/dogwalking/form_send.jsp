@@ -1,11 +1,9 @@
-
 <%@ page import="java.sql.*, Util.MyWebContextListener" %>
 <%@page import="java.io.File"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 
 <%
 String insertQuery = "INSERT INTO pet.dogwalker(num, id, title, size, day, time, address, address_detail, pay, content, today_date, fileName1, fileRealName1, file_route1, fileName2, fileRealName2, file_route2 ,fileName3, fileRealName3, file_route3, fileName4, fileRealName4, file_route4, fileName5, fileRealName5, file_route5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
