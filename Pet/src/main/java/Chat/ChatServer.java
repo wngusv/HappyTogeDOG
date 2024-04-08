@@ -24,7 +24,7 @@ public class ChatServer {
 	public void onOpen(Session session) {
 		String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
 		String chatId = session.getRequestParameterMap().get("userId").get(0);
-		System.out.println(chatId);
+		
 		if (chatRooms.containsKey(chatRoom)) {
 	        Set<Session> clients = chatRooms.get(chatRoom);
 	        for (Session client : clients) {
@@ -40,16 +40,16 @@ public class ChatServer {
 	            }
 	        }
 	    }
-
 		chatRooms.computeIfAbsent(chatRoom, k -> new HashSet<>()).add(session);
-		System.out.println("웹소켓 연결: " + session.getId() + ", 채팅방: " + chatRoom);
+		System.out.println("웹소켓 연결: " + chatId + ", 채팅방: " + chatRoom);
 
 	}
 
 	@OnMessage
 	public void onMessage(String message, Session session) throws IOException {
 		String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
-		System.out.println("메시지 전송: " + session.getId() + ", 채팅방: " + chatRoom + ", 내용: " + message);
+		String chatId = session.getRequestParameterMap().get("userId").get(0);
+		System.out.println("메시지 전송: " + chatId + ", 채팅방: " + chatRoom + ", 내용: " + message);
 		synchronized (chatRooms) {
 			Set<Session> clients = chatRooms.get(chatRoom);
 			for (Session client : clients) {
@@ -63,8 +63,9 @@ public class ChatServer {
 	@OnClose
 	public void onClose(Session session) {
 		String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
+		String chatId = session.getRequestParameterMap().get("userId").get(0);
 		chatRooms.get(chatRoom).remove(session);
-		System.out.println("웹소켓 종료: " + session.getId() + ", 채팅방: " + chatRoom);
+		System.out.println("웹소켓 종료: " + chatId + ", 채팅방: " + chatRoom);
 	}
 
 	@OnError
