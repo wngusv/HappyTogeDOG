@@ -62,29 +62,21 @@ var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/Ch
 		var message = event.data.split("|"); // 대화명과 메시지 분리
 		var sender = message[0];
 		var content = message[1];
-		console.log(content);
 		if (content != "") {
-			if (content.match("/")) { // 귓속말
-				if (content.match(("/" + chatId))) { // 나에게 보낸 메시지만 출력
-					var temp = content.replace(("/" + chatId), "[귓속말]: ");
-					chatWindow.innerHTML += "<div>" + sender + "" + temp
-							+ "</div>";
-				}
-			} else { // 일반 대화
-				chatWindow.innerHTML += "<div>" + sender + ": " + content
-						+ "</div>";
-			}
-		}
-		chatWindow.scrollTop = chatWindow.srollHeight;
+		  // 일반 대화
+				 chatWindow.innerHTML += "<div>" + sender + ": <span class='message-content'>" + content + "</span></div>";
+	        		
+		 }
+		chatWindow.scrollTop = chatWindow.scrollHeight;
 	};
 </script>
 <style>
 #chatWindow {
 	border: 1px solid black;
-	width: 270px;
+	width: 300px;
 	height: 310px;
-	overflow: scroll;
 	padding: 5px;
+	overflow-y: auto;;
 }
 
 #chatMessage {
@@ -117,6 +109,10 @@ var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/Ch
 
 .myMsg {
 	text-align: right;
+}
+
+.message-content {
+	word-wrap: break-word; /* 너무 긴 단어가 있을 경우 줄바꿈 처리 */
 }
 </style>
 </head>
