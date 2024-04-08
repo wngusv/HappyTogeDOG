@@ -73,7 +73,7 @@ function chatWinOpen() {
         return;
     }
     // If id is available (user logged in), proceed to open the chat window
-    window.open("/chat/ChatWindow.jsp?chatId=" + id +"&chatRoom="+"<%=post.getId()%>", "", "width=350,height=410");
+    window.open("/chat/ChatWindow.jsp?chatId=" + id +"&chatRoom="+"<%=post.getId()%>", "", "width=360,height=500");
 }
 // 서버로부터 받아온 mapState 정보를 JavaScript 객체로 파싱합니다.
 var mapState = JSON.parse('<%=post.getMapstate()%>');

@@ -1,129 +1,141 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+	pageEncoding="UTF-8"%><!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Chat App</title>
 <script>
 var chatRoomNum = <%=request.getParameter("chatRoom")%>;
 var LoginedId = '<%=session.getAttribute("userId")%>';
 var userName = '<%=session.getAttribute("userName")%>'
 var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/ChatingServer?chatRoom="+chatRoomNum+"&userId="+LoginedId);
-	var chatWindow, chatMessage, chatId;
+var chatWindow, chatMessage, chatId;
 
-	// 채팅창이 열리면 대화창, 메시지 입력창, 아이디 표시란으로 사용할 DOM 객체 저장
-	// 윈도우가 로드되면 실행할 익명 함수
-	window.onload = function() {
-		chatWindow = document.getElementById("chatWindow");
-		chatMessage = document.getElementById("chatMessage");
-		chatId = document.getElementById("chatId").value;
-	};
+window.onload = function() {
+    chatWindow = document.getElementById("chatWindow");
+    chatMessage = document.getElementById("chatMessage");
+    chatId = document.getElementById("chatId").value;
+};
 
-	// 메시지 전송
-	function sendMessage() {
-		// 대화창에 표시 
-		chatWindow.innerHTML += "<div class='myMsg'>" + chatMessage.value
-				+ "</div>";
-		webSocket.send(userName + '|' + chatMessage.value); // 서버로 전송
-		chatMessage.value = ""; //메시지 입력창 내용 지우기
-		chatWindow.scrollTop = chatWindow.scrollHeight; // 대화창 스크롤
-	}
+function sendMessage() {
+    chatWindow.innerHTML += "<div class='myMsg'>" + chatMessage.value + "</div>";
+    webSocket.send(userName + '|' + chatMessage.value);
+    chatMessage.value = "";
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
 
-	function disconnect() { // 함수명 수정
-		webSocket.close();
-	}
+function disconnect() {
+    webSocket.close();
+}
 
-	// 엔터 키 입력 처리
-	function enterKey() {
-		if (window.event.keyCode == 13) { // 13 = Enter 키의 코드값
-			sendMessage();
-		}
-	}
+function enterKey() {
+    if (window.event.keyCode == 13) {
+        sendMessage();
+    }
+}
 
-	// 웹소켓 서버에 연결되었을 때 실행
-	webSocket.onopen = function(event) {
-		chatWindow.innerHTML += "웹소켓 서버에 연결되었습니다.<br>";
-	};
+webSocket.onopen = function(event) {
+    chatWindow.innerHTML += "Connected to WebSocket server.<br>";
+};
 
-	// 웹소켓이 닫혔을 때 실행
-	webSocket.onclose = function(event) {
-		chatWindow.innerHTML += "웹소켓 서버가 종료되었습니다.<br>";
-		window.close();
-	}
+webSocket.onclose = function(event) {
+    chatWindow.innerHTML += "WebSocket server has closed.<br>";
+    window.close();
+}
 
-	webSocket.onerror = function(event) {
-		alert(event.data);
-		chatWindow.innerHTML += "채팅 중 에러가 발생하였습니다.<br>";
-	}
+webSocket.onerror = function(event) {
+    alert(event.data);
+    chatWindow.innerHTML += "An error occurred during chat.<br>";
+}
 
-	// 메시지를 받았을 때 실행
-	webSocket.onmessage = function(event) {
-		var message = event.data.split("|"); // 대화명과 메시지 분리
-		var sender = message[0];
-		var content = message[1];
-		if (content != "") {
-		  // 일반 대화
-				 chatWindow.innerHTML += "<div>" + sender + ": <span class='message-content'>" + content + "</span></div>";
-	        		
-		 }
-		chatWindow.scrollTop = chatWindow.scrollHeight;
-	};
+webSocket.onmessage = function(event) {
+    var message = event.data.split("|");
+    var sender = message[0];
+    var content = message[1];
+    if (content != "") {
+        chatWindow.innerHTML += "<div>" + sender + ": <span class='message-content'>" + content + "</span></div>";
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+};
 </script>
 <style>
 #chatWindow {
-	border: 1px solid black;
-	width: 300px;
-	height: 310px;
-	padding: 5px;
-	overflow-y: auto;;
+    border: 1px solid black;
+    width: 300px;
+    height: 310px;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #chatMessage {
-	margin-top: 10px;
-	width: 236px;
-	height: 30px;
+    width: 240px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
 }
 
 #sendBtn {
-	margin-top: 10px;
-	height: 30px;
-	position: relative;
-	top: 2px;
-	left: -2px;
+    margin-top: 10px;
+    height: 36px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+#sendBtn:hover {
+    background-color: #45a049;
 }
 
 #closeBtn {
-	margin-bottom: 3px;
-	position: relative;
-	top: 2px;
-	left: -2px;
+    margin-top: 10px;
+    height: 36px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+}
+
+#closeBtn:hover {
+    background-color: #d32f2f;
 }
 
 #chatId {
-	width: 158px;
-	height: 24px;
-	border: 1px solid #AAA;
-	background-color: #EEE;
+    width: 158px;
+    height: 24px;
+    border: 1px solid #AAA;
+    background-color: #EEE;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .myMsg {
-	text-align: right;
+    text-align: right;
+    margin-bottom: 5px;
 }
 
 .message-content {
-	word-wrap: break-word; /* 너무 긴 단어가 있을 경우 줄바꿈 처리 */
+    word-wrap: break-word;
 }
 </style>
 </head>
 <body>
-	아이디:
-	<input type="text" id="chatId" value="${ param.chatId }" readonly />
-	<button id="closeBtn" onclick="disconnect();">채팅 종료</button>
-	<div id="chatWindow"></div>
-	<div>
-		<input type="text" id="chatMessage" onkeyup="enterKey();">
-		<button id="sendBtn" onclick="sendMessage();">전송</button>
-	</div>
+    아이디:
+    <input type="text" id="chatId" value="${ param.chatId }" readonly />
+    <button id="closeBtn" onclick="disconnect();">채팅 종료</button>
+    <div id="chatWindow"></div>
+    <div>
+        <input type="text" id="chatMessage" onkeyup="enterKey();">
+        <button id="sendBtn" onclick="sendMessage();">전송</button>
+    </div>
 </body>
 </html>
