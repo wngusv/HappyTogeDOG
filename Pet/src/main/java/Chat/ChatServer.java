@@ -22,12 +22,10 @@ public class ChatServer {
 
 	@OnOpen
 	public void onOpen(Session session) {
-	    String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
-	    String chatId = session.getRequestParameterMap().get("userId").get(0);
-	    System.out.println(chatId);
-	    
-	    // Check if the chat room already contains a session associated with the user's ID
-	    if (chatRooms.containsKey(chatRoom)) {
+		String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
+		String chatId = session.getRequestParameterMap().get("userId").get(0);
+		System.out.println(chatId);
+		if (chatRooms.containsKey(chatRoom)) {
 	        Set<Session> clients = chatRooms.get(chatRoom);
 	        for (Session client : clients) {
 	            String existingChatId = client.getRequestParameterMap().get("userId").get(0);
@@ -42,10 +40,10 @@ public class ChatServer {
 	            }
 	        }
 	    }
-	    
-	    // If no existing session with the same ID found, add the new session to the chat room
-	    chatRooms.computeIfAbsent(chatRoom, k -> new HashSet<>()).add(session);
-	    System.out.println("웹소켓 연결: " + session.getId() + ", 채팅방: " + chatRoom);
+
+		chatRooms.computeIfAbsent(chatRoom, k -> new HashSet<>()).add(session);
+		System.out.println("웹소켓 연결: " + session.getId() + ", 채팅방: " + chatRoom);
+
 	}
 
 	@OnMessage
