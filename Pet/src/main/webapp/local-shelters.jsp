@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>지역 유기견 보호센터</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
 /*지역 유기견 보호센터 테두리*/
@@ -57,6 +59,7 @@
 .rounded-border {
 	margin-bottom: 10px; /* 푸터와의 간격 설정 */
 }
+
 </style>
 </head>
 <body>
@@ -178,6 +181,62 @@
     	            paginationDiv.appendChild(document.createTextNode(' '));
     	        }
     	    }
+    	    
+    	    // 페이지네이션 HTML 구조를 Bootstrap과 호환되게 수정
+    	     var paginationDiv = document.getElementById('pagination');
+    paginationDiv.innerHTML = ''; // 페이지네이션 초기화
+    var ul = document.createElement('ul');
+    ul.className = 'pagination justify-content-center';
+
+    // "이전" 페이지 그룹 이동 버튼
+    var startPage = Math.floor((pageNumber - 1) / 5) * 5 + 1;
+    var prevGroupLi = document.createElement('li');
+    prevGroupLi.className = 'page-item';
+    if (pageNumber <= 5) prevGroupLi.classList.add('disabled'); // 첫 번째 페이지 그룹인 경우 비활성화
+    var prevGroupLink = document.createElement('a');
+    prevGroupLink.className = 'page-link';
+    prevGroupLink.href = '#';
+    prevGroupLink.innerHTML = '&laquo;';
+    prevGroupLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        displayShelterInfo(shelters, startPage - 5);
+    });
+    prevGroupLi.appendChild(prevGroupLink);
+    ul.appendChild(prevGroupLi);
+
+    // 현재 페이지 그룹의 페이지 번호들
+    var endPage = Math.min(startPage + 4, totalPages);
+    for (let i = startPage; i <= endPage; i++) {
+        var li = document.createElement('li');
+        li.className = `page-item ${i == pageNumber ? 'active' : ''}`;
+        var link = document.createElement('a');
+        link.className = 'page-link';
+        link.href = '#';
+        link.innerText = i;
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            displayShelterInfo(shelters, i);
+        });
+        li.appendChild(link);
+        ul.appendChild(li);
+    }
+
+    // "다음" 페이지 그룹 이동 버튼
+    var nextGroupLi = document.createElement('li');
+    nextGroupLi.className = 'page-item';
+    if (endPage == totalPages) nextGroupLi.classList.add('disabled'); // 마지막 페이지 그룹인 경우 비활성화
+    var nextGroupLink = document.createElement('a');
+    nextGroupLink.className = 'page-link';
+    nextGroupLink.href = '#';
+    nextGroupLink.innerHTML = '&raquo;';
+    nextGroupLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        displayShelterInfo(shelters, startPage + 5);
+    });
+    nextGroupLi.appendChild(nextGroupLink);
+    ul.appendChild(nextGroupLi);
+
+    paginationDiv.appendChild(ul);
 
     	    // 이전에 추가된 모든 마커를 지도에서 제거합니다.
     	    markers.forEach(function(marker) {
@@ -276,6 +335,12 @@
          };
          xhr.send('');
       }
+
+      
    </script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
