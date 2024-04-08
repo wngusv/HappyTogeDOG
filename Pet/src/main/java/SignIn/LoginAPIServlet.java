@@ -31,7 +31,8 @@ public class LoginAPIServlet extends HttpServlet {
 				String redirectUrl = "../index.jsp" ;
 				resp.sendRedirect(redirectUrl);
 			} else {
-				  resp.sendRedirect("../login.html");
+				 String message = URLEncoder.encode("아이디 혹은 비밀번호가 틀렸습니다", "UTF-8");
+				    resp.sendRedirect("../login.jsp?error=" + message);
 			}
 
 		} catch (SQLException e) {
