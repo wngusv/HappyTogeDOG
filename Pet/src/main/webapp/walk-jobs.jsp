@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, Util.MyWebContextListener"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="/floating-banner.jsp" %>
+<%@ include file="/floating-banner.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body style="padding-top: 150px;">
-<header>
+	<header>
 		<%
 		request.setAttribute("pageTitle", "산책 아르바이트");
 		%>
@@ -25,54 +25,56 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h2>게시글 목록</h2>
-					<div class="btn-group" role="group" aria-label="Filter Buttons">
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="">전체</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="서울">서울</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="경기">경기</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="인천">인천</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="부산">부산</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="대구">대구</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="대전">대전</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="경남">경남</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="전남">전남</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="충남">충남</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="광주">광주</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="울산">울산</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="경북">경북</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="전북">전북</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="충북">충북</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="강원">강원</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="제주">제주</button>
-						<button type="button" class="btn btn-secondary filter-btn"
-							data-filter="세종">세종</button>
-					</div>
-					<c:choose>
-						<c:when test="${sessionScope.userId != null}">
-							<button class="btn btn-primary float-right mb-3"
-								onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
-						</c:when>
-						<c:otherwise>
-							<button class="btn btn-primary float-right mb-3"
-								onclick="alert('로그인 후 이용해주세요.'); location.href='login.jsp'">글쓰기</button>
-						</c:otherwise>
-					</c:choose>
+					<form action="walk-jobs.jsp" method="get">
+						<div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="filterLocation" class="d-block">지역</label> 
+                                <select class="form-control" id="filterLocation" name="filterLocation">
+                                    <option value="" <%=(request.getParameter("filterLocation") == null) ? "selected" : ""%>>전체</option>
+                                    <option value="서울" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("서울")) ? "selected" : ""%>>서울</option>
+                                    <option value="경기" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("경기")) ? "selected" : ""%>>경기</option>
+                                    <option value="인천" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("인천")) ? "selected" : ""%>>인천</option>
+                                    <option value="부산" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("부산")) ? "selected" : ""%>>부산</option>
+                                    <option value="대구" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("대구")) ? "selected" : ""%>>대구</option>
+                                    <option value="대전" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("대전")) ? "selected" : ""%>>대전</option>
+                                    <option value="경남" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("경남")) ? "selected" : ""%>>경남</option>
+                                    <option value="전남" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("전남")) ? "selected" : ""%>>전남</option>
+                                    <option value="충남" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("충남")) ? "selected" : ""%>>충남</option>
+                                    <option value="광주" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("광주")) ? "selected" : ""%>>광주</option>
+                                    <option value="울산" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("울산")) ? "selected" : ""%>>울산</option>
+                                    <option value="경북" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("경북")) ? "selected" : ""%>>경북</option>
+                                    <option value="전북" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("전북")) ? "selected" : ""%>>전북</option>
+                                    <option value="충북" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("충북")) ? "selected" : ""%>>충북</option>
+                                    <option value="강원" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("강원")) ? "selected" : ""%>>강원</option>
+                                    <option value="제주" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("제주")) ? "selected" : ""%>>제주</option>
+                                    <option value="세종" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("세종")) ? "selected" : ""%>>세종</option>
+								</select>
+							</div>
+<div class="form-group col-md-3">
+                                <label for="filterDay" class="d-block">근무요일</label> 
+                                <select class="form-control" id="filterDay" name="filterDay">
+                                    <option value="" <%=(request.getParameter("filterDay") == null) ? "selected" : ""%>>전체</option>
+                                    <option value="평일" <%=(request.getParameter("filterDay") != null && request.getParameter("filterDay").equals("평일")) ? "selected" : ""%>>평일</option>
+                                    <option value="주말" <%=(request.getParameter("filterDay") != null && request.getParameter("filterDay").equals("주말")) ? "selected" : ""%>>주말</option>
+                                </select>
+                            </div>
+ <div class="form-group col-md-3">
+                                <label for="filterTime" class="d-block">근무시간</label> 
+                                <select class="form-control" id="filterTime" name="filterTime">
+                                    <option value="" <%=(request.getParameter("filterTime") == null) ? "selected" : ""%>>전체</option>
+                                    <option value="오전" <%=(request.getParameter("filterTime") != null && request.getParameter("filterTime").equals("오전")) ? "selected" : ""%>>오전</option>
+                                    <option value="오후" <%=(request.getParameter("filterTime") != null && request.getParameter("filterTime").equals("오후")) ? "selected" : ""%>>오후</option>
+                                </select>
+                            </div>
+							 <div class="form-group col-md-3">
+                                <button type="submit" class="btn btn-primary mt-4">검색</button>
+                            </div>
+						</div>
+					</form>
+ <div class="text-right mb-3">
+                        <!-- 급여가 높은 순으로 정렬하는 버튼 -->
+                        <a href="walk-jobs.jsp?sortBy=pay" class="btn btn-primary">급여가 높은 순으로 정렬</a>
+                    </div>
 					<div class="table-responsive">
 						<table class="table table-striped table-bordered">
 							<thead class="thead-dark">
@@ -86,58 +88,88 @@
 									<th>작성일</th>
 								</tr>
 							</thead>
-							<tbody>
-								<%
-								try (Connection connection = MyWebContextListener.getConnection();) {
-									
-									int recordsPerPage = 10;
-									int currentPage = 1;
-									if (request.getParameter("currentPage") != null) {
-										currentPage = Integer.parseInt(request.getParameter("currentPage"));
-									}
-									int start = (currentPage - 1) * recordsPerPage;
+							                             <tbody>
+                                <%
+                                try (Connection connection = MyWebContextListener.getConnection();) {
 
-									String filterLocation = request.getParameter("filterLocation");
-									String query;
-									PreparedStatement ps;
+                                    int recordsPerPage = 10;
+                                    int currentPage = 1;
+                                    if (request.getParameter("currentPage") != null) {
+                                        currentPage = Integer.parseInt(request.getParameter("currentPage"));
+                                    }
+                                    int start = (currentPage - 1) * recordsPerPage;
 
-									if (filterLocation != null && !filterLocation.isEmpty()) {
-										query = "SELECT * FROM pet.dogwalker WHERE address LIKE ? ORDER BY num DESC LIMIT ?, ?";
-										ps = connection.prepareStatement(query);
-										ps.setString(1, "%" + filterLocation + "%");
-										ps.setInt(2, start);
-										ps.setInt(3, recordsPerPage);
-									} else {
-										query = "SELECT * FROM pet.dogwalker ORDER BY num DESC LIMIT ?, ?";
-										ps = connection.prepareStatement(query);
-										ps.setInt(1, start);
-										ps.setInt(2, recordsPerPage);
-									}
+                                    String filterLocation = request.getParameter("filterLocation");
+                                    String filterDay = request.getParameter("filterDay");
+                                    String filterTime = request.getParameter("filterTime");
+                                    String query;
+                                    PreparedStatement ps;
 
-									ResultSet rs = ps.executeQuery();
-									while (rs.next()) {
-								%>
-								<tr>
-									<td><%=rs.getInt("num")%></td>
-									<td><%=rs.getString("address")%></td>
-									<td><a
-										href="dogwalking/dogwalking_board_read.jsp?num=<%=rs.getInt("num")%>"><%=rs.getString("title")%></a></td>
-									<td><%=rs.getString("day")%></td>
-									<td><%=rs.getString("time")%></td>
-									<td><%=rs.getInt("pay")%> 원</td>
-									<td><%=rs.getTimestamp("today_date")%></td>
-								</tr>
-								<%
-								}
-								// 페이징 처리
-								String countQuery = "SELECT COUNT(*) AS total FROM pet.dogwalker";
-								PreparedStatement countPs = connection.prepareStatement(countQuery);
-								ResultSet countRs = countPs.executeQuery();
-								countRs.next();
-								int totalRecords = countRs.getInt("total");
-								int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
-								%>
-							</tbody>
+                                    // 정렬 파라미터 확인
+                                    String sortBy = request.getParameter("sortBy");
+
+                                    if (filterLocation != null && !filterLocation.isEmpty()) {
+                                        query = "SELECT * FROM pet.dogwalker WHERE address LIKE ?";
+                                        if (filterDay != null && !filterDay.isEmpty()) {
+                                            query += " AND day=?";
+                                        }
+                                        if (filterTime != null && !filterTime.isEmpty()) {
+                                            query += " AND time=?";
+                                        }
+                                        if (sortBy != null && sortBy.equals("pay")) {
+                                            query += " ORDER BY pay DESC"; // 급여가 높은 순으로 정렬
+                                        } else {
+                                            query += " ORDER BY num DESC";
+                                        }
+                                        query += " LIMIT ?, ?";
+                                        ps = connection.prepareStatement(query);
+                                        ps.setString(1, "%" + filterLocation + "%");
+                                        int parameterIndex = 2;
+                                        if (filterDay != null && !filterDay.isEmpty()) {
+                                            ps.setString(parameterIndex++, filterDay);
+                                        }
+                                        if (filterTime != null && !filterTime.isEmpty()) {
+                                            ps.setString(parameterIndex++, filterTime);
+                                        }
+                                        ps.setInt(parameterIndex++, start);
+                                        ps.setInt(parameterIndex++, recordsPerPage);
+                                    } else {
+                                        query = "SELECT * FROM pet.dogwalker";
+                                        if (sortBy != null && sortBy.equals("pay")) {
+                                            query += " ORDER BY pay DESC"; // 급여가 높은 순으로 정렬
+                                        } else {
+                                            query += " ORDER BY num DESC";
+                                        }
+                                        query += " LIMIT ?, ?";
+                                        ps = connection.prepareStatement(query);
+                                        ps.setInt(1, start);
+                                        ps.setInt(2, recordsPerPage);
+                                    }
+
+                                    ResultSet rs = ps.executeQuery();
+                                    while (rs.next()) {
+                                %>
+                                <tr>
+                                    <td><%=rs.getInt("num")%></td>
+                                    <td><%=rs.getString("address")%></td>
+                                    <td><a
+                                        href="dogwalking/dogwalking_board_read.jsp?num=<%=rs.getInt("num")%>"><%=rs.getString("title")%></a></td>
+                                    <td><%=rs.getString("day")%></td>
+                                    <td><%=rs.getString("time")%></td>
+                                    <td><%=rs.getInt("pay")%> 원</td>
+                                    <td><%=rs.getTimestamp("today_date")%></td>
+                                </tr>
+                                <%
+                                    }
+                                    // 페이징 처리
+                                    String countQuery = "SELECT COUNT(*) AS total FROM pet.dogwalker";
+                                    PreparedStatement countPs = connection.prepareStatement(countQuery);
+                                    ResultSet countRs = countPs.executeQuery();
+                                    countRs.next();
+                                    int totalRecords = countRs.getInt("total");
+                                    int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
+                                %>
+                            </tbody>
 						</table>
 					</div>
 					<nav aria-label="Page navigation example">
@@ -196,18 +228,6 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-	<script>
-		// 필터 버튼 클릭 시 필터링 동작
-		document.querySelectorAll('.filter-btn').forEach(
-				function(btn) {
-					btn.addEventListener('click', function() {
-						var filterValue = this.getAttribute('data-filter');
-						window.location.href = 'walk-jobs.jsp?filterLocation='
-								+ filterValue;
-					});
-				});
-	</script>
 
 </body>
 </html>

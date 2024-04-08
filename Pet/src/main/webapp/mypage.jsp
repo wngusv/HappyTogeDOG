@@ -20,6 +20,7 @@
             String id = userInfoRs.getString("id");
             String password = userInfoRs.getString("pw");
             String userName = userInfoRs.getString("user_name");
+            String phone = userInfoRs.getString("phone");
             String address = userInfoRs.getString("address");
             String addressDetail = userInfoRs.getString("address_detail");
     %>
@@ -28,6 +29,7 @@
         <p><strong>아이디:</strong> <%= id %></p>
 <p><strong>패스워드:</strong> <%= password %></p>
         <p><strong>이름:</strong> <%= userName %></p>
+        <p><strong>핸드폰:</strong> <%= phone %></p>
         <p><strong>주소:</strong> <%= address %> <%= addressDetail %></p>
         <a href="/mypage/EditUserInfo.jsp?type=address">회원정보수정</a>
     </div>
