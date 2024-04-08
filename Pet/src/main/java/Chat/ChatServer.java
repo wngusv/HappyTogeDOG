@@ -25,6 +25,7 @@ public class ChatServer {
 		String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
 		String chatId = session.getRequestParameterMap().get("userId").get(0);
 
+		if(!chatId.equals("null")) {
 		if (chatRooms.containsKey(chatRoom)) {
 			Set<Session> clients = chatRooms.get(chatRoom);
 			for (Session client : clients) {
@@ -44,6 +45,9 @@ public class ChatServer {
 		chatRooms.computeIfAbsent(chatRoom, k -> new HashSet<>()).add(session);
 		System.out.println("웹소켓 연결: " + chatId + ", 채팅방: " + chatRoom);
 		broadcastMessage(chatRoom, chatId +'|'+ "채팅방에 입장하였습니다.");
+		}else {
+			System.out.println("비정상 접속");
+		}
 
 	}
 

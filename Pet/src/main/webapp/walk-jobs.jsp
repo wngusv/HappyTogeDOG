@@ -3,6 +3,7 @@
 <%@ page import="java.sql.*, Util.MyWebContextListener"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/floating-banner.jsp"%>
+<%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,7 @@
 					<h2>게시글 목록</h2>
 					<form action="walk-jobs.jsp" method="get">
 						<div class="form-row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="filterLocation" class="d-block">지역</label> 
                                 <select class="form-control" id="filterLocation" name="filterLocation">
                                     <option value="" <%=(request.getParameter("filterLocation") == null) ? "selected" : ""%>>전체</option>
@@ -50,7 +51,7 @@
                                     <option value="세종" <%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("세종")) ? "selected" : ""%>>세종</option>
 								</select>
 							</div>
-<div class="form-group col-md-3">
+<div class="form-group col-md-2">
                                 <label for="filterDay" class="d-block">근무요일</label> 
                                 <select class="form-control" id="filterDay" name="filterDay">
                                     <option value="" <%=(request.getParameter("filterDay") == null) ? "selected" : ""%>>전체</option>
@@ -58,7 +59,7 @@
                                     <option value="주말" <%=(request.getParameter("filterDay") != null && request.getParameter("filterDay").equals("주말")) ? "selected" : ""%>>주말</option>
                                 </select>
                             </div>
- <div class="form-group col-md-3">
+ <div class="form-group col-md-2">
                                 <label for="filterTime" class="d-block">근무시간</label> 
                                 <select class="form-control" id="filterTime" name="filterTime">
                                     <option value="" <%=(request.getParameter("filterTime") == null) ? "selected" : ""%>>전체</option>
@@ -66,15 +67,26 @@
                                     <option value="오후" <%=(request.getParameter("filterTime") != null && request.getParameter("filterTime").equals("오후")) ? "selected" : ""%>>오후</option>
                                 </select>
                             </div>
-							 <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
+    <label for="filterSize" class="d-block">견종</label>
+    <select class="form-control" id="filterSize" name="filterSize">
+        <option value=""  <%=(request.getParameter("filterSize") == null) ? "selected" : ""%>>전체</option>
+        <option value="소형견(7kg이하)" <%=(request.getParameter("filterSize") != null && request.getParameter("filterSize").equals("소형견(7kg이하)")) ? "selected" : ""%>>소형견(7kg이하)</option>
+        <option value="중형견(8kg이상)" <%=(request.getParameter("filterSize") != null && request.getParameter("filterSize").equals("중형견(8kg이상)")) ? "selected" : ""%>>중형견(8kg이상)</option>
+        <option value="대형견(16kg이상)" <%=(request.getParameter("filterSize") != null && request.getParameter("filterSize").equals("대형견(16kg이상)")) ? "selected" : ""%>>대형견(16kg이상</option>
+        <option value="초대형견(45kg이상)" <%=(request.getParameter("filterSize") != null && request.getParameter("filterSize").equals("초대형견(45kg이상)")) ? "selected" : ""%>>초대형견(45kg이상)</option>
+    </select>
+</div>
+							 <div class="form-group col-md-2">
                                 <button type="submit" class="btn btn-primary mt-4">검색</button>
                             </div>
 						</div>
 					</form>
  <div class="text-right mb-3">
-                        <!-- 급여가 높은 순으로 정렬하는 버튼 -->
-                        <a href="walk-jobs.jsp?sortBy=pay" class="btn btn-primary">급여가 높은 순으로 정렬</a>
-                    </div>
+    <!-- 급여가 높은 순으로 정렬하는 버튼, 필터 조건을 URL에 추가 -->
+    <a href="walk-jobs.jsp?sortBy=pay&filterLocation=<%=request.getParameter("filterLocation") != null ? URLEncoder.encode(request.getParameter("filterLocation"), "UTF-8") : ""%>&filterDay=<%=request.getParameter("filterDay") != null ? URLEncoder.encode(request.getParameter("filterDay"), "UTF-8") : ""%>&filterTime=<%=request.getParameter("filterTime") != null ? URLEncoder.encode(request.getParameter("filterTime"), "UTF-8") : ""%>&filterSize=<%=request.getParameter("filterSize") != null ? URLEncoder.encode(request.getParameter("filterSize"), "UTF-8") : ""%>" class="btn btn-primary">급여 높은 순</a>
+
+</div>
 					<div class="table-responsive">
 						<table class="table table-striped table-bordered">
 							<thead class="thead-dark">
@@ -82,6 +94,7 @@
 									<th>번호</th>
 									<th>근무지</th>
 									<th>제목</th>
+									<th>견종</th>
 									<th>근무 요일</th>
 									<th>근무 시간</th>
 									<th>급여</th>
@@ -102,6 +115,7 @@
                                     String filterLocation = request.getParameter("filterLocation");
                                     String filterDay = request.getParameter("filterDay");
                                     String filterTime = request.getParameter("filterTime");
+                                    String filterSize = request.getParameter("filterSize");
                                     String query;
                                     PreparedStatement ps;
 
@@ -115,6 +129,9 @@
                                         }
                                         if (filterTime != null && !filterTime.isEmpty()) {
                                             query += " AND time=?";
+                                        }
+                                        if (filterSize != null && !filterSize.isEmpty()) {
+                                            query += " AND size=?";
                                         }
                                         if (sortBy != null && sortBy.equals("pay")) {
                                             query += " ORDER BY pay DESC"; // 급여가 높은 순으로 정렬
@@ -130,6 +147,9 @@
                                         }
                                         if (filterTime != null && !filterTime.isEmpty()) {
                                             ps.setString(parameterIndex++, filterTime);
+                                        }
+                                        if (filterSize != null && !filterSize.isEmpty()) {
+                                            ps.setString(parameterIndex++, filterSize);
                                         }
                                         ps.setInt(parameterIndex++, start);
                                         ps.setInt(parameterIndex++, recordsPerPage);
@@ -154,6 +174,7 @@
                                     <td><%=rs.getString("address")%></td>
                                     <td><a
                                         href="dogwalking/dogwalking_board_read.jsp?num=<%=rs.getInt("num")%>"><%=rs.getString("title")%></a></td>
+                                        <td><%=rs.getString("size")%></td>
                                     <td><%=rs.getString("day")%></td>
                                     <td><%=rs.getString("time")%></td>
                                     <td><%=rs.getInt("pay")%> 원</td>
@@ -223,11 +244,9 @@
 		</div>
 	</footer>
 
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -31,68 +31,68 @@
 		Animal animal = (Animal) request.getAttribute("animal");
 		%>
 		<img id= "img" src="<%=animal.getPopfile()%>" alt="동물 이미지" />
-		<p>
-			<strong>Desertion No:</strong>
+				<p>
+			<strong>유기번호:</strong>
 			<%=animal.getDesertionNo()%>
 		</p>
 		<p>
-			<strong>Happen Date:</strong>
+			<strong>발견일:</strong>
 			<%=animal.getHappenDt()%>
 		</p>
 		<p>
-			<strong>Happen Place:</strong>
+			<strong>발견장소:</strong>
 			<%=animal.getHappenPlace()%>
 		</p>
 		<p>
-			<strong>Kind Code:</strong>
+			<strong>종류 코드:</strong>
 			<%=animal.getKindCd()%>
 		</p>
 		<p>
-			<strong>Color Code:</strong>
+			<strong>색상 코드:</strong>
 			<%=animal.getColorCd()%>
 		</p>
 		<p>
-			<strong>Age:</strong>
+			<strong>나이:</strong>
 			<%=animal.getAge()%>
 		</p>
 		<p>
-			<strong>Weight:</strong>
+			<strong>무게:</strong>
 			<%=animal.getWeight()%>
 		</p>
 		<p>
-			<strong>Notice No:</strong>
+			<strong>공고번호:</strong>
 			<%=animal.getNoticeNo()%>
 		</p>
 		<p>
-			<strong>Notice Start Date:</strong>
+			<strong>공고시작일:</strong>
 			<%=animal.getNoticeSdt()%>
 		</p>
 		<p>
-			<strong>Notice End Date:</strong>
+			<strong>공고종료일:</strong>
 			<%=animal.getNoticeEdt()%>
 		</p>
 		<p>
-			<strong>Process State:</strong>
+			<strong>처리상태:</strong>
 			<%=animal.getProcessState()%>
 		</p>
 		<p>
-			<strong>Sex Code:</strong>
+			<strong>성별 코드:</strong>
 			<%=animal.getSexCd()%>
 		</p>
 		<p>
-			<strong>Neuter YN:</strong>
+			<strong>중성화 여부:</strong>
 			<%=animal.getNeuterYn()%>
 		</p>
 		<p>
-			<strong>Special Mark:</strong>
+			<strong>특이사항:</strong>
 			<%=animal.getSpecialMark()%>
 		</p>
 		<p>
-			<strong>Care Name:</strong>
+			<strong>보호소명:</strong>
 			<%=animal.getCareNm()%>
 		</p>
 		<p>
-			<strong>Care Tel:</strong>
+			<strong>보호소 연락처:</strong>
 			<%=animal.getCareTel()%>
 			<%
 			String careFacilityAddress = animal.getCareAddr().replaceAll("\\([^)]*\\)", "");
@@ -103,15 +103,15 @@
 		<div id="map" style="width: 100%; height: 350px"></div>
 
 		<p>
-			<strong>Org Name:</strong>
+			<strong>기관명:</strong>
 			<%=animal.getOrgNm()%>
 		</p>
 		<p>
-			<strong>Charge Name:</strong>
+			<strong>담당자명:</strong>
 			<%=animal.getChargeNm()%>
 		</p>
 		<p>
-			<strong>Office Tel:</strong>
+			<strong>사무실 연락처:</strong>
 			<%=animal.getOfficetel()%>
 		</p>
 	</div>
@@ -137,6 +137,7 @@
 
 		// 키워드로 장소를 검색합니다
 		ps.keywordSearch(address, placesSearchCB);
+			
 
 		// 키워드 검색 완료 시 호출되는 콜백함수 입니다
 		function placesSearchCB(data, status, pagination) {
@@ -172,6 +173,15 @@
 				infowindow.open(map, marker);
 			});
 		}
+		 kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+	            // 클릭한 위치의 좌표를 얻어옵니다
+
+	            // 카카오지도에서 해당 좌표를 보여주는 링크
+	            var kakaoMapUrl = 'https://map.kakao.com/link/search/' +address;
+
+	            // 새 창을 열어 해당 링크로 이동
+	            window.open(kakaoMapUrl);
+	        });
 	</script>
 </body>
 </html>
