@@ -408,7 +408,7 @@ function sortComments(orderType) {
 // 테이블을 업데이트하는 함수
 function updateTable(comments) {
     var tableBody = document.querySelector('.table.table-fixed tbody');
-    tableBody.innerHTML = ''; // 기존 테이블 내용을 비웁니다.
+    tableBody.innerHTML = '';
 
     comments.forEach(comment => {
         var row = '<tr>' +
@@ -416,21 +416,22 @@ function updateTable(comments) {
                     '<td>' + comment.content + '</td>' +
                     '<td>' + comment.content_time + '</td>' +
                     '<td>' +
-                        '<button type="button" class="reaction-button" onclick="handleReaction(' + comment.num + ', \'좋아요\')">' +
+                        '<button type="button" class="reaction-button" onclick="handleReaction(' + comment.commentNum + ', \'좋아요\')">' +
                             '<img src="images/강아지좋아요.PNG" alt="좋아요" style="height: 30px; width: 30px;">' +
                         '</button>' + 
-                        '<span id="like-count-' + comment.num + '">' + comment.like + '</span>' +
+                        '<span id="like-count-' + comment.commentNum + '">' + comment.like + '</span>' +
                     '</td>' +
                     '<td>' +
-                        '<button type="button" class="reaction-button" onclick="handleReaction(' + comment.num + ', \'싫어요\')">' +
+                        '<button type="button" class="reaction-button" onclick="handleReaction(' + comment.commentNum + ', \'싫어요\')">' +
                             '<img src="images/강아지싫어요.PNG" alt="싫어요" style="height: 30px; width: 30px;">' +
                         '</button>' +
-                        '<span id="dislike-count-' + comment.num + '">' + comment.dislike + '</span>' +
+                        '<span id="dislike-count-' + comment.commentNum + '">' + comment.dislike + '</span>' +
                     '</td>' +
                   '</tr>';
-        tableBody.innerHTML += row; // 새로운 행을 테이블에 추가합니다.
+        tableBody.innerHTML += row;
     });
 }
+
 
 
 function sendReaction(postId, type) {
@@ -540,5 +541,3 @@ function validateCommentForm() {
 
 
 </html>
-
-
