@@ -2,6 +2,8 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="Util.MyWebContextListener"%>
 <%@page import="java.sql.Connection"%>
+<%@ page import="java.net.URLEncoder" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -29,6 +31,8 @@
 .social-links li {
 	margin-left: 10px; /* 링크들 사이의 간격 설정 */
 }
+
+
 </style>
 <body style="padding-top: 150px;">
 	<header>
@@ -79,13 +83,14 @@
 					<tbody>
 						<!-- 테이블 데이터 행 -->
 						<%
+						
+						String categoryFilter = request.getParameter("categoryFilter");
 						int pagee = 1;
 						int pageeSize = 10;
 						if (request.getParameter("pagee") != null) {
 							pagee = Integer.parseInt(request.getParameter("pagee"));
 						}
 
-						String categoryFilter = request.getParameter("categoryFilter");
 						String sql = "SELECT b.idx, b.category, b.title, b.id, b.postdate, "
 								+ "COUNT(DISTINCT c.id) AS 추천수, COUNT(DISTINCT cc.num) AS comment_count " + "FROM board b "
 								+ "LEFT JOIN comment c ON b.idx = c.post_idx AND c.type = '추천' "
@@ -164,20 +169,31 @@
 						if (rs.next()) {
 					int totalPosts = rs.getInt(1);
 					int totalPages = (int) Math.ceil((double) totalPosts / pageeSize);
-
-					for (int i = 1; i <= totalPages; i++) {
-						if (pagee == i) {
-							out.print("<b>" + i + "</b> "); // 현재 페이지 강조
-						} else {
-							out.print("<a href='board.jsp?pagee=" + i + "'>" + i + "</a> ");
-						}
-					}
-						}
-					}
-				} catch (Exception ex) {
-					out.println("오류가 발생했습니다: " + ex.getMessage());
-				}
-				%>
+					%>
+					 <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <%
+                    for (int i = 1; i <= totalPages; i++) {
+                        String link = "board.jsp?pagee=" + i;
+                        if (categoryFilter != null && !categoryFilter.isEmpty()) {
+                            link += "&categoryFilter=" + URLEncoder.encode(categoryFilter, "UTF-8");
+                        }
+                        %>
+                        <li class="page-item <%= pagee == i ? "active" : "" %>">
+                            <a class="page-link" href="<%=link%>"><%=i%></a>
+                        </li>
+                        <%
+                    }
+                    %>
+                </ul>
+            </nav>
+            <%
+        }
+    }
+} catch (Exception ex) {
+    out.println("오류가 발생했습니다: " + ex.getMessage());
+}
+%>
 
 			</section>
 
