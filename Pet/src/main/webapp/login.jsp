@@ -79,6 +79,16 @@ h2 {
 						window.location.href = 'findPW.jsp'; // 비밀번호 찾기 페이지의 URL로 변경해야 함
 					});
 		});
+		 function getQueryParam(param) {
+	            var searchParams = new URLSearchParams(window.location.search);
+	            return searchParams.get(param);
+	        }
+	        
+	        // "error" 쿼리 파라미터 확인
+	        var errorMessage = getQueryParam("error");
+	        if (errorMessage) {
+	            alert(decodeURIComponent(errorMessage));
+	        }
 	</script>
 </body>
 </html>
