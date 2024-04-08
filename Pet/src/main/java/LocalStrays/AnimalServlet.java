@@ -2,7 +2,9 @@ package LocalStrays;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,13 +17,20 @@ import Util.LocalStrayListUpdateListener;
 @WebServlet("/AnimalServlet")
 public class AnimalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private List<Animal> animalList;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String localGovernment = request.getParameter("orgName");
 		String sessionLocate = (String) request.getSession().getAttribute("locate");
+		String page = request.getParameter("page");
+		System.out.println("페이지:" + page);
+		if (page == null) {
+	        page = "1";
+	    }
 
-		List<Animal> animalList = new ArrayList<>();
+		animalList = new ArrayList<>();
+		List<Animal> realAnimalList = new ArrayList<>();
 		String nowLocate = "우리 지역";
 
 		if (localGovernment != null) {
@@ -42,12 +51,44 @@ public class AnimalServlet extends HttpServlet {
 			animalList = LocalStrayListUpdateListener.getAllAnimalList();
 			nowLocate = "우리 지역";
 		}
+		
+		realAnimalList = pageOfAnimalList(page, animalList);
+		int totalPage = countAll(animalList);
+		
 
-		request.setAttribute("animalList", animalList);
+		request.setAttribute("animalList", realAnimalList);
+		request.setAttribute("pages", totalPage);
 		request.setAttribute("nowLocate", nowLocate);
 		request.setAttribute("localGovernmentList", LocalStrayListUpdateListener.getLocalGovernmentList());
 
 		request.getRequestDispatcher("/local-strays.jsp").forward(request, response);
+	}
+
+	private int countAll(List<Animal> animalList) {
+		int totalPage = animalList.size() / 20;
+		totalPage += animalList.size() % 20 == 0 ? 0 : 1;
+		return totalPage;
+	}
+
+	private List<Animal> pageOfAnimalList(String page, List<Animal> animalList) {
+		int pageSize = 20;
+
+		// 페이지 번호
+		int pageNumber = Integer.valueOf(page); // 예시로 2페이지를 선택
+
+		// 시작 인덱스 계산
+		int startIndex = (pageNumber - 1) * pageSize;
+		// 끝 인덱스 계산
+		int endIndex = pageNumber * pageSize;
+
+		// 시작 인덱스와 끝 인덱스를 벗어나지 않도록 보정
+		startIndex = Math.min(startIndex, animalList.size());
+		endIndex = Math.min(endIndex, animalList.size());
+
+		// 선택된 동물들의 리스트
+		List<Animal> selectedAnimals = animalList.subList(startIndex, endIndex);
+
+		return selectedAnimals;
 	}
 
 	private static List<Animal> getAnimalsByLocalGovernment(String localGovernment) {
