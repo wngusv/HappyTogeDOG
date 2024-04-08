@@ -24,7 +24,6 @@ public class AnimalServlet extends HttpServlet {
 		String localGovernment = request.getParameter("orgName");
 		String sessionLocate = (String) request.getSession().getAttribute("locate");
 		String page = request.getParameter("page");
-		System.out.println("페이지:" + page);
 		if (page == null) {
 	        page = "1";
 	    }

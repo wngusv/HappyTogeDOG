@@ -293,6 +293,42 @@
 			var modal = document.getElementById("passwordMismatchModal");
 			modal.style.display = "none"; // 모달 숨기기
 		}
+		
+		function validateFormFields() {
+		    var id = document.getElementById("id").value;
+		    var password = document.getElementById("password").value;
+		    var confirmPassword = document.getElementById("confirmPassword").value;
+		    var name = document.getElementById("name").value;
+		    var phone = document.getElementById("phone").value;
+		    var address = document.getElementById("sample6_address").value;
+		    var detailAddress = document.getElementById("sample6_detailAddress").value;
+
+		    // 필드가 비어있는지 확인
+		    if (!id) {
+		        alert("아이디를 입력해주세요.");
+		        return false; // 폼 제출을 중단합니다.
+		    } else if (!password) {
+		    	alert("비밀번호를 입력해주세요.")
+		    	return false;
+		    } else if (!confirmPassword) {
+		    	alert("비밀번호 확인 해주세요.")
+		    	return false;
+		    } else if (!name) {
+		    	alert("이름을 입력해주세요.")
+		    	return false;
+		    } else if (!phone) {
+		    	alert("전화번호를 입력해주세요.")
+		    	return false;
+		    } else if (!sample6_address) {
+		    	alert("주소를 입력해주세요.")
+		    	return false;
+		    } else if (!sample6_detailAddress) {
+		    	alert("상세주소를 입력해주세요.")
+		    	return false;
+		    }
+		    return true; // 모든 필드가 채워져 있으므로 폼 제출을 계속합니다.
+		}
+
 	</script>
 </body>
 </html>
