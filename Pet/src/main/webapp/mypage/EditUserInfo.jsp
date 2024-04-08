@@ -12,49 +12,50 @@
     <% 
     try (Connection connection = MyWebContextListener.getConnection();) {
         String userId = (String) session.getAttribute("userId");
-        String type = request.getParameter("type"); // 수정할 정보 종류 받기
-
-        if (type != null && !type.isEmpty()) {
-            Statement stmt = connection.createStatement();
-            String userInfoQuery = "SELECT * FROM pet.user WHERE id = '" + userId + "'";
-            ResultSet userInfoRs = stmt.executeQuery(userInfoQuery);
-
-            if (userInfoRs.next()) {
-                String id = userInfoRs.getString("id");
-                String password = userInfoRs.getString("pw");
-                String userName = userInfoRs.getString("user_name");
-                String address = userInfoRs.getString("address");
-                String addressDetail = userInfoRs.getString("address_detail");
+        Statement stmt = connection.createStatement();
+        // 회원 정보 가져오기
+        String userInfoQuery = "SELECT * FROM pet.user WHERE id = '" + userId + "'";
+        ResultSet userInfoRs = stmt.executeQuery(userInfoQuery);
+        if (userInfoRs.next()) {
+            String id = userInfoRs.getString("id");
+            String password = userInfoRs.getString("pw");
+            String userName = userInfoRs.getString("user_name");
+            String phone = userInfoRs.getString("phone");
+            String address = userInfoRs.getString("address");
+            String addressDetail = userInfoRs.getString("address_detail");
     %>
-    <form action="UpdateUserInfo.jsp" method="post">
-        <% if (type.equals("password")) { %>
-            <div>
-                <label for="password">새로운 패스워드:</label>
-                <input type="password" id="password" name="password">
-            </div>
-        <% } else if (type.equals("username")) { %>
-            <div>
-                <label for="username">새로운 이름:</label>
-                <input type="text" id="username" name="username" value="<%= userName %>">
-            </div>
-        <% } else if (type.equals("address")) { %>
-            <div>
-                <label for="address">새로운 주소:</label>
-                <input type="text" id="address" name="address" value="<%= address %>">
-            </div>
-            <div>
-                <label for="addressDetail">상세 주소:</label>
-                <input type="text" id="addressDetail" name="addressDetail" value="<%= addressDetail %>">
-            </div>
-        <% } %>
-        <input type="hidden" name="type" value="<%= type %>">
+    <form action="/mypage/UpdateUserInfo.jsp" method="post">
+        <div>
+            <label for="id">아이디:</label>
+            <input type="text" id="id" name="id" value="<%= id %>" readonly>
+        </div>
+        <div>
+            <label for="password">비밀번호:</label>
+            <input type="password" id="password" name="password" value="<%= password %>">
+        </div>
+        <div>
+            <label for="userName">이름:</label>
+            <input type="text" id="userName" name="userName" value="<%= userName %>">
+        </div>
+        <div>
+            <label for="phone">핸드폰:</label>
+            <input type="text" id="phone" name="phone" value="<%= phone %>">
+        </div>
+        <div>
+            <label for="address">주소:</label>
+            <input type="text" id="address" name="address" value="<%= address %>">
+        </div>
+        <div>
+            <label for="addressDetail">상세 주소:</label>
+            <input type="text" id="addressDetail" name="addressDetail" value="<%= addressDetail %>">
+        </div>
         <button type="submit">저장</button>
     </form>
     <a href="/mypage.jsp">취소</a>
     <% 
-            }
-            userInfoRs.close();
-            stmt.close();
+        } else {
+            // 회원 정보가 없는 경우
+            out.println("회원 정보를 찾을 수 없습니다.");
         }
     } catch (Exception e) {
         out.println("오류가 발생했습니다. 오류 메시지: " + e.getMessage());
