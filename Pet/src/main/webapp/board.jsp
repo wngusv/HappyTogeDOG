@@ -56,7 +56,7 @@
 								<!-- 카테고리 선택 폼 -->
 								<form action="board.jsp" method="get">
 									<select name="categoryFilter" onchange="this.form.submit()">
-										<option value="">--</option>
+										<option value="">전체</option>
 										<option value="소통">소통</option>
 										<option value="긴급">긴급</option>
 										<option value="후기">후기</option>
@@ -171,4 +171,21 @@
 		</div>
 	</footer>
 </body>
+<script>
+window.onload = function() {
+    var categorySelect = document.getElementsByName("categoryFilter")[0];
+    var selectedCategory = "<%= categoryFilter %>"; // JSP 코드를 사용하여 서버에서 선택된 카테고리를 가져옵니다.
+
+    // 선택된 카테고리가 있으면 해당 카테고리를 선택 상태로 설정합니다.
+    if (selectedCategory) {
+        for (var i = 0; i < categorySelect.options.length; i++) {
+            if (categorySelect.options[i].value === selectedCategory) {
+                categorySelect.selectedIndex = i;
+                break;
+            }
+        }
+    }
+};
+</script>
+
 </html>

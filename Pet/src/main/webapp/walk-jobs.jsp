@@ -3,6 +3,7 @@
 <%@ page import="java.sql.*, Util.MyWebContextListener"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/floating-banner.jsp"%>
+<%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,9 +73,10 @@
 						</div>
 					</form>
  <div class="text-right mb-3">
-                        <!-- 급여가 높은 순으로 정렬하는 버튼 -->
-                        <a href="walk-jobs.jsp?sortBy=pay" class="btn btn-primary">급여가 높은 순으로 정렬</a>
-                    </div>
+    <!-- 급여가 높은 순으로 정렬하는 버튼, 필터 조건을 URL에 추가 -->
+    <a href="walk-jobs.jsp?sortBy=pay&filterLocation=<%=request.getParameter("filterLocation") != null ? URLEncoder.encode(request.getParameter("filterLocation"), "UTF-8") : ""%>&filterDay=<%=request.getParameter("filterDay") != null ? URLEncoder.encode(request.getParameter("filterDay"), "UTF-8") : ""%>&filterTime=<%=request.getParameter("filterTime") != null ? URLEncoder.encode(request.getParameter("filterTime"), "UTF-8") : ""%>" class="btn btn-primary">급여가 높은 순으로 정렬</a>
+
+</div>
 					<div class="table-responsive">
 						<table class="table table-striped table-bordered">
 							<thead class="thead-dark">
