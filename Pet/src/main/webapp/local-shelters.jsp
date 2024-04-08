@@ -16,7 +16,6 @@
 	width: 40vw;
 	border-radius: 10px;
 	border: 1px solid #ccc;
-	cursor: pointer;
 	margin-right: 0 auto;
 }
 
@@ -58,7 +57,80 @@
 
 .rounded-border {
 	margin-bottom: 10px; /* 푸터와의 간격 설정 */
+	 width: 60%;
 }
+.weekday-hours {
+  padding: 0.25rem 0.5rem; /* px-2 py-1 */
+  border-radius: 0.375rem; /* rounded */
+  color: white; /* text-white */
+  background-color: #60a5fa; /* bg-sky-500, 하늘색 */
+  font-weight: 600; /* font-semibold */
+  font-size: 0.75rem; /* text-xs */
+  display: flex;
+  align-items: center;
+  width: max-content;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* transition duration-300 ease */
+}
+
+.weekday-hours:active {
+  background-color: #d1d5db; /* active:bg-gray-300 */
+}
+
+.weekend-hours {
+  padding: 0.25rem 0.5rem; /* 동일 */
+  border-radius: 0.375rem; /* 동일 */
+  color: white; /* 동일 */
+  background-color: #f87171; /* bg-red-500, 붉은색 */
+  font-weight: 600; /* 동일 */
+  font-size: 0.75rem; /* 동일 */
+  display: flex;
+  align-items: center;
+  width: max-content;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* 동일 */
+}
+
+.weekend-hours:active {
+  background-color: #d1d5db; /* 동일 */
+}
+
+.close-day {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  color: white;
+  background-color: #9ae6b4; /* 연두색 배경 */
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.close-day:active {
+  background-color: #d1d5db;
+}
+
+.org-name {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  color: white;
+  background-color: #6b7280; /* 살짝 검은 회색 배경 */
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.org-name:active {
+  background-color: #d1d5db;
+}
+
 
 </style>
 </head>
@@ -249,34 +321,34 @@
     	    paginatedShelters.forEach(function(shelter) {
     	        var shelterElement = document.createElement('div');
     	        shelterElement.classList.add('rounded-border');
-    	        shelterElement.innerHTML = '<p>보호소 이름: ' + shelter.careNm
-    	              + '</p><p>주소: ' + shelter.careAddr + '</p>'
-    	              + '<p>전화번호: ' + shelter.careTel + '</p>';
+    	        shelterElement.innerHTML = '<p>보호소 이름:' + shelter.careNm + '</p>' 
+    	        + '<p>주소:  <img src="images/강아지비추천.PNG" alt="아이콘" />' + shelter.careAddr + '</p>'
+    	        + '<p>전화번호:  <img src="images/강아지비추천.PNG" alt="아이콘" />' + shelter.careTel + '</p>';
+
 
     	        var additionalInfoDiv = document.createElement('div');
     	        additionalInfoDiv.className = 'additional-info';
-    	        additionalInfoDiv.style.display = 'none'; // 초기에는 추가 정보를 감추도록 설정
-    	        additionalInfoDiv.innerHTML = '<p>관리기관명: ' + shelter.orgNm + '</p>' +
-                '<p>평일 운영시간: ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>';
+    	        additionalInfoDiv.style.display = 'flex'; // Flexbox를 사용하여 내부 요소를 가로로 배열
+    	        additionalInfoDiv.style.flexWrap = 'wrap'; // 내용이 너무 많으면 다음 줄로 넘김
+    	        additionalInfoDiv.style.alignItems = 'center'; // 내부 요소를 세로 중앙에 정렬
+    	        additionalInfoDiv.style.gap = '10px';
+    	        additionalInfoDiv.innerHTML = '<p class="org-name">관리기관명: ' + shelter.orgNm + '</p>' +
+                '<p class="weekday-hours">평일 운영시간: ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>';
                 if (shelter.weekendOprStime && shelter.weekendOprEtime) {
-                	additionalInfoDiv.innerHTML += '<p>주말 운영시간: ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>';
+                	additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>';
                 } else {
-                	additionalInfoDiv.innerHTML += '<p>주말 운영시간: 미운영</p>';
+                	additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: 미운영</p>';
                 }
 
                 if (shelter.closeDay === 0) {
-                	additionalInfoDiv.innerHTML += '<p>휴무일: ' + (shelter.closeDay === 0 ? "없음" : shelter.closeDay) + '</p>';
+                	additionalInfoDiv.innerHTML += '<p class="close-day">휴무일: ' + (shelter.closeDay === 0 ? "없음" : shelter.closeDay) + '</p>';
                 } else {
-                	additionalInfoDiv.innerHTML += '<p>휴무일: 없음</p>';
+                	additionalInfoDiv.innerHTML += '<p class="close-day">휴무일: 없음</p>';
                 }
     	        							
     	        shelterElement.appendChild(additionalInfoDiv);
     	        shelterInfoDiv.appendChild(shelterElement);
 
-    	        shelterElement.addEventListener('click', function() {
-    	            additionalInfoDiv.style.display = additionalInfoDiv.style.display === 'none' ? 'block' : 'none';
-    	            shelterElement.classList.toggle('expanded');
-    	        });
 
     	        // 보호소의 위도와 경도 정보가 유효할 경우에만 마커를 생성하여 지도에 표시합니다.
     	        if(shelter.lat && shelter.lng) {
@@ -286,7 +358,7 @@
     	            var marker = new kakao.maps.Marker({position: markerPosition});
     	            kakao.maps.event.addListener(marker, 'click', function() {
     	                var infoWindow = new kakao.maps.InfoWindow({
-    	                    content: '<div style="padding:5px;">보호소 이름: ' + shelter.careNm + '<br>주소: ' + shelter.careAddr + '<br>전화번호: ' + shelter.careTel + '</div>'
+    	                    content: '<div style="padding:8px;">보호소 이름: ' + shelter.careNm + '<br>주소: ' + shelter.careAddr + '</div>'
     	                });
     	                infoWindow.open(map, marker);
     	            });
