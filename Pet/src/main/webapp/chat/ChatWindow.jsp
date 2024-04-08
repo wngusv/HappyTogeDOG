@@ -8,6 +8,7 @@
 <script>
 var chatRoomNum = <%=request.getParameter("chatRoom")%>;
 var LoginedId = '<%=session.getAttribute("userId")%>';
+var userName = '<%=session.getAttribute("userName")%>'
 var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/ChatingServer?chatRoom="+chatRoomNum+"&userId="+LoginedId);
 	var chatWindow, chatMessage, chatId;
 
@@ -24,7 +25,7 @@ var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/Ch
 		// 대화창에 표시 
 		chatWindow.innerHTML += "<div class='myMsg'>" + chatMessage.value
 				+ "</div>";
-		webSocket.send(chatId + '|' + chatMessage.value); // 서버로 전송
+		webSocket.send(userName + '|' + chatMessage.value); // 서버로 전송
 		chatMessage.value = ""; //메시지 입력창 내용 지우기
 		chatWindow.scrollTop = chatWindow.scrollHeight; // 대화창 스크롤
 	}
