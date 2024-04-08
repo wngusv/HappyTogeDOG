@@ -62,6 +62,7 @@ var webSocket = new WebSocket("<%=application.getInitParameter("CHAT_ADDR")%>/Ch
 		var message = event.data.split("|"); // 대화명과 메시지 분리
 		var sender = message[0];
 		var content = message[1];
+		console.log(content);
 		if (content != "") {
 			if (content.match("/")) { // 귓속말
 				if (content.match(("/" + chatId))) { // 나에게 보낸 메시지만 출력

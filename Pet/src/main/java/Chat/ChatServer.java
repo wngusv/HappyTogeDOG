@@ -24,24 +24,26 @@ public class ChatServer {
 	public void onOpen(Session session) {
 		String chatRoom = session.getRequestParameterMap().get("chatRoom").get(0);
 		String chatId = session.getRequestParameterMap().get("userId").get(0);
-		
+
 		if (chatRooms.containsKey(chatRoom)) {
-	        Set<Session> clients = chatRooms.get(chatRoom);
-	        for (Session client : clients) {
-	            String existingChatId = client.getRequestParameterMap().get("userId").get(0);
-	            if (existingChatId.equals(chatId)) {
-	                try {
-	                    // Reject the new connection
-	                    session.close(new CloseReason(CloseCodes.UNEXPECTED_CONDITION, "Another session with the same ID already exists in this chat room."));
-	                    return;
-	                } catch (IOException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	        }
-	    }
+			Set<Session> clients = chatRooms.get(chatRoom);
+			for (Session client : clients) {
+				String existingChatId = client.getRequestParameterMap().get("userId").get(0);
+				if (existingChatId.equals(chatId)) {
+					try {
+						// Reject the new connection
+						session.close(new CloseReason(CloseCodes.UNEXPECTED_CONDITION,
+								"Another session with the same ID already exists in this chat room."));
+						return;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 		chatRooms.computeIfAbsent(chatRoom, k -> new HashSet<>()).add(session);
 		System.out.println("웹소켓 연결: " + chatId + ", 채팅방: " + chatRoom);
+		broadcastMessage(chatRoom, chatId +'|'+ "채팅방에 입장하였습니다.");
 
 	}
 
@@ -66,6 +68,7 @@ public class ChatServer {
 		String chatId = session.getRequestParameterMap().get("userId").get(0);
 		chatRooms.get(chatRoom).remove(session);
 		System.out.println("웹소켓 종료: " + chatId + ", 채팅방: " + chatRoom);
+		broadcastMessage(chatRoom, chatId +'|'  + "채팅방에서 퇴장하였습니다.");
 	}
 
 	@OnError
@@ -73,4 +76,18 @@ public class ChatServer {
 		System.out.println("에러 발생");
 		e.printStackTrace();
 	}
+
+	private void broadcastMessage(String chatRoom, String message) {
+		synchronized (chatRooms) {
+			Set<Session> clients = chatRooms.get(chatRoom);
+			for (Session client : clients) {
+				try {
+					client.getBasicRemote().sendText(message);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 }
