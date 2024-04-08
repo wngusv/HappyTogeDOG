@@ -48,6 +48,11 @@
 				<%-- 내가 쓴 글 목록들 보여주는 곳으로 이동시키기... --%>
 				<input type="button" value="글쓰기"
 					onclick="location.href='boardWrite.jsp';">
+
+				<button type="button" onclick="sortByNewest()">최신순</button>
+				<button type="button" onclick="sortByRecommendation()">추천순</button>
+
+
 				<!-- 부트스트랩을 사용한 테이블 스타일 -->
 				<table class="table table-striped table-hover">
 					<thead>
@@ -67,7 +72,8 @@
 							<th>제목</th>
 							<th>아이디</th>
 							<th>작성시간</th>
-							<!-- <th>좋아요</th> 일단 언젠가..-->
+							<th>추천순</th>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -80,27 +86,37 @@
 						}
 
 						String categoryFilter = request.getParameter("categoryFilter");
-						String sql = "SELECT b.idx, b.category, b.title, b.id, b.postdate, COUNT(c.num) AS comment_count " + "FROM board b "
-								+ "LEFT JOIN comment_content c ON b.idx = c.post_idx ";
+						String sql = "SELECT b.idx, b.category, b.title, b.id, b.postdate, "
+								+ "COUNT(DISTINCT c.id) AS 추천수, COUNT(DISTINCT cc.num) AS comment_count " + "FROM board b "
+								+ "LEFT JOIN comment c ON b.idx = c.post_idx AND c.type = '추천' "
+								+ "LEFT JOIN comment_content cc ON b.idx = cc.post_idx ";
 
 						// categoryFilter 값이 비어있지 않으면 WHERE 절 추가
 						if (categoryFilter != null && !categoryFilter.isEmpty()) {
 							sql += "WHERE b.category = ? ";
 						}
 
-						sql += "GROUP BY b.idx " + "ORDER BY b.postdate DESC " + "LIMIT ?, ?";
+						String sort = request.getParameter("sort");
+						String orderBy = "b.postdate DESC"; // 기본 정렬
+
+						if ("recommendation".equals(sort)) {
+						    orderBy = "추천수 DESC, b.postdate DESC";
+						} else if ("newest".equals(sort)) {
+						    orderBy = "b.postdate DESC";
+						}
+
+						sql += "GROUP BY b.idx ORDER BY " + orderBy + " LIMIT ?, ?";
 
 						try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+							int paramIndex = 1;
 							// categoryFilter 값이 비어있지 않으면 파라미터 설정
 							if (categoryFilter != null && !categoryFilter.isEmpty()) {
-								stmt.setString(1, categoryFilter);
-								stmt.setInt(2, (pagee - 1) * pageeSize);
-								stmt.setInt(3, pageeSize);
-							} else {
-								stmt.setInt(1, (pagee - 1) * pageeSize);
-								stmt.setInt(2, pageeSize);
+								stmt.setString(paramIndex++, categoryFilter);
 							}
+
+							stmt.setInt(paramIndex++, (pagee - 1) * pageeSize);
+							stmt.setInt(paramIndex, pageeSize);
 
 							try (ResultSet rs = stmt.executeQuery();) {
 								while (rs.next()) {
@@ -113,9 +129,12 @@
  %> (<%=rs.getInt("comment_count")%>) <%
  }
  %>
+
 							</a></td>
+
 							<td><%=rs.getString("id")%></td>
 							<td><%=rs.getTimestamp("postdate").toString()%></td>
+							<td><%=rs.getInt("추천수")%></td>
 						</tr>
 
 						<%
@@ -174,18 +193,36 @@
 <script>
 window.onload = function() {
     var categorySelect = document.getElementsByName("categoryFilter")[0];
-    var selectedCategory = "<%= categoryFilter %>"; // JSP 코드를 사용하여 서버에서 선택된 카테고리를 가져옵니다.
+    var selectedCategory = "<%=categoryFilter%>";
+	// JSP 코드를 사용하여 서버에서 선택된 카테고리를 가져옵니다.
 
-    // 선택된 카테고리가 있으면 해당 카테고리를 선택 상태로 설정합니다.
-    if (selectedCategory) {
-        for (var i = 0; i < categorySelect.options.length; i++) {
-            if (categorySelect.options[i].value === selectedCategory) {
-                categorySelect.selectedIndex = i;
-                break;
-            }
-        }
-    }
-};
+		// 선택된 카테고리가 있으면 해당 카테고리를 선택 상태로 설정합니다.
+		if (selectedCategory) {
+			for (var i = 0; i < categorySelect.options.length; i++) {
+				if (categorySelect.options[i].value === selectedCategory) {
+					categorySelect.selectedIndex = i;
+					break;
+				}
+			}
+		}
+	};
+	
+	function sortByRecommendation() {
+	    var currentUrl = window.location.href;
+	    var newUrl = new URL(currentUrl);
+	    newUrl.searchParams.set('sort', 'recommendation');
+	    console.log("Sort by recommendation:", newUrl.href); // 로그 기록
+	    window.location.href = newUrl.href;
+	}
+
+	function sortByNewest() {
+	    var currentUrl = window.location.href;
+	    var newUrl = new URL(currentUrl);
+	    newUrl.searchParams.set('sort', 'newest');
+	    console.log("Sort by newest:", newUrl.href); // 로그 기록
+	    window.location.href = newUrl.href;
+	}
+
 </script>
 
 </html>
