@@ -96,15 +96,6 @@
 						</a>
 						<div class="card-details">
 							<p>
-								<strong>유기번호:</strong>
-								<%=animal.getDesertionNo()%></p>
-							<p>
-								<strong>발생일:</strong>
-								<%=animal.getHappenDt()%></p>
-							<p>
-								<strong>발생장소:</strong>
-								<%=animal.getHappenPlace()%></p>
-							<p>
 								<strong>종류:</strong>
 								<%=animal.getKindCd()%></p>
 							<p>
@@ -114,21 +105,9 @@
 								<strong>나이:</strong>
 								<%=animal.getAge()%></p>
 							<p>
-								<strong>체즁:</strong>
+								<strong>체중:</strong>
 								<%=animal.getWeight()%></p>
-							<p>
-								<strong>공고번호:</strong>
-								<%=animal.getNoticeNo()%></p>
-							<p>
-								<strong>공고시작일:</strong>
-								<%=animal.getNoticeSdt()%></p>
-							<p>
-								<strong>공고종료일:</strong>
-								<%=animal.getNoticeEdt()%></p>
-							<p>
-								<strong>처리상태:</strong>
-								<%=animal.getProcessState()%></p>
-							<p>
+							
 								<strong>성별:</strong>
 								<%=animal.getSexCd()%></p>
 							<p>
@@ -137,21 +116,10 @@
 							<p>
 								<strong>특징:</strong>
 								<%=animal.getSpecialMark()%></p>
-							<p>
-								<strong>관리기관명:</strong>
-								<%=animal.getCareNm()%></p>
-							<p>
-								<strong>관리기관전화번호:</strong>
-								<%=animal.getCareTel()%></p>
-							<p>
+							
 								<strong>관리기관주소:</strong>
 								<%=animal.getCareAddr()%></p>
-							<p>
-								<strong>담당기관:</strong>
-								<%=animal.getChargeNm()%></p>
-							<p>
-								<strong>담당자전화번호:</strong>
-								<%=animal.getOfficetel()%></p>
+							
 						</div>
 					</div>
 				</div>
