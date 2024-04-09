@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="/floating-banner.jsp" %>
+<%@ include file="/floating-banner.jsp"%>
 
 <!DOCTYPE html>
 <html>
@@ -109,11 +109,57 @@
 	color: #007bff;
 	text-decoration: none;
 }
-.customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
-.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
-.customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
-.customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
-.customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+
+.customoverlay {
+	position: relative;
+	bottom: 85px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	border-bottom: 2px solid #ddd;
+	float: left;
+}
+
+.customoverlay:nth-of-type(n) {
+	border: 0;
+	box-shadow: 0px 1px 2px #888;
+}
+
+.customoverlay a {
+	display: block;
+	text-decoration: none;
+	color: #000;
+	text-align: center;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: bold;
+	overflow: hidden;
+	background: #d95050;
+	background: #d95050
+		url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
+		no-repeat right 14px center;
+}
+
+.customoverlay .title {
+	display: block;
+	text-align: center;
+	background: #fff;
+	margin-right: 35px;
+	padding: 10px 15px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.customoverlay:after {
+	content: '';
+	position: absolute;
+	margin-left: -12px;
+	left: 50%;
+	bottom: -12px;
+	width: 22px;
+	height: 12px;
+	background:
+		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}
 </style>
 </head>
 <body style="padding-top: 150px;">
@@ -131,11 +177,15 @@
 				<h2>지역 반려동물 시설</h2>
 			</section>
 		</div>
-		<div class="container"> <!-- Bootstrap 그리드 시스템 사용 -->
-			<div class="row justify-content-center"> <!-- 가운데 정렬 -->
+		<div class="container">
+			<!-- Bootstrap 그리드 시스템 사용 -->
+			<div class="row justify-content-center">
+				<!-- 가운데 정렬 -->
 				<div class="col-lg-10">
 					<div class="map_wrap">
-						<div id="map" style="width: 100%; height: 500px; position: relative; overflow: hidden;"></div> <!-- 수정된 높이 -->
+						<div id="map"
+							style="width: 100%; height: 500px; position: relative; overflow: hidden;"></div>
+						<!-- 수정된 높이 -->
 						<ul id="category">
 							<li id="동물병원">동물병원</li>
 							<li id="애견용품">애견용품</li>
@@ -199,46 +249,48 @@
 		}
 
 		function displayPlaces(places) {
-		    var bounds = new kakao.maps.LatLngBounds();
-		    removeAllMarkers();
-		    for (var i = 0; i < places.length; i++) {
-		        (function(place) {
-		            var placePosition = new kakao.maps.LatLng(place.y, place.x);
-		           
-		            var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다
-	                imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-	                imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-		            
-		            // 사용자 정의 마커 이미지를 사용하여 마커를 생성합니다
-		            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-		                marker = new kakao.maps.Marker({
-		                    position: placePosition,
-		                    image: markerImage // 마커이미지 설정
-		                });
-		            marker.setMap(map);
-		            markers.push(marker);
+			var bounds = new kakao.maps.LatLngBounds();
+			removeAllMarkers();
+			for (var i = 0; i < places.length; i++) {
+				(function(place) {
+					var placePosition = new kakao.maps.LatLng(place.y, place.x);
 
-		            // 커스텀 오버레이의 내용을 장소 이름과 URL을 포함하도록 설정합니다
-		            var content = '<div class="customoverlay">' +
-		                          '    <div class="info">' +
-		                          '        <div class="title">' +
-		                          '            <a href="' + place.place_url + '" target="_blank">' + place.place_name + '</a>' +
-		                          '        </div>' +
-		                          '    </div>' +
-		                          '</div>';
+					var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다
+					imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+					imageOption = {
+						offset : new kakao.maps.Point(27, 69)
+					}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
-		            // 커스텀 오버레이를 생성합니다
-		            var overlay = new kakao.maps.CustomOverlay({
-		                content: content,
-		                map: map,
-		                position: marker.getPosition(),
-		                yAnchor: 1 // 오버레이가 마커 위에 위치하도록 Y 앵커 값을 조정합니다
-		            });
+					// 사용자 정의 마커 이미지를 사용하여 마커를 생성합니다
+					var markerImage = new kakao.maps.MarkerImage(imageSrc,
+							imageSize, imageOption), marker = new kakao.maps.Marker(
+							{
+								position : placePosition,
+								image : markerImage
+							// 마커이미지 설정
+							});
+					marker.setMap(map);
+					markers.push(marker);
 
-		            bounds.extend(placePosition);
-		        })(places[i]);
-		    }
-		    map.setBounds(bounds);
+					// 커스텀 오버레이의 내용을 장소 이름과 URL을 포함하도록 설정합니다
+					var content = '<div class="customoverlay">'
+							+ '  <a href="' + place.place_url + '" target="_blank">'
+							+ '    <span class="title">' + place.place_name
+							+ '</span>' + '  </a>' + '</div>';
+
+					// 커스텀 오버레이를 생성합니다
+					var overlay = new kakao.maps.CustomOverlay({
+						content : content,
+						map : map,
+						position : marker.getPosition(),
+						yAnchor : 1
+					// 오버레이가 마커 위에 위치하도록 Y 앵커 값을 조정합니다
+					});
+
+					bounds.extend(placePosition);
+				})(places[i]);
+			}
+			map.setBounds(bounds);
 		}
 
 		function addMarker(position) {
@@ -258,43 +310,49 @@
 		}
 
 		function setCurrentLocation() {
-		    if (navigator.geolocation) {
-		        navigator.geolocation.getCurrentPosition(function(position) {
-		            var lat = position.coords.latitude,
-		                lon = position.coords.longitude;
-		            var locPosition = new kakao.maps.LatLng(lat, lon);
-		            map.setCenter(locPosition);
-		            addMarker(locPosition);
-		        }, function(error) {
-		            console.error("Geolocation access is denied.");
-		            var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-		            displayMarker(locPosition, 'geolocation을 사용할수 없어요..');
-		        });
-		    } else {
-		        alert("This browser doesn't support geolocation.");
-		        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-		        displayMarker(locPosition, 'geolocation을 사용할수 없어요..');
-		    }
+			if (navigator.geolocation) {
+				navigator.geolocation
+						.getCurrentPosition(
+								function(position) {
+									var lat = position.coords.latitude, lon = position.coords.longitude;
+									var locPosition = new kakao.maps.LatLng(
+											lat, lon);
+									map.setCenter(locPosition);
+									addMarker(locPosition);
+								},
+								function(error) {
+									console
+											.error("Geolocation access is denied.");
+									var locPosition = new kakao.maps.LatLng(
+											33.450701, 126.570667);
+									displayMarker(locPosition,
+											'geolocation을 사용할수 없어요..');
+								});
+			} else {
+				alert("This browser doesn't support geolocation.");
+				var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+				displayMarker(locPosition, 'geolocation을 사용할수 없어요..');
+			}
 		}
 
 		function displayMarker(locPosition, message) {
-		    var marker = new kakao.maps.Marker({
-		        map: map,
-		        position: locPosition
-		    });
+			var marker = new kakao.maps.Marker({
+				map : map,
+				position : locPosition
+			});
 
-		    var iwContent = message,
-		        iwRemoveable = true;
+			var iwContent = message, iwRemoveable = true;
 
-		    var infowindow = new kakao.maps.InfoWindow({
-		        content: iwContent,
-		        removable: iwRemoveable
-		    });
+			var infowindow = new kakao.maps.InfoWindow({
+				content : iwContent,
+				removable : iwRemoveable
+			});
 
-		    // 인포윈도우의 가로 길이를 조절합니다.
-		    infowindow.setContent('<div style="padding:5px; width:150px;">' + iwContent + '</div>');
+			// 인포윈도우의 가로 길이를 조절합니다.
+			infowindow.setContent('<div style="padding:5px; width:150px;">'
+					+ iwContent + '</div>');
 
-		    infowindow.open(map, marker);
+			infowindow.open(map, marker);
 		}
 
 		function initMap() {
