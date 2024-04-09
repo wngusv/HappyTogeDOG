@@ -159,11 +159,6 @@
 								<p class="card-text"><%=animal.getSpecialMark()%></p>
 							</h5>
 
-							<h5 class="card-title">
-								<strong>관리기관주소:</strong>
-								<p class="card-text"><%=animal.getCareAddr()%></p>
-							</h5>
-
 						</div>
 					</div>
 				</div>
