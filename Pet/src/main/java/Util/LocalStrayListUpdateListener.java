@@ -202,7 +202,7 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 	
 	public static boolean checkLocalGovernmentList(String locate) {
 		for(LocalGovernment LGL : localGovernmentList) {
-			if(LGL.getOrgdownNm().equals(locate)) {
+			if(locate.contains(LGL.getOrgdownNm())) {
 				return true;
 			}
 		}

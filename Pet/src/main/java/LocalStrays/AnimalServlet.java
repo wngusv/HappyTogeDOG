@@ -45,7 +45,7 @@ public class AnimalServlet extends HttpServlet {
 			}
 		} else if (sessionLocate != null && LocalStrayListUpdateListener.checkLocalGovernmentList(sessionLocate)) {
 			animalList = getAnimalsByLocalGovernment(sessionLocate);
-			nowLocate = sessionLocate;
+			nowLocate = makeRealLocate(sessionLocate);
 		} else {
 			animalList = LocalStrayListUpdateListener.getAllAnimalList();
 			nowLocate = "우리 지역";
@@ -92,11 +92,19 @@ public class AnimalServlet extends HttpServlet {
 
 	private static List<Animal> getAnimalsByLocalGovernment(String localGovernment) {
 		List<Animal> animalsInLocalGovernment = new ArrayList<>();
+		String extractedPart = makeRealLocate(localGovernment);
 		for (Animal animal : LocalStrayListUpdateListener.getAllAnimalList()) {
-			if (animal.getOrgNm().contains(localGovernment)) {
+			if (animal.getOrgNm().contains(extractedPart)) {
 				animalsInLocalGovernment.add(animal);
 			}
 		}
 		return animalsInLocalGovernment;
+	}
+
+	private static String makeRealLocate(String localGovernment) {
+		String location = localGovernment;
+		int lastSpaceIndex = location.lastIndexOf(" ");
+		String extractedPart = lastSpaceIndex != -1 ? location.substring(lastSpaceIndex + 1) : location;
+		return extractedPart;
 	}
 }
