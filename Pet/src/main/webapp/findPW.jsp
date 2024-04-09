@@ -3,9 +3,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>비밀번호 찾기</title>
-<script>
+    <meta charset="UTF-8">
+    <title>비밀번호 찾기</title>
+    <!-- 부트스트랩 CSS 추가 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-container {
+            margin-top: 50px;
+        }
+        .gray-text {
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container form-container">
+        <h2 class="mb-4">비밀번호 찾기</h2>
+        <form method="post" action="api/findPW" id="findPW-form">
+            <div class="form-group">
+                <label for="name">이름</label> 
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">전화번호</label> 
+                <input type="text" maxlength="11" id="phone" name="phone" class="form-control" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            </div>
+            <div class="form-group">
+                <button type="button" id="certificationNumber" class="btn btn-secondary" disabled>인증번호 받기</button>
+            </div>
+            <div class="form-group">
+                <label>인증번호:</label>
+                <input type="text" maxlength="5" id="checkNumber" name="checkNumber" class="form-control gray-text" placeholder="5자리 숫자를 입력하세요." required />
+            </div>
+            <div class="form-group">
+                <button type="button" id="check" class="btn btn-primary" disabled>확인</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 부트스트랩 JavaScript 추가 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- 여기에 기존 JavaScript 코드를 추가 -->
+    <script>
 // 페이지가 로드될 때 함수를 실행
 document.addEventListener('DOMContentLoaded', function () {
 	var nameInput = document.getElementById('name');
@@ -67,20 +109,5 @@ document.addEventListener('DOMContentLoaded', function () {
     // ...
 });
 </script>
-</head>
-<body>
-<h2>비밀번호 찾기</h2>
-<form method="post" action="api/findPW" id="findPW-form">
- <label for="name">이름</label> 
- <input type="text" id="name" name="name" required>
- 
- <label for="phone">전화번호</label> 
- <input type="text" maxlength="11" id="phone" name="phone" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-
- <button type="button" id="certificationNumber" disabled>인증번호 받기</button>
-
- <p>인증번호:</p>
- <input type="text" maxlength="5" id="checkNumber" name="checkNumber" class="gray-text" placeholder="5자리 숫자를 입력하세요." required />
- <button type="button" id="check" disabled>확인</button>
 </body>
 </html>
