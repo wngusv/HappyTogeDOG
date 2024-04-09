@@ -7,7 +7,7 @@
 <meta charset="UTF-8" />
 <title>메인페이지</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 	<header>
