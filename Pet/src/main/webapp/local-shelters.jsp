@@ -70,9 +70,9 @@
 
 
 .region-link:hover {
-	background-color: #ffcc00; /* Change background color on hover */
+	background-color: rgb(255, 144, 61); /* Change background color on hover */
 	text-decoration: none;
-	color: black;
+	color: rgb(59, 38, 14);
 	font-size: 18px;
 	transform: scale(1.1);
 }
