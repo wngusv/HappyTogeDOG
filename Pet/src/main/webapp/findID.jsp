@@ -17,39 +17,38 @@
 
 .form-container {
 	margin-top: 50px;
+	 width: 20%; /* 폼의 너비 조정 */
 }
 </style>
 </head>
 <body>
 	<div class="container form-container">
-		<h2 class="mb-4">아이디 찾기</h2>
-		<form method="post" action="api/findId" id="findId-form">
-			<div class="form-group">
-				<label for="name">이름</label> <input type="text" id="name"
-					name="name" class="form-control" required>
-			</div>
-			<div class="form-group">
-				<label for="phone">전화번호</label> <input type="text" maxlength="11"
-					id="phone" name="phone" class="form-control" required
-					oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-			</div>
-			<div class="form-group">
-				<button type="button" id="certificationNumber"
-					class="btn btn-secondary" disabled>인증번호 받기</button>
-			</div>
-			<div class="form-group">
-				<label>인증번호:</label> <input type="text" maxlength="5"
-					id="checkNumber" name="checkNumber" class="form-control gray-text"
-					placeholder="5자리 숫자를 입력하세요." required />
-			</div>
-			<div class="form-group">
-				<button type="button" id="check" class="btn"
-					style="background-color: rgb(88, 185, 117); border-color: rgb(88, 185, 117);"
-					disabled>확인</button>
-			</div>
+    <h2 class="mb-4">아이디 찾기</h2>
+    <form method="post" action="api/findId" id="findId-form">
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">전화번호</label>
+            <input type="text" maxlength="11" id="phone" name="phone" class="form-control" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        </div>
+        <div class="form-group">
+            <button type="button" id="certificationNumber" class="btn btn-secondary" disabled>인증번호 받기</button>
+        </div>
+        <div class="form-group">
+            <label>인증번호:</label>
+            <input type="text" maxlength="5" id="checkNumber" name="checkNumber" class="form-control gray-text placeholder="5자리 숫자를 입력하세요." required />
+        </div>
+        <div class="form-group">
+            <button type="button" id="check" class="btn" style="background-color: rgb(88, 185, 117); border-color: rgb(88, 185, 117);" disabled>확인</button>
+        </div>
+    </form>
+</div>
 
-		</form>
-	</div>
+
+
+
 
 	<!-- 부트스트랩 JavaScript 추가 -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
