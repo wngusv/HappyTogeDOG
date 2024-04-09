@@ -15,7 +15,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #f3f3f3;
+        background-color: rgb(250, 230, 163);
         padding: 10px 50px;
     }
     .nav-menu, .navbar-nav {
@@ -48,7 +48,9 @@
 <body>
 
 <div class="header">
-    <h2><a href="index.jsp">도기도기</h2>
+    <a href="index.jsp">
+    <img src="/images/Group 35.png" alt="도기도기 이미지">
+</a>
     <ul class="nav-menu">
         <li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
         <li><a href="pet-facilities.jsp">반려동물 시설</a></li>

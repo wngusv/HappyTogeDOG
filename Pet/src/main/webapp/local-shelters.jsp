@@ -15,7 +15,7 @@
 .rounded-border {
 	width: 40vw;
 	border-radius: 10px;
-	border: 1px solid #ccc;
+	border: 2px solid #ccc;
 	margin-right: 0 auto;
 }
 
