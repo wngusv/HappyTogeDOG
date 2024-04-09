@@ -20,10 +20,14 @@
 }
 
 .map_wrap {
-	position: relative;
-	width: 100%;
-	height: 600px;
+	border-radius: 10px; /* 테두리의 둥근 정도 설정 */
+	border: 2px solid rgb(111, 94, 75); /* 테두리 스타일 설정 */
+	background-color: #fff; /* 배경색을 흰색으로 설정 */
+	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif; /* 폰트 설정 */
+	font-size: 12px; /* 폰트 크기 설정 */
+	position: relative; /* 상대적 위치 설정 */
 }
+
 
 #category {
 	position: absolute;

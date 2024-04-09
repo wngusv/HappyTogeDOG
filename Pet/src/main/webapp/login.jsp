@@ -46,11 +46,11 @@ h2 {
 				<input type="password" class="form-control" name="userPassword"
 					placeholder="비밀번호" />
 			</div>
-			<button type="submit" class="btn btn-primary btn-block">로그인</button>
+			<button type="submit" class="btn btn-primary btn-block" style="background-color: rgb(250, 230, 163); border-color: rgb(250, 230, 163); color: black;">로그인</button>
 			<div class="text-center mt-3">
-				<button type="button" class="btn btn-link" id="findID">아이디
+				<button type="button" class="btn btn-link" style="color: rgb(103,77,58);" id="findID">아이디
 					찾기</button>
-				<button type="button" class="btn btn-link" id="findPW">비밀번호
+				<button type="button" class="btn btn-link" style="color: rgb(103,77,58);" id="findPW">비밀번호
 					찾기</button>
 			</div>
 		</form>

@@ -19,6 +19,15 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <style>
+  /* <td> 내의 모든 <a> 태그에 적용될 스타일 */
+    .table td a {
+        color: black; /* 텍스트 색상을 검정색으로 설정 */
+        text-decoration: none; /* 밑줄 제거 */
+    }
+
+    .table td a:hover {
+        text-decoration: underline; /* 마우스 오버시 밑줄 추가 */
+    }
  /* 페이징 버튼의 배경색과 텍스트 색상 변경 */
         .page-link {
             background-color: #ffffff; /* 배경색 변경 */
@@ -97,10 +106,10 @@
        // town 값이 null이 아닌 경우 town 출력, null인 경우 공백 출력
     String displayTown = (town != null) ? town : "";
     %>
-            <h2><%=displayTown %> 자유게시판</h2>
+            <h2 style="text-align: right;"><%=displayTown %> 자유게시판</h2>
             <!-- 검색 폼 -->
             <form action="board.jsp" method="get">
-               <input type="text" name="find"
+               <input type="text" name="find" 
                   value="<%=request.getParameter("find") != null ? request.getParameter("find") : ""%>">
                <input type="submit" class="btn btn-default" value="검색">
             </form>
