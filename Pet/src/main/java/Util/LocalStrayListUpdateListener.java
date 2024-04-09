@@ -9,9 +9,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,6 +18,8 @@ import java.util.TimerTask;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import LocalSite.CidoCode;
+import LocalSite.CidoCodeJsonParser;
 import LocalSite.LocalGovernment;
 import LocalSite.LocalGovernmentJsonParser;
 import LocalStrays.Animal;
@@ -32,6 +33,8 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 	private static List<Animal> allAnimalList;
 	private static List<Animal> noticeAnimalList;
 	private static List<Animal> protectAnimalList;
+	
+	private static List<CidoCode> CidoCodeList;
 	
 	private static List<LocalGovernment> localGovernmentList;
 
@@ -65,7 +68,8 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 			allAnimalList.addAll(noticeAnimalList);
 			allAnimalList.addAll(protectAnimalList);
 			
-			localGovernmentList = makeLocalGovernmentList();
+			CidoCodeList = makeCidoCodeList();
+			localGovernmentList = makeLocalGovernmentList(CidoCodeList);
 //			sortAnimalList(allAnimalList);
 			
 			System.out.println("AllAnimalUpdate");
@@ -175,12 +179,14 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 				+ URLEncoder.encode(value, "UTF-8")); /* 시도코드 (시도 조회 OPEN API 참조) */
 	}
 
-	public static List<LocalGovernment> makeLocalGovernmentList()
+	public static List<LocalGovernment> makeLocalGovernmentList(List<CidoCode> cidoCodeList2)
 			throws UnsupportedEncodingException, MalformedURLException, IOException, ProtocolException {
+		List<LocalGovernment> allLocalGovernment=  new ArrayList<>();;
+		for(CidoCode cido : cidoCodeList2) {
 		StringBuilder urlBuilder = new StringBuilder(
 				"http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sigungu"); /* URL */
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY); /* Service Key */
-		appendItem(urlBuilder, "upr_cd", BUSAN_CODE); // 시군구 상위코드(시도코드) (입력 시 데이터 O, 미입력 시 데이터 X)
+		appendItem(urlBuilder, "upr_cd", cido.getOrgCd()); // 시군구 상위코드(시도코드) (입력 시 데이터 O, 미입력 시 데이터 X)
 		appendItem(urlBuilder, "_type", "json"); // xml(기본값) 또는 json
 		URL url = new URL(urlBuilder.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -197,7 +203,35 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 		}
 		rd.close();
 		conn.disconnect();
-		return LocalGovernmentJsonParser.parseJsonResponse(responseContent.toString());
+		System.out.println(LocalGovernmentJsonParser.parseJsonResponse(responseContent.toString()));
+		allLocalGovernment.addAll(LocalGovernmentJsonParser.parseJsonResponse(responseContent.toString()));
+	}
+		return allLocalGovernment;
+}
+	
+	public static List<CidoCode> makeCidoCodeList() throws IOException{
+		StringBuilder urlBuilder = new StringBuilder(
+				"http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido");
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY);
+		appendItem(urlBuilder, "numOfRows", "30");
+		appendItem(urlBuilder, "_type", "json");
+		URL url = new URL(urlBuilder.toString());
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		if (conn.getResponseCode() != 200) {
+			throw new RuntimeException("HTTP error code: " + conn.getResponseCode());
+		}
+		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		StringBuilder responseContent = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			responseContent.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+		return CidoCodeJsonParser.parseJsonResponse(responseContent.toString());
+		
 	}
 	
 	public static boolean checkLocalGovernmentList(String locate) {

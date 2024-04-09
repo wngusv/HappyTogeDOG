@@ -58,7 +58,7 @@
  		} catch (SQLException e) {
  			e.printStackTrace();
  		} %>
-            <h2><%=town %> 자유게시판</h2>
+            <h2><%=town %>의 자유게시판</h2>
             <!-- 검색 폼 -->
             <form action="board.jsp" method="get">
                <input type="text" name="find"

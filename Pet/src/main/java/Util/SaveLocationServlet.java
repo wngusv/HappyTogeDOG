@@ -26,7 +26,6 @@ public class SaveLocationServlet extends HttpServlet {
             String address = getAddressFromKakaoMapAPI(latitude, longitude);
             String regionDepthName = parseRegionDepthName(address);
             HttpSession session = request.getSession();
-            System.out.println(regionDepthName);
             
             session.setAttribute("locate", regionDepthName);
             // 여기서 address를 원하는 작업에 활용
