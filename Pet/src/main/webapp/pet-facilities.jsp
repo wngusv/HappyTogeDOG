@@ -74,11 +74,6 @@
 	padding: 10px;
 }
 
-.title {
-	margin-bottom: 5px;
-	font-size: 18px;
-	font-weight: bold;
-}
 
 .close {
 	position: absolute;
