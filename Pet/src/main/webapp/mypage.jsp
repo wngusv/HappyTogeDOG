@@ -78,7 +78,7 @@
         	<tr>
                 <th>카테고리</th>
                 <th>제목</th>
-                <th>날짜</th>
+                <th>작성 날짜</th>
                 <th>삭제</th>
             </tr>
             <%
@@ -92,16 +92,16 @@
             		 int idx =  boardReadingRs.getInt("idx");
             				 %>
             				  <tr>
-                <td><a href="/mypage/ViewPost.jsp?postId=<%= idx %>"><%= category %></a></td>
-                <td><%= title %></td>
-                <td><a href="/mypage/EditPost.jsp?postId=<%= idx %>"><%= postdate %></a></td>
+                <td><%= category %></a></td>
+                <td><a href="/....jsp?idx=<%= idx %>"><%= title %></a></td>
+                <td><%= postdate %></td>
                 <td><a href="#" onclick="confirmDelete('<%= idx %>')">삭제</a></td>
 
 <script>
-    function confirmDelete(postId) {
+    function confirmDelete(idx) {
         var confirmResult = confirm("정말로 삭제하시겠습니까?");
         if (confirmResult) {
-            window.location.href = "/mypage/DeletePost.jsp?postId=" + postId;
+            window.location.href = "/boardDeleteServlet.do?idx=" + idx;
         }
     }
 </script>
