@@ -19,6 +19,24 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <style>
+ .fixed-layout-table {
+        table-layout: fixed; /* 테이블 레이아웃을 고정된 너비로 설정 */
+        width: 100%; /* 테이블의 전체 너비 설정 */
+    }
+
+    .fixed-layout-table th, .fixed-layout-table td {
+        width: 20%; /* 각 열의 너비를 테이블 전체 너비의 20%로 설정 */
+    }
+.table th, .table td {
+		background-color: white;
+        text-align: center; /* 텍스트 가운데 정렬 */
+    }
+    
+  /* 테이블의 <th> 요소 배경색 변경 */
+    .table th {
+        background-color: rgb(111, 94, 75);
+        color: white; /* 텍스트 색상을 밝게 설정 (선택 사항) */
+    }
 .custom-button-color {
     background-color: rgb(235, 136, 106); /* R: 235, G: 136, B: 106 */
     border-color: rgb(235, 136, 106); /* 버튼 테두리 색상도 같게 설정 */
@@ -79,7 +97,7 @@
 
 
             <!-- 부트스트랩을 사용한 테이블 스타일 -->
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover fixed-layout-table">
                <thead>
                   <tr>
                      <th width=100>
