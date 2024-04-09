@@ -1,3 +1,4 @@
+<%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="Util.MyWebContextListener"%>
@@ -42,7 +43,22 @@
    <main>
       <div class="container">
          <section class="strays-info">
-            <h2>본인동네 자유게시판(ex.부산진구 자유게시판)</h2>
+         <%      String userId = (String) session.getAttribute("userId");
+         String town = null;
+ 		String sql_neighborhood = "SELECT CASE WHEN address LIKE '%시%' THEN LEFT(address, LOCATE('시', address)) WHEN address LIKE '%군%' THEN LEFT(address, LOCATE('군', address)) WHEN address LIKE '%구%' THEN LEFT(address, LOCATE('구', address)) END AS neighborhood FROM user WHERE id = ? AND (address LIKE '%시%' OR address LIKE '%군%' OR address LIKE '%구%')";
+ 		try (Connection conn = MyWebContextListener.getConnection();
+ 				PreparedStatement stmt = conn.prepareStatement(sql_neighborhood)) {
+ 			stmt.setString(1, userId);
+
+ 			try (ResultSet rs = stmt.executeQuery();) {
+ 				if (rs.next()) {
+ 					town = rs.getString("neighborhood");
+ 				}
+ 			}
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 		} %>
+            <h2><%=town %> 자유게시판</h2>
             <!-- 검색 폼 -->
             <form action="board.jsp" method="get">
                <input type="text" name="find"
@@ -82,6 +98,8 @@
                <tbody>
                   <!-- 테이블 데이터 행 -->
                   <%
+            
+          		
                   String find = request.getParameter("find"); // 검색 버튼을 눌렀을 때 입력한 문자열
                   int pagee = 1;
                   int pageeSize = 10;
@@ -91,30 +109,26 @@
 
                   String categoryFilter = request.getParameter("categoryFilter");
                   String sql = "SELECT b.idx, b.category, b.title, b.id, b.postdate, "
-                        + "COUNT(DISTINCT c.id) AS 추천수, COUNT(DISTINCT cc.num) AS comment_count " + "FROM board b "
-                        + "LEFT JOIN comment c ON b.idx = c.post_idx AND c.type = '추천' "
-                        + "LEFT JOIN comment_content cc ON b.idx = cc.post_idx ";
+                	        + "COUNT(DISTINCT c.id) AS 추천수, COUNT(DISTINCT cc.num) AS comment_count " 
+                	        + "FROM board b "
+                	        + "LEFT JOIN comment c ON b.idx = c.post_idx AND c.type = '추천' "
+                	        + "LEFT JOIN comment_content cc ON b.idx = cc.post_idx "
+                	        + "WHERE b.town = ? ";
 
-                  // TODO:검색부분이랑 카테고리 부분 sql 정리하기-------------------------------
                   boolean whereAdded = false;
 
                   if (find != null && !find.isEmpty()) {
-                     sql += "WHERE REPLACE(b.title, ' ', '') LIKE ? ";
+                     sql += "AND REPLACE(b.title, ' ', '') LIKE ? ";
                      whereAdded = true;
                   }
 
-                  // categoryFilter 값이 비어있지 않으면 WHERE 절 추가
                   if (categoryFilter != null && !categoryFilter.isEmpty()) {
-                     if (whereAdded) {
-                        // 이미 WHERE 절이 추가된 경우, AND 연산자를 사용
-                        sql += "AND b.category = ? ";
-                     } else {
-                        // WHERE 절이 아직 없는 경우, WHERE 절을 추가
-                        sql += "WHERE b.category = ? ";
+                     if (!whereAdded) {
+                        sql += "AND ";
                         whereAdded = true;
                      }
+                     sql += "b.category = ? ";
                   }
-                  // ----------------------------------------------------------------------
 
                   String sort = request.getParameter("sort");
                   String orderBy = "b.postdate DESC"; // 기본 정렬
@@ -130,10 +144,11 @@
                   try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                      int paramIndex = 1;
+                     stmt.setString(paramIndex++, town);
+
                      if (find != null && !find.isEmpty()) {
                         stmt.setString(paramIndex++, "%" + find.replace(" ", "") + "%");
                      }
-                     // categoryFilter 값이 비어있지 않으면 파라미터 설정
                      if (categoryFilter != null && !categoryFilter.isEmpty()) {
                         stmt.setString(paramIndex++, categoryFilter);
                      }
@@ -173,38 +188,39 @@
             </table>
             <%
             // 총 게시물 수 계산하기 위한 쿼리
-            String countSql = "SELECT COUNT(*) FROM board";
+            String countSql = "SELECT COUNT(*) FROM board WHERE town = ?";
             if (find != null && !find.isEmpty()) {
-               countSql += " WHERE REPLACE(title, ' ', '') LIKE ?";
+               countSql += " AND REPLACE(title, ' ', '') LIKE ?";
             }
-
             if (categoryFilter != null && !categoryFilter.isEmpty()) {
-               countSql += " WHERE category = ?";
+               countSql += " AND category = ?";
             }
             try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(countSql)) {
+               stmt.setString(1, town);
+               int paramIndex = 2;
                if (find != null && !find.isEmpty()) {
-                  stmt.setString(1, "%" + find.replace(" ", "") + "%");
+                  stmt.setString(paramIndex++, "%" + find.replace(" ", "") + "%");
                }
                if (categoryFilter != null && !categoryFilter.isEmpty()) {
-                  stmt.setString(1, categoryFilter);
+                  stmt.setString(paramIndex++, categoryFilter);
                }
 
                try (ResultSet rs = stmt.executeQuery();) {
                   if (rs.next()) {
-               int totalPosts = rs.getInt(1);
-               int totalPages = (int) Math.ceil((double) totalPosts / pageeSize);
+                     int totalPosts = rs.getInt(1);
+                     int totalPages = (int) Math.ceil((double) totalPosts / pageeSize);
 
-                 for (int i = 1; i <= totalPages; i++) {
-                  if (pagee == i) {
-                     out.print("<b>" + i + "</b> "); // 현재 페이지 강조
-                  } else {
-                	  String pageLink = "board.jsp?pagee=" + i;
-                	  if (categoryFilter != null && !categoryFilter.isEmpty()) {
-                	      pageLink += "&categoryFilter=" + URLEncoder.encode(categoryFilter, "UTF-8");
-                	  }
-                	  out.print("<a href='" + pageLink + "'>" + i + "</a> ");
-                  }
-               }
+                     for (int i = 1; i <= totalPages; i++) {
+                        if (pagee == i) {
+                           out.print("<b>" + i + "</b> "); // 현재 페이지 강조
+                        } else {
+                           String pageLink = "board.jsp?pagee=" + i;
+                           if (categoryFilter != null && !categoryFilter.isEmpty()) {
+                              pageLink += "&categoryFilter=" + URLEncoder.encode(categoryFilter, "UTF-8");
+                           }
+                           out.print("<a href='" + pageLink + "'>" + i + "</a> ");
+                        }
+                     }
                   }
                }
             } catch (Exception ex) {
@@ -227,34 +243,34 @@
 window.onload = function() {
     var categorySelect = document.getElementsByName("categoryFilter")[0];
     var selectedCategory = "<%=categoryFilter%>";
-      // JSP 코드를 사용하여 서버에서 선택된 카테고리를 가져옵니다.
+    // JSP 코드를 사용하여 서버에서 선택된 카테고리를 가져옵니다.
 
-      // 선택된 카테고리가 있으면 해당 카테고리를 선택 상태로 설정합니다.
-      if (selectedCategory) {
-         for (var i = 0; i < categorySelect.options.length; i++) {
+    // 선택된 카테고리가 있으면 해당 카테고리를 선택 상태로 설정합니다.
+    if (selectedCategory) {
+        for (var i = 0; i < categorySelect.options.length; i++) {
             if (categorySelect.options[i].value === selectedCategory) {
-               categorySelect.selectedIndex = i;
-               break;
+                categorySelect.selectedIndex = i;
+                break;
             }
-         }
-      }
-   };
+        }
+    }
+};
 
-   function sortByRecommendation() {
-      var currentUrl = window.location.href;
-      var newUrl = new URL(currentUrl);
-      newUrl.searchParams.set('sort', 'recommendation');
-      console.log("Sort by recommendation:", newUrl.href); // 로그 기록
-      window.location.href = newUrl.href;
-   }
+function sortByRecommendation() {
+    var currentUrl = window.location.href;
+    var newUrl = new URL(currentUrl);
+    newUrl.searchParams.set('sort', 'recommendation');
+    console.log("Sort by recommendation:", newUrl.href); // 로그 기록
+    window.location.href = newUrl.href;
+}
 
-   function sortByNewest() {
-      var currentUrl = window.location.href;
-      var newUrl = new URL(currentUrl);
-      newUrl.searchParams.set('sort', 'newest');
-      console.log("Sort by newest:", newUrl.href); // 로그 기록
-      window.location.href = newUrl.href;
-   }
+function sortByNewest() {
+    var currentUrl = window.location.href;
+    var newUrl = new URL(currentUrl);
+    newUrl.searchParams.set('sort', 'newest');
+    console.log("Sort by newest:", newUrl.href); // 로그 기록
+    window.location.href = newUrl.href;
+}
 </script>
 
 </html>

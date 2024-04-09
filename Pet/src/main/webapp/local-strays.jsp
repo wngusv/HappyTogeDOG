@@ -110,8 +110,9 @@
 				%>
 				<div class="col-md-3 mb-4">
 					<div class="card">
-						<img src="<%=animal.getPopfile()%>" class="card-img-top"
-							alt="동물 이미지">
+					 <a href="/AnimalDetailServlet?desertionNo=<%=animal.getDesertionNo()%>&orgName=<%=animal.getOrgNm()%>"> <!-- 이미지를 클릭하면 animal.getLink()의 링크로 이동 -->
+            			<img src="<%=animal.getPopfile()%>" class="card-img-top" alt="동물 이미지">
+      				  </a>
 						<div class="card-body">
 							<h5 class="card-title">
 								<strong>종류:</strong><p class="card-text"><%=animal.getKindCd()%></p>
