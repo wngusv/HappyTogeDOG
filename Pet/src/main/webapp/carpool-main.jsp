@@ -33,7 +33,7 @@
 }
 </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
 	<header>
 		<%
 		request.setAttribute("pageTitle", "반려견 카풀");

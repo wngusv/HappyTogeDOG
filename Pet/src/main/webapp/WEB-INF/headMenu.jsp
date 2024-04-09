@@ -41,6 +41,10 @@
         background-color: #fff; /* 선택된 메뉴의 배경색을 흰색으로 지정 */
         color: rgb(255, 144, 61); /* 활성화된 메뉴의 색상 설정 */
     }
+    . login {
+    font-size: 14px; /* 선택된 메뉴와 다른 글자 크기 설정 */
+        font-weight: normal; /* bold체 해제 */
+    }
     /* 별도 클래스 추가 */
     .user-info a, .user-info span,
     .user-info img {
@@ -97,10 +101,11 @@
         <li><a href="carpool-main.jsp">반려견 카풀</a></li>
         <li><a href="board.jsp">게시판</a></li>
     </ul>
-    <ul class="navbar-nav">
+    <ul class="login">
         <c:choose>
             <c:when test="${sessionScope.userId != null}">
-                <li id="username-container" class="user-info"><span id="username-greeting">안녕하세요, ${sessionScope.userName}님!</span> <a id="logout-button" href="./api/logout">로그아웃</a></li>
+                <li id="username-container" class="user-info"><span id="username-greeting">안녕하세요, ${sessionScope.userName}님!</span></li>
+                <li><a id="logout-button" href="./api/logout">로그아웃</a></li>
                 <li><a href="mypage.jsp"><img src="/images/마이페이지.png" alt="마이페이지">마이페이지</a></li>
 
             </c:when>

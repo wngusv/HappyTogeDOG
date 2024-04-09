@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>경로 따라 지도에 선 그리기 및 장소 검색</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
 #postForm {
 	margin: 20px auto; /* 수평 가운데 정렬 */
