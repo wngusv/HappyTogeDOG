@@ -19,6 +19,12 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <style>
+.custom-button-color {
+    background-color: rgb(235, 136, 106); /* R: 235, G: 136, B: 106 */
+    border-color: rgb(235, 136, 106); /* 버튼 테두리 색상도 같게 설정 */
+    color: white; /* 글씨 색상을 흰색으로 설정 */
+}
+
 .social-links {
    list-style: none; /* 리스트 스타일 없애기 */
    padding: 0; /* 패딩 제거 */
@@ -32,7 +38,7 @@
    margin-left: 10px; /* 링크들 사이의 간격 설정 */
 }
 </style>
-<body style="padding-top: 150px;">
+<body style="padding-top: 150px; background-color: rgb(254, 247, 222);">
    <header>
       <%
       request.setAttribute("pageTitle", "게시판");
@@ -45,31 +51,31 @@
          <section class="strays-info">
          <%      String userId = (String) session.getAttribute("userId");
          String town = null;
- 		String sql_neighborhood = "SELECT CASE WHEN address LIKE '%시%' THEN LEFT(address, LOCATE('시', address)) WHEN address LIKE '%군%' THEN LEFT(address, LOCATE('군', address)) WHEN address LIKE '%구%' THEN LEFT(address, LOCATE('구', address)) END AS neighborhood FROM user WHERE id = ? AND (address LIKE '%시%' OR address LIKE '%군%' OR address LIKE '%구%')";
- 		try (Connection conn = MyWebContextListener.getConnection();
- 				PreparedStatement stmt = conn.prepareStatement(sql_neighborhood)) {
- 			stmt.setString(1, userId);
+       String sql_neighborhood = "SELECT CASE WHEN address LIKE '%시%' THEN LEFT(address, LOCATE('시', address)) WHEN address LIKE '%군%' THEN LEFT(address, LOCATE('군', address)) WHEN address LIKE '%구%' THEN LEFT(address, LOCATE('구', address)) END AS neighborhood FROM user WHERE id = ? AND (address LIKE '%시%' OR address LIKE '%군%' OR address LIKE '%구%')";
+       try (Connection conn = MyWebContextListener.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql_neighborhood)) {
+          stmt.setString(1, userId);
 
- 			try (ResultSet rs = stmt.executeQuery();) {
- 				if (rs.next()) {
- 					town = rs.getString("neighborhood");
- 				}
- 			}
- 		} catch (SQLException e) {
- 			e.printStackTrace();
- 		} %>
+          try (ResultSet rs = stmt.executeQuery();) {
+             if (rs.next()) {
+                town = rs.getString("neighborhood");
+             }
+          }
+       } catch (SQLException e) {
+          e.printStackTrace();
+       } %>
             <h2><%=town %> 자유게시판</h2>
             <!-- 검색 폼 -->
             <form action="board.jsp" method="get">
                <input type="text" name="find"
                   value="<%=request.getParameter("find") != null ? request.getParameter("find") : ""%>">
-               <input type="submit" value="검색">
+               <input type="submit" class="btn btn-default" value="검색">
             </form>
-            <input type="button" value="글쓰기"
+            <input type="button" class="btn btn-sm custom-button-color" value="글쓰기"
                onclick="location.href='boardWrite.jsp';">
 
-            <button type="button" onclick="sortByNewest()">최신순</button>
-            <button type="button" onclick="sortByRecommendation()">추천순</button>
+            <button type="button" class="btn btn-default" onclick="sortByNewest()">최신순</button>
+            <button type="button" class="btn btn-default" onclick="sortByRecommendation()">추천순</button>
 
 
             <!-- 부트스트랩을 사용한 테이블 스타일 -->
@@ -99,7 +105,7 @@
                   <!-- 테이블 데이터 행 -->
                   <%
             
-          		
+                
                   String find = request.getParameter("find"); // 검색 버튼을 눌렀을 때 입력한 문자열
                   int pagee = 1;
                   int pageeSize = 10;
@@ -109,11 +115,11 @@
 
                   String categoryFilter = request.getParameter("categoryFilter");
                   String sql = "SELECT b.idx, b.category, b.title, b.id, b.postdate, "
-                	        + "COUNT(DISTINCT c.id) AS 추천수, COUNT(DISTINCT cc.num) AS comment_count " 
-                	        + "FROM board b "
-                	        + "LEFT JOIN comment c ON b.idx = c.post_idx AND c.type = '추천' "
-                	        + "LEFT JOIN comment_content cc ON b.idx = cc.post_idx "
-                	        + "WHERE b.town = ? ";
+                           + "COUNT(DISTINCT c.id) AS 추천수, COUNT(DISTINCT cc.num) AS comment_count " 
+                           + "FROM board b "
+                           + "LEFT JOIN comment c ON b.idx = c.post_idx AND c.type = '추천' "
+                           + "LEFT JOIN comment_content cc ON b.idx = cc.post_idx "
+                           + "WHERE b.town = ? ";
 
                   boolean whereAdded = false;
 
