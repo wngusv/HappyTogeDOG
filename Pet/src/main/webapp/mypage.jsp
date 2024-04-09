@@ -39,7 +39,6 @@
             <tr>
                 <th>제목</th>
                 <th>작성 날짜</th>
-                <th>수정</th>
                 <th>삭제</th>
             </tr>
             <% 
@@ -54,7 +53,6 @@
             <tr>
                 <td><a href="/mypage/ViewPost.jsp?postId=<%= postId %>"><%= title %></a></td>
                 <td><%= todayDate %></td>
-                <td><a href="/mypage/EditPost.jsp?postId=<%= postId %>">수정</a></td>
                 <td><a href="#" onclick="confirmDelete('<%= postId %>')">삭제</a></td>
 
 <script>
@@ -93,12 +91,12 @@
             				 %>
             				  <tr>
                 <td><%= category %></a></td>
-                <td><a href="/....jsp?idx=<%= idx %>"><%= title %></a></td>
+                 <td><a href="/boardReading.jsp?idx=<%= idx %>"><%= title %></a></td>
                 <td><%= postdate %></td>
-                <td><a href="#" onclick="confirmDelete('<%= idx %>')">삭제</a></td>
+                <td><a href="#" onclick="confirmDeletee('<%= idx %>')">삭제</a></td>
 
 <script>
-    function confirmDelete(idx) {
+    function confirmDeletee(idx) {
         var confirmResult = confirm("정말로 삭제하시겠습니까?");
         if (confirmResult) {
             window.location.href = "/boardDeleteServlet.do?idx=" + idx;

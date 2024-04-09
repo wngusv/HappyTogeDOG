@@ -12,55 +12,96 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import LocalSite.CidoCode;
+import LocalSite.LocalGovernment;
 import Util.LocalStrayListUpdateListener;
 
 @WebServlet("/AnimalServlet")
 public class AnimalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private List<Animal> animalList;
+	List<LocalGovernment> localGovernment;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String localGovernment = request.getParameter("orgName");
+		String orgName = request.getParameter("orgName");
+		String cidoName = request.getParameter("cidoName");
 		String sessionLocate = (String) request.getSession().getAttribute("locate");
 		String page = request.getParameter("page");
 		if (page == null) {
-	        page = "1";
-	    }
+			page = "1";
+		}
 
 		animalList = new ArrayList<>();
-		List<Animal> realAnimalList = new ArrayList<>();
-		String nowLocate = "우리 지역";
+		localGovernment = new ArrayList<LocalGovernment>();
 
-		if (localGovernment != null) {
-			if (LocalStrayListUpdateListener.checkLocalGovernmentList(localGovernment)) {
-				animalList = getAnimalsByLocalGovernment(localGovernment);
-				nowLocate = localGovernment;
-			} else if (localGovernment.equals("all")) {
+		List<Animal> realAnimalList = new ArrayList<>();
+		String nowLocate =null;
+
+		if (cidoName != null) {
+			if (LocalStrayListUpdateListener.checkCidoList(cidoName)) {
+				if (orgName != null) {
+					animalList=getAnimalsByLocalGovernment(orgName);
+					nowLocate = orgName;
+				} else {
+					animalList = getAnimalsByCidoCode(cidoName);
+				}
+				localGovernment = sortByCidoName(cidoName);
+				
+			} else if (cidoName.equals("all")) {
 				animalList = LocalStrayListUpdateListener.getAllAnimalList();
-				nowLocate = "우리 지역";
 			} else {
 				animalList = LocalStrayListUpdateListener.getAllAnimalList();
-				nowLocate = "우리 지역";
 			}
-		} else if (sessionLocate != null && LocalStrayListUpdateListener.checkLocalGovernmentList(sessionLocate)) {
-			animalList = getAnimalsByLocalGovernment(sessionLocate);
-			nowLocate = makeRealLocate(sessionLocate);
 		} else {
 			animalList = LocalStrayListUpdateListener.getAllAnimalList();
-			nowLocate = "우리 지역";
 		}
-		
+
 		realAnimalList = pageOfAnimalList(page, animalList);
 		int totalPage = countAll(animalList);
-		
 
 		request.setAttribute("animalList", realAnimalList);
 		request.setAttribute("pages", totalPage);
 		request.setAttribute("nowLocate", nowLocate);
-		request.setAttribute("localGovernmentList", LocalStrayListUpdateListener.getLocalGovernmentList());
+		request.setAttribute("Cido", LocalStrayListUpdateListener.getCidoCodeList());
+		request.setAttribute("currentCido", cidoName);
+		request.setAttribute("localGovernment", localGovernment);
 
 		request.getRequestDispatcher("/local-strays.jsp").forward(request, response);
+	}
+
+	private List<LocalGovernment> sortByCidoName(String cidoName) {
+		List<LocalGovernment> list = new ArrayList<LocalGovernment>();
+		for (CidoCode Cido : LocalStrayListUpdateListener.getCidoCodeList()) {
+			if (Cido.getOrgdownNm().equals(cidoName)) {
+				for (LocalGovernment LGM : LocalStrayListUpdateListener.getLocalGovernmentList()) {
+					if (LGM.getUprCd().equals(Cido.getOrgCd())) {
+						list.add(LGM);
+					}
+				}
+			}
+		}
+		return list;
+	}
+
+	private List<Animal> getAnimalsByCidoCode(String cidoName) {
+		List<Animal> animalsInCido = new ArrayList<>();
+		for (Animal animal : LocalStrayListUpdateListener.getAllAnimalList()) {
+			if (animal.getOrgNm().contains(cidoName)) {
+				animalsInCido.add(animal);
+			}
+		}
+		return animalsInCido;
+	}
+
+	private static List<Animal> getAnimalsByLocalGovernment(String localGovernment) {
+		List<Animal> animalsInLocalGovernment = new ArrayList<>();
+		for (Animal animal : LocalStrayListUpdateListener.getAllAnimalList()) {
+			if (animal.getOrgNm().contains(localGovernment)) {
+				animalsInLocalGovernment.add(animal);
+			}
+		}
+		return animalsInLocalGovernment;
 	}
 
 	private int countAll(List<Animal> animalList) {
@@ -88,17 +129,6 @@ public class AnimalServlet extends HttpServlet {
 		List<Animal> selectedAnimals = animalList.subList(startIndex, endIndex);
 
 		return selectedAnimals;
-	}
-
-	private static List<Animal> getAnimalsByLocalGovernment(String localGovernment) {
-		List<Animal> animalsInLocalGovernment = new ArrayList<>();
-		String extractedPart = makeRealLocate(localGovernment);
-		for (Animal animal : LocalStrayListUpdateListener.getAllAnimalList()) {
-			if (animal.getOrgNm().contains(extractedPart)) {
-				animalsInLocalGovernment.add(animal);
-			}
-		}
-		return animalsInLocalGovernment;
 	}
 
 	private static String makeRealLocate(String localGovernment) {

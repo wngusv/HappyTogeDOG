@@ -24,10 +24,10 @@ public class UploadProcess extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			String saveDirectory = getServletContext().getRealPath("/Upload");
-			String originalFileName = FileUtil.uploadFile(req, saveDirectory);
-			String saveFileName = FileUtil.renameFile(saveDirectory, originalFileName);
-			insertMyFile(req, resp, originalFileName, saveFileName);
+			String fileUploadPath = getServletContext().getInitParameter("fileUploadPath");
+			String originalFileName = FileUtil.uploadFile(req, fileUploadPath);
+			System.out.println(originalFileName);
+			insertMyFile(req, resp, originalFileName, originalFileName);
 			resp.sendRedirect("board.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();

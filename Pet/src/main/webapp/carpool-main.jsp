@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>카풀 메인</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
 .rounded-border {
 	width: 50vw;
@@ -32,7 +33,7 @@
 }
 </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
 	<header>
 		<%
 		request.setAttribute("pageTitle", "반려견 카풀");

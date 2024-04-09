@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ImageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String filename = request.getPathInfo().substring(1); // URL에서 파일 이름 추출
-        File file = new File("C:\\Pet\\uploads", filename);
+        String fileUploadPath = getServletContext().getInitParameter("fileUploadPath");
+        File file = new File(fileUploadPath, filename);
         response.setHeader("Content-Type", getServletContext().getMimeType(filename));
         response.setHeader("Content-Length", String.valueOf(file.length()));
         response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");

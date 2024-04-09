@@ -1,4 +1,5 @@
 <%@page import="LocalSite.LocalGovernment"%>
+<%@page import="LocalSite.CidoCode"%>
 <%@page import="LocalStrays.Animal"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,7 +10,8 @@
 <html lang="en">
 
 <head>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="styles.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +40,7 @@
 }
 
 .row {
-	margin: 20px;
+	margin: 120px;
 }
 
 .local-government-button:hover {
@@ -89,16 +91,22 @@
 	<main>
 		<div class="custom-container">
 			<section class="strays-info">
-				<h2>${requestScope.nowLocate}의유기동물들</h2>
+				<h2>지역 유기동물</h2>
 			</section>
 
 			<div class="local-government-buttons">
-				<a href="/AnimalServlet?orgName=all" class="local-government-button">전체</a>
-				<c:forEach var="government"
-					items="${requestScope.localGovernmentList}">
-					<a id="${government.getOrgdownNm()}"
-						class="local-government-button"
-						href="/AnimalServlet?orgName=${government.getOrgdownNm()}">${government.getOrgdownNm()}</a>
+				<a href="/AnimalServlet?cidoName=all"
+					class="local-government-button">전체</a>
+				<c:forEach var="Cido" items="${requestScope.Cido}">
+					<a id="${Cido.getOrgCd()}" class="local-government-button"
+						href="/AnimalServlet?cidoName=${Cido.getOrgdownNm()}">${Cido.getOrgdownNm()}</a>
+				</c:forEach>
+			</div>
+			<div class="local-government-buttons" id="filteredGovernmentButtons">
+				<c:forEach var="government" items="${requestScope.localGovernment}">
+					<a
+						href="/AnimalServlet?cidoName=${ requestScope.currentCido }&orgName=${government.getOrgdownNm()}"
+						class="local-government-button">${government.getOrgdownNm()}</a>
 				</c:forEach>
 			</div>
 
@@ -110,42 +118,52 @@
 				%>
 				<div class="col-md-3 mb-4">
 					<div class="card">
-					 <a href="/AnimalDetailServlet?desertionNo=<%=animal.getDesertionNo()%>&orgName=<%=animal.getOrgNm()%>"> <!-- 이미지를 클릭하면 animal.getLink()의 링크로 이동 -->
-            			<img src="<%=animal.getPopfile()%>" class="card-img-top" alt="동물 이미지">
-      				  </a>
+						<a
+							href="/AnimalDetailServlet?desertionNo=<%=animal.getDesertionNo()%>&orgName=<%=animal.getOrgNm()%>">
+							<!-- 이미지를 클릭하면 animal.getLink()의 링크로 이동 --> <img
+							src="<%=animal.getPopfile()%>" class="card-img-top" alt="동물 이미지">
+						</a>
 						<div class="card-body">
 							<h5 class="card-title">
-								<strong>종류:</strong><p class="card-text"><%=animal.getKindCd()%></p>
+								<strong>종류:</strong>
+								<p class="card-text"><%=animal.getKindCd()%></p>
 							</h5>
-							
+
 							<h5 class="card-title">
-								<strong>색상:</strong><p class="card-text"><%=animal.getColorCd()%></p>
+								<strong>색상:</strong>
+								<p class="card-text"><%=animal.getColorCd()%></p>
 							</h5>
-							
+
 							<h5 class="card-title">
-								<strong>나이:</strong><p class="card-text"><%=animal.getAge()%></p>
+								<strong>나이:</strong>
+								<p class="card-text"><%=animal.getAge()%></p>
 							</h5>
-							
+
 							<h5 class="card-title">
-								<strong>체중:</strong><p class="card-text"><%=animal.getWeight()%></p>
+								<strong>체중:</strong>
+								<p class="card-text"><%=animal.getWeight()%></p>
 							</h5>
-							
+
 							<h5 class="card-title">
-								<strong>성별:</strong>	<p class="card-text"><%=animal.getSexCd()%></p>
+								<strong>성별:</strong>
+								<p class="card-text"><%=animal.getSexCd()%></p>
 							</h5>
-						
+
 							<h5 class="card-title">
-								<strong>중성화여부:</strong><p class="card-text"><%=animal.getNeuterYn()%></p>
+								<strong>중성화여부:</strong>
+								<p class="card-text"><%=animal.getNeuterYn()%></p>
 							</h5>
-							
+
 							<h5 class="card-title">
-								<strong>특징:</strong><p class="card-text"><%=animal.getSpecialMark()%></p>
+								<strong>특징:</strong>
+								<p class="card-text"><%=animal.getSpecialMark()%></p>
 							</h5>
-							
+
 							<h5 class="card-title">
-								<strong>관리기관주소:</strong><p class="card-text"><%=animal.getCareAddr()%></p>
+								<strong>관리기관주소:</strong>
+								<p class="card-text"><%=animal.getCareAddr()%></p>
 							</h5>
-							
+
 						</div>
 					</div>
 				</div>
@@ -156,10 +174,22 @@
 			</div>
 
 			<div class="pages">
-				<c:forEach begin="1" end="${pages}" var="pageNumber">
-					<a href="/AnimalServlet?orgName=${nowLocate}&page=${pageNumber}"
-						class="btn btn-primary">${pageNumber}</a>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${empty requestScope.nowLocate}">
+						<c:forEach begin="1" end="${pages}" var="pageNumber">
+							<a
+								href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pageNumber}"
+								class="btn btn-primary">${pageNumber}</a>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach begin="1" end="${pages}" var="pageNumber">
+							<a
+								href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${pageNumber}"
+								class="btn btn-primary">${pageNumber}</a>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 
 		</div>
@@ -176,29 +206,6 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script>
-		window.onload = function() {
-			var nowLocate = "${requestScope.nowLocate}";
-
-			var buttons = document
-					.getElementsByClassName('local-government-button');
-			for (var i = 0; i < buttons.length; i++) {
-				var button = buttons[i];
-				if (button.id.trim() === nowLocate.trim()) {
-					button.classList.add('highlight');
-				}
-			}
-
-			// "우리 지역"일 경우 "전체" 버튼에 테두리 추가
-			if (nowLocate.trim() === "우리 지역") {
-				var allButton = document
-						.querySelector('.local-government-buttons a[href="/AnimalServlet?orgName=all"]');
-				if (allButton) {
-					allButton.classList.add('highlight');
-				}
-			}
-		};
-	</script>
 </body>
 
 </html>
