@@ -11,17 +11,20 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
- /* 페이징 버튼의 배경색과 텍스트 색상 변경 */
-        .page-link {
-            background-color: #ffffff; /* 배경색 변경 */
-            color: rgb(111, 94, 66); /* 텍스트 색상 변경 */
-        }
+.container {
+    max-width: 90%;
+}
+/* 페이징 버튼의 배경색과 텍스트 색상 변경 */
+.page-link {
+	background-color: #ffffff; /* 배경색 변경 */
+	color: rgb(111, 94, 66); /* 텍스트 색상 변경 */
+}
 
-        /* 활성화된 페이징 버튼의 배경색과 텍스트 색상 변경 */
-        .page-item.active .page-link {
-            background-color: rgb(111, 94, 75); /* 활성화된 버튼의 배경색 변경 */
-            color: #ffffff; /* 활성화된 버튼의 텍스트 색상 변경 */
-        }
+/* 활성화된 페이징 버튼의 배경색과 텍스트 색상 변경 */
+.page-item.active .page-link {
+	background-color: rgb(111, 94, 75); /* 활성화된 버튼의 배경색 변경 */
+	color: #ffffff; /* 활성화된 버튼의 텍스트 색상 변경 */
+}
 /*지역 유기견 보호센터 테두리*/
 .rounded-border {
 	background-color: white;
@@ -34,7 +37,7 @@
 /*지도*/
 #map {
 	position: fixed;
-	border: 2px solid  rgb(111, 94, 75);
+	border: 2px solid rgb(111, 94, 75);
 	border-radius: 10px;
 	top: 50%;
 	right: 230px; /* 우측 여백 설정 */
@@ -45,32 +48,32 @@
 
 .map-border {
 	border-radius: 10px; /* 테두리의 둥근 정도를 설정합니다. */
-	border: 1px solid  rgb(111, 94, 75); /* 테두리의 선 스타일과 색상을 설정합니다. */
+	border: 1px solid rgb(111, 94, 75); /* 테두리의 선 스타일과 색상을 설정합니다. */
 	overflow: hidden; /* 내용이 넘치는 경우를 방지하기 위해 오버플로 속성을 숨깁니다. */
 }
 
 .region-link {
-    background-color: rgb(205, 173, 129);
-    font-size: 15px;
-    border-radius: 10px; /* Rounded border */
-    border: none; /* Remove default border */
-    padding: 5px 11px; /* Padding for button */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Change font */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    margin: 5px; /* Add margin between buttons */
-    color: rgb(59, 38, 14);
-    display: inline-block;
-    font-weight: bold; /* Make font bold */
-    /* Hover effect for background color */
-    transition: background-color 0.3s ease;
-    /* Hover effect for transform */
-    transition: transform 0.3s ease;
+	background-color: rgb(205, 173, 129);
+	font-size: 15px;
+	border-radius: 10px; /* Rounded border */
+	border: none; /* Remove default border */
+	padding: 5px 11px; /* Padding for button */
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	/* Change font */
+	cursor: pointer; /* Change cursor to pointer on hover */
+	margin: 5px; /* Add margin between buttons */
+	color: rgb(59, 38, 14);
+	display: inline-block;
+	font-weight: bold; /* Make font bold */
+	/* Hover effect for background color */
+	transition: background-color 0.3s ease;
+	/* Hover effect for transform */
+	transition: transform 0.3s ease;
 }
 
-
 .region-link:hover {
-	background-color: rgb(255, 144, 61); /* Change background color on hover */
+	background-color: rgb(255, 144, 61);
+	/* Change background color on hover */
 	text-decoration: none;
 	color: rgb(59, 38, 14);
 	font-size: 18px;
@@ -79,6 +82,8 @@
 
 #region-list {
 	margin-bottom: 20px;
+	 width: 100%; /* 또는 충분한 고정 너비 */
+	   overflow: auto; 
 }
 
 .rounded-border {
@@ -172,10 +177,10 @@
 		%>
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
-	<body style="background-color: rgb(254, 247, 222);">
+<body style="background-color: rgb(254, 247, 222);">
 	<main style="margin-bottom: 150px;">
 		<div class="container" style="padding-top: 150px;">
-			<section class="strays-info">
+			<section class="strays-info" style="width: 1200px;">
 				<div id="map-container">
 					<div id="map" style="width: 500px; height: 400px;"></div>
 				</div>
