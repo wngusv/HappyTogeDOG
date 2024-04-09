@@ -114,37 +114,37 @@
 							alt="동물 이미지">
 						<div class="card-body">
 							<h5 class="card-title">
-								<strong>종류:</strong>
+								<strong>종류:</strong><p class="card-text"><%=animal.getKindCd()%></p>
 							</h5>
-							<p class="card-text"><%=animal.getKindCd()%></p>
+							
 							<h5 class="card-title">
-								<strong>색상:</strong>
+								<strong>색상:</strong><p class="card-text"><%=animal.getColorCd()%></p>
 							</h5>
-							<p class="card-text"><%=animal.getColorCd()%></p>
+							
 							<h5 class="card-title">
-								<strong>나이:</strong>
+								<strong>나이:</strong><p class="card-text"><%=animal.getAge()%></p>
 							</h5>
-							<p class="card-text"><%=animal.getAge()%></p>
+							
 							<h5 class="card-title">
-								<strong>체중:</strong>
+								<strong>체중:</strong><p class="card-text"><%=animal.getWeight()%></p>
 							</h5>
-							<p class="card-text"><%=animal.getWeight()%></p>
+							
 							<h5 class="card-title">
-								<strong>성별:</strong>
+								<strong>성별:</strong>	<p class="card-text"><%=animal.getSexCd()%></p>
 							</h5>
-							<p class="card-text"><%=animal.getSexCd()%></p>
+						
 							<h5 class="card-title">
-								<strong>중성화여부:</strong>
+								<strong>중성화여부:</strong><p class="card-text"><%=animal.getNeuterYn()%></p>
 							</h5>
-							<p class="card-text"><%=animal.getNeuterYn()%></p>
+							
 							<h5 class="card-title">
-								<strong>특징:</strong>
+								<strong>특징:</strong><p class="card-text"><%=animal.getSpecialMark()%></p>
 							</h5>
-							<p class="card-text"><%=animal.getSpecialMark()%></p>
+							
 							<h5 class="card-title">
-								<strong>관리기관주소:</strong>
+								<strong>관리기관주소:</strong><p class="card-text"><%=animal.getCareAddr()%></p>
 							</h5>
-							<p class="card-text"><%=animal.getCareAddr()%></p>
+							
 						</div>
 					</div>
 				</div>
