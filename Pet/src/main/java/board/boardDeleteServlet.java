@@ -1,6 +1,7 @@
 package board;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -26,13 +27,15 @@ public class boardDeleteServlet extends HttpServlet {
 
 				pstmt.executeUpdate();
 
+				// mypage.jsp로 리다이렉트
+				response.sendRedirect("/mypage.jsp");
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
+				
 			}
 
-			// mypage.jsp로 리다이렉트
-			response.sendRedirect("/mypage.jsp");
 		}
 	}
 
-}
+} 
