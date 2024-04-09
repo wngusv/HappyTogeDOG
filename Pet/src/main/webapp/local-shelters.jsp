@@ -37,6 +37,7 @@
 	margin-right: 0 auto;
 }
 
+
 /*지도*/
 #map {
 	position: fixed;

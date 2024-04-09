@@ -19,10 +19,14 @@
 	font-size: 12px;
 }
 
+
 .map_wrap {
 	position: relative;
 	width: 100%;
-	height: 600px;
+	height: 510px;
+	border: 2px solid rgb(111, 94, 75);
+	border-radius: 10px;
+	
 }
 
 #category {

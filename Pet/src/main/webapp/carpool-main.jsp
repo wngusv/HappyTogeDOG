@@ -14,14 +14,12 @@
 .rounded-border {
 	width: 50vw;
 	border-radius: 10px;
-	border: 1px solid #ccc;
+	border: 2px solid rgb(111, 94, 75);
 	cursor: pointer;
 	margin: 0 auto;
 }
 
-.rounded-border:hover {
-	border-color: #007bff;
-}
+
 
 .centered-message {
 	display: flex;
