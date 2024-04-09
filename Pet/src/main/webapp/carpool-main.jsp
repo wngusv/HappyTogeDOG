@@ -12,15 +12,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
 .rounded-border {
-	width: 50vw;
+	background-color: white;
+	width: 40vw;
 	border-radius: 10px;
-	border: 1px solid #ccc;
-	cursor: pointer;
-	margin: 0 auto;
-}
-
-.rounded-border:hover {
-	border-color: #007bff;
+	border: 2px solid rgb(111, 94, 75);
+	margin-right: 0 auto;
 }
 
 .centered-message {
@@ -44,7 +40,7 @@
 		<div class="container">
 			<button onclick="checklogin();"
 				style="float: right; margin-top: 200px;">카풀 모집</button>
-			<h2 style="margin-top: 200px;">반려견 카풀</h2>
+			<h2 style="margin-top: 200px;"></h2>
 			<c:if test="${empty posts}">
 				<div class="rounded-border centered-message">등록된 글이 없습니다.</div>
 			</c:if>
