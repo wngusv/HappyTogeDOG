@@ -75,7 +75,7 @@
       %>
       <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
    </header>
-
+ 
    <main>
       <div class="container">
          <section class="strays-info">
