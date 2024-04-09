@@ -30,8 +30,6 @@
 .social-links li {
 	margin-left: 10px; /* 링크들 사이의 간격 설정 */
 }
-
-
 </style>
 <body style="padding-top: 150px;">
 	<header>
@@ -45,11 +43,12 @@
 		<div class="container">
 			<section class="strays-info">
 				<h2>본인동네 자유게시판(ex.부산진구 자유게시판)</h2>
-				 <!-- 검색 폼 -->
-                <form action="board.jsp" method="get">
-                    <input type="text" name="find" value="<%=request.getParameter("find") != null ? request.getParameter("find") : ""%>">
-                    <input type="submit" value="검색">
-                </form>
+				<!-- 검색 폼 -->
+				<form action="board.jsp" method="get">
+					<input type="text" name="find"
+						value="<%=request.getParameter("find") != null ? request.getParameter("find") : ""%>">
+					<input type="submit" value="검색">
+				</form>
 				<input type="button" value="글쓰기"
 					onclick="location.href='boardWrite.jsp';">
 
@@ -77,7 +76,7 @@
 							<th>아이디</th>
 							<th>작성시간</th>
 							<th>추천순</th>
-							
+
 						</tr>
 					</thead>
 					<tbody>
@@ -97,13 +96,23 @@
 								+ "LEFT JOIN comment_content cc ON b.idx = cc.post_idx ";
 
 						// TODO:검색부분이랑 카테고리 부분 sql 정리하기-------------------------------
-						 if (find != null && !find.isEmpty()) {
-                             sql += "WHERE REPLACE(b.title, ' ', '') LIKE ? ";
-                         }
-						 
+						boolean whereAdded = false;
+
+						if (find != null && !find.isEmpty()) {
+							sql += "WHERE REPLACE(b.title, ' ', '') LIKE ? ";
+							whereAdded = true;
+						}
+
 						// categoryFilter 값이 비어있지 않으면 WHERE 절 추가
 						if (categoryFilter != null && !categoryFilter.isEmpty()) {
-							sql += "WHERE b.category = ? ";
+							if (whereAdded) {
+								// 이미 WHERE 절이 추가된 경우, AND 연산자를 사용
+								sql += "AND b.category = ? ";
+							} else {
+								// WHERE 절이 아직 없는 경우, WHERE 절을 추가
+								sql += "WHERE b.category = ? ";
+								whereAdded = true;
+							}
 						}
 						// ----------------------------------------------------------------------
 
@@ -111,9 +120,9 @@
 						String orderBy = "b.postdate DESC"; // 기본 정렬
 
 						if ("recommendation".equals(sort)) {
-						    orderBy = "추천수 DESC, b.postdate DESC";
+							orderBy = "추천수 DESC, b.postdate DESC";
 						} else if ("newest".equals(sort)) {
-						    orderBy = "b.postdate DESC";
+							orderBy = "b.postdate DESC";
 						}
 
 						sql += "GROUP BY b.idx ORDER BY " + orderBy + " LIMIT ?, ?";
@@ -122,8 +131,8 @@
 
 							int paramIndex = 1;
 							if (find != null && !find.isEmpty()) {
-                                 stmt.setString(paramIndex++, "%" + find.replace(" ", "") + "%");
-                            }
+								stmt.setString(paramIndex++, "%" + find.replace(" ", "") + "%");
+							}
 							// categoryFilter 값이 비어있지 않으면 파라미터 설정
 							if (categoryFilter != null && !categoryFilter.isEmpty()) {
 								stmt.setString(paramIndex++, categoryFilter);
@@ -166,16 +175,16 @@
 				// 총 게시물 수 계산하기 위한 쿼리
 				String countSql = "SELECT COUNT(*) FROM board";
 				if (find != null && !find.isEmpty()) {
-                    countSql += " WHERE REPLACE(title, ' ', '') LIKE ?";
-                }
-				
+					countSql += " WHERE REPLACE(title, ' ', '') LIKE ?";
+				}
+
 				if (categoryFilter != null && !categoryFilter.isEmpty()) {
 					countSql += " WHERE category = ?";
 				}
 				try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(countSql)) {
-					 if (find != null && !find.isEmpty()) {
-                         stmt.setString(1, "%" + find.replace(" ", "") + "%");
-                     }
+					if (find != null && !find.isEmpty()) {
+						stmt.setString(1, "%" + find.replace(" ", "") + "%");
+					}
 					if (categoryFilter != null && !categoryFilter.isEmpty()) {
 						stmt.setString(1, categoryFilter);
 					}
@@ -213,8 +222,9 @@
 <script>
 window.onload = function() {
     var categorySelect = document.getElementsByName("categoryFilter")[0];
-    var selectedCategory = "<%=categoryFilter%>";
-	// JSP 코드를 사용하여 서버에서 선택된 카테고리를 가져옵니다.
+    var selectedCategory = "<%=categoryFilter%>
+	";
+		// JSP 코드를 사용하여 서버에서 선택된 카테고리를 가져옵니다.
 
 		// 선택된 카테고리가 있으면 해당 카테고리를 선택 상태로 설정합니다.
 		if (selectedCategory) {
@@ -226,23 +236,22 @@ window.onload = function() {
 			}
 		}
 	};
-	
+
 	function sortByRecommendation() {
-	    var currentUrl = window.location.href;
-	    var newUrl = new URL(currentUrl);
-	    newUrl.searchParams.set('sort', 'recommendation');
-	    console.log("Sort by recommendation:", newUrl.href); // 로그 기록
-	    window.location.href = newUrl.href;
+		var currentUrl = window.location.href;
+		var newUrl = new URL(currentUrl);
+		newUrl.searchParams.set('sort', 'recommendation');
+		console.log("Sort by recommendation:", newUrl.href); // 로그 기록
+		window.location.href = newUrl.href;
 	}
 
 	function sortByNewest() {
-	    var currentUrl = window.location.href;
-	    var newUrl = new URL(currentUrl);
-	    newUrl.searchParams.set('sort', 'newest');
-	    console.log("Sort by newest:", newUrl.href); // 로그 기록
-	    window.location.href = newUrl.href;
+		var currentUrl = window.location.href;
+		var newUrl = new URL(currentUrl);
+		newUrl.searchParams.set('sort', 'newest');
+		console.log("Sort by newest:", newUrl.href); // 로그 기록
+		window.location.href = newUrl.href;
 	}
-
 </script>
 
 </html>
