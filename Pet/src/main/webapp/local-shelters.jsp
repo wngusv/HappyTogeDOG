@@ -50,22 +50,24 @@
 }
 
 .region-link {
-	background-color: yellow;
-	font-size: 15px;
-	border-radius: 10px; /* Rounded border */
-	border: none; /* Remove default border */
-	padding: 5px 11px; /* Padding for button */
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	/* Change font */
-	cursor: pointer; /* Change cursor to pointer on hover */
-	margin: 5px; /* Add margin between buttons */
-	color: black;
-	display: inline-block;
-	/* Hover effect for background color */
-	transition: background-color 0.3s ease;
-	/* Hover effect for transform */
-	transition: transform 0.3s ease;
+    background-color: rgb(205, 173, 129);
+    font-size: 15px;
+    border-radius: 10px; /* Rounded border */
+    border: none; /* Remove default border */
+    padding: 5px 11px; /* Padding for button */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Change font */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    margin: 5px; /* Add margin between buttons */
+    color: rgb(59, 38, 14);
+    display: inline-block;
+    font-weight: bold; /* Make font bold */
+    /* Hover effect for background color */
+    transition: background-color 0.3s ease;
+    /* Hover effect for transform */
+    transition: transform 0.3s ease;
 }
+
 
 .region-link:hover {
 	background-color: #ffcc00; /* Change background color on hover */
