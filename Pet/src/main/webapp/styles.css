@@ -1,8 +1,13 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500; /* Medium 굵기 */
 }
+
+.navbar-brand, .navbar-nav .nav-link, .menu ul li a {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500; /* Medium 굵기 */
+}
+
 
 .container {
     width: 80%;

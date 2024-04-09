@@ -6,15 +6,14 @@
 <%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
-<head>
+<header class="my-header">
 <meta charset="UTF-8">
 <title>산책 아르바이트</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="styles.css">
-</head>
 <body style="padding-top: 150px;">
-	<header>
+
 		<%
 		request.setAttribute("pageTitle", "산책 아르바이트");
 		%>
@@ -25,7 +24,6 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>게시글 목록</h2>
 					<form action="walk-jobs.jsp" method="get">
 						<div class="form-row">
                             <div class="form-group col-md-2">
