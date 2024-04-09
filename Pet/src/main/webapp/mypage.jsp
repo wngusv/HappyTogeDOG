@@ -95,10 +95,10 @@
                 <td><%= category %></a></td>
                 <td><a href="/....jsp?idx=<%= idx %>"><%= title %></a></td>
                 <td><%= postdate %></td>
-                <td><a href="#" onclick="confirmDelete('<%= idx %>')">삭제</a></td>
+                <td><a href="#" onclick="confirmDeletee('<%= idx %>')">삭제</a></td>
 
 <script>
-    function confirmDelete(idx) {
+    function confirmDeletee(idx) {
         var confirmResult = confirm("정말로 삭제하시겠습니까?");
         if (confirmResult) {
             window.location.href = "/boardDeleteServlet.do?idx=" + idx;
