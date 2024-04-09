@@ -16,6 +16,17 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 	rel="stylesheet">
 <style>
+.table-fixed th {
+    background-color: rgb(111, 94, 75); /* 배경색 변경 */
+    color: white; /* 텍스트 색상 변경 */
+}
+
+.custom-green-button {
+	background-color: rgb(108, 185, 249); /* 버튼 배경색 */
+	border-color: transparent; /* 버튼 테두리 색상 */
+	color: black; /* 버튼 내 텍스트 색상 */
+}
+
 .post-title {
 	font-size: 2rem; /* 제목 크기 */
 	color: #007bff; /* 제목 색상 */
@@ -162,7 +173,7 @@
 }
 </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
 	<%
 	String idx = request.getParameter("idx");
 	int recommendationCount = 0;
@@ -231,7 +242,7 @@
 						String content = rs.getString("content");
 						String sfile = rs.getString("sfile");
 				%>
-				<h2 class="post-title"><%=title%></h2>
+				<h2 class="post-title" style="color: black;"><%=title%></h2>
 				<div class="text-right">
 					<p class="post-meta">
 						작성자:
@@ -243,7 +254,8 @@
 				<%
 				if (sfile != null && !sfile.isEmpty()) {
 				%>
-				<img src="<%=request.getContextPath()%>/image/<%=sfile%>" alt="게시글 사진" class="img-fluid post-image">
+				<img src="<%=request.getContextPath()%>/image/<%=sfile%>"
+					alt="게시글 사진" class="img-fluid post-image">
 				<%
 				}
 				%>
@@ -311,13 +323,15 @@
 						<textarea id="comment-input" name="comment" class="form-control"
 							rows="3" placeholder="댓글을 입력하세요..."></textarea>
 						<br>
-						<button type="submit" class="btn btn-primary mt-2">등록</button>
+						<button type="submit" class="btn btn-primary mt-1" style="background-color: rgb(149, 204, 143); border-color: rgb(149, 204, 143); color: black;">등록</button>
 					</form>
 				</div>
 
 				<br>
-				<button type="button" onclick="sortComments('latest')">최신순</button>
-				<button type="button" onclick="sortComments('mostLiked')">좋아요순</button>
+				<button type="button" class="custom-green-button"
+					onclick="sortComments('latest')">최신순</button>
+				<button type="button" class="custom-green-button"
+					onclick="sortComments('mostLiked')">좋아요순</button>
 
 				<table class="table table-fixed">
 					<thead>
