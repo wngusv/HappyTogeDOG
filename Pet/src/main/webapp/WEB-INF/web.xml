@@ -58,10 +58,16 @@
 		<servlet-name>VerifyCodeServlet_PW</servlet-name>
 		<url-pattern>/VerifyCodeServlet_PW</url-pattern>
 	</servlet-mapping>
-	
+
 	<context-param>
-	<param-name>CHAT_ADDR</param-name>
-	<param-value>ws://localhost:8080</param-value>
+		<param-name>CHAT_ADDR</param-name>
+		<param-value>ws://localhost:8080</param-value>
 	</context-param>
+
+	<context-param>
+		<param-name>fileUploadPath</param-name>
+		<param-value>C:\\Pet\\uploads\\</param-value>
+	</context-param>
+
 
 </web-app>
