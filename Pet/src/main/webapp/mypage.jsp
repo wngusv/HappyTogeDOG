@@ -39,7 +39,6 @@
             <tr>
                 <th>제목</th>
                 <th>작성 날짜</th>
-                <th>수정</th>
                 <th>삭제</th>
             </tr>
             <% 
@@ -54,7 +53,6 @@
             <tr>
                 <td><a href="/mypage/ViewPost.jsp?postId=<%= postId %>"><%= title %></a></td>
                 <td><%= todayDate %></td>
-                <td><a href="/mypage/EditPost.jsp?postId=<%= postId %>">수정</a></td>
                 <td><a href="#" onclick="confirmDelete('<%= postId %>')">삭제</a></td>
 
 <script>

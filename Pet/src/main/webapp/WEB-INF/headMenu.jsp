@@ -104,14 +104,14 @@
     <ul class="login">
         <c:choose>
             <c:when test="${sessionScope.userId != null}">
-                <li id="username-container" class="user-info"><span id="username-greeting">안녕하세요, ${sessionScope.userName}님!</span></li>
-                <li><a id="logout-button" href="./api/logout">로그아웃</a></li>
+                <li id="username-container" class="user-info"><span id="username-greeting"><img src="/images/헬로.png" alt="마이페이지">안녕하세요, ${sessionScope.userName}님!</span></li>
+                <li><a id="logout-button" href="./api/logout"><img src="/images/로그아웃ㄴ.png" alt="마이페이지">로그아웃</a></li>
                 <li><a href="mypage.jsp"><img src="/images/마이페이지.png" alt="마이페이지">마이페이지</a></li>
 
             </c:when>
             <c:otherwise>
-                <li><a id="login-button" href="login.jsp">로그인</a></li>
-                <li><a id="signup-button" href="signupform.jsp">회원가입</a></li>
+                <li><a id="login-button" href="login.jsp"><img src="/images/로그인.png" alt="마이페이지">  로그인</a>
+                <a id="signup-button" href="signupform.jsp"><img src="/images/회원가입.png" alt="마이페이지">  회원가입</a></li>
             </c:otherwise>
         </c:choose>
     </ul>
