@@ -36,8 +36,10 @@
                 <input type="text" maxlength="5" id="checkNumber" name="checkNumber" class="form-control gray-text" placeholder="5자리 숫자를 입력하세요." required />
             </div>
             <div class="form-group">
-                <button type="button" id="check" class="btn btn-primary" disabled>확인</button>
-            </div>
+				<button type="button" id="check" class="btn"
+					style="background-color: rgb(88, 185, 117); border-color: rgb(88, 185, 117);"
+					disabled>확인</button>
+			</div>
         </form>
     </div>
 
