@@ -59,6 +59,11 @@
 	margin-bottom: 10px; /* 푸터와의 간격 설정 */
 	 width: 60%;
 }
+
+.shelter-name {
+	color: gray;	
+}
+
 .weekday-hours {
   padding: 0.25rem 0.5rem; /* px-2 py-1 */
   border-radius: 0.375rem; /* rounded */
@@ -69,7 +74,6 @@
   display: flex;
   align-items: center;
   width: max-content;
-  cursor: pointer;
   transition: background-color 0.3s ease; /* transition duration-300 ease */
 }
 
@@ -87,7 +91,6 @@
   display: flex;
   align-items: center;
   width: max-content;
-  cursor: pointer;
   transition: background-color 0.3s ease; /* 동일 */
 }
 
@@ -105,7 +108,6 @@
   display: flex;
   align-items: center;
   width: max-content;
-  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
@@ -123,7 +125,6 @@
   display: flex;
   align-items: center;
   width: max-content;
-  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
@@ -321,16 +322,17 @@
     	    paginatedShelters.forEach(function(shelter) {
     	        var shelterElement = document.createElement('div');
     	        shelterElement.classList.add('rounded-border');
-    	        shelterElement.innerHTML = '<p>보호소 이름:' + shelter.careNm + '</p>' 
+    	        shelterElement.innerHTML = '<p class="shelter-name">보호소 이름 : ' + shelter.careNm + '</p>' 
     	        + '<p>주소:  <img src="images/강아지비추천.PNG" alt="아이콘" />' + shelter.careAddr + '</p>'
     	        + '<p>전화번호:  <img src="images/강아지비추천.PNG" alt="아이콘" />' + shelter.careTel + '</p>';
-
+				
 
     	        var additionalInfoDiv = document.createElement('div');
     	        additionalInfoDiv.className = 'additional-info';
     	        additionalInfoDiv.style.display = 'flex'; // Flexbox를 사용하여 내부 요소를 가로로 배열
     	        additionalInfoDiv.style.flexWrap = 'wrap'; // 내용이 너무 많으면 다음 줄로 넘김
     	        additionalInfoDiv.style.alignItems = 'center'; // 내부 요소를 세로 중앙에 정렬
+    	        additionalInfoDiv.style.justifyContent = 'center'; // 내부 요소를 가로 중앙에 정렬
     	        additionalInfoDiv.style.gap = '10px';
     	        additionalInfoDiv.innerHTML = '<p class="org-name">관리기관명: ' + shelter.orgNm + '</p>' +
                 '<p class="weekday-hours">평일 운영시간: ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>';
@@ -345,10 +347,14 @@
                 } else {
                 	additionalInfoDiv.innerHTML += '<p class="close-day">휴무일: 없음</p>';
                 }
+    	        
+                var separator = document.createElement('div'); // 구분선을 위한 div 생성
+    	        separator.style.borderTop = "2px solid #ccc"; // 구분선 스타일 적용, 색상과 두께는 조절 가능
+    	        separator.style.margin = "10px 0"; // 위아래 마진 추가하여 내용과의 간격 조절
     	        							
-    	        shelterElement.appendChild(additionalInfoDiv);
-    	        shelterInfoDiv.appendChild(shelterElement);
-
+                shelterElement.appendChild(separator); // 이제 separator는 올바르게 추가될 수 있습니다.
+                shelterElement.appendChild(additionalInfoDiv); // additionalInfoDiv 추가
+                shelterInfoDiv.appendChild(shelterElement);
 
     	        // 보호소의 위도와 경도 정보가 유효할 경우에만 마커를 생성하여 지도에 표시합니다.
     	        if(shelter.lat && shelter.lng) {
