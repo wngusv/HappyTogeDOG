@@ -243,7 +243,7 @@
 				<%
 				if (sfile != null && !sfile.isEmpty()) {
 				%>
-				<img src="<%=sfile%>" alt="게시글 사진" class="img-fluid post-image">
+				<img src="<%=request.getContextPath()%>/image/<%=sfile%>" alt="게시글 사진" class="img-fluid post-image">
 				<%
 				}
 				%>

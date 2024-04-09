@@ -187,7 +187,7 @@
 		<div class="container" style="padding-top: 150px;">
 			<section class="strays-info" style="width: 1200px;">
 				<div id="map-container">
-					<div id="map" style="width: 500px; height: 400px;"></div>
+					<div id="map" style="width: 700px; height: 500px;"></div>
 				</div>
 				<div id="shelters"></div>
 				<div id="region-list">
