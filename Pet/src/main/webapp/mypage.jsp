@@ -93,7 +93,7 @@
             				 %>
             				  <tr>
                 <td><%= category %></a></td>
-                <td><a href="/....jsp?idx=<%= idx %>"><%= title %></a></td>
+                 <td><a href="/boardReading.jsp?idx=<%= idx %>"><%= title %></a></td>
                 <td><%= postdate %></td>
                 <td><a href="#" onclick="confirmDeletee('<%= idx %>')">삭제</a></td>
 
