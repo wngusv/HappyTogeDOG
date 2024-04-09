@@ -11,7 +11,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="styles.css">
 <body style="padding-top: 150px; background-color: rgb(254, 247, 222);">
-<style>
+	<style>
 .map_wrap, .map_wrap * {
 	margin: 0;
 	padding: 0;
@@ -20,9 +20,11 @@
 }
 
 .map_wrap {
+	border-radius: 10px;
+	border: 2px solid rgb(111, 94, 75);
 	position: relative;
 	width: 100%;
-	height: 600px;
+	height: 510px;
 }
 
 #category {
@@ -73,7 +75,6 @@
 .info {
 	padding: 10px;
 }
-
 
 .close {
 	position: absolute;
@@ -156,9 +157,9 @@
 		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
 }
 
- .space {
-        height: 50px; /* 원하는 높이로 조절하세요 */
-    }
+.space {
+	height: 50px; /* 원하는 높이로 조절하세요 */
+}
 </style>
 </head>
 <body style="padding-top: 150px;">
@@ -169,11 +170,10 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 
 	</header>
-<div class="space"></div>
+	<div class="space"></div>
 	<main>
 		<div class="container">
-			<section class="strays-info">
-			</section>
+			<section class="strays-info"></section>
 		</div>
 		<div class="container">
 			<!-- Bootstrap 그리드 시스템 사용 -->
@@ -247,40 +247,38 @@
 		}
 
 		function displayPlaces(places) {
-		    var bounds = new kakao.maps.LatLngBounds();
-		    removeAllMarkers();
-		    for (var i = 0; i < places.length; i++) {
-		        (function(place) {
-		            var placePosition = new kakao.maps.LatLng(place.y, place.x);
+			var bounds = new kakao.maps.LatLngBounds();
+			removeAllMarkers();
+			for (var i = 0; i < places.length; i++) {
+				(function(place) {
+					var placePosition = new kakao.maps.LatLng(place.y, place.x);
 
-		            // 마커를 생성합니다 (이전에는 여기에 마커 이미지 설정이 있었습니다)
-		            var marker = new kakao.maps.Marker({
-		                position: placePosition
-		            });
-		            marker.setMap(map);
-		            markers.push(marker);
+					// 마커를 생성합니다 (이전에는 여기에 마커 이미지 설정이 있었습니다)
+					var marker = new kakao.maps.Marker({
+						position : placePosition
+					});
+					marker.setMap(map);
+					markers.push(marker);
 
-		            // 커스텀 오버레이의 내용을 장소 이름과 URL을 포함하도록 설정합니다
-		            var content = '<div class="customoverlay">' +
-		                          '  <a href="' + place.place_url + '" target="_blank">' +
-		                          '    <span class="title">' + place.place_name + '</span>' +
-		                          '  </a>' +
-		                          '</div>';
+					// 커스텀 오버레이의 내용을 장소 이름과 URL을 포함하도록 설정합니다
+					var content = '<div class="customoverlay">'
+							+ '  <a href="' + place.place_url + '" target="_blank">'
+							+ '    <span class="title">' + place.place_name
+							+ '</span>' + '  </a>' + '</div>';
 
-		            // 커스텀 오버레이를 생성합니다
-		            var overlay = new kakao.maps.CustomOverlay({
-		                content: content,
-		                map: map,
-		                position: marker.getPosition(),
-		                yAnchor: 1
-		            });
+					// 커스텀 오버레이를 생성합니다
+					var overlay = new kakao.maps.CustomOverlay({
+						content : content,
+						map : map,
+						position : marker.getPosition(),
+						yAnchor : 1
+					});
 
-		            bounds.extend(placePosition);
-		        })(places[i]);
-		    }
-		    map.setBounds(bounds);
+					bounds.extend(placePosition);
+				})(places[i]);
+			}
+			map.setBounds(bounds);
 		}
-
 
 		function addMarker(position) {
 			var marker = new kakao.maps.Marker({

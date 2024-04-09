@@ -27,10 +27,10 @@ public class MyWebContextListener implements ServletContextListener {
 
 	private void initDataSource() {
 		BasicDataSource ds = new BasicDataSource();
-		ds.setUrl("jdbc:mysql://192.168.0.106:3306/pet");
+		ds.setUrl("jdbc:mysql://localhost:3306/pet");
 		ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		ds.setUsername("wngus");
-		ds.setPassword("wngus");
+		ds.setUsername("root");
+		ds.setPassword("root");
 
 		dataSource = ds;
 	}

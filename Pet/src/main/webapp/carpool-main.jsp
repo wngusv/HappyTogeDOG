@@ -17,10 +17,8 @@
 	border: 1px solid #ccc;
 	cursor: pointer;
 	margin: 0 auto;
-}
-
-.rounded-border:hover {
-	border-color: #007bff;
+	border-radius: 10px;
+	border: 2px solid rgb(111, 94, 75);
 }
 
 .centered-message {
