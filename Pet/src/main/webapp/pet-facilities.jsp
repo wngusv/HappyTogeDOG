@@ -7,10 +7,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>지역 반려동물 시설</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="styles.css">
+<body style="padding-top: 150px; background-color: rgb(254, 247, 222);">
 <style>
 .map_wrap, .map_wrap * {
 	margin: 0;
@@ -155,6 +155,10 @@
 	background:
 		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
 }
+
+ .space {
+        height: 50px; /* 원하는 높이로 조절하세요 */
+    }
 </style>
 </head>
 <body style="padding-top: 150px;">
@@ -165,11 +169,10 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 
 	</header>
-
+<div class="space"></div>
 	<main>
 		<div class="container">
 			<section class="strays-info">
-				<h2>지역 반려동물 시설</h2>
 			</section>
 		</div>
 		<div class="container">
