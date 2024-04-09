@@ -173,24 +173,52 @@
 				%>
 			</div>
 
-			<div class="pages">
-				<c:choose>
-					<c:when test="${empty requestScope.nowLocate}">
-						<c:forEach begin="1" end="${pages}" var="pageNumber">
-							<a
-								href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pageNumber}"
-								class="btn btn-primary">${pageNumber}</a>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<c:forEach begin="1" end="${pages}" var="pageNumber">
-							<a
-								href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${pageNumber}"
-								class="btn btn-primary">${pageNumber}</a>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
-			</div>
+<div class="pages">
+    <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=1" class="btn btn-primary">&lt;&lt; First</a>
+    <c:choose>
+        <c:when test="${empty requestScope.nowLocate}">
+            <c:set var="startPage" value="${currentPage - 5}" />
+            <c:if test="${startPage lt 1}">
+                <c:set var="startPage" value="1" />
+            </c:if>
+            <c:set var="endPage" value="${currentPage + 5}" />
+            <c:if test="${endPage gt pages}">
+                <c:set var="endPage" value="${pages}" />
+            </c:if>
+            <c:if test="${currentPage gt 1}">
+                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${currentPage - 1}" class="btn btn-primary">&lt; Previous</a>
+            </c:if>
+            <c:forEach begin="${startPage}" end="${endPage}" var="pageNumber">
+                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pageNumber}" class="btn btn-primary ${currentPage eq pageNumber ? 'active' : ''}">${pageNumber}</a>
+            </c:forEach>
+            <c:if test="${currentPage lt pages}">
+                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${currentPage + 1}" class="btn btn-primary">Next &gt;</a>
+            </c:if>
+        </c:when>
+        <c:otherwise>
+            <c:set var="startPage" value="${currentPage - 5}" />
+            <c:if test="${startPage lt 1}">
+                <c:set var="startPage" value="1" />
+            </c:if>
+            <c:set var="endPage" value="${currentPage + 5}" />
+            <c:if test="${endPage gt pages}">
+                <c:set var="endPage" value="${pages}" />
+            </c:if>
+            <c:if test="${currentPage gt 1}">
+                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${currentPage - 1}" class="btn btn-primary">&lt; Previous</a>
+            </c:if>
+            <c:forEach begin="${startPage}" end="${endPage}" var="pageNumber">
+                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${pageNumber}" class="btn btn-primary ${currentPage eq pageNumber ? 'active' : ''}">${pageNumber}</a>
+            </c:forEach>
+            <c:if test="${currentPage lt pages}">
+                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${currentPage + 1}" class="btn btn-primary">Next &gt;</a>
+            </c:if>
+        </c:otherwise>
+    </c:choose>
+    <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pages}" class="btn btn-primary">Last &gt;&gt;</a>
+</div>
+
+
 
 		</div>
 	</main>

@@ -66,6 +66,7 @@ public class AnimalServlet extends HttpServlet {
 		request.setAttribute("Cido", LocalStrayListUpdateListener.getCidoCodeList());
 		request.setAttribute("currentCido", cidoName);
 		request.setAttribute("localGovernment", localGovernment);
+		request.setAttribute("currentPage", page);
 
 		request.getRequestDispatcher("/local-strays.jsp").forward(request, response);
 	}
