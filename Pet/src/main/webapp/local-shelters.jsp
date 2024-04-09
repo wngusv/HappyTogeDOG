@@ -322,7 +322,7 @@
     	    paginatedShelters.forEach(function(shelter) {
     	        var shelterElement = document.createElement('div');
     	        shelterElement.classList.add('rounded-border');
-    	        shelterElement.innerHTML = '<p class="shelter-name">보호소 이름 : ' + shelter.careNm + '</p>' 
+    	        shelterElement.innerHTML = '<p><img src="images/보호소.png" alt="아이콘" /> 보호소 : ' + shelter.careNm + '</p>' 
     	        + '<p><img src="images/주소.png" alt="아이콘" /> 주소 : ' + shelter.careAddr + '</p>'
     	        + '<p><img src="images/전화.png" alt="아이콘" /> 전화 : ' + shelter.careTel + '</p>';
 				
