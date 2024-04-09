@@ -20,7 +20,7 @@
 }
 </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
 	<div class="container form-container">
 		<h2 class="mb-4">비밀번호 찾기</h2>
 		<form method="post" action="api/findPW" id="findPW-form">

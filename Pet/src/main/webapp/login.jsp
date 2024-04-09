@@ -32,7 +32,7 @@ h2 {
 }
 </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
 	
 	<div class="login-wrapper">
 		<h2>로그인</h2>

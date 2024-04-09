@@ -22,7 +22,7 @@
 }
 </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container">
@@ -100,7 +100,7 @@
 						id="sample6_detailAddress" class="form-control" placeholder="상세주소"
 						name="address_detail">
 				</div>
-				<button type="submit" id="submitBtn" class="btn btn-primary">확인</button>
+				<button type="submit" id="submitBtn" class="btn btn-primary" style="background-color: rgb(111, 94, 75); border-color: rgb(111, 94, 75);">확인</button>
 			</form>
 		</div>
 	</section>
