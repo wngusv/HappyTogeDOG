@@ -1,7 +1,8 @@
-다시 처음부터 할 게. <%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="Util.MyWebContextListener"%>
 <%@page import="java.sql.Connection"%>
+<%@ page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -44,10 +45,11 @@
 		<div class="container">
 			<section class="strays-info">
 				<h2>본인동네 자유게시판(ex.부산진구 자유게시판)</h2>
-				<input type="text" name="find"> <input type="button"
-					value="검색"> <input type="button" value="작성한 글보기"
-					onclick="location.href='boardWrite.jsp';">
-				<%-- 내가 쓴 글 목록들 보여주는 곳으로 이동시키기... --%>
+				 <!-- 검색 폼 -->
+                <form action="board.jsp" method="get">
+                    <input type="text" name="find" value="<%=request.getParameter("find") != null ? request.getParameter("find") : ""%>">
+                    <input type="submit" value="검색">
+                </form>
 				<input type="button" value="글쓰기"
 					onclick="location.href='boardWrite.jsp';">
 
@@ -81,6 +83,7 @@
 					<tbody>
 						<!-- 테이블 데이터 행 -->
 						<%
+						String find = request.getParameter("find"); // 검색 버튼을 눌렀을 때 입력한 문자열
 						int pagee = 1;
 						int pageeSize = 10;
 						if (request.getParameter("pagee") != null) {
@@ -93,10 +96,16 @@
 								+ "LEFT JOIN comment c ON b.idx = c.post_idx AND c.type = '추천' "
 								+ "LEFT JOIN comment_content cc ON b.idx = cc.post_idx ";
 
+						// TODO:검색부분이랑 카테고리 부분 sql 정리하기-------------------------------
+						 if (find != null && !find.isEmpty()) {
+                             sql += "WHERE REPLACE(b.title, ' ', '') LIKE ? ";
+                         }
+						 
 						// categoryFilter 값이 비어있지 않으면 WHERE 절 추가
 						if (categoryFilter != null && !categoryFilter.isEmpty()) {
 							sql += "WHERE b.category = ? ";
 						}
+						// ----------------------------------------------------------------------
 
 						String sort = request.getParameter("sort");
 						String orderBy = "b.postdate DESC"; // 기본 정렬
@@ -112,6 +121,9 @@
 						try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 							int paramIndex = 1;
+							if (find != null && !find.isEmpty()) {
+                                 stmt.setString(paramIndex++, "%" + find.replace(" ", "") + "%");
+                            }
 							// categoryFilter 값이 비어있지 않으면 파라미터 설정
 							if (categoryFilter != null && !categoryFilter.isEmpty()) {
 								stmt.setString(paramIndex++, categoryFilter);
@@ -153,11 +165,17 @@
 				<%
 				// 총 게시물 수 계산하기 위한 쿼리
 				String countSql = "SELECT COUNT(*) FROM board";
+				if (find != null && !find.isEmpty()) {
+                    countSql += " WHERE REPLACE(title, ' ', '') LIKE ?";
+                }
+				
 				if (categoryFilter != null && !categoryFilter.isEmpty()) {
 					countSql += " WHERE category = ?";
 				}
 				try (Connection conn = MyWebContextListener.getConnection(); PreparedStatement stmt = conn.prepareStatement(countSql)) {
-
+					 if (find != null && !find.isEmpty()) {
+                         stmt.setString(1, "%" + find.replace(" ", "") + "%");
+                     }
 					if (categoryFilter != null && !categoryFilter.isEmpty()) {
 						stmt.setString(1, categoryFilter);
 					}
