@@ -13,19 +13,17 @@
 <style>
 /*지역 유기견 보호센터 테두리*/
 .rounded-border {
+	background-color: white;
 	width: 40vw;
 	border-radius: 10px;
-	border: 2px solid #ccc;
+	border: 2px solid rgb(111, 94, 75);
 	margin-right: 0 auto;
 }
 
-.rounded-border:hover {
-	border-color: #007bff; /* 호버 시 테두리 색상 변경 */
-}
 /*지도*/
 #map {
 	position: fixed;
-	border: 2px solid #ccc;
+	border: 2px solid  rgb(111, 94, 75);
 	border-radius: 10px;
 	top: 50%;
 	right: 230px; /* 우측 여백 설정 */
@@ -36,19 +34,34 @@
 
 .map-border {
 	border-radius: 10px; /* 테두리의 둥근 정도를 설정합니다. */
-	border: 1px solid #ccc; /* 테두리의 선 스타일과 색상을 설정합니다. */
+	border: 1px solid  rgb(111, 94, 75); /* 테두리의 선 스타일과 색상을 설정합니다. */
 	overflow: hidden; /* 내용이 넘치는 경우를 방지하기 위해 오버플로 속성을 숨깁니다. */
 }
 
 .region-link {
-	display: inline-block; /* 인라인 블록 요소로 설정하여 수평 정렬 */
-	margin-right: 10px; /* 링크 간격 설정 */
-	text-decoration: none; /* 밑줄 제거 */
-	color: #333; /* 링크 색상 설정 */
+	background-color: yellow;
+	font-size: 15px;
+	border-radius: 10px; /* Rounded border */
+	border: none; /* Remove default border */
+	padding: 5px 11px; /* Padding for button */
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	/* Change font */
+	cursor: pointer; /* Change cursor to pointer on hover */
+	margin: 5px; /* Add margin between buttons */
+	color: black;
+	display: inline-block;
+	/* Hover effect for background color */
+	transition: background-color 0.3s ease;
+	/* Hover effect for transform */
+	transition: transform 0.3s ease;
 }
 
 .region-link:hover {
-	color: #007bff; /* 호버시 색상 변경 */
+	background-color: #ffcc00; /* Change background color on hover */
+	text-decoration: none;
+	color: black;
+	font-size: 18px;
+	transform: scale(1.1);
 }
 
 #region-list {
@@ -57,82 +70,86 @@
 
 .rounded-border {
 	margin-bottom: 10px; /* 푸터와의 간격 설정 */
-	 width: 60%;
+	width: 60%;
 }
 
 .shelter-name {
-	color: gray;	
+	color: gray;
 }
 
 .weekday-hours {
-  padding: 0.25rem 0.5rem; /* px-2 py-1 */
-  border-radius: 0.375rem; /* rounded */
-  color: white; /* text-white */
-  background-color: #60a5fa; /* bg-sky-500, 하늘색 */
-  font-weight: 600; /* font-semibold */
-  font-size: 0.75rem; /* text-xs */
-  display: flex;
-  align-items: center;
-  width: max-content;
-  transition: background-color 0.3s ease; /* transition duration-300 ease */
+	padding: 0.25rem 0.5rem; /* px-2 py-1 */
+	border-radius: 0.375rem; /* rounded */
+	color: white; /* text-white */
+	background-color: #60a5fa; /* bg-sky-500, 하늘색 */
+	font-weight: 600; /* font-semibold */
+	font-size: 0.75rem; /* text-xs */
+	display: flex;
+	align-items: center;
+	width: max-content;
+	transition: background-color 0.3s ease;
+	/* transition duration-300 ease */
 }
 
 .weekday-hours:active {
-  background-color: #d1d5db; /* active:bg-gray-300 */
+	background-color: #d1d5db; /* active:bg-gray-300 */
 }
 
 .weekend-hours {
-  padding: 0.25rem 0.5rem; /* 동일 */
-  border-radius: 0.375rem; /* 동일 */
-  color: white; /* 동일 */
-  background-color: #f87171; /* bg-red-500, 붉은색 */
-  font-weight: 600; /* 동일 */
-  font-size: 0.75rem; /* 동일 */
-  display: flex;
-  align-items: center;
-  width: max-content;
-  transition: background-color 0.3s ease; /* 동일 */
+	padding: 0.25rem 0.5rem; /* 동일 */
+	border-radius: 0.375rem; /* 동일 */
+	color: white; /* 동일 */
+	background-color: #f87171; /* bg-red-500, 붉은색 */
+	font-weight: 600; /* 동일 */
+	font-size: 0.75rem; /* 동일 */
+	display: flex;
+	align-items: center;
+	width: max-content;
+	transition: background-color 0.3s ease; /* 동일 */
 }
 
 .weekend-hours:active {
-  background-color: #d1d5db; /* 동일 */
+	background-color: #d1d5db; /* 동일 */
 }
 
 .close-day {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
-  color: white;
-  background-color: #9ae6b4; /* 연두색 배경 */
-  font-weight: 600;
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  width: max-content;
-  transition: background-color 0.3s ease;
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.375rem;
+	color: white;
+	background-color: #9ae6b4; /* 연두색 배경 */
+	font-weight: 600;
+	font-size: 0.75rem;
+	display: flex;
+	align-items: center;
+	width: max-content;
+	transition: background-color 0.3s ease;
 }
 
 .close-day:active {
-  background-color: #d1d5db;
+	background-color: #d1d5db;
 }
 
 .org-name {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
-  color: white;
-  background-color: #6b7280; /* 살짝 검은 회색 배경 */
-  font-weight: 600;
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  width: max-content;
-  transition: background-color 0.3s ease;
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.375rem;
+	color: white;
+	background-color: #6b7280; /* 살짝 검은 회색 배경 */
+	font-weight: 600;
+	font-size: 0.75rem;
+	display: flex;
+	align-items: center;
+	width: max-content;
+	transition: background-color 0.3s ease;
 }
 
 .org-name:active {
-  background-color: #d1d5db;
+	background-color: #d1d5db;
 }
 
-
+.highlight {
+	border: 2px solid black;
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -146,7 +163,6 @@
 	<main style="margin-bottom: 150px;">
 		<div class="container" style="padding-top: 150px;">
 			<section class="strays-info">
-				<h2>지역 유기견 보호센터</h2>
 				<div id="map-container">
 					<div id="map" style="width: 500px; height: 400px;"></div>
 				</div>
@@ -350,7 +366,7 @@
                 }
     	        
                 var separator = document.createElement('div'); // 구분선을 위한 div 생성
-    	        separator.style.borderTop = "2px solid #ccc"; // 구분선 스타일 적용, 색상과 두께는 조절 가능
+    	        separator.style.borderTop = "2px solid  rgb(111, 94, 75)"; // 구분선 스타일 적용, 색상과 두께는 조절 가능
     	        separator.style.margin = "10px 0"; // 위아래 마진 추가하여 내용과의 간격 조절
     	        							
                 shelterElement.appendChild(separator); // 이제 separator는 올바르게 추가될 수 있습니다.
@@ -427,7 +443,25 @@
          xhr.send('');
       }
 
-      
+      window.onload = function() {
+    	    // 모든 지역 링크에 대한 참조를 가져옵니다.
+    	    var regionLinks = document.querySelectorAll('.region-link');
+    	    
+    	    // 각 링크에 대해 클릭 이벤트 리스너를 설정합니다.
+    	    regionLinks.forEach(function(link) {
+    	        link.addEventListener('click', function(event) {
+    	            event.preventDefault(); // 기본 동작을 방지합니다.
+
+    	            // 모든 링크에서 'highlight' 클래스를 제거합니다.
+    	            regionLinks.forEach(function(otherLink) {
+    	                otherLink.classList.remove('highlight');
+    	            });
+
+    	            // 현재 클릭된 링크에 'highlight' 클래스를 추가합니다.
+    	            this.classList.add('highlight');
+    	        });
+    	    });
+    	};
    </script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
