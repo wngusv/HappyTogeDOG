@@ -181,7 +181,7 @@
 		: ""%>&filterSize=<%=request.getParameter("filterSize") != null ? URLEncoder.encode(request.getParameter("filterSize"), "UTF-8")
 		: ""%>"
 						class="btn btn-primary"
-						style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">급여 높은 순</a>
+						style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">▼ 급여 높은 순</a>
 
 <c:choose>
 						<c:when test="${sessionScope.userId != null}">

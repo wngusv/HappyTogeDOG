@@ -11,6 +11,17 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
+ /* 페이징 버튼의 배경색과 텍스트 색상 변경 */
+        .page-link {
+            background-color: #ffffff; /* 배경색 변경 */
+            color: rgb(111, 94, 66); /* 텍스트 색상 변경 */
+        }
+
+        /* 활성화된 페이징 버튼의 배경색과 텍스트 색상 변경 */
+        .page-item.active .page-link {
+            background-color: rgb(111, 94, 75); /* 활성화된 버튼의 배경색 변경 */
+            color: #ffffff; /* 활성화된 버튼의 텍스트 색상 변경 */
+        }
 /*지역 유기견 보호센터 테두리*/
 .rounded-border {
 	background-color: white;
@@ -159,7 +170,7 @@
 		%>
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
-
+	<body style="background-color: rgb(254, 247, 222);">
 	<main style="margin-bottom: 150px;">
 		<div class="container" style="padding-top: 150px;">
 			<section class="strays-info">
