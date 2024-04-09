@@ -109,6 +109,11 @@
 	color: #007bff;
 	text-decoration: none;
 }
+.customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+.customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+.customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+.customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 </style>
 </head>
 <body style="padding-top: 150px;">
@@ -199,30 +204,36 @@
 		    for (var i = 0; i < places.length; i++) {
 		        (function(place) {
 		            var placePosition = new kakao.maps.LatLng(place.y, place.x);
-		            var marker = addMarker(placePosition);
+		           
+		            var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다
+	                imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+	                imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+		            
+		            // 사용자 정의 마커 이미지를 사용하여 마커를 생성합니다
+		            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+		                marker = new kakao.maps.Marker({
+		                    position: placePosition,
+		                    image: markerImage // 마커이미지 설정
+		                });
+		            marker.setMap(map);
+		            markers.push(marker);
 
-		            var content = '<div class="wrap">'
-		                    + '    <div class="info">'
-		                    + '        <div class="title">'
-		                    + place.place_name
-		                    + '            <div class="close" onclick="closeOverlay(overlay' + i + ')" title="닫기">X</div>'
-		                    + '        </div>'
-		                    + '        <div class="body">'
-		                    + '            <div class="desc">'
-		                    + '                <div class="ellipsis">'
-		                    + place.address_name
-		                    + '</div>'
-		                    + '                <div><a href="' + place.place_url + '" target="_blank" class="link">더보기</a></div>'
-		                    + '            </div>' + '        </div>'
-		                    + '    </div>' + '</div>';
+		            // 커스텀 오버레이의 내용을 장소 이름과 URL을 포함하도록 설정합니다
+		            var content = '<div class="customoverlay">' +
+		                          '    <div class="info">' +
+		                          '        <div class="title">' +
+		                          '            <a href="' + place.place_url + '" target="_blank">' + place.place_name + '</a>' +
+		                          '        </div>' +
+		                          '    </div>' +
+		                          '</div>';
 
+		            // 커스텀 오버레이를 생성합니다
 		            var overlay = new kakao.maps.CustomOverlay({
-		                content : content,
-		                map : map,
-		                position : marker.getPosition()
+		                content: content,
+		                map: map,
+		                position: marker.getPosition(),
+		                yAnchor: 1 // 오버레이가 마커 위에 위치하도록 Y 앵커 값을 조정합니다
 		            });
-
-		            window['overlay' + i] = overlay; // 오버레이를 전역 변수로 저장해 클릭 이벤트에서 접근 가능하게 합니다.
 
 		            bounds.extend(placePosition);
 		        })(places[i]);
