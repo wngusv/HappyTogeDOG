@@ -12,19 +12,22 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
 .container {
-    max-width: 90%;
+	max-width: 90%;
 }
 /* 페이징 버튼의 배경색과 텍스트 색상 변경 */
 .page-link {
 	background-color: #ffffff; /* 배경색 변경 */
 	color: rgb(111, 94, 66); /* 텍스트 색상 변경 */
+	border-color: rgb(222, 226, 230);
 }
 
 /* 활성화된 페이징 버튼의 배경색과 텍스트 색상 변경 */
 .page-item.active .page-link {
-	background-color: rgb(111, 94, 75); /* 활성화된 버튼의 배경색 변경 */
-	color: #ffffff; /* 활성화된 버튼의 텍스트 색상 변경 */
+	background-color: #ffffff; /* 활성화된 버튼의 배경색 변경 */
+	color: rgb(111, 94, 66); /* 활성화된 버튼의 텍스트 색상 변경 */
+	border-color: rgb(222, 226, 230);
 }
+
 /*지역 유기견 보호센터 테두리*/
 .rounded-border {
 	background-color: white;
@@ -40,9 +43,9 @@
 	border: 2px solid rgb(111, 94, 75);
 	border-radius: 10px;
 	top: 50%;
-	right: 230px; /* 우측 여백 설정 */
+	right: 180px; /* 우측 여백 설정 */
 	transform: translateY(-50%);
-	width: 50vw; /* 가로 너비 조절 */
+	width: 80vw; /* 가로 너비 조절 */
 	height: 400px; /* 높이 설정 */
 }
 
@@ -82,8 +85,8 @@
 
 #region-list {
 	margin-bottom: 20px;
-	 width: 100%; /* 또는 충분한 고정 너비 */
-	   overflow: auto; 
+	width: 100%; /* 또는 충분한 고정 너비 */
+	overflow: auto;
 }
 
 .rounded-border {
@@ -165,8 +168,10 @@
 }
 
 .highlight {
-	border: 2px solid black;
-	font-weight: bold;
+	background-color: rgb(255, 144, 61);
+	text-decoration: bold;
+	color: rgb(59, 38, 14);
+	font-size: 15px;
 }
 </style>
 </head>

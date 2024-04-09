@@ -23,6 +23,7 @@
         .page-item.active .page-link {
             background-color: rgb(111, 94, 75); /* 활성화된 버튼의 배경색 변경 */
             color: #ffffff; /* 활성화된 버튼의 텍스트 색상 변경 */
+            border-color: transparent;
         }
     </style>
 	<body style="padding-top: 150px; background-color: rgb(254, 247, 222);"><%
@@ -185,7 +186,7 @@
 
 <c:choose>
 						<c:when test="${sessionScope.userId != null}">
-							<button class="btn btn-primary float-right mb-3"
+							<button class="btn btn-primary float-right mb-3" style="background-color: rgb(235, 111, 98); color: #ffffff; border-color: rgb(235, 111, 98);"
 								onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
 						</c:when>
 						<c:otherwise>
@@ -196,8 +197,8 @@
 					</c:choose>
 </div>
 					<div class="table-responsive">
-						<table class="table table-striped table-bordered"
-						style="background-color: white;">
+						<table class="table table-striped table-bordered fixed-layout-table"
+						style="background-color: white; text-align: center;">
 							<thead
 							style="background-color: rgb(111, 94, 75); color: #ffffff; text-align: center;">
 								<tr>
