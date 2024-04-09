@@ -38,6 +38,29 @@
 	transition: background-color 0.3s ease;
 	transition: transform 0.3s ease;
 }
+.government-button{
+background-color: rgb(205, 173, 129);
+	font-size: 15px;
+	border-radius: 10px; /* Rounded border */
+	border: none; /* Remove default border */
+	padding: 5px 11px; /* Padding for button */
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	/* Change font */
+	cursor: pointer; /* Change cursor to pointer on hover */
+	margin: 5px; /* Add margin between buttons */
+	color: black;
+	display: inline-block;
+	/* Hover effect */
+	transition: background-color 0.3s ease;
+	transition: transform 0.3s ease;
+}
+.government-button:hover {
+	background-color: #ffcc00; /* Change background color on hover */
+	text-decoration: none;
+	color: black;
+	font-size: 18px;
+	transform: scale(1.1);
+}
 
 .row {
 	margin: 120px;
@@ -106,7 +129,7 @@
 				<c:forEach var="government" items="${requestScope.localGovernment}">
 					<a
 						href="/AnimalServlet?cidoName=${ requestScope.currentCido }&orgName=${government.getOrgdownNm()}"
-						class="local-government-button">${government.getOrgdownNm()}</a>
+						class="government-button">${government.getOrgdownNm()}</a>
 				</c:forEach>
 			</div>
 
