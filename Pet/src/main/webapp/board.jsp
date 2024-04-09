@@ -194,11 +194,15 @@
                int totalPosts = rs.getInt(1);
                int totalPages = (int) Math.ceil((double) totalPosts / pageeSize);
 
-               for (int i = 1; i <= totalPages; i++) {
+                 for (int i = 1; i <= totalPages; i++) {
                   if (pagee == i) {
                      out.print("<b>" + i + "</b> "); // 현재 페이지 강조
                   } else {
-                     out.print("<a href='board.jsp?pagee=" + i + "'>" + i + "</a> ");
+                	  String pageLink = "board.jsp?pagee=" + i;
+                	  if (categoryFilter != null && !categoryFilter.isEmpty()) {
+                	      pageLink += "&categoryFilter=" + URLEncoder.encode(categoryFilter, "UTF-8");
+                	  }
+                	  out.print("<a href='" + pageLink + "'>" + i + "</a> ");
                   }
                }
                   }

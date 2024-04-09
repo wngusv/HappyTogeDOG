@@ -20,7 +20,7 @@ header {
     top: 0;
     width: 100%;
     background: rgb(250, 230, 163);
-    color: #fff;
+    color: rgb(0, 0, 0);
     padding: 13px 0;
     z-index: 999; /* 다른 요소들 위에 헤더를 표시하기 위해 z-index 값을 설정합니다. */
 }
