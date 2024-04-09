@@ -15,7 +15,7 @@
 .rounded-border {
 	width: 40vw;
 	border-radius: 10px;
-	border: 1px solid #ccc;
+	border: 2px solid #ccc;
 	margin-right: 0 auto;
 }
 
@@ -323,8 +323,8 @@
     	        var shelterElement = document.createElement('div');
     	        shelterElement.classList.add('rounded-border');
     	        shelterElement.innerHTML = '<p class="shelter-name">보호소 이름 : ' + shelter.careNm + '</p>' 
-    	        + '<p>주소:  <img src="images/강아지비추천.PNG" alt="아이콘" />' + shelter.careAddr + '</p>'
-    	        + '<p>전화번호:  <img src="images/강아지비추천.PNG" alt="아이콘" />' + shelter.careTel + '</p>';
+    	        + '<p><img src="images/주소.png" alt="아이콘" />' + shelter.careAddr + '</p>'
+    	        + '<p><img src="images/전화기.png" alt="아이콘" />' + shelter.careTel + '</p>';
 				
 
     	        var additionalInfoDiv = document.createElement('div');
@@ -334,12 +334,12 @@
     	        additionalInfoDiv.style.alignItems = 'center'; // 내부 요소를 세로 중앙에 정렬
     	        additionalInfoDiv.style.justifyContent = 'center'; // 내부 요소를 가로 중앙에 정렬
     	        additionalInfoDiv.style.gap = '10px';
-    	        additionalInfoDiv.innerHTML = '<p class="org-name">관리기관명: ' + shelter.orgNm + '</p>' +
+    	        additionalInfoDiv.innerHTML = '<p class="org-name">관리기관 : ' + shelter.orgNm + '</p>' +
                 '<p class="weekday-hours">평일 운영시간: ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>';
                 if (shelter.weekendOprStime && shelter.weekendOprEtime) {
-                	additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>';
+                	additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간 : ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>';
                 } else {
-                	additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: 미운영</p>';
+                	additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간 : 미운영</p>';
                 }
 
                 if (shelter.closeDay === 0) {
