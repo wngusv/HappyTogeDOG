@@ -194,50 +194,40 @@
 		}
 
 		function displayPlaces(places) {
-			var bounds = new kakao.maps.LatLngBounds();
-			removeAllMarkers();
-			for (var i = 0; i < places.length; i++) {
-				(function(place) {
-					var placePosition = new kakao.maps.LatLng(place.y, place.x);
-					var marker = addMarker(placePosition);
+		    var bounds = new kakao.maps.LatLngBounds();
+		    removeAllMarkers();
+		    for (var i = 0; i < places.length; i++) {
+		        (function(place) {
+		            var placePosition = new kakao.maps.LatLng(place.y, place.x);
+		            var marker = addMarker(placePosition);
 
-					var content = '<div class="wrap">'
-							+ '    <div class="info">'
-							+ '        <div class="title">'
-							+ '            '
-							+ place.place_name
-							+ '            <div class="close" onclick="closeOverlay(overlay)" title="닫기">X</div>'
-							+ '        </div>'
-							+ '        <div class="body">'
-							+ '            <div class="desc">'
-							+ '                <div class="ellipsis">'
-							+ place.address_name
-							+ '</div>'
-							+ '                <div><a href="' + place.place_url + '" target="_blank" class="link">더보기</a></div>'
-							+ '            </div>' + '        </div>'
-							+ '    </div>' + '</div>';
+		            var content = '<div class="wrap">'
+		                    + '    <div class="info">'
+		                    + '        <div class="title">'
+		                    + place.place_name
+		                    + '            <div class="close" onclick="closeOverlay(overlay' + i + ')" title="닫기">X</div>'
+		                    + '        </div>'
+		                    + '        <div class="body">'
+		                    + '            <div class="desc">'
+		                    + '                <div class="ellipsis">'
+		                    + place.address_name
+		                    + '</div>'
+		                    + '                <div><a href="' + place.place_url + '" target="_blank" class="link">더보기</a></div>'
+		                    + '            </div>' + '        </div>'
+		                    + '    </div>' + '</div>';
 
-					var overlay = new kakao.maps.CustomOverlay({
-						content : content,
-						map : null,
-						position : marker.getPosition()
-					});
+		            var overlay = new kakao.maps.CustomOverlay({
+		                content : content,
+		                map : map,
+		                position : marker.getPosition()
+		            });
 
-					// 닫기 버튼의 onclick 이벤트에서 overlay를 인자로 전달합니다.
-					content = content.replace('closeOverlay(overlay)',
-							'closeOverlay(overlay' + i + ')');
-					overlay.setContent(content);
+		            window['overlay' + i] = overlay; // 오버레이를 전역 변수로 저장해 클릭 이벤트에서 접근 가능하게 합니다.
 
-					window['overlay' + i] = overlay;
-
-					kakao.maps.event.addListener(marker, 'click', function() {
-						overlay.setMap(map);
-					});
-
-					bounds.extend(placePosition);
-				})(places[i]);
-			}
-			map.setBounds(bounds);
+		            bounds.extend(placePosition);
+		        })(places[i]);
+		    }
+		    map.setBounds(bounds);
 		}
 
 		function addMarker(position) {
@@ -264,7 +254,6 @@
 		            var locPosition = new kakao.maps.LatLng(lat, lon);
 		            map.setCenter(locPosition);
 		            addMarker(locPosition);
-		            displayMarker(locPosition, '<div style="padding:5px;">내위치</div>'); // 위치 정보가 확인되면 인포윈도우를 엽니다.
 		        }, function(error) {
 		            console.error("Geolocation access is denied.");
 		            var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
