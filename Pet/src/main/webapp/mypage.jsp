@@ -73,6 +73,50 @@
         </table>
     </div>
     <div>
+        <h2>내가 쓴 게시글</h2>
+        <table  border="1">
+        	<tr>
+                <th>카테고리</th>
+                <th>제목</th>
+                <th>날짜</th>
+                <th>삭제</th>
+            </tr>
+            <%
+            	String boardReadingSql = "SELECT * FROM board WHERE id = '" + userId + "' ORDER BY postdate DESC";
+            	
+            try(ResultSet boardReadingRs = stmt.executeQuery(boardReadingSql);){
+            	 while (boardReadingRs.next()){
+            		 String category =  boardReadingRs.getString("category");
+            		 String title =  boardReadingRs.getString("title");
+            		 String postdate =  boardReadingRs.getString("postdate");
+            		 int idx =  boardReadingRs.getInt("idx");
+            				 %>
+            				  <tr>
+                <td><a href="/mypage/ViewPost.jsp?postId=<%= idx %>"><%= category %></a></td>
+                <td><%= title %></td>
+                <td><a href="/mypage/EditPost.jsp?postId=<%= idx %>"><%= postdate %></a></td>
+                <td><a href="#" onclick="confirmDelete('<%= idx %>')">삭제</a></td>
+
+<script>
+    function confirmDelete(postId) {
+        var confirmResult = confirm("정말로 삭제하시겠습니까?");
+        if (confirmResult) {
+            window.location.href = "/mypage/DeletePost.jsp?postId=" + postId;
+        }
+    }
+</script>
+            </tr>
+            				 
+            				 
+            				 
+            				 <%
+            				 
+            	 }
+            }
+            %>
+        </table>
+    </div>
+    <div>
         <h2>내 채팅방 보기</h2>
     </div>
     <% 
