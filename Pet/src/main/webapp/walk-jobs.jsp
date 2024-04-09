@@ -12,8 +12,7 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<body style="padding-top: 150px;">
-
+<body style="padding-top: 150px; background-color: rgb(254, 247, 222);">
 		<%
 		request.setAttribute("pageTitle", "산책 아르바이트");
 		%>
@@ -76,13 +75,13 @@
     </select>
 </div>
 							 <div class="form-group col-md-2">
-                                <button type="submit" class="btn btn-primary mt-4">검색</button>
+                                <button type="submit" class="btn btn-primary mt-4"  style="background-color: rgb(235, 111, 98); color: #ffffff; border-color: rgb(235, 111, 98);">검색</button>
                             </div>
 						</div>
 					</form>
  <div class="text-right mb-3">
     <!-- 급여가 높은 순으로 정렬하는 버튼, 필터 조건을 URL에 추가 -->
-    <a href="walk-jobs.jsp?sortBy=pay&filterLocation=<%=request.getParameter("filterLocation") != null ? URLEncoder.encode(request.getParameter("filterLocation"), "UTF-8") : ""%>&filterDay=<%=request.getParameter("filterDay") != null ? URLEncoder.encode(request.getParameter("filterDay"), "UTF-8") : ""%>&filterTime=<%=request.getParameter("filterTime") != null ? URLEncoder.encode(request.getParameter("filterTime"), "UTF-8") : ""%>&filterSize=<%=request.getParameter("filterSize") != null ? URLEncoder.encode(request.getParameter("filterSize"), "UTF-8") : ""%>" class="btn btn-primary">급여 높은 순</a>
+    <a href="walk-jobs.jsp?sortBy=pay&filterLocation=<%=request.getParameter("filterLocation") != null ? URLEncoder.encode(request.getParameter("filterLocation"), "UTF-8") : ""%>&filterDay=<%=request.getParameter("filterDay") != null ? URLEncoder.encode(request.getParameter("filterDay"), "UTF-8") : ""%>&filterTime=<%=request.getParameter("filterTime") != null ? URLEncoder.encode(request.getParameter("filterTime"), "UTF-8") : ""%>&filterSize=<%=request.getParameter("filterSize") != null ? URLEncoder.encode(request.getParameter("filterSize"), "UTF-8") : ""%>" class="btn btn-primary" style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">급여 높은 순</a>
 
 <c:choose>
 						<c:when test="${sessionScope.userId != null}">
@@ -90,14 +89,14 @@
 								onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
 						</c:when>
 						<c:otherwise>
-							<button class="btn btn-primary float-right mb-3"
+							<button class="btn btn-primary float-right mb-3" style="background-color: rgb(235, 111, 98); color: #ffffff; border-color: rgb(235, 111, 98);"
 								onclick="alert('로그인 후 이용해주세요.'); location.href='login.jsp'">글쓰기</button>
 						</c:otherwise>
 					</c:choose>
 </div>
 					<div class="table-responsive">
-						<table class="table table-striped table-bordered">
-							<thead class="thead-dark">
+						<table class="table table-striped table-bordered" style="background-color: white;">
+							<thead style="background-color: rgb(10, 133, 233); color: #ffffff;" >
 								<tr>
 									<th>번호</th>
 									<th>근무지</th>
