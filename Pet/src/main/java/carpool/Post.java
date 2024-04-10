@@ -12,4 +12,6 @@ public class Post {
 	private String userId; // 작성자 ID
 	private String createdAt; // 생성 시간
 	private String mapstate;
+	private String startAddress;
+	private String endAddress;
 }
