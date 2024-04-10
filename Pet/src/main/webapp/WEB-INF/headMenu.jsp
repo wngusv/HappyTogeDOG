@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>도기도기</title>
+<title>HappyTogeDog</title>
 <style>
     body {
         margin: 0;
