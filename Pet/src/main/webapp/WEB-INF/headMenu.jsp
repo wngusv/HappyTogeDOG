@@ -17,15 +17,17 @@
         justify-content: space-between;
         align-items: center;
         background-color: rgb(250, 230, 163);
-        padding: 10px 50px;
+        padding: 3px 50px;
     }
     .nav-menu, .navbar-nav {
         display: flex;
-        list-style: none;
         padding: 0;
+        margin-top: 13px;
     }
     .nav-menu li, .navbar-nav li {
         padding: 0 20px;
+        list-style: none;
+        
     }
     .nav-menu li a, .navbar-nav li a {
         text-decoration: none;
@@ -42,25 +44,34 @@
         color: rgb(255, 144, 61); /* 활성화된 메뉴의 색상 설정 */
     }
     . login {
-    font-size: 14px; /* 선택된 메뉴와 다른 글자 크기 설정 */
+    margin-top: 10px;
+    font-size: 16px; /* 선택된 메뉴와 다른 글자 크기 설정 */
         font-weight: normal; /* bold체 해제 */
+        list-style-type : none;
     }
     /* 별도 클래스 추가 */
     .user-info a, .user-info span,
     .user-info img {
-        font-size: 14px; /* 선택된 메뉴와 다른 글자 크기 설정 */
+        font-size: 16px; /* 선택된 메뉴와 다른 글자 크기 설정 */
         font-weight: normal; /* bold체 해제 */
+        list-style-type : none;
     }
 
     .user-info img {
         width: 25px; /* 이미지 크기 조정 */
         height: 25px;
         vertical-align: middle;
+        list-style: none;
     }
 
     .nav-menu li a:hover, .navbar-nav li a:hover,
     .nav-menu li a:focus, .navbar-nav li a:focus {
         color: rgb(255, 144, 61);
+    }
+    
+    li {
+        margin: 5px 0;
+        list-style: none;
     }
     #username-container {
         padding-right: 20px;
@@ -104,14 +115,14 @@
     <ul class="login">
         <c:choose>
             <c:when test="${sessionScope.userId != null}">
-                <li id="username-container" class="user-info"><span id="username-greeting"><img src="/images/헬로.png" alt="마이페이지">안녕하세요, ${sessionScope.userName}님!</span></li>
-                <li><a id="logout-button" href="./api/logout"><img src="/images/로그아웃ㄴ.png" alt="마이페이지">로그아웃</a></li>
-                <li><a href="mypage.jsp"><img src="/images/마이페이지.png" alt="마이페이지">마이페이지</a></li>
+                <li id="username-container" class="user-info" style ="list-style: none;"><span id="username-greeting"><img src="/images/헬로5.png" alt="마이페이지">ㅤ안녕하세요, ${sessionScope.userName}님!</span></li>
+                <li style ="list-style: none;"><a href="mypage.jsp"><img src="/images/마이페이지4.png" alt="마이페이지">ㅤ마이페이지</a></li>
+                <li style ="list-style: none;"><a id="logout-button" href="./api/logout"><img src="/images/로그아웃3.png" alt="로그아웃">ㅤ로그아웃</a></li>
 
             </c:when>
             <c:otherwise>
-                <li><a id="login-button" href="login.jsp"><img src="/images/로그인.png" alt="마이페이지">  로그인</a>
-                <a id="signup-button" href="signupform.jsp"><img src="/images/회원가입.png" alt="마이페이지">  회원가입</a></li>
+                <li style ="list-style: none;"><a id="login-button" href="login.jsp"><img src="/images/로그인3.png" alt="로그인">ㅤ로그인</a></li>
+                <li style ="list-style: none;"><a id="signup-button" href="signupform.jsp"><img src="/images/회원가입3.png" alt="회원가입">ㅤ회원가입</a></li>
             </c:otherwise>
         </c:choose>
     </ul>
