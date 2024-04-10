@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ include file="/floating-banner.jsp" %>
+<%@ include file="/floating-banner.jsp"%>
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +8,8 @@
 <meta charset="UTF-8">
 <title>경로 따라 지도에 선 그리기 및 장소 검색</title>
 <link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
 #postForm {
 	margin: 20px auto; /* 수평 가운데 정렬 */
@@ -50,11 +51,10 @@
 }
 
 #map {
-	width: 60%; 
+	width: 60%;
 	height: 400px;
 	border: 2px solid rgb(111, 94, 75);
 	border-radius: 10px;
-	
 }
 
 .map_wrap, .map_wrap * {
@@ -274,10 +274,13 @@
 			<div>
 				출발지 : <input type="text" id="startInput" size="15">
 				<button onclick="searchPlaces('start')">검색</button>
+				<input type="hidden" id="startRoadInput" name="startRoadAddress" />
 			</div>
 			<div>
 				도착지 : <input type="text" id="endInput" size="15">
 				<button onclick="searchPlaces('end')">검색</button>
+				<input type="hidden" id="endRoadInput" name="endRoadAddress" />
+
 				<button onclick="getCarDirection()">경로 찾기</button>
 				<button onclick="resetMap()">초기화</button>
 			</div>
@@ -405,59 +408,72 @@
 				map.setBounds(bounds);
 			}
 
-			function selectPlace(position, title, type) {
-				var inputId = type === 'start' ? 'startInput' : 'endInput';
-				document.getElementById(inputId).value = title; // 입력란에 타이틀 표시
+			function selectPlace(position, title, type, roadAddress) {
+			    console.log("Selected Road Address:", roadAddress); // 함수에 전달된 도로명 주소 로깅
+			    var inputId = type === 'start' ? 'startInput' : 'endInput';
+			    var roadInputId = type === 'start' ? 'startRoadInput' : 'endRoadInput'; // 도로명 주소 입력 필드 ID
 
-				// 이미 정의된 마커 이미지를 바탕으로 적절한 이미지 선택
-				var markerImage = type === 'start' ? startMarkerImage : endMarkerImage;
+			    document.getElementById(inputId).value = title; // 입력란에 타이틀 표시
+			    document.getElementById(roadInputId).value = roadAddress || ''; // 도로명 주소 입력 필드에 도로명 주소 할당
 
-				// 기존 마커가 있으면 지도에서 제거
-				if (type === 'start' && startMarker) startMarker.setMap(null);
-				if (type === 'end' && endMarker) endMarker.setMap(null);
+			    // 이미 정의된 마커 이미지를 바탕으로 적절한 이미지 선택
+			    var markerImage = type === 'start' ? startMarkerImage : endMarkerImage;
 
-				// 새 마커 생성
-				var marker = new kakao.maps.Marker({
-					map: map,
-					position: position,
-					image: markerImage // 마커 이미지 설정
-				});
+			    // 기존 마커가 있으면 지도에서 제거
+			    if (type === 'start' && startMarker) startMarker.setMap(null);
+			    if (type === 'end' && endMarker) endMarker.setMap(null);
 
-				// 전역 변수에 마커와 위치 정보 저장
-				if (type === 'start') {
-					startMarker = marker;
-					startPoint = { lat: position.getLat(), lng: position.getLng() };
-				} else {
-					endMarker = marker;
-					endPoint = { lat: position.getLat(), lng: position.getLng() };
-				}
+			    // 새 마커 생성
+			    var marker = new kakao.maps.Marker({
+			        map: map,
+			        position: position,
+			        image: markerImage // 마커 이미지 설정
+			    });
+
+			    // 전역 변수에 마커와 위치 정보 저장
+			    if (type === 'start') {
+			        startMarker = marker;
+			        startPoint = { lat: position.getLat(), lng: position.getLng() };
+			    } else {
+			        endMarker = marker;
+			        endPoint = { lat: position.getLat(), lng: position.getLng() };
+			    }
 			}
+
 
 
 
 
 			function getListItem(index, places) {
+			    var el = document.createElement('li'),
+			        itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+			            '<div class="info">' +
+			            '   <h5>' + places.place_name + '</h5>';
 
-				var el = document.createElement('li'),
-					itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
-						'<div class="info">' +
-						'   <h5>' + places.place_name + '</h5>';
+			    // 도로명 주소가 있는 경우와 없는 경우 처리
+			    var roadAddress = places.road_address_name || '';
+			    if (roadAddress) {
+			        itemStr += '    <span>' + roadAddress + '</span>' +
+			            '   <span class="jibun gray">' + places.address_name + '</span>';
+			    } else {
+			        itemStr += '    <span>' + places.address_name + '</span>';
+			    }
 
-				if (places.road_address_name) {
-					itemStr += '    <span>' + places.road_address_name + '</span>' +
-						'   <span class="jibun gray">' + places.address_name + '</span>';
-				} else {
-					itemStr += '    <span>' + places.address_name + '</span>';
-				}
+			    itemStr += '  <span class="tel">' + places.phone + '</span>' +
+			        '</div>';
 
-				itemStr += '  <span class="tel">' + places.phone + '</span>' +
-					'</div>';
+			    el.innerHTML = itemStr;
+			    el.className = 'item';
 
-				el.innerHTML = itemStr;
-				el.className = 'item';
+			    // 클릭 이벤트 리스너 추가
+			    el.onclick = function () {
+			        console.log("Road Address:", roadAddress); // 도로명 주소 로깅
+			        selectPlace(new kakao.maps.LatLng(places.y, places.x), places.place_name, currentSearchType, roadAddress); // 수정된 도로명 주소 전달
+			    };
 
-				return el;
+			    return el;
 			}
+
 
 			function addMarker(position, idx, title) {
 				var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
@@ -624,6 +640,10 @@
 			}
 
 			function submitPost() {
+				 var startRoadInput = document.getElementById('startRoadInput').value;
+				    var endRoadInput = document.getElementById('endRoadInput').value;
+				var startInput = document.getElementById('startInput').value;
+				var endInput = document.getElementById('endInput').value;
 				var title = document.getElementById('title').value;
 				var content = document.getElementById('content').value;
 				var mapState = getMapState(); // 지도 상태 수집
@@ -636,6 +656,10 @@
 					},
 					body: JSON.stringify({
 						title: title,
+						startInput: startInput,
+						endInput: endInput,
+						 startRoadInput: startRoadInput,
+					        endRoadInput: endRoadInput,
 						content: content,
 						mapstate: mapState,
 						userId: userId
