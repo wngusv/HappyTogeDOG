@@ -7,7 +7,7 @@
     /* Floating Banner CSS */
     #floating-banner {
         position: fixed; /* Fixed position to float on the screen */
-        top: 150px; /* Distance from the bottom */
+        top: 170px; /* Distance from the bottom */
         right: 20px; /* Distance from the right */
         background-color: transparent; /* Banner background color */
         color: white; /* Text color */
