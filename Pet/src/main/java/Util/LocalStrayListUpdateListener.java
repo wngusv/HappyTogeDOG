@@ -9,16 +9,20 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import LocalSite.CidoCode;
+import LocalSite.CidoCodeJsonParser;
 import LocalSite.LocalGovernment;
 import LocalSite.LocalGovernmentJsonParser;
 import LocalStrays.Animal;
@@ -32,7 +36,9 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 	private static List<Animal> allAnimalList;
 	private static List<Animal> noticeAnimalList;
 	private static List<Animal> protectAnimalList;
-	
+
+	private static List<CidoCode> CidoCodeList;
+
 	private static List<LocalGovernment> localGovernmentList;
 
 	@Override
@@ -57,24 +63,25 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 
 	private static void updateData() {
 		try {
+
+			CidoCodeList = makeCidoCodeList();
+			localGovernmentList = makeLocalGovernmentList(CidoCodeList);
+
 			if (allAnimalList == null) {
-	            allAnimalList = new ArrayList<>();
-	        }
-			noticeAnimalList = makeNoticeAnimalList();
-			protectAnimalList = makeProtectAnimalList();
+				allAnimalList = new ArrayList<>();
+			}
+
+			noticeAnimalList = makeNoticeAnimalList(CidoCodeList);
+			protectAnimalList = makeProtectAnimalList(CidoCodeList);
 			allAnimalList.addAll(noticeAnimalList);
 			allAnimalList.addAll(protectAnimalList);
-			
-			localGovernmentList = makeLocalGovernmentList();
 //			sortAnimalList(allAnimalList);
-			
+
 			System.out.println("AllAnimalUpdate");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-
 
 //	private static void sortAnimalList(List<Animal> allAnimalList) {
 //	    // 오늘 날짜 String 형태로 설정
@@ -89,84 +96,92 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 //	    }
 //	}
 
-
-	public static List<Animal> makeNoticeAnimalList()
+	public static List<Animal> makeNoticeAnimalList(List<CidoCode> cidoCodeList2)
 			throws UnsupportedEncodingException, MalformedURLException, IOException, ProtocolException {
-		StringBuilder urlBuilder = new StringBuilder(
-				"http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic"); /* URL */
-		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY); /* Service Key */
-		appendItem(urlBuilder, "upr_cd", BUSAN_CODE); // 시도코드 (시도 조회 OPEN API 참조)
+		List<Animal> allNoticeAnimalList = new ArrayList<>();
+		for (CidoCode local : cidoCodeList2) {
+			StringBuilder urlBuilder = new StringBuilder(
+					"http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic"); /* URL */
+			urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY); /* Service Key */
+			appendItem(urlBuilder, "upr_cd", local.getOrgCd()); // 시도코드 (시도 조회 OPEN API 참조)
 //		appendItem(urlBuilder,"bgnde"," "); /* 유기날짜(검색 시작일) (YYYYMMDD) */
 //		appendItem(urlBuilder,"endde"," "); /* 유기날짜(검색 종료일) (YYYYMMDD) */
 //		appendItem(urlBuilder,"upkind"," "); /* 축종코드 (개 : 417000, 고양이 : 422400, 기타 : 429900) */
 //		appendItem(urlBuilder,"kind"," "); /* 품종코드 (품종 조회 OPEN API 참조) */
 //		appendItem(urlBuilder,"org_cd"," "); /* 시군구코드 (시군구 조회 OPEN API 참조) */
 //		appendItem(urlBuilder,"care_reg_no"," "); /* 보호소번호 (보호소 조회 OPEN API 참조) */
-		appendItem(urlBuilder,"state","notice"); /* 상태(전체 : null(빈값), 공고중 : notice, 보호중 : protect) */
+			appendItem(urlBuilder, "state", "notice"); /* 상태(전체 : null(빈값), 공고중 : notice, 보호중 : protect) */
 //		appendItem(urlBuilder,"neuter_yn"," "); /* 상태 (전체 : null(빈값), 예 : Y, 아니오 : N, 미상 : U) */
-		appendItem(urlBuilder, "pageNo", "1"); // 페이지 번호 (기본값 : 1)
-		appendItem(urlBuilder, "numOfRows", "1000"); // 페이지당 보여줄 개수 (1,000 이하), 기본값 : 10
-		appendItem(urlBuilder, "_type", "json"); // xml(기본값) 또는 json
-		URL url = new URL(urlBuilder.toString());
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
-		BufferedReader rd;
-		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-		}
-		StringBuilder jsonData = new StringBuilder();
-		String line;
-		while ((line = rd.readLine()) != null) {
-			jsonData.append(line);
-		}
-		rd.close();
-		conn.disconnect();
+			appendItem(urlBuilder, "pageNo", "1"); // 페이지 번호 (기본값 : 1)
+			appendItem(urlBuilder, "numOfRows", "1000"); // 페이지당 보여줄 개수 (1,000 이하), 기본값 : 10
+			appendItem(urlBuilder, "_type", "json"); // xml(기본값) 또는 json
+			URL url = new URL(urlBuilder.toString());
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-type", "application/json");
+			BufferedReader rd;
+			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else {
+				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			}
+			StringBuilder jsonData = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				jsonData.append(line);
+			}
+			rd.close();
+			conn.disconnect();
 
-		List<Animal> animalList = AnimalResponseParser.parseJsonResponse(jsonData.toString());
-		return animalList;
+			allNoticeAnimalList.addAll(AnimalResponseParser.parseJsonResponse(jsonData.toString()));
+		}
+		return allNoticeAnimalList;
 	}
-	public static List<Animal> makeProtectAnimalList()
-			throws UnsupportedEncodingException, MalformedURLException, IOException, ProtocolException {
-		StringBuilder urlBuilder = new StringBuilder(
-				"http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic"); /* URL */
-		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY); /* Service Key */
-		appendItem(urlBuilder, "upr_cd", BUSAN_CODE); // 시도코드 (시도 조회 OPEN API 참조)
-//		appendItem(urlBuilder,"bgnde"," "); /* 유기날짜(검색 시작일) (YYYYMMDD) */
-//		appendItem(urlBuilder,"endde"," "); /* 유기날짜(검색 종료일) (YYYYMMDD) */
-//		appendItem(urlBuilder,"upkind"," "); /* 축종코드 (개 : 417000, 고양이 : 422400, 기타 : 429900) */
-//		appendItem(urlBuilder,"kind"," "); /* 품종코드 (품종 조회 OPEN API 참조) */
-//		appendItem(urlBuilder,"org_cd"," "); /* 시군구코드 (시군구 조회 OPEN API 참조) */
-//		appendItem(urlBuilder,"care_reg_no"," "); /* 보호소번호 (보호소 조회 OPEN API 참조) */
-		appendItem(urlBuilder,"state","protect"); /* 상태(전체 : null(빈값), 공고중 : notice, 보호중 : protect) */
-//		appendItem(urlBuilder,"neuter_yn"," "); /* 상태 (전체 : null(빈값), 예 : Y, 아니오 : N, 미상 : U) */
-		appendItem(urlBuilder, "pageNo", "1"); // 페이지 번호 (기본값 : 1)
-		appendItem(urlBuilder, "numOfRows", "1000"); // 페이지당 보여줄 개수 (1,000 이하), 기본값 : 10
-		appendItem(urlBuilder, "_type", "json"); // xml(기본값) 또는 json
-		URL url = new URL(urlBuilder.toString());
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
-		BufferedReader rd;
-		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-		}
-		StringBuilder jsonData = new StringBuilder();
-		String line;
-		while ((line = rd.readLine()) != null) {
-			jsonData.append(line);
-		}
-		rd.close();
-		conn.disconnect();
 
-		List<Animal> animalList = AnimalResponseParser.parseJsonResponse(jsonData.toString());
-		return animalList;
+	public static List<Animal> makeProtectAnimalList(List<CidoCode> cidoCodeList2)
+			throws UnsupportedEncodingException, MalformedURLException, IOException, ProtocolException {
+		List<Animal> allProtectAnimalList = Collections.synchronizedList(new CopyOnWriteArrayList<>());
+		cidoCodeList2.parallelStream().forEach(cido -> {
+			try {
+				StringBuilder urlBuilder = new StringBuilder(
+						"http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic"); /* URL */
+				urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY); /* Service Key */
+				appendItem(urlBuilder, "upr_cd", cido.getOrgCd()); // 시도코드 (시도 조회 OPEN API 참조)
+//				appendItem(urlBuilder,"bgnde"," "); /* 유기날짜(검색 시작일) (YYYYMMDD) */
+//				appendItem(urlBuilder,"endde"," "); /* 유기날짜(검색 종료일) (YYYYMMDD) */
+//				appendItem(urlBuilder,"upkind"," "); /* 축종코드 (개 : 417000, 고양이 : 422400, 기타 : 429900) */
+//				appendItem(urlBuilder,"kind"," "); /* 품종코드 (품종 조회 OPEN API 참조) */
+//				appendItem(urlBuilder,"org_cd"," "); /* 시군구코드 (시군구 조회 OPEN API 참조) */
+//				appendItem(urlBuilder,"care_reg_no"," "); /* 보호소번호 (보호소 조회 OPEN API 참조) */
+				appendItem(urlBuilder, "state", "protect"); /* 상태(전체 : null(빈값), 공고중 : notice, 보호중 : protect) */
+//				appendItem(urlBuilder,"neuter_yn"," "); /* 상태 (전체 : null(빈값), 예 : Y, 아니오 : N, 미상 : U) */
+				appendItem(urlBuilder, "pageNo", "1"); // 페이지 번호 (기본값 : 1)
+				appendItem(urlBuilder, "numOfRows", "1000"); // 페이지당 보여줄 개수 (1,000 이하), 기본값 : 10
+				appendItem(urlBuilder, "_type", "json"); // xml(기본값) 또는 json
+				URL url = new URL(urlBuilder.toString());
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("GET");
+				conn.setRequestProperty("Content-type", "application/json");
+				BufferedReader rd;
+				if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+					rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				} else {
+					rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+				}
+				StringBuilder jsonData = new StringBuilder();
+				String line;
+				while ((line = rd.readLine()) != null) {
+					jsonData.append(line);
+				}
+				rd.close();
+				conn.disconnect();
+
+				allProtectAnimalList.addAll(AnimalResponseParser.parseJsonResponse(jsonData.toString()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+		return allProtectAnimalList;
 	}
 
 	private static void appendItem(StringBuilder urlBuilder, String item, String value)
@@ -175,13 +190,45 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 				+ URLEncoder.encode(value, "UTF-8")); /* 시도코드 (시도 조회 OPEN API 참조) */
 	}
 
-	public static List<LocalGovernment> makeLocalGovernmentList()
+	public static List<LocalGovernment> makeLocalGovernmentList(List<CidoCode> cidoCodeList2)
 			throws UnsupportedEncodingException, MalformedURLException, IOException, ProtocolException {
-		StringBuilder urlBuilder = new StringBuilder(
-				"http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sigungu"); /* URL */
-		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY); /* Service Key */
-		appendItem(urlBuilder, "upr_cd", BUSAN_CODE); // 시군구 상위코드(시도코드) (입력 시 데이터 O, 미입력 시 데이터 X)
-		appendItem(urlBuilder, "_type", "json"); // xml(기본값) 또는 json
+
+		List<LocalGovernment> allLocalGovernment = Collections.synchronizedList(new CopyOnWriteArrayList<>());
+		cidoCodeList2.parallelStream().forEach(cido -> {
+			try {
+				StringBuilder urlBuilder = new StringBuilder(
+						"http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sigungu");
+				urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY);
+				appendItem(urlBuilder, "upr_cd", cido.getOrgCd());
+				appendItem(urlBuilder, "_type", "json");
+				URL url = new URL(urlBuilder.toString());
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("GET");
+				conn.setRequestProperty("Content-type", "application/json");
+				if (conn.getResponseCode() != 200) {
+					throw new RuntimeException("HTTP error code: " + conn.getResponseCode());
+				}
+				BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				StringBuilder responseContent = new StringBuilder();
+				String line;
+				while ((line = rd.readLine()) != null) {
+					responseContent.append(line);
+				}
+				rd.close();
+				conn.disconnect();
+				allLocalGovernment.addAll(LocalGovernmentJsonParser.parseJsonResponse(responseContent.toString()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+		return allLocalGovernment;
+	}
+
+	public static List<CidoCode> makeCidoCodeList() throws IOException {
+		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido");
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY);
+		appendItem(urlBuilder, "numOfRows", "30");
+		appendItem(urlBuilder, "_type", "json");
 		URL url = new URL(urlBuilder.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
@@ -197,24 +244,42 @@ public class LocalStrayListUpdateListener implements ServletContextListener {
 		}
 		rd.close();
 		conn.disconnect();
-		return LocalGovernmentJsonParser.parseJsonResponse(responseContent.toString());
+		return CidoCodeJsonParser.parseJsonResponse(responseContent.toString());
+
 	}
-	
+
 	public static boolean checkLocalGovernmentList(String locate) {
-		for(LocalGovernment LGL : localGovernmentList) {
-			if(LGL.getOrgdownNm().equals(locate)) {
+		for (LocalGovernment LGL : localGovernmentList) {
+			if (locate.contains(LGL.getOrgdownNm())) {
 				return true;
 			}
 		}
 		return false;
-		
+
 	}
 
 	public static List<Animal> getAllAnimalList() {
 		return allAnimalList;
 	}
 
+	public static List<CidoCode> getCidoCodeList() {
+		return CidoCodeList;
+	}
+
+	public static void setCidoCodeList(List<CidoCode> cidoCodeList) {
+		CidoCodeList = cidoCodeList;
+	}
+
 	public static List<LocalGovernment> getLocalGovernmentList() {
 		return localGovernmentList;
+	}
+
+	public static boolean checkCidoList(String cidoCode) {
+		for( CidoCode Cido : CidoCodeList) {
+			if (cidoCode.contains(Cido.getOrgdownNm())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

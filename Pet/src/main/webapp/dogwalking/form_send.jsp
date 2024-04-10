@@ -1,11 +1,9 @@
-
 <%@ page import="java.sql.*, Util.MyWebContextListener" %>
 <%@page import="java.io.File"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 
 <%
 String insertQuery = "INSERT INTO pet.dogwalker(num, id, title, size, day, time, address, address_detail, pay, content, today_date, fileName1, fileRealName1, file_route1, fileName2, fileRealName2, file_route2 ,fileName3, fileRealName3, file_route3, fileName4, fileRealName4, file_route4, fileName5, fileRealName5, file_route5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -18,7 +16,8 @@ try (Connection connection = MyWebContextListener.getConnection();
     int num = 0;
 
     // 파일 업로드 디렉토리 확인 및 생성
-    String uploadDir = application.getRealPath("/uploads");
+    String fileUploadPath = getServletContext().getInitParameter("fileUploadPath");
+    String uploadDir = fileUploadPath;
     File uploadDirFile = new File(uploadDir);
     if (!uploadDirFile.exists()) {
         uploadDirFile.mkdirs(); // 디렉토리가 존재하지 않으면 생성
@@ -57,24 +56,24 @@ try (Connection connection = MyWebContextListener.getConnection();
     
     String fileName1 = multipartRequest.getOriginalFileName("dogPhoto1");
     String fileRealName1 = multipartRequest.getFilesystemName("dogPhoto1");
-    String file_route1 = "/uploads/" + fileRealName1; // 상대 경로 저장
+    String file_route1 = fileUploadPath + fileRealName1; 
     
     String fileName2 = multipartRequest.getOriginalFileName("dogPhoto2");
     String fileRealName2 = multipartRequest.getFilesystemName("dogPhoto2");
-    String file_route2 = "/uploads/" + fileRealName2; // 상대 경로 저장
+    String file_route2 = fileUploadPath + fileRealName2; 
     
     String fileName3 = multipartRequest.getOriginalFileName("dogPhoto3");
     String fileRealName3 = multipartRequest.getFilesystemName("dogPhoto3");
-    String file_route3 = "/uploads/" + fileRealName3; // 상대 경로 저장
+    String file_route3 = fileUploadPath + fileRealName3; 
     
     String fileName4 = multipartRequest.getOriginalFileName("dogPhoto4");
     String fileRealName4 = multipartRequest.getFilesystemName("dogPhoto4");
-    String file_route4 = "/uploads/" + fileRealName4; // 상대 경로 저장
+    String file_route4 = fileUploadPath + fileRealName4; 
     
     String fileName5 = multipartRequest.getOriginalFileName("dogPhoto5");
     String fileRealName5 = multipartRequest.getFilesystemName("dogPhoto5");
-    String file_route5 = "/uploads/" + fileRealName5; // 상대 경로 저장
-
+    String file_route5 = fileUploadPath + fileRealName5; 
+    
     // DB 연결 및 SQL 쿼리 실행
     
     

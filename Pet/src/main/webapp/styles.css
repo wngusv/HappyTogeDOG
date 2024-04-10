@@ -1,8 +1,13 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500; /* Medium 굵기 */
 }
+
+.navbar-brand, .navbar-nav .nav-link, .menu ul li a {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500; /* Medium 굵기 */
+}
+
 
 .container {
     width: 80%;
@@ -14,8 +19,8 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
-    background: #333;
-    color: #fff;
+    background: rgb(250, 230, 163);
+    color: rgb(0, 0, 0);
     padding: 13px 0;
     z-index: 999; /* 다른 요소들 위에 헤더를 표시하기 위해 z-index 값을 설정합니다. */
 }

@@ -15,16 +15,22 @@ public class LocalGovernmentJsonParser {
             JSONObject responseObj = jsonObj.getJSONObject("response");
             JSONObject bodyObj = responseObj.getJSONObject("body");
             JSONObject itemsObj = bodyObj.getJSONObject("items");
-            JSONArray itemArray = itemsObj.getJSONArray("item");
 
-            for (int i = 0; i < itemArray.length(); i++) {
-                JSONObject itemObj = itemArray.getJSONObject(i);
-                String uprCd = itemObj.getString("uprCd");
-                String orgCd = itemObj.getString("orgCd");
-                String orgdownNm = itemObj.getString("orgdownNm");
+            // Check if "item" array exists
+            if (itemsObj.has("item")) {
+                JSONArray itemArray = itemsObj.getJSONArray("item");
 
-                LocalGovernment localGovernment = new LocalGovernment(uprCd, orgCd, orgdownNm);
-                localGovernmentList.add(localGovernment);
+                for (int i = 0; i < itemArray.length(); i++) {
+                    JSONObject itemObj = itemArray.getJSONObject(i);
+                    String uprCd = itemObj.getString("uprCd");
+                    String orgCd = itemObj.getString("orgCd");
+                    String orgdownNm = itemObj.has("orgdownNm") ? itemObj.getString("orgdownNm") : null;
+
+                    if (orgdownNm != null) {
+                        LocalGovernment localGovernment = new LocalGovernment(uprCd, orgCd, orgdownNm);
+                        localGovernmentList.add(localGovernment);
+                    }
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

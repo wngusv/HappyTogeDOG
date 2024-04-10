@@ -44,6 +44,7 @@ public class commentSortServlet extends HttpServlet {
                     comment.put("content_time", rs.getTimestamp("content_time").toString());
                     comment.put("like", rs.getInt("like"));
                     comment.put("dislike", rs.getInt("dislike"));
+                    comment.put("commentNum", rs.getInt("num"));
                     comments.add(comment);
                 }
             } catch (SQLException e) {

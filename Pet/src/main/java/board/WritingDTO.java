@@ -10,6 +10,8 @@ public class WritingDTO {
 	private String sfile;
 	private String postdate;
 	private String id;
+	private String town;
+	
 	public String getIdx() {
 		return idx;
 	}
@@ -57,6 +59,12 @@ public class WritingDTO {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getTown() {
+		return town;
+	}
+	public void setTown(String town) {
+		this.town = town;
 	}
 	
 	

@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="/floating-banner.jsp" %>
+<%@ include file="/floating-banner.jsp"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>지역 반려동물 시설</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="styles.css">
-<style>
+<body style="padding-top: 150px; background-color: rgb(254, 247, 222);">
+	<style>
 .map_wrap, .map_wrap * {
 	margin: 0;
 	padding: 0;
@@ -20,9 +20,11 @@
 }
 
 .map_wrap {
+	border-radius: 10px;
+	border: 2px solid rgb(111, 94, 75);
 	position: relative;
 	width: 100%;
-	height: 600px;
+	height: 510px;
 }
 
 #category {
@@ -74,12 +76,6 @@
 	padding: 10px;
 }
 
-.title {
-	margin-bottom: 5px;
-	font-size: 18px;
-	font-weight: bold;
-}
-
 .close {
 	position: absolute;
 	top: 10px;
@@ -109,6 +105,61 @@
 	color: #007bff;
 	text-decoration: none;
 }
+
+.customoverlay {
+	position: relative;
+	bottom: 50px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	border-bottom: 2px solid #ddd;
+	float: left;
+}
+
+.customoverlay:nth-of-type(n) {
+	border: 0;
+	box-shadow: 0px 1px 2px #888;
+}
+
+.customoverlay a {
+	display: block;
+	text-decoration: none;
+	color: #000;
+	text-align: center;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: bold;
+	overflow: hidden;
+	background: #d95050;
+	background: #d95050
+		url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
+		no-repeat right 14px center;
+}
+
+.customoverlay .title {
+	display: block;
+	text-align: center;
+	background: #fff;
+	margin-right: 35px;
+	padding: 10px 15px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.customoverlay:after {
+	content: '';
+	position: absolute;
+	margin-left: -12px;
+	left: 50%;
+	bottom: -12px;
+	width: 22px;
+	height: 12px;
+	background:
+		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}
+
+.space {
+	height: 50px; /* 원하는 높이로 조절하세요 */
+}
 </style>
 </head>
 <body style="padding-top: 150px;">
@@ -119,18 +170,20 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 
 	</header>
-
+	<div class="space"></div>
 	<main>
 		<div class="container">
-			<section class="strays-info">
-				<h2>지역 반려동물 시설</h2>
-			</section>
+			<section class="strays-info"></section>
 		</div>
-		<div class="container"> <!-- Bootstrap 그리드 시스템 사용 -->
-			<div class="row justify-content-center"> <!-- 가운데 정렬 -->
+		<div class="container">
+			<!-- Bootstrap 그리드 시스템 사용 -->
+			<div class="row justify-content-center">
+				<!-- 가운데 정렬 -->
 				<div class="col-lg-10">
 					<div class="map_wrap">
-						<div id="map" style="width: 100%; height: 500px; position: relative; overflow: hidden;"></div> <!-- 수정된 높이 -->
+						<div id="map"
+							style="width: 100%; height: 500px; position: relative; overflow: hidden;"></div>
+						<!-- 수정된 높이 -->
 						<ul id="category">
 							<li id="동물병원">동물병원</li>
 							<li id="애견용품">애견용품</li>
@@ -199,39 +252,26 @@
 			for (var i = 0; i < places.length; i++) {
 				(function(place) {
 					var placePosition = new kakao.maps.LatLng(place.y, place.x);
-					var marker = addMarker(placePosition);
 
-					var content = '<div class="wrap">'
-							+ '    <div class="info">'
-							+ '        <div class="title">'
-							+ '            '
-							+ place.place_name
-							+ '            <div class="close" onclick="closeOverlay(overlay)" title="닫기">X</div>'
-							+ '        </div>'
-							+ '        <div class="body">'
-							+ '            <div class="desc">'
-							+ '                <div class="ellipsis">'
-							+ place.address_name
-							+ '</div>'
-							+ '                <div><a href="' + place.place_url + '" target="_blank" class="link">더보기</a></div>'
-							+ '            </div>' + '        </div>'
-							+ '    </div>' + '</div>';
+					// 마커를 생성합니다 (이전에는 여기에 마커 이미지 설정이 있었습니다)
+					var marker = new kakao.maps.Marker({
+						position : placePosition
+					});
+					marker.setMap(map);
+					markers.push(marker);
 
+					// 커스텀 오버레이의 내용을 장소 이름과 URL을 포함하도록 설정합니다
+					var content = '<div class="customoverlay">'
+							+ '  <a href="' + place.place_url + '" target="_blank">'
+							+ '    <span class="title">' + place.place_name
+							+ '</span>' + '  </a>' + '</div>';
+
+					// 커스텀 오버레이를 생성합니다
 					var overlay = new kakao.maps.CustomOverlay({
 						content : content,
-						map : null,
-						position : marker.getPosition()
-					});
-
-					// 닫기 버튼의 onclick 이벤트에서 overlay를 인자로 전달합니다.
-					content = content.replace('closeOverlay(overlay)',
-							'closeOverlay(overlay' + i + ')');
-					overlay.setContent(content);
-
-					window['overlay' + i] = overlay;
-
-					kakao.maps.event.addListener(marker, 'click', function() {
-						overlay.setMap(map);
+						map : map,
+						position : marker.getPosition(),
+						yAnchor : 1
 					});
 
 					bounds.extend(placePosition);
@@ -257,44 +297,49 @@
 		}
 
 		function setCurrentLocation() {
-		    if (navigator.geolocation) {
-		        navigator.geolocation.getCurrentPosition(function(position) {
-		            var lat = position.coords.latitude,
-		                lon = position.coords.longitude;
-		            var locPosition = new kakao.maps.LatLng(lat, lon);
-		            map.setCenter(locPosition);
-		            addMarker(locPosition);
-		            displayMarker(locPosition, '<div style="padding:5px;">내위치</div>'); // 위치 정보가 확인되면 인포윈도우를 엽니다.
-		        }, function(error) {
-		            console.error("Geolocation access is denied.");
-		            var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-		            displayMarker(locPosition, 'geolocation을 사용할수 없어요..');
-		        });
-		    } else {
-		        alert("This browser doesn't support geolocation.");
-		        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-		        displayMarker(locPosition, 'geolocation을 사용할수 없어요..');
-		    }
+			if (navigator.geolocation) {
+				navigator.geolocation
+						.getCurrentPosition(
+								function(position) {
+									var lat = position.coords.latitude, lon = position.coords.longitude;
+									var locPosition = new kakao.maps.LatLng(
+											lat, lon);
+									map.setCenter(locPosition);
+									addMarker(locPosition);
+								},
+								function(error) {
+									console
+											.error("Geolocation access is denied.");
+									var locPosition = new kakao.maps.LatLng(
+											33.450701, 126.570667);
+									displayMarker(locPosition,
+											'geolocation을 사용할수 없어요..');
+								});
+			} else {
+				alert("This browser doesn't support geolocation.");
+				var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+				displayMarker(locPosition, 'geolocation을 사용할수 없어요..');
+			}
 		}
 
 		function displayMarker(locPosition, message) {
-		    var marker = new kakao.maps.Marker({
-		        map: map,
-		        position: locPosition
-		    });
+			var marker = new kakao.maps.Marker({
+				map : map,
+				position : locPosition
+			});
 
-		    var iwContent = message,
-		        iwRemoveable = true;
+			var iwContent = message, iwRemoveable = true;
 
-		    var infowindow = new kakao.maps.InfoWindow({
-		        content: iwContent,
-		        removable: iwRemoveable
-		    });
+			var infowindow = new kakao.maps.InfoWindow({
+				content : iwContent,
+				removable : iwRemoveable
+			});
 
-		    // 인포윈도우의 가로 길이를 조절합니다.
-		    infowindow.setContent('<div style="padding:5px; width:150px;">' + iwContent + '</div>');
+			// 인포윈도우의 가로 길이를 조절합니다.
+			infowindow.setContent('<div style="padding:5px; width:150px;">'
+					+ iwContent + '</div>');
 
-		    infowindow.open(map, marker);
+			infowindow.open(map, marker);
 		}
 
 		function initMap() {

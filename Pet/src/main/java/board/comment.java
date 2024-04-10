@@ -25,10 +25,10 @@ public class comment extends HttpServlet { // 유저가 쓴 댓글 action으로 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		String userId = (String) session.getAttribute("userId");
+		int postIdx = Integer.parseInt(req.getParameter("postIdx"));
+		String type = req.getParameter("action");
 
 		if (userId != null) {
-			int postIdx = Integer.parseInt(req.getParameter("postIdx")); // 게시글 Idx
-			String type = req.getParameter("action");
 			// '추천' 또는 '비추천' 문자열
 
 			// 데이터베이스 연결과 로직을 처리합니다.
@@ -78,8 +78,44 @@ public class comment extends HttpServlet { // 유저가 쓴 댓글 action으로 
 				e.printStackTrace();
 			}
 
-			// 처리 후 게시글 읽기 페이지로 리다이렉트
-			resp.sendRedirect("boardReading.jsp?idx=" + postIdx);
+			// 추천 및 비추천 카운트를 계산
+			int recommendationCount = 0;
+			int notRecommendationCount = 0;
+			try (Connection conn = MyWebContextListener.getConnection()) {
+				// 추천 카운트 쿼리
+				String sqlRec = "SELECT COUNT(*) AS rec_count FROM comment WHERE post_idx = ? AND type = '추천'";
+				try (PreparedStatement psmtRec = conn.prepareStatement(sqlRec)) {
+					psmtRec.setInt(1, postIdx);
+					try (ResultSet rsRec = psmtRec.executeQuery()) {
+						if (rsRec.next()) {
+							recommendationCount = rsRec.getInt("rec_count");
+						}
+					}
+				}
+				// 비추천 카운트 쿼리
+				String sqlNotRec = "SELECT COUNT(*) AS not_rec_count FROM comment WHERE post_idx = ? AND type = '비추천'";
+				try (PreparedStatement psmtNotRec = conn.prepareStatement(sqlNotRec)) {
+					psmtNotRec.setInt(1, postIdx);
+					try (ResultSet rsNotRec = psmtNotRec.executeQuery()) {
+						if (rsNotRec.next()) {
+							notRecommendationCount = rsNotRec.getInt("not_rec_count");
+						}
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				// 에러 발생 시 JSON 응답을 통해 클라이언트에게 전달
+				resp.setContentType("application/json");
+				PrintWriter out = resp.getWriter();
+				out.print("{\"status\": \"error\", \"message\": \"" + e.getMessage() + "\"}");
+				return;
+			}
+
+			// JSON 형식으로 카운트 정보를 클라이언트에 반환
+			resp.setContentType("application/json");
+			PrintWriter out = resp.getWriter();
+			out.print("{\"status\": \"success\", \"recommendationCount\": " + recommendationCount
+					+ ", \"notRecommendationCount\": " + notRecommendationCount + "}");
 		} else {
 			// 로그인하지 않은 경우, 로그인 페이지나 메시지 표시 등의 처리
 			// 예: 로그인 페이지로 리다이렉트

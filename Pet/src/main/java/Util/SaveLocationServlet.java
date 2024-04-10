@@ -24,10 +24,10 @@ public class SaveLocationServlet extends HttpServlet {
             double latitude = Double.parseDouble(request.getParameter("latitude"));
             double longitude = Double.parseDouble(request.getParameter("longitude"));
             String address = getAddressFromKakaoMapAPI(latitude, longitude);
-            String region2DepthName = parseRegion2DepthName(address);
+            String regionDepthName = parseRegionDepthName(address);
             HttpSession session = request.getSession();
             
-            session.setAttribute("locate", region2DepthName);
+            session.setAttribute("locate", regionDepthName);
             // 여기서 address를 원하는 작업에 활용
 
         } catch (Exception e) {
@@ -66,14 +66,17 @@ public class SaveLocationServlet extends HttpServlet {
         }
     }
     
-    public static String parseRegion2DepthName(String json) {
+    public static String parseRegionDepthName(String json) {
+    	String region1DepthName = null;
         String region2DepthName = null;
         JSONObject jsonObject = new JSONObject(json);
         JSONArray documents = jsonObject.getJSONArray("documents");
         if (documents.length() > 0) {
             JSONObject addressObject = documents.getJSONObject(0).getJSONObject("address");
+            region1DepthName = addressObject.getString("region_1depth_name");
             region2DepthName = addressObject.getString("region_2depth_name");
+            
         }
-        return region2DepthName;
+        return region1DepthName+" "+region2DepthName;
     }
 }
