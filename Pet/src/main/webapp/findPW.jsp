@@ -54,7 +54,7 @@
 					class="btn btn-secondary" disabled>인증번호 받기</button>
 			</div>
 			<div class="form-group">
-				<label>인증번호:</label> <input type="text" maxlength="5"
+				<label>인증번호</label> <input type="text" maxlength="5"
 					id="checkNumber" name="checkNumber" class="form-control gray-text"
 					placeholder="5자리 숫자를 입력하세요." required />
 			</div>
