@@ -41,7 +41,7 @@
 	transition: transform 0.3s ease;
 }
 .government-button{
-background-color: rgb(205, 173, 129);
+background-color: rgb(109, 95, 80);
 	font-size: 15px;
 	border-radius: 10px; /* Rounded border */
 	border: none; /* Remove default border */
@@ -50,7 +50,7 @@ background-color: rgb(205, 173, 129);
 	/* Change font */
 	cursor: pointer; /* Change cursor to pointer on hover */
 	margin: 5px; /* Add margin between buttons */
-	color: black;
+	color: white;
 	display: inline-block;
 	/* Hover effect */
 	transition: background-color 0.3s ease;
