@@ -52,10 +52,8 @@
 						onclick="window.location.href='/viewPost?id=${post.id}';"
 						style="cursor: pointer; margin-bottom: 10px; padding: 10px;">
 						<p>제목: ${post.title}</p>
-						<p>출발지: ${post.startInput}</p>
-						<p>${post.startRoadInput}</p>
-						<p>도착지: ${post.endInput}</p>
-						<p>${post.endRoadInput}</p>
+						<p>출발지: ${post.startInput} (${post.startRoadInput})</p> 
+						<p>도착지: ${post.endInput} (${post.endRoadInput})</p>
 						<p>작성자: ${post.userId}</p>
 						<p>등록 시간: ${post.createdAt}</p>
 					</div>

@@ -390,15 +390,15 @@
 
 					bounds.extend(placePosition);
 
-					(function (marker, title, position) {
+					(function (marker, title, position, roadAddress) {
 						kakao.maps.event.addListener(marker, 'click', function () {
-							selectPlace(position, title, currentSearchType); // 'currentSearchType' 사용
+							selectPlace(position, title, currentSearchType, roadAddress); // 'currentSearchType' 사용
 						});
 
 						itemEl.onclick = function () {
-							selectPlace(position, title, currentSearchType); // 'currentSearchType' 사용
+							selectPlace(position, title, currentSearchType, roadAddress); // 'currentSearchType' 사용
 						};
-					})(marker, places[i].place_name, placePosition);
+					})(marker, places[i].place_name, placePosition, places[i].road_address_name);
 
 					fragment.appendChild(itemEl);
 				}
@@ -640,8 +640,9 @@
 			}
 
 			function submitPost() {
-				 var startRoadInput = document.getElementById('startRoadInput').value;
-				    var endRoadInput = document.getElementById('endRoadInput').value;
+				var startRoadInput = document.getElementById('startRoadInput') ? document.getElementById('startRoadInput').value : '';
+				var endRoadInput = document.getElementById('endRoadInput') ? document.getElementById('endRoadInput').value : '';
+
 				var startInput = document.getElementById('startInput').value;
 				var endInput = document.getElementById('endInput').value;
 				var title = document.getElementById('title').value;
