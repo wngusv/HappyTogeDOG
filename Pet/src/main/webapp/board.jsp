@@ -28,6 +28,7 @@
         /* 활성화된 페이징 버튼의 배경색과 텍스트 색상 변경 */
         .page-item.active .page-link {
             background-color: rgb(111, 94, 75); /* 활성화된 버튼의 배경색 변경 */
+            border-color: rgb(111, 94, 75);
             color: #ffffff; /* 활성화된 버튼의 텍스트 색상 변경 */
         }
         
