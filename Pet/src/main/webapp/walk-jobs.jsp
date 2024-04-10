@@ -35,14 +35,14 @@
 
 <main>
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<form action="walk-jobs.jsp" method="get">
-					<div class="form-row">
-						<!-- 지역 콤보박스 -->
-						<div class="form-group col-md-2" style="margin-top: 20px;">
-							<label for="filterLocation" class="d-block">지역</label> <select
-								class="form-control" id="filterLocation" name="filterLocation">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="walk-jobs.jsp" method="get">
+                <div class="form-row align-items-end">
+                    <!-- 지역 콤보박스 -->
+                    <div class="form-group col-md-2" style="margin-top: 20px;">
+                        <label for="filterLocation" class="d-block">지역</label>
+                        <select class="form-control" id="filterLocation" name="filterLocation">
 								<option value=""
 									<%=(request.getParameter("filterLocation") == null) ? "selected" : ""%>>전체</option>
 								<option value="서울"
@@ -61,7 +61,7 @@
 									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("부산"))
 		? "selected"
 		: ""%>>부산</option>
-		<option value="대구"
+								<option value="대구"
 									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("대구"))
 		? "selected"
 		: ""%>>대구</option>
@@ -118,9 +118,9 @@
 						</div>
 
 						<!-- 근무요일 콤보박스 -->
-						<div class="form-group col-md-2" style="margin-top: 20px;">
-							<label for="filterDay" class="d-block">근무요일</label> <select
-								class="form-control" id="filterDay" name="filterDay">
+						 <div class="form-group col-md-2" style="margin-top: 20px;">
+                        <label for="filterDay" class="d-block">근무요일</label>
+                        <select class="form-control" id="filterDay" name="filterDay">
 								<option value=""
 									<%=(request.getParameter("filterDay") == null) ? "selected" : ""%>>전체</option>
 								<option value="평일"
@@ -133,9 +133,9 @@
 						</div>
 
 						<!-- 근무시간 콤보박스 -->
-						<div class="form-group col-md-2" style="margin-top: 20px;">
-							<label for="filterTime" class="d-block">근무시간</label> <select
-								class="form-control" id="filterTime" name="filterTime">
+						  <div class="form-group col-md-2" style="margin-top: 20px;">
+                        <label for="filterTime" class="d-block">근무시간</label>
+                        <select class="form-control" id="filterTime" name="filterTime">
 								<option value=""
 									<%=(request.getParameter("filterTime") == null) ? "selected" : ""%>>전체</option>
 								<option value="오전"
@@ -147,10 +147,9 @@
 							</select>
 						</div>
 
-						<!-- 견종 콤보박스 -->
-						<div class="form-group col-md-2" style="margin-top: 20px;">
-							<label for="filterSize" class="d-block">견종</label> <select
-								class="form-control" id="filterSize" name="filterSize">
+					 <div class="form-group col-md-2" style="margin-top: 20px;">
+                        <label for="filterSize" class="d-block">견종</label>
+                        <select class="form-control" id="filterSize" name="filterSize">
 								<option value=""
 									<%=(request.getParameter("filterSize") == null) ? "selected" : ""%>>전체</option>
 								<option value="소형견(7kg이하)"
@@ -173,15 +172,14 @@
 						</div>
 
 						<!-- 검색 버튼 -->
-						<div class="form-group col-md-1" style="margin-top: 20px;">
-							<button type="submit" class="btn btn-primary"
-								style="margin-top: 32px; background-color: rgb(235, 111, 98); color: white; border-color: rgb(235, 111, 98);">검색</button>
-						</div>
+						 <div class="form-group col-md-2">
+                        <button type="submit" class="btn btn-primary" style="background-color: rgb(235, 111, 98); color: white; border-color: rgb(235, 111, 98); height: 38px;">검색</button>
+                    </div>
 
 						<!-- 급여 높은 순 버튼 -->
-<div class="form-group col-md-7" style="margin-top: 20px; margin-left: auto;">
-    <a href="walk-jobs.jsp?sortBy=pay" class="btn btn-primary float-right" style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">▼ 급여 높은 순</a>
-</div>
+						  <div class="form-group col-md-2">
+                        <a href="walk-jobs.jsp?sortBy=pay" class="btn btn-primary float-right" style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">▼ 급여 높은 순</a>
+                    </div>
 
 					</div>
 				</form>
@@ -342,7 +340,7 @@
 							</c:when>
 							<c:otherwise>
 								<button type="button" class="btn btn-primary"
-									style="background-color: rgb(235, 111, 98); color: white; margin-top: -95px; border-color: rgb(235, 111, 98);" 
+									style="background-color: rgb(235, 111, 98); color: white; margin-top: -95px; border-color: rgb(235, 111, 98);"
 									onclick="alert('로그인 후 이용해주세요.'); location.href='login.jsp'">글쓰기</button>
 							</c:otherwise>
 						</c:choose>
