@@ -61,6 +61,58 @@
 									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("부산"))
 		? "selected"
 		: ""%>>부산</option>
+		<option value="대구"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("대구"))
+		? "selected"
+		: ""%>>대구</option>
+								<option value="대전"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("대전"))
+		? "selected"
+		: ""%>>대전</option>
+								<option value="경남"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("경남"))
+		? "selected"
+		: ""%>>경남</option>
+								<option value="전남"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("전남"))
+		? "selected"
+		: ""%>>전남</option>
+								<option value="충남"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("충남"))
+		? "selected"
+		: ""%>>충남</option>
+								<option value="광주"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("광주"))
+		? "selected"
+		: ""%>>광주</option>
+								<option value="울산"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("울산"))
+		? "selected"
+		: ""%>>울산</option>
+								<option value="경북"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("경북"))
+		? "selected"
+		: ""%>>경북</option>
+								<option value="전북"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("전북"))
+		? "selected"
+		: ""%>>전북</option>
+								<option value="충북"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("충북"))
+		? "selected"
+		: ""%>>충북</option>
+								<option value="강원"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("강원"))
+		? "selected"
+		: ""%>>강원</option>
+								<option value="제주"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("제주"))
+		? "selected"
+		: ""%>>제주</option>
+								<option value="세종"
+									<%=(request.getParameter("filterLocation") != null && request.getParameter("filterLocation").equals("세종"))
+		? "selected"
+		: ""%>>세종</option>
 								<!-- 추가 지역 옵션들 -->
 							</select>
 						</div>
