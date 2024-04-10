@@ -12,6 +12,7 @@
 <style>
 body {
 	font-family: sans-serif;
+	background-color: rgb(254, 247, 222);
 }
 
 .login-wrapper {
@@ -46,12 +47,10 @@ h2 {
 				<input type="password" class="form-control" name="userPassword"
 					placeholder="비밀번호" />
 			</div>
-			<button type="submit" class="btn btn-primary btn-block">로그인</button>
+			<button type="submit" class="btn btn-primary btn-block" style="background-color: rgb(235, 135, 106); border-color: rgb(235, 135, 106)">로그인</button>
 			<div class="text-center mt-3">
-				<button type="button" class="btn btn-link" id="findID">아이디
-					찾기</button>
-				<button type="button" class="btn btn-link" id="findPW">비밀번호
-					찾기</button>
+				<button type="button" class="btn btn-link" id="findID" style="color: rgb(109, 95, 80);">아이디 찾기</button>
+				<button type="button" class="btn btn-link" id="findPW" style="color: rgb(109, 95, 80);">비밀번호 찾기</button>
 			</div>
 		</form>
 	</div>
