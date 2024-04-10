@@ -8,9 +8,11 @@
 <meta charset="UTF-8">
 <title>HappyTogeDog</title>
 <style>
+   @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
     body {
         margin: 0;
-        font-family: Arial, sans-serif;
+        font-family: 'Nanum Pen Script', cursive !important;
+        font-size: 16px;
     }
     .header {
         display: flex;

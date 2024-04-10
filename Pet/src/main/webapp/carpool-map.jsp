@@ -15,8 +15,8 @@
 	width: 60%; /* 폼 너비 설정 */
 	padding: 20px;
 	border: 1px solid #ccc;
-	border-radius: 5px;
-	background-color: #f9f9f9;
+	border: 2px solid rgb(111, 94, 75);
+	border-radius: 10px;
 }
 
 #postForm input[type="text"], #postForm textarea {
@@ -52,8 +52,8 @@
 #map {
 	width: 60%; 
 	height: 400px;
+	border: 2px solid rgb(111, 94, 75);
 	border-radius: 10px;
-	 border: 1px solid #ccc;
 	
 }
 
