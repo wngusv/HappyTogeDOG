@@ -26,6 +26,13 @@
         .input-field {
             width: 100%;
         }
+        
+        .input-group-append {
+        background-color: rgb(88, 184, 117);
+        }
+        .btn btn-outline-primary {
+        background-color: rgb(88, 184, 117);
+        }
     </style>
 </head>
 <body style="background-color: rgb(254, 247, 222);">
@@ -54,7 +61,7 @@
                 <div class="input-group">
                     <input type="password" id="password" name="password" class="form-control input-field" value="<%= password %>" readonly>
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-primary" onclick="openEditWindow('password')">수정</button>
+                        <button type="button" class="btn btn-outline-primary" onclick="openEditWindow('password')" style ="color: white; border-color: rgb(88, 184, 117);">수정</button>
                     </div>
                 </div>
             </div>
@@ -71,7 +78,7 @@
                 <div class="input-group">
                     <input type="text" id="address" name="address" class="form-control input-field" value="<%= address %>" readonly>
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-primary" onclick="openAddressSearchWindow()">주소 수정</button>
+                        <button type="button" class="btn btn-outline-primary" onclick="openAddressSearchWindow()" style ="color: white; border-color: rgb(88, 184, 117);">주소 수정</button>
                     </div>
                 </div>
             </div>
@@ -80,7 +87,7 @@
                 <input type="text" id="addressDetail" name="addressDetail" class="form-control input-field" value="<%= addressDetail %>" readonly>
             </div>
             <div class="text-center">
-                <a href="/mypage.jsp" class="btn btn-outline-secondary">마이페이지로 돌아가기</a>
+                <a href="/mypage.jsp" class="btn btn-outline-secondary" style ="color: white; background-color: rgb(235, 111, 98); border-color: rgb(235, 111, 98);">마이페이지로 돌아가기</a>
             </div>
         <% 
             } else {
