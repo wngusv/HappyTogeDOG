@@ -528,16 +528,13 @@
 
 
 			function getCarDirection() {
-				  // 출발점이 설정되지 않았을 경우
 			    if (!startMarker) {
 			        alert("출발점을 지정해주세요.");
-			        return; // 함수를 여기서 종료하여 경로를 표시하지 않음
+			        return; 
 			    }
-
-			    // 도착점이 설정되지 않았을 경우
 			    if (!endMarker) {
 			        alert("도착점을 지정해주세요.");
-			        return; // 함수를 여기서 종료하여 경로를 표시하지 않음
+			        return; 
 			    }
 				
 				if (polyline) polyline.setMap(null); // 이전에 그려진 선이 있다면 지웁니다.
