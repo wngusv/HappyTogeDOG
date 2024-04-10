@@ -10,8 +10,11 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="styles.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-@import	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
+	;
 
 .container {
 	max-width: 90%;
@@ -20,27 +23,25 @@
 .page-link {
 	background-color: #ffffff; /* 배경색 변경 */
 	color: rgb(111, 94, 66); /* 텍스트 색상 변경 */
-	border-color: rgb(222, 226, 230);
 }
 
 /* 활성화된 페이징 버튼의 배경색과 텍스트 색상 변경 */
 .page-item.active .page-link {
-	background-color: #ffffff; /* 활성화된 버튼의 배경색 변경 */
-	color: rgb(111, 94, 66); /* 활성화된 버튼의 텍스트 색상 변경 */
-	border-color: rgb(222, 226, 230);
+	background-color: rgb(111, 94, 75); /* 활성화된 버튼의 배경색 변경 */
+	color: #ffffff; /* 활성화된 버튼의 텍스트 색상 변경 */
+	border-color: transparent;
 }
 
 /*지역 유기견 보호센터 테두리*/
 .rounded-border {
-    background-color: white;
-    width: 38vw; /* 가로 길이 설정 */
-    border-radius: 10px; /* 테두리 둥글게 처리 */
-    border: 2px solid rgb(111, 94, 75); /* 테두리 색상과 두께 설정 */
-    margin: 0 auto; /* 상하 마진을 0으로, 좌우 마진을 자동으로 설정하여 중앙 정렬 */
-    margin-right: 900px; /* 오른쪽 여백을 추가로 조정 */
-    margin-bottom: 10px;
+	background-color: white;
+	width: 38vw; /* 가로 길이 설정 */
+	border-radius: 10px; /* 테두리 둥글게 처리 */
+	border: 2px solid rgb(111, 94, 75); /* 테두리 색상과 두께 설정 */
+	margin: 0 auto; /* 상하 마진을 0으로, 좌우 마진을 자동으로 설정하여 중앙 정렬 */
+	margin-right: 900px; /* 오른쪽 여백을 추가로 조정 */
+	margin-bottom: 10px;
 }
-
 
 /*지도*/
 #map {
@@ -93,7 +94,6 @@
 	width: 100%; /* 또는 충분한 고정 너비 */
 	overflow: auto;
 	text-align: center;
-	
 }
 
 .shelter-name {
@@ -186,13 +186,13 @@
 	</header>
 <body style="background-color: rgb(254, 247, 222);">
 	<main style="margin-bottom: 150px;">
-    <div class="container" style="padding-top: 150px;">
-        <section class="strays-info" style="width: 1200px; margin: auto;">
-            <div id="map-container">
-                <div id="map" style="width: 700px; height: 500px;"></div>
-            </div>
-            <div id="shelters"></div>
-            <div id="region-list" style="text-align: center;">
+		<div class="container" style="padding-top: 150px;">
+			<section class="strays-info" style="width: 1200px; margin: auto;">
+				<div id="map-container">
+					<div id="map" style="width: 700px; height: 500px;"></div>
+				</div>
+				<div id="shelters"></div>
+				<div id="region-list" style="text-align: center;">
 					<a href="#" class="region-link" data-region="">전체</a> <a href="#"
 						class="region-link" data-region="서울특별시">서울</a> <a href="#"
 						class="region-link" data-region="부산광역시">부산</a> <a href="#"
@@ -214,8 +214,8 @@
 				</div>
 
 			</section>
-				<div id="shelter-info"></div>
-				<div id="pagination"></div>
+			<div id="shelter-info"></div>
+			<div id="pagination"></div>
 		</div>
 
 	</main>
@@ -249,7 +249,7 @@
       queryParams += '&' + encodeURIComponent('pageNo') + '='
             + encodeURIComponent('1'); /*페이지 수*/
       queryParams += '&' + encodeURIComponent('_type') + '='
-            + encodeURIComponent('json'); /**/
+            + encodeURIComponent('json'); 
 
       xhr.open('GET', url + queryParams);
       xhr.onreadystatechange = function() {
@@ -270,7 +270,7 @@
     	    var startIndex = (pageNumber - 1) * sheltersPerPage;
     	    var endIndex = startIndex + sheltersPerPage;
     	    var paginatedShelters = shelters.slice(startIndex, endIndex);
-
+			console.log(pageNumber);
     	    var shelterInfoDiv = document.getElementById('shelter-info');
     	    shelterInfoDiv.innerHTML = ''; // 이전 내용 초기화
 
@@ -290,18 +290,13 @@
 
     	        paginationDiv.appendChild(pageLink);
 
-    	        // 페이지 간 구분을 위해 공백 추가
-    	        if (i < totalPages) {
-    	            paginationDiv.appendChild(document.createTextNode(' '));
-    	        }
     	    }
     	    
-    	    // 페이지네이션 HTML 구조를 Bootstrap과 호환되게 수정
-    	     var paginationDiv = document.getElementById('pagination');
     paginationDiv.innerHTML = ''; // 페이지네이션 초기화
     var ul = document.createElement('ul');
     ul.className = 'pagination justify-content-center';
-
+	
+    
     // "이전" 페이지 그룹 이동 버튼
     var startPage = Math.floor((pageNumber - 1) / 5) * 5 + 1;
     var prevGroupLi = document.createElement('li');
@@ -318,11 +313,14 @@
     prevGroupLi.appendChild(prevGroupLink);
     ul.appendChild(prevGroupLi);
 
-    // 현재 페이지 그룹의 페이지 번호들
+ // 현재 페이지 그룹의 페이지 번호들
     var endPage = Math.min(startPage + 4, totalPages);
     for (let i = startPage; i <= endPage; i++) {
         var li = document.createElement('li');
-        li.className = `page-item ${i == pageNumber ? 'active' : ''}`;
+        li.className = 'page-item'; // 기본적으로 'page-item' 클래스를 설정합니다.
+        if (i === pageNumber) { // 현재 페이지 번호와 일치하는 경우에만 'active' 클래스를 추가합니다.
+            li.classList.add('active');
+        }
         var link = document.createElement('a');
         link.className = 'page-link';
         link.href = '#';
@@ -489,6 +487,7 @@
     	    });
     	};
    </script>
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
