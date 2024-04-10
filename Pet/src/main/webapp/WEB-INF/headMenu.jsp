@@ -8,12 +8,19 @@
 <meta charset="UTF-8">
 <title>HappyTogeDog</title>
 <style>
-@import	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
+	;
 
 body {
 	margin: 0;
 	font-family: "Noto Sans KR", sans-serif;
 	font-optical-sizing: auto;
+}
+
+.my-header {
+	padding-top: 0px;
+	padding-bottom: 0px
 }
 
 .header {
@@ -22,6 +29,8 @@ body {
 	align-items: center;
 	background-color: rgb(250, 230, 163);
 	padding: 3px 50px;
+	padding-bottom: 0px;
+	padding-top: 0px;
 }
 
 .nav-menu, .navbar-nav {
@@ -51,8 +60,8 @@ body {
 	color: rgb(255, 144, 61); /* 활성화된 메뉴의 색상 설정 */
 }
 
-.
-login {
+.login {
+	padding-top: 10px;
 	margin-top: 10px;
 	font-size: 16px; /* 선택된 메뉴와 다른 글자 크기 설정 */
 	font-weight: normal; /* bold체 해제 */
