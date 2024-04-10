@@ -1,5 +1,6 @@
 package board;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +26,10 @@ public class UploadProcess extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			String fileUploadPath = getServletContext().getInitParameter("fileUploadPath");
+			 File uploadDirFile = new File(fileUploadPath);
+			    if (!uploadDirFile.exists()) {
+			        uploadDirFile.mkdirs(); // 디렉토리가 존재하지 않으면 생성
+			    }
 			String originalFileName = FileUtil.uploadFile(req, fileUploadPath);
 			System.out.println(originalFileName);
 			insertMyFile(req, resp, originalFileName, originalFileName);
