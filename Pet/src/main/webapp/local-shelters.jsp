@@ -43,7 +43,7 @@
 	border: 2px solid rgb(111, 94, 75);
 	border-radius: 10px;
 	top: 50%;
-	right: 180px; /* 우측 여백 설정 */
+	right: 250px; /* 우측 여백 설정 */
 	transform: translateY(-50%);
 	width: 80vw; /* 가로 너비 조절 */
 	height: 400px; /* 높이 설정 */
