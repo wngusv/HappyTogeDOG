@@ -10,6 +10,7 @@
 <title>카풀 메인</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <style>
 .rounded-border {
 	width: 50vw;
@@ -39,27 +40,29 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 	<main>
-		<div class="container">
-			<button onclick="checklogin();"
-				style="float: right; margin-top: 200px;">카풀 모집</button>
-			<h2 style="margin-top: 200px;">반려견 카풀</h2>
-			<c:if test="${empty posts}">
-				<div class="rounded-border centered-message">등록된 글이 없습니다.</div>
-			</c:if>
-			<c:if test="${not empty posts}">
-				<c:forEach items="${posts}" var="post">
-					<div class="rounded-border"
-						onclick="window.location.href='/viewPost?id=${post.id}';"
-						style="cursor: pointer; margin-bottom: 10px; padding: 10px;">
-						<p>제목: ${post.title}</p>
-						<p>출발지: ${post.startInput} (${post.startRoadInput})</p> 
-						<p>도착지: ${post.endInput} (${post.endRoadInput})</p>
-						<p>작성자: ${post.userId}</p>
-						<p>등록 시간: ${post.createdAt}</p>
-					</div>
-				</c:forEach>
-			</c:if>
-
+		<div class="container mt-5">
+			<div class="row">
+				<div class="col-12">
+					<button class="btn btn-primary float-right mb-3" onclick="checklogin();">카풀 모집</button>
+					<h2 class="mb-3">반려견 카풀</h2>
+					<c:if test="${empty posts}">
+						<div class="alert alert-info">등록된 글이 없습니다.</div>
+					</c:if>
+					<c:if test="${not empty posts}">
+						<c:forEach items="${posts}" var="post">
+							<div class="card mb-3">
+								<div class="card-body" onclick="window.location.href='/viewPost?id=${post.id}';">
+									<h5 class="card-title">제목: ${post.title}</h5>
+									<p class="card-text text-primary">출발지: ${post.startInput} (${post.startRoadInput})</p>
+									<p class="card-text text-primary">도착지: ${post.endInput} (${post.endRoadInput})</p>
+									<p class="card-text">작성자: ${post.userId}</p>
+									<p class="card-text">등록 시간: ${post.createdAt}</p>
+								</div>
+							</div>
+						</c:forEach>
+					</c:if>
+				</div>
+			</div>
 		</div>
 	</main>
 	<footer>
