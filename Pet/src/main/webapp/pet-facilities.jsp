@@ -20,8 +20,8 @@
 }
 
 .map_wrap {
-   border-radius: 10px;
    border: 2px solid rgb(111, 94, 75);
+   border-radius: 3px;
    position: relative;
    width: 1000px;
    height: 600px;
