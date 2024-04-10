@@ -274,10 +274,13 @@
 			<div>
 				출발지 : <input type="text" id="startInput" size="15">
 				<button onclick="searchPlaces('start')">검색</button>
+				<input type="hidden" id="startRoadInput" name="startRoadAddress" />
 			</div>
 			<div>
 				도착지 : <input type="text" id="endInput" size="15">
 				<button onclick="searchPlaces('end')">검색</button>
+				<input type="hidden" id="endRoadInput" name="endRoadAddress" />
+
 				<button onclick="getCarDirection()">경로 찾기</button>
 				<button onclick="resetMap()">초기화</button>
 			</div>
@@ -312,8 +315,6 @@
 			var startPoint = {}, endPoint = {};
 			var startMarker, endMarker, polyline;
 			var pathData = [];
-			var startAddress = "";
-			var endAddress = "";
 
 			function searchPlaces(type) {
 				var inputId = type === 'start' ? 'startInput' : 'endInput';
@@ -389,15 +390,15 @@
 
 					bounds.extend(placePosition);
 
-					(function (marker, title, position) {
+					(function (marker, title, position, roadAddress) {
 						kakao.maps.event.addListener(marker, 'click', function () {
-							selectPlace(position, title, currentSearchType); // 'currentSearchType' 사용
+							selectPlace(position, title, currentSearchType, roadAddress); // 'currentSearchType' 사용
 						});
 
 						itemEl.onclick = function () {
-							selectPlace(position, title, currentSearchType); // 'currentSearchType' 사용
+							selectPlace(position, title, currentSearchType, roadAddress); // 'currentSearchType' 사용
 						};
-					})(marker, places[i].place_name, placePosition);
+					})(marker, places[i].place_name, placePosition, places[i].road_address_name);
 
 					fragment.appendChild(itemEl);
 				}
@@ -407,71 +408,72 @@
 				map.setBounds(bounds);
 			}
 
-			function selectPlace(position, title, type) {
+			function selectPlace(position, title, type, roadAddress) {
+			    console.log("Selected Road Address:", roadAddress); // 함수에 전달된 도로명 주소 로깅
 			    var inputId = type === 'start' ? 'startInput' : 'endInput';
+			    var roadInputId = type === 'start' ? 'startRoadInput' : 'endRoadInput'; // 도로명 주소 입력 필드 ID
+
 			    document.getElementById(inputId).value = title; // 입력란에 타이틀 표시
+			    document.getElementById(roadInputId).value = roadAddress || ''; // 도로명 주소 입력 필드에 도로명 주소 할당
 
 			    // 이미 정의된 마커 이미지를 바탕으로 적절한 이미지 선택
 			    var markerImage = type === 'start' ? startMarkerImage : endMarkerImage;
 
-			    // 출발지와 도착지에 따라 주소 정보 가져오기
-			    var addressInfo = {};
-			    var geocoder = new kakao.maps.services.Geocoder();
-			    geocoder.coord2Address(position.getLng(), position.getLat(), function(result, status) {
-			        if (status === kakao.maps.services.Status.OK) {
-			            var address = result[0].road_address.address_name; // 도로명 주소 가져오기
-			            addressInfo = { lat: position.getLat(), lng: position.getLng(), address: address };
-			        }
-			        
-			        // 기존 마커가 있으면 지도에서 제거
-			        if (type === 'start' && startMarker) startMarker.setMap(null);
-			        if (type === 'end' && endMarker) endMarker.setMap(null);
+			    // 기존 마커가 있으면 지도에서 제거
+			    if (type === 'start' && startMarker) startMarker.setMap(null);
+			    if (type === 'end' && endMarker) endMarker.setMap(null);
 
-			        // 새 마커 생성
-			        var marker = new kakao.maps.Marker({
-			            map: map,
-			            position: position,
-			            image: markerImage // 마커 이미지 설정
-			        });
-
-			        // 전역 변수에 마커와 위치 정보 저장
-			        if (type === 'start') {
-			            startMarker = marker;
-			            startPoint = { lat: position.getLat(), lng: position.getLng() };
-			            startAddress = addressInfo.address; // 출발지의 주소 정보 저장
-			            console.log(startAddress);
-			        } else {
-			            endMarker = marker;
-			            endPoint = { lat: position.getLat(), lng: position.getLng() };
-			            endAddress = addressInfo.address; // 도착지의 주소 정보 저장
-			            console.log(endAddress);
-			        }
+			    // 새 마커 생성
+			    var marker = new kakao.maps.Marker({
+			        map: map,
+			        position: position,
+			        image: markerImage // 마커 이미지 설정
 			    });
+
+			    // 전역 변수에 마커와 위치 정보 저장
+			    if (type === 'start') {
+			        startMarker = marker;
+			        startPoint = { lat: position.getLat(), lng: position.getLng() };
+			    } else {
+			        endMarker = marker;
+			        endPoint = { lat: position.getLat(), lng: position.getLng() };
+			    }
 			}
+
+
+
 
 
 			function getListItem(index, places) {
+			    var el = document.createElement('li'),
+			        itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+			            '<div class="info">' +
+			            '   <h5>' + places.place_name + '</h5>';
 
-				var el = document.createElement('li'),
-					itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
-						'<div class="info">' +
-						'   <h5>' + places.place_name + '</h5>';
+			    // 도로명 주소가 있는 경우와 없는 경우 처리
+			    var roadAddress = places.road_address_name || '';
+			    if (roadAddress) {
+			        itemStr += '    <span>' + roadAddress + '</span>' +
+			            '   <span class="jibun gray">' + places.address_name + '</span>';
+			    } else {
+			        itemStr += '    <span>' + places.address_name + '</span>';
+			    }
 
-				if (places.road_address_name) {
-					itemStr += '    <span>' + places.road_address_name + '</span>' +
-						'   <span class="jibun gray">' + places.address_name + '</span>';
-				} else {
-					itemStr += '    <span>' + places.address_name + '</span>';
-				}
+			    itemStr += '  <span class="tel">' + places.phone + '</span>' +
+			        '</div>';
 
-				itemStr += '  <span class="tel">' + places.phone + '</span>' +
-					'</div>';
+			    el.innerHTML = itemStr;
+			    el.className = 'item';
 
-				el.innerHTML = itemStr;
-				el.className = 'item';
+			    // 클릭 이벤트 리스너 추가
+			    el.onclick = function () {
+			        console.log("Road Address:", roadAddress); // 도로명 주소 로깅
+			        selectPlace(new kakao.maps.LatLng(places.y, places.x), places.place_name, currentSearchType, roadAddress); // 수정된 도로명 주소 전달
+			    };
 
-				return el;
+			    return el;
 			}
+
 
 			function addMarker(position, idx, title) {
 				var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
@@ -638,36 +640,44 @@
 			}
 
 			function submitPost() {
-			    var title = document.getElementById('title').value;
-			    var content = document.getElementById('content').value;
-			    var mapState = getMapState(); // 지도 상태 수집
-			    var userId = "<%=session.getAttribute("userId")%>";
+				var startRoadInput = document.getElementById('startRoadInput') ? document.getElementById('startRoadInput').value : '';
+				var endRoadInput = document.getElementById('endRoadInput') ? document.getElementById('endRoadInput').value : '';
 
-			    fetch('/submit-post', {
-			        method: 'POST',
-			        headers: {
-			            'Content-Type': 'application/json'
-			        },
-			        body: JSON.stringify({
-			            title: title,
-			            content: content,
-			            mapstate: mapState,
-			            userId: userId,
-			            startAddress: startAddress, // 출발지 주소 정보 추가
-			            endAddress: endAddress // 도착지 주소 정보 추가
-			        })
-			    })
-			    .then(response => response.json())
-			    .then(data => {
-			        console.log('Success:', data);
-			        alert("등록되었습니다.");
-			        window.close();
-			        window.location.href = "carpool-main.jsp";
-			    })
-			    .catch((error) => {
-			        console.error('Error:', error);
-			    });
+				var startInput = document.getElementById('startInput').value;
+				var endInput = document.getElementById('endInput').value;
+				var title = document.getElementById('title').value;
+				var content = document.getElementById('content').value;
+				var mapState = getMapState(); // 지도 상태 수집
+				var userId = "<%=session.getAttribute("userId")%>";
+				console.log(getMapState());
+				fetch('/submit-post', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						title: title,
+						startInput: startInput,
+						endInput: endInput,
+						 startRoadInput: startRoadInput,
+					        endRoadInput: endRoadInput,
+						content: content,
+						mapstate: mapState,
+						userId: userId
+					})
+				})
+					.then(response => response.json())
+					.then(data => {
+						console.log('Success:', data);
+						alert("등록되었습니다.");
+						window.close();
+						window.location.href = "carpool-main.jsp";
+					})
+					.catch((error) => {
+						console.error('Error:', error);
+					});
 			}
+
 
 		</script>
 </body>

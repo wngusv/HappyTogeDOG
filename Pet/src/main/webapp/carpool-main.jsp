@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.Map"%> <!-- Map을 import 해야 합니다 -->
+<%@ page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/floating-banner.jsp"%>
 <!DOCTYPE html>
@@ -40,8 +40,6 @@
 	</header>
 	<main>
 		<div class="container">
-            <%-- JavaScript 함수로부터 출발지와 도착지의 주소를 가져옵니다 --%>
-            
 			<button onclick="checklogin();"
 				style="float: right; margin-top: 200px;">카풀 모집</button>
 			<h2 style="margin-top: 200px;">반려견 카풀</h2>
@@ -54,10 +52,10 @@
 						onclick="window.location.href='/viewPost?id=${post.id}';"
 						style="cursor: pointer; margin-bottom: 10px; padding: 10px;">
 						<p>제목: ${post.title}</p>
+						<p>출발지: ${post.startInput} (${post.startRoadInput})</p> 
+						<p>도착지: ${post.endInput} (${post.endRoadInput})</p>
 						<p>작성자: ${post.userId}</p>
 						<p>등록 시간: ${post.createdAt}</p>
-                        <p>출발지: ${post.startAddress}</p>
-                        <p>도착지: ${post.endAddress}</p>
 					</div>
 				</c:forEach>
 			</c:if>
@@ -77,8 +75,6 @@
 			}
 			window.location.href = 'carpool-map.jsp';
 		}
-       	
-       	
 	</script>
 </body>
 </html>
