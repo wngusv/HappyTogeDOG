@@ -36,7 +36,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #FFEFD5;">
     <header>
         <% request.setAttribute("pageTitle", "메인페이지"); %>
         <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
