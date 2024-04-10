@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>산책 아르바이트 공고</title>
+    <title>반려견 산책 아르바이트 공고</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
@@ -24,7 +24,7 @@
     }
 %>
 <div class="container mt-5">
-    <h1 class="mb-4">반려견 산책 아르바이트 공고</h1>
+    <h1 class="mb-4"><img src="/images/산책알바.png" alt="산책알바"> 반려견 산책 아르바이트 공고</h1>
     <form method="post" action="form_send.jsp" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">제목:</label>
