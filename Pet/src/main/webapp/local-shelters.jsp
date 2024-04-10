@@ -31,11 +31,11 @@
 /*지역 유기견 보호센터 테두리*/
 .rounded-border {
     background-color: white;
-    width: 38vw; /* 가로 길이 설정 */
+    width: 33vw; /* 가로 길이 설정 */
     border-radius: 10px; /* 테두리 둥글게 처리 */
     border: 2px solid rgb(111, 94, 75); /* 테두리 색상과 두께 설정 */
     margin: 0 auto; /* 상하 마진을 0으로, 좌우 마진을 자동으로 설정하여 중앙 정렬 */
-    margin-right: 900px; /* 오른쪽 여백을 추가로 조정 */
+    margin-right: 800px; /* 오른쪽 여백을 추가로 조정 */
     margin-bottom: 10px;
 }
 
