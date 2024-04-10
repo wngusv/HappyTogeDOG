@@ -374,12 +374,18 @@
     	        additionalInfoDiv.style.alignItems = 'center'; // 내부 요소를 세로 중앙에 정렬
     	        additionalInfoDiv.style.justifyContent = 'center'; // 내부 요소를 가로 중앙에 정렬
     	        additionalInfoDiv.style.gap = '10px';
-    	        additionalInfoDiv.innerHTML = '<p class="org-name">관리기관명: ' + shelter.orgNm + '</p>' +
-                '<p class="weekday-hours">평일 운영시간: ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>';
+    	     // 평일 운영시간 정보가 유효한지 검사
+    	        if (shelter.weekOprStime && shelter.weekOprEtime && shelter.weekOprStime !== ':' && shelter.weekOprEtime !== ':') {
+    	            additionalInfoDiv.innerHTML = '<p class="org-name">관리기관 : ' + shelter.orgNm + '</p>' +
+    	                '<p class="weekday-hours">평일 운영시간 : ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>';
+    	        } else {
+    	            additionalInfoDiv.innerHTML = '<p class="org-name">관리기관 : ' + shelter.orgNm + '</p>' +
+    	                '<p class="weekday-hours">평일 운영시간 : 정보없음</p>';
+    	        }
                 if (shelter.weekendOprStime && shelter.weekendOprEtime && shelter.weekendOprStime !== ':' && shelter.weekendOprEtime !== ':') {
-                    additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>';
+                    additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간 : ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>';
                 } else {
-                    additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: 미운영</p>';
+                    additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간 : 미운영</p>';
                 }
 
 

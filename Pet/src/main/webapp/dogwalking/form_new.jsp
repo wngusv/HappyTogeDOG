@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>산책 알바 구하기</title>
+    <title>산책 아르바이트 공고</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
@@ -15,7 +15,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
 <%
     String userId = (String)session.getAttribute("userId");
     User user = null;
@@ -24,7 +24,7 @@
     }
 %>
 <div class="container mt-5">
-    <h1 class="mb-4">산책 알바 구하기 입력폼</h1>
+    <h1 class="mb-4">반려견 산책 아르바이트 공고</h1>
     <form method="post" action="form_send.jsp" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">제목:</label>
@@ -55,7 +55,7 @@
         </div>
         <div class="form-group">
             <label for="pickupLocation">픽업위치:</label><br>
-            <button type="button" class="btn btn-primary mb-2" onclick="sample6_execDaumPostcode()">우편번호 찾기</button><br>
+            <button type="button" class="btn btn-primary mb-2" onclick="sample6_execDaumPostcode()" style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">우편번호 찾기</button><br>
             <input type="text" class="form-control mb-2" id="sample6_address" placeholder="주소" value="<%= user != null ? user.getAddress() : "" %>" name="sample6_address" readonly>
             <input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" value="<%= user != null ? user.getAddress_detail() : "" %>" name="sample6_detailAddress">
         </div>
@@ -65,7 +65,8 @@
         </div>
         <div class="form-group">
             <label for="introduction">소개글:</label>
-            <textarea class="form-control" id="introduction" placeholder="소개글" name="introduction" maxlength="2048" style="height:150px;"></textarea>
+            <textarea class="form-control" id="introduction"
+            placeholder="반려견의 이름, 성격 등을 최대한 자세히 소개 해주세요." name="introduction" maxlength="2048" style="height:150px;"></textarea>
         </div>
 <div class="form-group">
     <label for="dogPhoto">강아지 사진 (최대 5개까지):<small class="form-text text-muted">이미지 파일만(jpg, png) 첨부 가능합니다. (각 파일 2MB 이하)</small></label><br>
@@ -82,7 +83,7 @@
     
 </div>
         <hr>
-        <button type="submit" class="btn btn-primary">등록하기</button>
+        <button type="submit" class="btn btn-primary" style="background-color: rgb(235, 111, 98); color: white; border-color: rgb(235, 111, 98);">등록하기</button>
     </form>
 </div>
 <script>
