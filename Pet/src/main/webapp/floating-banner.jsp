@@ -23,7 +23,7 @@
 <!-- Floating Banner HTML -->
 <div id="floating-banner">
     <a href="donations.jsp">
-        <img src="/images/플로팅배너.jpeg" alt="기부하기">
+        <img src="/images/플로팅배너.png" alt="기부하기">
     </a>
 </div>
 
