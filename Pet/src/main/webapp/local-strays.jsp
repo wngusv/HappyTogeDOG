@@ -252,7 +252,6 @@ background-color: rgb(205, 173, 129);
 
 
 
-
 		</div>
 	</main>
 
