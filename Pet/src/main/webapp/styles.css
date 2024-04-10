@@ -1,84 +1,66 @@
-body {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500; /* Medium 굵기 */
-}
-
-.navbar-brand, .navbar-nav .nav-link, .menu ul li a {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500; /* Medium 굵기 */
-}
-
-
 .container {
-    width: 80%;
-    margin: 0 auto;
-    overflow: hidden;
+	width: 80%;
+	margin: 0 auto;
+	overflow: hidden;
 }
 
 header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgb(250, 230, 163);
-    color: rgb(0, 0, 0);
-    padding: 13px 0;
-    z-index: 999; /* 다른 요소들 위에 헤더를 표시하기 위해 z-index 값을 설정합니다. */
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background: rgb(250, 230, 163);
+	color: rgb(0, 0, 0);
+	padding: 0 0;
+	z-index: 999; /* 다른 요소들 위에 헤더를 표시하기 위해 z-index 값을 설정합니다. */
 }
 
 header .logo {
-    float: left;
+	float: left;
 }
 
 header .logo h1 {
-    margin: 0;
+	margin: 0;
 }
 
 header nav {
-    float: right;
+	float: right;
 }
 
 header nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
-
 header nav ul li {
-    display: inline;
-    margin-left: 20px;
+	display: inline;
+	margin-left: 20px;
 }
 
 header nav ul li a {
-    color: #fff;
-    text-decoration: none;
+	color: #fff;
+	text-decoration: none;
 }
 
-
 .menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 5;
-    height: 30px;
+	list-style: none;
+	margin: 0;
+	padding: 5;
+	height: 30px;
 }
 
 .menu ul li {
-    display: inline-block;
+	display: inline-block;
 }
 
 .menu ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    padding: 10px 20px;
+	color: #ffffff;
+	text-decoration: none;
+	padding: 10px 20px;
 }
 
 .menu ul li a:hover {
-    color: black;
-    background-color: rgb(248, 248, 142);
-    border-radius: 50px; 
+	color: black;
+	background-color: rgb(248, 248, 142);
+	border-radius: 50px;
 }
-
-
-
-
-

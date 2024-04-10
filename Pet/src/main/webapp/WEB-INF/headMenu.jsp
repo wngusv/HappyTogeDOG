@@ -18,19 +18,12 @@ body {
 	font-optical-sizing: auto;
 }
 
-.my-header {
-	padding-top: 0px;
-	padding-bottom: 0px
-}
-
 .header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	background-color: rgb(250, 230, 163);
 	padding: 3px 50px;
-	padding-bottom: 0px;
-	padding-top: 0px;
 }
 
 .nav-menu, .navbar-nav {
