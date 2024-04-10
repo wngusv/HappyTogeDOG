@@ -378,11 +378,12 @@
     	        additionalInfoDiv.style.gap = '10px';
     	        additionalInfoDiv.innerHTML = '<p class="org-name">관리기관명: ' + shelter.orgNm + '</p>' +
                 '<p class="weekday-hours">평일 운영시간: ' + shelter.weekOprStime + '~' + shelter.weekOprEtime + '</p>';
-                if (shelter.weekendOprStime && shelter.weekendOprEtime) {
-                	additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>';
+                if (shelter.weekendOprStime && shelter.weekendOprEtime && shelter.weekendOprStime !== ':' && shelter.weekendOprEtime !== ':') {
+                    additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: ' + shelter.weekendOprStime + '~' + shelter.weekendOprEtime + '</p>';
                 } else {
-                	additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: 미운영</p>';
+                    additionalInfoDiv.innerHTML += '<p class="weekend-hours">주말 운영시간: 미운영</p>';
                 }
+
 
                 if (shelter.closeDay === 0) {
                 	additionalInfoDiv.innerHTML += '<p class="close-day">휴무일: ' + (shelter.closeDay === 0 ? "없음" : shelter.closeDay) + '</p>';
