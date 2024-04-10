@@ -41,6 +41,10 @@
 					name="name" class="form-control" required>
 			</div>
 			<div class="form-group">
+				<label for="name">아이디</label> <input type="text" id="id" name="id"
+					class="form-control" required>
+			</div>
+			<div class="form-group">
 				<label for="phone">전화번호</label> <input type="text" maxlength="11"
 					id="phone" name="phone" class="form-control" required
 					oninput="this.value = this.value.replace(/[^0-9]/g, '')">
@@ -54,9 +58,11 @@
 					id="checkNumber" name="checkNumber" class="form-control gray-text"
 					placeholder="5자리 숫자를 입력하세요." required />
 			</div>
-			 <div class="form-group">
-            <button type="button" id="check" class="btn" style="background-color: rgb(88, 185, 117); border-color: rgb(88, 185, 117);" disabled>확인</button>
-        </div>
+			<div class="form-group">
+				<button type="button" id="check" class="btn"
+					style="background-color: rgb(88, 185, 117); border-color: rgb(88, 185, 117);"
+					disabled>확인</button>
+			</div>
 		</form>
 	</div>
 
@@ -75,6 +81,7 @@
 						'DOMContentLoaded',
 						function() {
 							var nameInput = document.getElementById('name');
+							var idInput = document.getElementById('id');
 							var phoneInput = document.getElementById('phone');
 							var certificationButton = document
 									.getElementById('certificationNumber');
@@ -84,16 +91,20 @@
 
 							function updateButtonStates() {
 								var isNameFilled = nameInput.value.trim().length > 0;
+								var isIdFilled = idInput.value.trim().length > 0;
 								var isPhoneCorrect = phoneInput.value.length === 11
 										&& /^\d+$/.test(phoneInput.value);
 								var isCodeCorrect = checkNumberInput.value.length === 5
 										&& /^\d+$/.test(checkNumberInput.value);
 
-								certificationButton.disabled = !(isNameFilled && isPhoneCorrect);
+								certificationButton.disabled = !(isNameFilled
+										&& isIdFilled && isPhoneCorrect);
 								checkButton.disabled = !isCodeCorrect;
 							}
 
 							nameInput.addEventListener('input',
+									updateButtonStates);
+							idInput.addEventListener('input',
 									updateButtonStates);
 							phoneInput.addEventListener('input',
 									updateButtonStates);
@@ -121,6 +132,7 @@
 
 							function verifyCode() {
 								var userName = document.getElementById('name').value;
+								var userId = idInput.value;
 								var userPhone = document
 										.getElementById('phone').value;
 								var userCode = document
@@ -139,7 +151,9 @@
 								var postData = 'code='
 										+ encodeURIComponent(userCode)
 										+ '&name='
-										+ encodeURIComponent(userName)
+										+ encodeURIComponent(userName) 
+										+ '&id='
+										+ encodeURIComponent(userId)
 										+ '&phone='
 										+ encodeURIComponent(userPhone);
 								xhr.send(postData);

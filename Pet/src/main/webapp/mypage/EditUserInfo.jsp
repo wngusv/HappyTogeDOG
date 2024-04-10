@@ -28,7 +28,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
     <div class="container form-container">
         <h1 class="text-center mb-4">회원 정보 수정</h1>
         <% 

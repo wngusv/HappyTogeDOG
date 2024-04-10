@@ -32,14 +32,15 @@ public class FindIDDAO { // id랑 pw 찾는 dao인데,, 지금 이름 바꾸면 
 	}
 	
 	
-	public String findPW(String name, String phone) {
+	public String findPW(String name,String id, String phone) {
 		
 		
-		String sql = "SELECT pw FROM user where user_name = ? and phone = ? ";
+		String sql = "SELECT pw FROM user where user_name = ? and id = ? and phone = ? ";
 		try (Connection conn = MyWebContextListener.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, name);
-			stmt.setString(2, phone);
+			stmt.setString(2, id);
+			stmt.setString(3, phone);
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
 					String pw = rs.getString("pw");
