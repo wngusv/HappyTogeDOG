@@ -16,27 +16,27 @@ import LocalStrays.Animal;
 import LocalStrays.AnimalServlet;
 
 public class MyWebContextListener implements ServletContextListener {
-	private static DataSource dataSource;
+   private static DataSource dataSource;
 
-	@Override
-	public void contextInitialized(ServletContextEvent sce) {
-		initDataSource();
-		System.out.println("데이터베이스 연결 완료");
+   @Override
+   public void contextInitialized(ServletContextEvent sce) {
+      initDataSource();
+      System.out.println("데이터베이스 연결 완료");
 
-	}
+   }
 
-	private void initDataSource() {
-		BasicDataSource ds = new BasicDataSource();
-		ds.setUrl("jdbc:mysql://192.168.0.106:3306/pet");
-		ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		ds.setUsername("wngus");
-		ds.setPassword("wngus");
+   private void initDataSource() {
+      BasicDataSource ds = new BasicDataSource();
+      ds.setUrl("jdbc:mysql://192.168.0.106:3306/pet");
+      ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+      ds.setUsername("wngus");
+      ds.setPassword("wngus");
 
-		dataSource = ds;
-	}
+      dataSource = ds;
+   }
 
-	public static Connection getConnection() throws SQLException {
-		return dataSource.getConnection();
-	}
+   public static Connection getConnection() throws SQLException {
+      return dataSource.getConnection();
+   }
 
 }
