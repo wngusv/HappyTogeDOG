@@ -82,7 +82,7 @@ background-color: rgb(205, 173, 129);
 }
 
 .card:hover {
-	border: 2px solid #000;
+	border: 2px solid rgb(111, 94, 75);
 }
 
 .local-government-buttons {
