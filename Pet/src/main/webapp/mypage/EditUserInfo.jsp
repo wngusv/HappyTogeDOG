@@ -80,7 +80,7 @@
                 <input type="text" id="addressDetail" name="addressDetail" class="form-control input-field" value="<%= addressDetail %>" readonly>
             </div>
             <div class="text-center">
-                <a href="/mypage.jsp" class="btn btn-outline-secondary">취소</a>
+                <a href="/mypage.jsp" class="btn btn-outline-secondary">마이페이지로 돌아가기</a>
             </div>
         <% 
             } else {
