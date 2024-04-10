@@ -640,13 +640,25 @@
 			}
 
 			function submitPost() {
+				if (pathData.length === 0) {
+			        alert('경로를 찾은 후에 등록해주세요.');
+			        return; // 함수 실행을 여기서 중단합니다.
+			    }
+				
+				
 				var startRoadInput = document.getElementById('startRoadInput') ? document.getElementById('startRoadInput').value : '';
 				var endRoadInput = document.getElementById('endRoadInput') ? document.getElementById('endRoadInput').value : '';
-
 				var startInput = document.getElementById('startInput').value;
 				var endInput = document.getElementById('endInput').value;
 				var title = document.getElementById('title').value;
 				var content = document.getElementById('content').value;
+				
+				 if (title === '' || content === '') {
+				        alert('제목과 내용을 모두 입력해주세요.');
+				        return; // 함수 실행을 여기서 중단합니다.
+				    }
+
+				
 				var mapState = getMapState(); // 지도 상태 수집
 				var userId = "<%=session.getAttribute("userId")%>";
 				console.log(getMapState());
