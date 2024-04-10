@@ -175,15 +175,13 @@
 						<!-- 검색 버튼 -->
 						<div class="form-group col-md-1" style="margin-top: 20px;">
 							<button type="submit" class="btn btn-primary"
-								style="margin-top: 32px; background-color: rgb(235, 111, 98); color: white;">검색</button>
+								style="margin-top: 32px; background-color: rgb(235, 111, 98); color: white; border-color: rgb(235, 111, 98);">검색</button>
 						</div>
 
 						<!-- 급여 높은 순 버튼 -->
-						<div class="form-group col-md-2" style="margin-top: 20px; margin-left: 90px;">
-							<a href="walk-jobs.jsp?sortBy=pay" class="btn btn-primary"
-								style="margin-top: 32px; background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">▼
-								급여 높은 순</a>
-						</div>
+<div class="form-group col-md-7" style="margin-top: 20px; margin-left: auto;">
+    <a href="walk-jobs.jsp?sortBy=pay" class="btn btn-primary float-right" style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">▼ 급여 높은 순</a>
+</div>
 
 					</div>
 				</form>
@@ -339,12 +337,12 @@
 						<c:choose>
 							<c:when test="${sessionScope.userId != null}">
 								<button type="button" class="btn btn-primary"
-									style="background-color: rgb(235, 111, 98); color: white; margin-top: -95px;"
+									style="background-color: rgb(235, 111, 98); color: white; margin-top: -95px; border-color: rgb(235, 111, 98);"
 									onclick="location.href='dogwalking/form_new.jsp'">글쓰기</button>
 							</c:when>
 							<c:otherwise>
 								<button type="button" class="btn btn-primary"
-									style="background-color: rgb(235, 111, 98); color: white; margin-top: -95px;"
+									style="background-color: rgb(235, 111, 98); color: white; margin-top: -95px; border-color: rgb(235, 111, 98);" 
 									onclick="alert('로그인 후 이용해주세요.'); location.href='login.jsp'">글쓰기</button>
 							</c:otherwise>
 						</c:choose>

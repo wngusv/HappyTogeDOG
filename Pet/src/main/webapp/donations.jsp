@@ -19,10 +19,10 @@
 }
 </style>
 </head>
-<body>
+<body style="padding-top: 100px; background-color: rgb(254, 247, 222);">
 		<header>
 		<%
-		request.setAttribute("pageTitle", "기부");
+		request.setAttribute("pageTitle", "유기견 기부");
 		%>
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
@@ -43,10 +43,6 @@
 		</script>
 	</main>
 
-	<footer>
-		<div class="container">
-			<p>&copy; 2024 Pet. 모든 권리 보유.</p>
-		</div>
-	</footer>
+
 </body>
 </html>
