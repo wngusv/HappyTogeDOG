@@ -23,7 +23,7 @@
 }
 
 .local-government-button {
-	background-color: yellow;
+	background-color: rgb(205, 173, 129);
 	font-size: 15px;
 	border-radius: 10px; /* Rounded border */
 	border: none; /* Remove default border */
@@ -32,10 +32,12 @@
 	/* Change font */
 	cursor: pointer; /* Change cursor to pointer on hover */
 	margin: 5px; /* Add margin between buttons */
-	color: black;
+	color: rgb(59, 38, 14);
 	display: inline-block;
-	/* Hover effect */
+	font-weight: bold; /* Make font bold */
+	/* Hover effect for background color */
 	transition: background-color 0.3s ease;
+	/* Hover effect for transform */
 	transition: transform 0.3s ease;
 }
 
@@ -44,9 +46,10 @@
 }
 
 .local-government-button:hover {
-	background-color: #ffcc00; /* Change background color on hover */
+	background-color: rgb(255, 144, 61);
+	/* Change background color on hover */
 	text-decoration: none;
-	color: black;
+	color: rgb(59, 38, 14);
 	font-size: 18px;
 	transform: scale(1.1);
 }
@@ -69,8 +72,10 @@
 }
 
 .local-government-button.highlight {
-	border: 2px solid black;
-	font-weight: bold;
+	background-color: rgb(255, 144, 61);
+	text-decoration: bold;
+	color: rgb(59, 38, 14);
+	font-size: 15px;
 }
 
 .pages {
@@ -229,6 +234,8 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+
 </body>
 
 </html>
