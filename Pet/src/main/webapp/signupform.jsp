@@ -22,7 +22,7 @@
 }
 </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container">
