@@ -18,7 +18,7 @@
         padding-right: 10px; /* 오른쪽 여백 추가 */
     }
 </style>
-<body style="padding-top: 100px; background-color: rgb(254, 247, 222);">>
+<body style="padding-top: 100px; background-color: rgb(254, 247, 222);">
     <div class="container">
         <h1 class="mt-5">마이페이지</h1>
         <main>
