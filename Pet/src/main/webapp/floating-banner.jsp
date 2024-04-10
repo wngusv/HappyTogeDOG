@@ -11,10 +11,9 @@
         right: 20px; /* Distance from the right */
         background-color: transparent; /* Banner background color */
         color: white; /* Text color */
-        padding: 10px; /* Padding inside the banner */
+        padding: 0px; /* Padding inside the banner */
         z-index: 1000; /* Ensure it stays on top of other content */
         cursor: pointer; /* Change mouse cursor on hover */
-        box-shadow: 0px 0px 10px rgba(0,0,0,0.5); /* Shadow for better visibility */
         border-radius: 0px; /* Rounded corners for aesthetic */
     }
 </style>
