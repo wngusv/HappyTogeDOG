@@ -58,10 +58,12 @@
     </li>
 </ul>
             <a href="/mypage/EditUserInfo.jsp?type=address" class="btn btn-primary mt-3" style="background-color: rgb(88, 185, 117); border-color: rgb(88, 185, 117);">회원정보수정</a>
+            <br>
+            <br>
         </div>
         <div class="row">
         <div class="col-md-6">
-            <h2>내가 쓴 산책 아르바이트 공고</h2>
+            <h2>작성한 산책 아르바이트 공고 목록</h2>
             <table class="table table-striped" style="background-color: white; text-align: center;">
                 <thead>
                     <tr>
@@ -93,7 +95,7 @@
             </table>
         </div>
         <div class="col-md-6">
-            <h2>내가 쓴 게시글</h2>
+            <h2>작성한 게시글 목록</h2>
             <table class="table table-striped" style="background-color: white; text-align: center;">
                 <thead>
                     <tr>
