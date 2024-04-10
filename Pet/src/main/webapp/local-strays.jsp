@@ -20,6 +20,7 @@
 .custom-body {
 	padding-top: 150px;
 	background-color: rgb(254, 247, 222);
+	color: rgb(59, 38, 14);
 }
 
 .local-government-button {
@@ -82,8 +83,18 @@ background-color: rgb(109, 95, 80);
 	margin: 0 auto; /* 중앙 정렬을 위해 좌우 여백을 자동으로 조정합니다. */
 }
 
+.card-text {
+font-size: 16px;
+color: #826D59;
+}
+
+.card-title {
+font-size: 18px;
+}
+
 .card:hover {
-	border: 2px solid rgb(111, 94, 75);
+	border: 3px solid #EB886A;
+	transform: scale(1.05);
 }
 
 .local-government-buttons {
@@ -154,37 +165,37 @@ background-color: rgb(109, 95, 80);
 						</a>
 						<div class="card-body">
 							<h5 class="card-title">
-								<strong>종류:</strong>
+								<strong>종류</strong>
 								<p class="card-text"><%=animal.getKindCd()%></p>
 							</h5>
 
 							<h5 class="card-title">
-								<strong>색상:</strong>
+								<strong>색상</strong>
 								<p class="card-text"><%=animal.getColorCd()%></p>
 							</h5>
 
 							<h5 class="card-title">
-								<strong>나이:</strong>
+								<strong>나이</strong>
 								<p class="card-text"><%=animal.getAge()%></p>
 							</h5>
 
 							<h5 class="card-title">
-								<strong>체중:</strong>
+								<strong>체중</strong>
 								<p class="card-text"><%=animal.getWeight()%></p>
 							</h5>
 
 							<h5 class="card-title">
-								<strong>성별:</strong>
+								<strong>성별</strong>
 								<p class="card-text"><%=animal.getSexCd()%></p>
 							</h5>
 
 							<h5 class="card-title">
-								<strong>중성화여부:</strong>
+								<strong>중성화여부</strong>
 								<p class="card-text"><%=animal.getNeuterYn()%></p>
 							</h5>
 
 							<h5 class="card-title">
-								<strong>특징:</strong>
+								<strong>특징</strong>
 								<p class="card-text"><%=animal.getSpecialMark()%></p>
 							</h5>
 
