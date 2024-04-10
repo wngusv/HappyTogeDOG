@@ -16,6 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>지역 유기동물</title>
 <style>
+@import	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 .custom-body {
 	padding-top: 150px;
 	background-color: rgb(254, 247, 222);
