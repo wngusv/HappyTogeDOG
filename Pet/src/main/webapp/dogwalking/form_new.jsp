@@ -66,7 +66,7 @@
         <div class="form-group">
             <label for="introduction">소개글:</label>
             <textarea class="form-control" id="introduction"
-            placeholder="반려견의 이름, 성격 등을 최대한 자세히 소개 해주세요." name="introduction" maxlength="2048" style="height:150px;"></textarea>
+            placeholder="반려견의 이름, 성격 등을 최대한 자세히 소개 해주세요. 원하는 근무 요일과 시간을 명확히 작성해주세요." name="introduction" maxlength="2048" style="height:150px;"></textarea>
         </div>
 <div class="form-group">
     <label for="dogPhoto">강아지 사진 (최대 5개까지):<small class="form-text text-muted">이미지 파일만(jpg, png) 첨부 가능합니다. (각 파일 2MB 이하)</small></label><br>
