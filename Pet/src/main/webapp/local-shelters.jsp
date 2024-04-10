@@ -30,19 +30,22 @@
 
 /*지역 유기견 보호센터 테두리*/
 .rounded-border {
-	background-color: white;
-	width: 40vw;
-	border-radius: 10px;
-	border: 2px solid rgb(111, 94, 75);
-	margin-right: 0 auto;
+    background-color: white;
+    width: 38vw; /* 가로 길이 설정 */
+    border-radius: 10px; /* 테두리 둥글게 처리 */
+    border: 2px solid rgb(111, 94, 75); /* 테두리 색상과 두께 설정 */
+    margin: 0 auto; /* 상하 마진을 0으로, 좌우 마진을 자동으로 설정하여 중앙 정렬 */
+    margin-right: 900px; /* 오른쪽 여백을 추가로 조정 */
+    margin-bottom: 10px;
 }
+
 
 /*지도*/
 #map {
 	position: fixed;
 	border: 2px solid rgb(111, 94, 75);
 	border-radius: 10px;
-	top: 50%;
+	top: 50.4%;
 	right: 250px; /* 우측 여백 설정 */
 	transform: translateY(-50%);
 	width: 80vw; /* 가로 너비 조절 */
@@ -87,11 +90,8 @@
 	margin-bottom: 20px;
 	width: 100%; /* 또는 충분한 고정 너비 */
 	overflow: auto;
-}
-
-.rounded-border {
-	margin-bottom: 10px; /* 푸터와의 간격 설정 */
-	width: 60%;
+	text-align: center;
+	
 }
 
 .shelter-name {
@@ -184,13 +184,13 @@
 	</header>
 <body style="background-color: rgb(254, 247, 222);">
 	<main style="margin-bottom: 150px;">
-		<div class="container" style="padding-top: 150px;">
-			<section class="strays-info" style="width: 1200px;">
-				<div id="map-container">
-					<div id="map" style="width: 700px; height: 500px;"></div>
-				</div>
-				<div id="shelters"></div>
-				<div id="region-list">
+    <div class="container" style="padding-top: 150px;">
+        <section class="strays-info" style="width: 1200px; margin: auto;">
+            <div id="map-container">
+                <div id="map" style="width: 700px; height: 500px;"></div>
+            </div>
+            <div id="shelters"></div>
+            <div id="region-list" style="text-align: center;">
 					<a href="#" class="region-link" data-region="">전체</a> <a href="#"
 						class="region-link" data-region="서울특별시">서울</a> <a href="#"
 						class="region-link" data-region="부산광역시">부산</a> <a href="#"
@@ -210,10 +210,10 @@
 						class="region-link" data-region="강원도">강원</a> <a href="#"
 						class="region-link" data-region="제주">제주</a>
 				</div>
-				<div id="shelter-info"></div>
-				<div id="pagination"></div>
 
 			</section>
+				<div id="shelter-info"></div>
+				<div id="pagination"></div>
 		</div>
 
 	</main>
