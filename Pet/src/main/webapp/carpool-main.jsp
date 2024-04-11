@@ -13,6 +13,22 @@
    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <style>
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.content-wrap {
+    min-height: 100%;
+    /* Flexbox 설정 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 컨텐츠를 상단과 하단으로 분리 */
+}
+
+footer {
+    margin-top: auto; /* 푸터를 하단에 고정 */
+}
 .row {
    margin-top: 50px;
 }
@@ -233,6 +249,7 @@ window.onload = function() {
 </script>
 </head>
 <body style="padding-top: 50px; background-color: rgb(254, 247, 222);">
+   <div class="content-wrap">
    <header>
       <%
       request.setAttribute("pageTitle", "반려견 카풀");
