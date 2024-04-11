@@ -109,7 +109,6 @@
 .local-government-buttons {
 	text-align: center;
 	background-color: rgb(254, 247, 222);
-	padding-top: 30px;
 	padding-bottom: 50px;
 	height: 0px;
 }
@@ -138,10 +137,6 @@
 
 	<main style="margin-bottom: 55px;'">
 		<div class="custom-container">
-			<section class="strays-info">
-				<h2>지역 유기동물</h2>
-			</section>
-
 			<div class="local-government-buttons">
 				<a href="/AnimalServlet?cidoName=all"
 					class="local-government-button">전체</a>
@@ -150,7 +145,7 @@
 						href="/AnimalServlet?cidoName=${Cido.getOrgdownNm()}">${Cido.getOrgdownNm()}</a>
 				</c:forEach>
 			</div>
-			<div class="local-government-buttons" id="filteredGovernmentButtons">
+			<div class="local-government-buttons" id="filteredGovernmentButtons" style="padding-top: 40px;">
 				<c:forEach var="government" items="${requestScope.localGovernment}">
 					<c:if test="${not government.getOrgdownNm().equals('가정보호')}">
 						<a
