@@ -1,17 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, Util.MyWebContextListener"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/floating-banner.jsp"%>
+<%@ page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 <html>
-<head>
+<header class="my-header">
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
+<link rel="stylesheet" type="text/css" href="../styles.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
-body {
-	padding: 20px;
-}
+
 
 .card {
 	margin-bottom: 20px;
@@ -22,9 +25,13 @@ body {
 	height: auto;
 }
 </style>
-</head>
-<body>
-	<%
+<body style="padding-top: 150px; background-color: rgb(254, 247, 222);">
+	   <%
+		request.setAttribute("pageTitle", "상세 페이지");
+		%>
+		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
+</header>
+<%
 	String num = request.getParameter("num");
 	if (num != null && !num.isEmpty()) {
 		String query = "SELECT * FROM dogwalker WHERE num = ?";
@@ -58,6 +65,7 @@ body {
 		String fileRealName5 = rs.getString("fileRealName5");
 		String fileRoute5 = rs.getString("file_route5");
 	%>
+	<div class="container mt-5">
 	<div class="card">
 		<div class="card-body">
 			<table class="table">
@@ -148,7 +156,10 @@ body {
 				}
 				%>
 			</div>
-
+			<div class="row justify-content-center mt-3">
+        <div class="col-auto">
+	<a href="/walk-jobs.jsp" class="btn btn-primary" style="background-color: rgb(235, 111, 98); color: white;; border-color: rgb(235, 111, 98);">목록으로 돌아가기</a>
+</div>
 		</div>
 	</div>
 
@@ -163,6 +174,11 @@ body {
 	}
 	}
 	%>
-	<a href="/walk-jobs.jsp" class="btn btn-primary">목록으로 돌아가기</a>
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

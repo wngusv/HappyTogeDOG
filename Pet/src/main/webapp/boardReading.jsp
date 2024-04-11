@@ -173,6 +173,7 @@
 	box-shadow: none;
 }
 </style>
+<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 </head>
 <body style="background-color: rgb(254, 247, 222);">
 	<%

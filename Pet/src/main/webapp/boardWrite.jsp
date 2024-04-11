@@ -15,11 +15,21 @@
             max-height: 200px;
             margin-top: 10px;
         }
+          .btn-primary {
+        background-color: rgb(111, 94, 75); /* 배경색 변경 */
+        border-color: transparent; /* 버튼 테두리 색상 */
+    color: white; /* 텍스트 색상 변경 */
+    }
+    .btn-primary:hover {
+   background-color: rgb(149, 204, 143); /* 버튼 배경색 */
+	border-color: transparent; /* 버튼 테두리 색상 */
+	color: black; /* 버튼 내 텍스트 색상 */
+}
     </style>
 </head>
 <body style="background-color: rgb(254, 247, 222);">
     <div class="container mt-5">
-        <h2 class="mb-4">자유게시판 글쓰기</h2>
+        <h2 class="mb-4"><img src="/images/게시판글쓰기.png">자유게시판 글쓰기</h2>
         <form name="writeForm" method="post" enctype="multipart/form-data" action="/UploadProcess.do" onsubmit="return validateForm(this);" class="needs-validation" novalidate>
             <div class="form-group">
                 <label for="categorySelect">카테고리</label>
