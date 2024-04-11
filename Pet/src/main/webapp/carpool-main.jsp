@@ -116,7 +116,6 @@ function showSubRegions(event, region) {
     console.log("Function called with region:", region); // 로그 추가
     event.preventDefault(); // 기본 앵커 이벤트 방지
 
-    
     var regionsData = {
        '전체': [],   
         '서울': ['종로구', '중구', '용산구','성동구','광진구','동대문구','중랑구','성북구','강북구','도봉구','노원구','은평구','서대문구','마포구','양천구','강서구','구로구','금천구','영등포구','동작구','관악구','서초구','강남구','송파구','강동구'],
@@ -136,7 +135,6 @@ function showSubRegions(event, region) {
        '전북': ['전주시','군산시','익산시','정읍시','남원시','김제시','완주군','진안군','무주군','장수군','임실군','순창군','고창군','부안군'],
        '강원특별자치도': ['춘천시','원주시','강릉시','동해시','태백시','속초시','삼척시','홍천군','횡성군','영월군','평창군','정선군','철원군','화천군','양구군','인제군','고성군','양양군'],
        '제주': ['제주시','서귀포시']
-    
     };
 
     var subRegionsContainer = document.getElementById('sub-regions');
@@ -149,7 +147,7 @@ function showSubRegions(event, region) {
             subRegionLink.href = '#';
             subRegionLink.className = 'region-link sub-region-link';
             subRegionLink.textContent = subRegion;
-            
+
             // 클릭 이벤트 리스너 추가
             subRegionLink.addEventListener('click', function() {
                 // 모든 sub-region-link에서 dynamic-highlight 클래스 제거
@@ -159,14 +157,17 @@ function showSubRegions(event, region) {
 
                 // 현재 클릭된 버튼에만 dynamic-highlight 클래스 추가
                 this.classList.add('dynamic-highlight');
+
+                // 선택된 지역과 하위 지역의 조합에 해당하는 게시물만 표시
+                filterPostsByRegion(region + ' ' + subRegion);
             });
-            
-            
+
             // subRegionLink에 대한 onclick 이벤트 추가 가능
             subRegionsContainer.appendChild(subRegionLink);
         });
     }
 }
+
 document.addEventListener('DOMContentLoaded', function() {
     // 모든 지역 링크에 클릭 이벤트 리스너를 추가합니다.
     document.querySelectorAll('.region-link').forEach(function(link) {
@@ -194,6 +195,7 @@ function filterPostsByRegion(region) {
         }
     });
 }
+
 window.onload = function() {
     var regionLinks = document.querySelectorAll('.region-link');
     regionLinks.forEach(function(link) {
@@ -297,5 +299,10 @@ window.onload = function() {
       </div>
     <%@ include file="/WEB-INF/footer.jsp"%>
    </main>
+   <script>
+       
+          
+
+   </script>
 </body>
 </html>
