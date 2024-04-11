@@ -102,7 +102,7 @@
 				String displayTown = (town != null) ? town : "";
 				%>
 				<h2 style="text-align: right;">
-					<span style="color: rgb(231, 94, 94);"><%=displayTown%></span> 게시판
+					<span style="color: rgb(231, 94, 94);"><img src="/images/지역3.png" alt="지역"> <%=displayTown%></span> 게시판
 				</h2>
 				<!-- 검색 폼 -->
 				<form action="board.jsp" method="get">
