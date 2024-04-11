@@ -30,7 +30,7 @@
 }
 
 #postForm button {
-	margin-top: 20px;
+	margin-top: 35px;
 	padding: 10px 20px;
 	background-color: #4CAF50;
 	color: white;
