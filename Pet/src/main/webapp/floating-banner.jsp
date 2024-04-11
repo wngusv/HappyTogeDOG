@@ -15,6 +15,7 @@
         z-index: 1000; /* Ensure it stays on top of other content */
         cursor: pointer; /* Change mouse cursor on hover */
         border-radius: 0px; /* Rounded corners for aesthetic */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow effect */
     }
 
     /* Second Floating Banner CSS */
@@ -28,6 +29,7 @@
         z-index: 1000; /* Ensure it stays on top of other content */
         cursor: pointer; /* Change mouse cursor on hover */
         border-radius: 0px; /* Rounded corners for aesthetic */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow effect */
     }
 </style>
 </head>
