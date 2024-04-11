@@ -36,8 +36,8 @@
 </a>
 
 </div>
-    <p>© 2024 Your Website Name. All rights reserved.</p>
-    <p>Contact us at example@example.com</p>
+    <p style="margin-top: 10px;">우리는 하나다.</p>
+    <p>© 2024 Happy togeDog. All rights reserved.</p>
 </div>
 
 </body>
