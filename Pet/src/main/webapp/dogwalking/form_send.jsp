@@ -6,7 +6,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
-String insertQuery = "INSERT INTO pet.dogwalker(num, id, title, size, day, time, address, address_detail, pay, content, today_date, fileName1, fileRealName1, file_route1, fileName2, fileRealName2, file_route2 ,fileName3, fileRealName3, file_route3, fileName4, fileRealName4, file_route4, fileName5, fileRealName5, file_route5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+String insertQuery = "INSERT INTO pet.dogwalker(num, id, title, size, day, time, phone, address, address_detail, pay, content, today_date, fileName1, fileRealName1, file_route1, fileName2, fileRealName2, file_route2 ,fileName3, fileRealName3, file_route3, fileName4, fileRealName4, file_route4, fileName5, fileRealName5, file_route5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 try (Connection connection = MyWebContextListener.getConnection();
 		PreparedStatement psmt = connection.prepareStatement(insertQuery);) {
     // 인코딩 UTF-8 설정
@@ -37,6 +37,7 @@ try (Connection connection = MyWebContextListener.getConnection();
     String size = multipartRequest.getParameter("dogSize");
     String day = multipartRequest.getParameter("day");
     String time = multipartRequest.getParameter("time");
+    String phone = multipartRequest.getParameter("phone");
     String address = multipartRequest.getParameter("sample6_address");
     String address_detail = multipartRequest.getParameter("sample6_detailAddress");
     String payStr = multipartRequest.getParameter("pay"); // 'pay' 값을 문자열로 읽음
@@ -84,26 +85,27 @@ try (Connection connection = MyWebContextListener.getConnection();
     psmt.setString(4, size);
     psmt.setString(5, day);
     psmt.setString(6, time);
-    psmt.setString(7, address);
-    psmt.setString(8, address_detail);
-    psmt.setInt(9, pay);
-    psmt.setString(10, content);
-    psmt.setTimestamp(11, today_date);
-    psmt.setString(12, fileName1);
-    psmt.setString(13, fileRealName1);
-    psmt.setString(14, file_route1);
-    psmt.setString(15, fileName2);
-    psmt.setString(16, fileRealName2);
-    psmt.setString(17, file_route2);
-    psmt.setString(18, fileName3);
-    psmt.setString(19, fileRealName3);
-    psmt.setString(20, file_route3);
-    psmt.setString(21, fileName4);
-    psmt.setString(22, fileRealName4);
-    psmt.setString(23, file_route4);
-    psmt.setString(24, fileName5);
-    psmt.setString(25, fileRealName5);
-    psmt.setString(26, file_route5);
+    psmt.setString(7, phone);
+    psmt.setString(8, address);
+    psmt.setString(9, address_detail);
+    psmt.setInt(10, pay);
+    psmt.setString(11, content);
+    psmt.setTimestamp(12, today_date);
+    psmt.setString(13, fileName1);
+    psmt.setString(14, fileRealName1);
+    psmt.setString(15, file_route1);
+    psmt.setString(16, fileName2);
+    psmt.setString(17, fileRealName2);
+    psmt.setString(18, file_route2);
+    psmt.setString(19, fileName3);
+    psmt.setString(20, fileRealName3);
+    psmt.setString(21, file_route3);
+    psmt.setString(22, fileName4);
+    psmt.setString(23, fileRealName4);
+    psmt.setString(24, file_route4);
+    psmt.setString(25, fileName5);
+    psmt.setString(26, fileRealName5);
+    psmt.setString(27, file_route5);
 
     psmt.executeUpdate();
 
