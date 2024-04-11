@@ -427,20 +427,47 @@ footer {
     	            var markerPosition = new kakao.maps.LatLng(lat, lng);
     	            var marker = new kakao.maps.Marker({position: markerPosition});
     	            kakao.maps.event.addListener(marker, 'click', function() {
-    	                var content = '<div style="position: relative; padding: 10px; border-radius: 8px; background-color: #ffffff;">' +
-    	                              '보호소 이름: ' + shelter.careNm + '<br>주소: ' + shelter.careAddr +
-    	                              '<button style="position: absolute; top: 5px; right: 5px; background-color: #909090; color: white; border: none; border-radius: 4px; padding: 2px 6px; cursor: pointer; font-size: 12px;">닫기</button></div>';
-
-    	                var infoWindow = new kakao.maps.InfoWindow({
-    	                    content: content
+    	                // 인포윈도우 컨텐츠를 위한 div 요소 생성
+    	                var contentDiv = document.createElement('div');
+    	                contentDiv.style.position = 'relative';
+    	                contentDiv.style.padding = '10px';
+    	                contentDiv.style.borderRadius = '8px';
+    	                contentDiv.style.backgroundColor = '#ffffff';
+    	                // 보호소 정보 추가
+    	                contentDiv.innerHTML = '보호소 이름: ' + shelter.careNm + '<br>주소: ' + shelter.careAddr;
+    	                
+    	                // 닫기 버튼 생성 및 스타일 설정
+    	                var closeButton2 = document.createElement('button');
+    	                closeButton2.innerHTML = '닫기';
+    	                closeButton2.style.position = 'absolute';
+    	                closeButton2.style.top = '5px';
+    	                closeButton2.style.right = '5px';
+    	                closeButton2.style.backgroundColor = '#909090';
+    	                closeButton2.style.color = 'white';
+    	                closeButton2.style.border = 'none';
+    	                closeButton2.style.borderRadius = '4px';
+    	                closeButton2.style.padding = '2px 6px';
+    	                closeButton2.style.cursor = 'pointer';
+    	                closeButton2.style.fontSize = '12px';
+    	                
+    	                // 닫기 버튼에 이벤트 리스너 추가
+    	                closeButton2.addEventListener('click', function() {
+    	                    infoWindow.close();
     	                });
-
+    	                
+    	                // 닫기 버튼을 컨텐츠 div에 추가
+    	                contentDiv.appendChild(closeButton2);
+    	                
+    	                // 인포윈도우 생성 및 오픈
+    	                var infoWindow = new kakao.maps.InfoWindow({
+    	                    content: contentDiv  // 컨텐츠로 div 요소를 직접 설정
+    	                });
+    	                
     	                infoWindow.open(map, marker);
     	            });
 
     	            marker.setMap(map);
     	            markers.push(marker);
-
     	        }
     	    });
     	}
