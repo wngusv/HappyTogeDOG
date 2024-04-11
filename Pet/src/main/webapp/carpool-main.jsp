@@ -69,120 +69,166 @@
 }
 
 .sub-region-link {
-    /* 여기에 원하는 스타일 속성 추가 */
-    background-color:  rgb(135, 206, 235);
-    color: #333;
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 10px;
-    text-decoration: none;
-    display: inline-block; /* 인라인 블록으로 표시 */
-    /* 기타 필요한 스타일 */
+	/* 여기에 원하는 스타일 속성 추가 */
+	background-color: rgb(135, 206, 235);
+	color: #333;
+	padding: 5px 10px;
+	margin: 5px;
+	border-radius: 10px;
+	text-decoration: none;
+	display: inline-block; /* 인라인 블록으로 표시 */
+	/* 기타 필요한 스타일 */
 }
+
 .sub-region-link:hover {
-	background-color:  rgb(152, 255, 152);
+	background-color: rgb(152, 255, 152);
 	/* Change background color on hover */
 	text-decoration: none;
 	color: rgb(59, 38, 14);
 	font-size: 18px;
 	transform: scale(1.1);
 }
+
 .highlight {
-    background-color: rgb(255, 144, 61);
-    text-decoration: bold;
-    color: rgb(59, 38, 14);
-    font-size: 15px;
-}
-.dynamic-highlight {
-    background-color: rgb(152, 255, 152);
-    color: black; /* 글씨색은 흰색으로 합니다 */
-    font-weight: bold; /* 글씨를 굵게 합니다 */
-    /* 기타 원하는 스타일 속성을 추가할 수 있습니다 */
+	background-color: rgb(255, 144, 61);
+	text-decoration: bold;
+	color: rgb(59, 38, 14);
+	font-size: 15px;
 }
 
+.dynamic-highlight {
+	background-color: rgb(152, 255, 152);
+	color: black; /* 글씨색은 흰색으로 합니다 */
+	font-weight: bold; /* 글씨를 굵게 합니다 */
+	/* 기타 원하는 스타일 속성을 추가할 수 있습니다 */
+}
 </style>
 <script>
 function checklogin() {
-	var login = '<%=session.getAttribute("userId")%>';
-if (login == "null" || login == "") {
-	alert("로그인이 필요합니다.")
-	window.location.href = 'login.jsp';
-	return;
-}
-window.location.href = 'carpool-map.jsp';
-}
+   var login = '<%=session.getAttribute("userId")%>
+	';
+		if (login == "null" || login == "") {
+			alert("로그인이 필요합니다.")
+			window.location.href = 'login.jsp';
+			return;
+		}
+		window.location.href = 'carpool-map.jsp';
+	}
 
-function showSubRegions(event, region) {
-    console.log("Function called with region:", region); // 로그 추가
-    event.preventDefault(); // 기본 앵커 이벤트 방지
+	function showSubRegions(event, region) {
+		console.log("Function called with region:", region); // 로그 추가
+		event.preventDefault(); // 기본 앵커 이벤트 방지
 
-    
-    var regionsData = {
-    	'전체': [],	
-        '서울': ['종로구', '중구', '용산구','성동구','광진구','동대문구','중랑구','성북구','강북구','도봉구','노원구','은평구','서대문구','마포구','양천구','강서구','구로구','금천구','영등포구','동작구','관악구','서초구','강남구','송파구','강동구'],
-        '부산': ['중구', '서구', '동구','영도구','부산진구','동래구','남구','북구','해운대구','사하구','금정구','강서구','연제구','수영구','사상구','기장군'],
-        '대구': ['중구', '동구', '서구','남구','북구','수성구','달서구','달성군','군위군'],
-        '인천': ['중구', '동구', '미추홀구','연수구','남동구','부평구','계양구','서구','강화군','옹진군'],
-        '광주': ['동구', '서구', '남구','북구','광산구'],
-  	  	'대전': ['동구','중구','서구','유성구','대덕구'],
-    	'울산': ['중구','남구','동구','북구','울주군'],
-    	'세종특별자치시': [],
- 	   	'경기': ['수원시','성남시','의정부시','안양시','부천시','광명시','평택시','동두천시','안산시','고양시','과천시','구리시','남양주시','오산시','시흥시','군포시','의왕시','하남시','용인시','파주시','이천시','안성시','김포시','화성시','광주시','양주시','포천시','여주시','연천군','가평군','양평군'],
-    	'경남': ['창원시','진주시','통영시','사천시','김해시','밀양시','거제시','양산시','의령군','함안군','창녕군','고성군','남해군','하동군','산청군','함양군','거창군','합천군'],
-  		'경북': ['포항시','경주시','김천시','안동시','구미시','영주시','영천시','상주시','문경시','경산시','의성군','청송군','영양군','영덕군','청도군','고령군','성주군','칠곡군','예천군','봉화군','울진군','울릉군'],
-    	'충남': ['천안시','공주시','보령시','아산시','서산시','논산시','계룡시','당진시','금산군','부여군','서천군','청양군','홍성군','예산군','태안군'],
-    	'충북': ['청주시','충주시','제천시','보은군','옥천군','영동군','증평군','진천군','괴산군','음성군','단양군'],
-    	'전남': ['목포시','여수시','순천시','나주시','광양시','담양군','곡성군','구례군','고흥군','보성군','화순군','장흥군','강진군','해남군','영암군','무안군','함평군','영광군','장성군','완도군','진도군','신안군'],
-    	'전북': ['전주시','군산시','익산시','정읍시','남원시','김제시','완주군','진안군','무주군','장수군','임실군','순창군','고창군','부안군'],
-    	'강원특별자치도': ['춘천시','원주시','강릉시','동해시','태백시','속초시','삼척시','홍천군','횡성군','영월군','평창군','정선군','철원군','화천군','양구군','인제군','고성군','양양군'],
-    	'제주': ['제주시','서귀포시']
-    
-    };
+		var regionsData = {
+			'전체' : [],
+			'서울' : [ '종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구', '성북구',
+					'강북구', '도봉구', '노원구', '은평구', '서대문구', '마포구', '양천구', '강서구',
+					'구로구', '금천구', '영등포구', '동작구', '관악구', '서초구', '강남구', '송파구',
+					'강동구' ],
+			'부산' : [ '중구', '서구', '동구', '영도구', '부산진구', '동래구', '남구', '북구',
+					'해운대구', '사하구', '금정구', '강서구', '연제구', '수영구', '사상구', '기장군' ],
+			'대구' : [ '중구', '동구', '서구', '남구', '북구', '수성구', '달서구', '달성군', '군위군' ],
+			'인천' : [ '중구', '동구', '미추홀구', '연수구', '남동구', '부평구', '계양구', '서구',
+					'강화군', '옹진군' ],
+			'광주' : [ '동구', '서구', '남구', '북구', '광산구' ],
+			'대전' : [ '동구', '중구', '서구', '유성구', '대덕구' ],
+			'울산' : [ '중구', '남구', '동구', '북구', '울주군' ],
+			'세종특별자치시' : [],
+			'경기' : [ '수원시', '성남시', '의정부시', '안양시', '부천시', '광명시', '평택시', '동두천시',
+					'안산시', '고양시', '과천시', '구리시', '남양주시', '오산시', '시흥시', '군포시',
+					'의왕시', '하남시', '용인시', '파주시', '이천시', '안성시', '김포시', '화성시',
+					'광주시', '양주시', '포천시', '여주시', '연천군', '가평군', '양평군' ],
+			'경남' : [ '창원시', '진주시', '통영시', '사천시', '김해시', '밀양시', '거제시', '양산시',
+					'의령군', '함안군', '창녕군', '고성군', '남해군', '하동군', '산청군', '함양군',
+					'거창군', '합천군' ],
+			'경북' : [ '포항시', '경주시', '김천시', '안동시', '구미시', '영주시', '영천시', '상주시',
+					'문경시', '경산시', '의성군', '청송군', '영양군', '영덕군', '청도군', '고령군',
+					'성주군', '칠곡군', '예천군', '봉화군', '울진군', '울릉군' ],
+			'충남' : [ '천안시', '공주시', '보령시', '아산시', '서산시', '논산시', '계룡시', '당진시',
+					'금산군', '부여군', '서천군', '청양군', '홍성군', '예산군', '태안군' ],
+			'충북' : [ '청주시', '충주시', '제천시', '보은군', '옥천군', '영동군', '증평군', '진천군',
+					'괴산군', '음성군', '단양군' ],
+			'전남' : [ '목포시', '여수시', '순천시', '나주시', '광양시', '담양군', '곡성군', '구례군',
+					'고흥군', '보성군', '화순군', '장흥군', '강진군', '해남군', '영암군', '무안군',
+					'함평군', '영광군', '장성군', '완도군', '진도군', '신안군' ],
+			'전북' : [ '전주시', '군산시', '익산시', '정읍시', '남원시', '김제시', '완주군', '진안군',
+					'무주군', '장수군', '임실군', '순창군', '고창군', '부안군' ],
+			'강원특별자치도' : [ '춘천시', '원주시', '강릉시', '동해시', '태백시', '속초시', '삼척시',
+					'홍천군', '횡성군', '영월군', '평창군', '정선군', '철원군', '화천군', '양구군',
+					'인제군', '고성군', '양양군' ],
+			'제주' : [ '제주시', '서귀포시' ]
 
-    var subRegionsContainer = document.getElementById('sub-regions');
-    subRegionsContainer.innerHTML = ''; // 기존 내용 지우기
+		};
 
-    var subRegions = regionsData[region];
-    if (subRegions) {
-        subRegions.forEach(function(subRegion) {
-            var subRegionLink = document.createElement('a');
-            subRegionLink.href = '#';
-            subRegionLink.className = 'region-link sub-region-link';
-            subRegionLink.textContent = subRegion;
-            
-            // 클릭 이벤트 리스너 추가
-            subRegionLink.addEventListener('click', function() {
-                // 모든 sub-region-link에서 dynamic-highlight 클래스 제거
-                document.querySelectorAll('.sub-region-link').forEach(function(link) {
-                    link.classList.remove('dynamic-highlight');
-                });
+		var subRegionsContainer = document.getElementById('sub-regions');
+		subRegionsContainer.innerHTML = ''; // 기존 내용 지우기
 
-                // 현재 클릭된 버튼에만 dynamic-highlight 클래스 추가
-                this.classList.add('dynamic-highlight');
-            });
-            
-            
-            // subRegionLink에 대한 onclick 이벤트 추가 가능
-            subRegionsContainer.appendChild(subRegionLink);
-        });
-    }
-}
+		var subRegions = regionsData[region];
+		if (subRegions) {
+			subRegions.forEach(function(subRegion) {
+				var subRegionLink = document.createElement('a');
+				subRegionLink.href = '#';
+				subRegionLink.className = 'region-link sub-region-link';
+				subRegionLink.textContent = subRegion;
 
-window.onload = function() {
-    var regionLinks = document.querySelectorAll('.region-link');
-    regionLinks.forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // 기본 동작을 방지합니다.
-            regionLinks.forEach(function(otherLink) {
-                otherLink.classList.remove('highlight');
-            });
-            this.classList.add('highlight');
-        });
-    });
-};
+				// 클릭 이벤트 리스너 추가
+				subRegionLink.addEventListener('click', function() {
+					// 모든 sub-region-link에서 dynamic-highlight 클래스 제거
+					document.querySelectorAll('.sub-region-link').forEach(
+							function(link) {
+								link.classList.remove('dynamic-highlight');
+							});
 
+					// 현재 클릭된 버튼에만 dynamic-highlight 클래스 추가
+					this.classList.add('dynamic-highlight');
+				});
 
-	
+				// subRegionLink에 대한 onclick 이벤트 추가 가능
+				subRegionsContainer.appendChild(subRegionLink);
+			});
+		}
+	}
+	document.addEventListener('DOMContentLoaded', function() {
+		// 모든 지역 링크에 클릭 이벤트 리스너를 추가합니다.
+		document.querySelectorAll('.region-link').forEach(function(link) {
+			link.addEventListener('click', function(event) {
+				event.preventDefault(); // 기본 앵커 동작 방지
+				var selectedRegion = this.getAttribute('data-region'); // 클릭된 지역의 이름을 가져옵니다.
+				filterPostsByRegion(selectedRegion); // 필터링 함수 호출
+			});
+		});
+	});
+
+	function filterPostsByRegion(region) {
+		// 모든 게시물을 숨깁니다.
+		var posts = document.querySelectorAll('.card');
+		posts.forEach(function(post) {
+			post.style.display = 'none'; // 일단 모든 게시물을 숨깁니다.
+		});
+
+		// 선택된 지역 이름을 포함하는 게시물만 표시합니다.
+		posts
+				.forEach(function(post) {
+					// 여기서는 출발지가 게시물에 텍스트로 포함되어 있다고 가정합니다.
+					var postStart = post
+							.querySelector('.card-text.text-primary').textContent;
+					if (region === '전체' || postStart.includes(region)) {
+						post.style.display = ''; // 해당 지역 이름을 포함하는 게시물만 다시 표시합니다.
+					}
+				});
+	}
+	window.onload = function() {
+		var regionLinks = document.querySelectorAll('.region-link');
+		regionLinks.forEach(function(link) {
+			link.addEventListener('click', function(event) {
+				event.preventDefault(); // 기본 동작을 방지합니다.
+				regionLinks.forEach(function(otherLink) {
+					otherLink.classList.remove('highlight');
+				});
+				this.classList.add('highlight');
+			});
+		});
+	};
 </script>
 </head>
 <body style="padding-top: 50px; background-color: rgb(254, 247, 222);">
@@ -196,8 +242,7 @@ window.onload = function() {
 		<div class="container mt-5">
 			<div class="row">
 				<div id="region-list" style="text-align: center;">
-					<a href="#"
-						class="region-link" data-region="전체"
+					<a href="#" class="region-link" data-region="전체"
 						onclick="showSubRegions(event, '전체')">전체</a><a href="#"
 						class="region-link" data-region="서울"
 						onclick="showSubRegions(event, '서울')">서울</a> <a href="#"
@@ -240,7 +285,7 @@ window.onload = function() {
 					<!-- 여기에 하위 지역 링크가 동적으로 추가됩니다 -->
 				</div>
 				<div class="col-12">
-				<br>
+					<br>
 					<button class="btn float-right mb-3" onclick="checklogin();"
 						style="background-color: rgb(115, 182, 119); border-color: rgb(115, 182, 119); color: white;">카풀
 						모집</button>
@@ -274,10 +319,8 @@ window.onload = function() {
 		<div class="container"></div>
 	</footer>
 	<script>
-       
-       	
-
+		
 	</script>
-	 <%@ include file="/WEB-INF/footer.jsp"%>
+	<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
