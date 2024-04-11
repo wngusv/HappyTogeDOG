@@ -17,7 +17,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: rgb(254, 247, 222);">
     <div class="container mt-5">
         <h2 class="mb-4">자유게시판 글쓰기</h2>
         <form name="writeForm" method="post" enctype="multipart/form-data" action="/UploadProcess.do" onsubmit="return validateForm(this);" class="needs-validation" novalidate>
