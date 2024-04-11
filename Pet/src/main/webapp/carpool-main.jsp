@@ -316,12 +316,8 @@ window.onload = function() {
             </div>
          </div>
       </div>
-    <%@ include file="/WEB-INF/footer.jsp"%>
+   
    </main>
-   <script>
-       
-          
-
-   </script>
+    <%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
