@@ -42,11 +42,13 @@ public class FindIDDAO { // id랑 pw 찾는 dao인데,, 지금 이름 바꾸면 
 			stmt.setString(2, id);
 			stmt.setString(3, phone);
 			try (ResultSet rs = stmt.executeQuery()) {
+				String pw = null;
 				if (rs.next()) {
-					String pw = rs.getString("pw");
+					pw = rs.getString("pw");
 					return pw; // id 반환
 				}else {
-					return null;
+					return pw = null;
+					
 				} 
 			}
 		} catch (SQLException e) {
