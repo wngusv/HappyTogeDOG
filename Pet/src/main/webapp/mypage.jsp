@@ -46,9 +46,6 @@
         <strong>아이디:</strong> <%=id%>
     </li>
     <li class="list-group-item">
-        <strong>패스워드:</strong> <%=password%>
-    </li>
-    <li class="list-group-item">
         <strong>이름:</strong> <%=userName%>
     </li>
     <li class="list-group-item">
