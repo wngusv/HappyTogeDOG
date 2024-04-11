@@ -336,7 +336,6 @@
 						countRs.next();
 						int totalRecords = countRs.getInt("total");
 						int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
-						System.out.println(totalPages);
 						%>
 					</tbody>
 				</table>
