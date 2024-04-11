@@ -9,7 +9,7 @@
 <header class="my-header">
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
-<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="../styles.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -25,10 +25,13 @@
 	height: auto;
 }
 </style>
-</header>
 <body style="background-color: rgb(254, 247, 222);">
-	    <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
-	<%
+	   <%
+		request.setAttribute("pageTitle", "상세 페이지");
+		%>
+		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
+</header>
+<%
 	String num = request.getParameter("num");
 	if (num != null && !num.isEmpty()) {
 		String query = "SELECT * FROM dogwalker WHERE num = ?";

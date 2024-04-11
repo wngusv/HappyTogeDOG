@@ -116,12 +116,12 @@ document.addEventListener("DOMContentLoaded", function() {
 		<a href="index.jsp"> <img src="/images/Group 35.png" alt="로고 이미지">
 		</a>
 		<ul class="nav-menu">
-			<li><a href="pet-facilities.jsp">주변 반려견 시설</a></li>
-			<li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
-			<li><a href="carpool-main.jsp">반려견 카풀</a></li>
+			<li><a href="../pet-facilities.jsp">주변 반려견 시설</a></li>
+			<li><a href="../walk-jobs.jsp">산책 아르바이트</a></li>
+			<li><a href="../carpool-main.jsp">반려견 카풀</a></li>
 			<li><a href="/AnimalServlet">지역 유기견</a></li>
-			<li><a href="local-shelters.jsp">지역 유기견 보호소</a></li>
-			<li><a href="board.jsp">게시판</a></li>
+			<li><a href="../local-shelters.jsp">지역 유기견 보호소</a></li>
+			<li><a href="../board.jsp">게시판</a></li>
 		</ul>
 		<ul class="login">
 			<c:choose>
