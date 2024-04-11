@@ -17,19 +17,18 @@ public class DeletePostServlet extends HttpServlet {
 		List<Post> posts = (List<Post>) getServletContext().getAttribute("posts");
 		String userId = (String) req.getSession().getAttribute("userId");
 		String postIdStr = req.getParameter("id");
-		System.out.println(postIdStr);
 		Integer postId = Integer.valueOf(postIdStr); 
 		if (userId != null) {
 			for (Post post : posts) {
 				if (post.getId()==postId && post.getUserId().equals(userId)) {
 					posts.remove(post);
 					req.setAttribute("posts", posts);
-					req.getRequestDispatcher("carpool-main.jsp").forward(req, resp);
-					
+					resp.setStatus(200);
+					resp.sendRedirect("/mypage.jsp");
 				}
 			}
 		}else {
-			resp.sendRedirect("carpool-main.jsp");
+			resp.sendRedirect("/mypage.jsp");
 		}
 	}
 

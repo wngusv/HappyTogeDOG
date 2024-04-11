@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page
     import="java.sql.*, javax.servlet.http.HttpSession, Util.MyWebContextListener"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <header class="my-header">
@@ -129,6 +130,44 @@
                 </tbody>
             </table>
         </div>
+       
+   <c:choose>
+    <c:when test="${not empty posts}">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>작성한 카풀 목록</h2>
+            <table class="table table-striped" style="background-color: white; text-align: center;">
+                <thead>
+                    <tr>
+                        <th>출발지</th>
+                        <th>도착지</th>
+                        <th>제목</th>
+                        <th>등록 시간</th>
+                        <th>삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${posts}" var="carpoolPost">
+                        <tr>
+                            <td>${carpoolPost.startInput} (${carpoolPost.startRoadInput})</td>
+                            <td>${carpoolPost.endInput} (${carpoolPost.endRoadInput})</td>
+                            <td><a href='/viewPost?id=${carpoolPost.id}'>${carpoolPost.title}</a></td>
+                            <td>${carpoolPost.createdAt}</td>
+                            <td>
+                                <c:if test="${sessionScope.userId eq carpoolPost.userId}">
+                                    <button onclick="confirmDeletePost(${carpoolPost.id})" class="btn btn-danger" style="background-color: rgb(237, 111, 98); border-color: rgb(237, 111, 98);">삭제</button>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
         </div>
         <!-- Remaining code for the chat room -->
         <!-- Add Bootstrap styles and structure similar to the above sections -->
@@ -179,6 +218,25 @@
                     success : function(response) {
                         alert("글이 성공적으로 삭제되었습니다.");
                         window.location.reload();
+                    },
+                    error : function(xhr, status, error) {
+                        alert("삭제 중 오류가 발생했습니다.");
+                    }
+                });
+            }
+        }
+        function confirmDeletePost(idx) {
+        	var confirmResult = confirm("정말로 삭제하시겠습니까?");
+            if (confirmResult) {
+                $.ajax({
+                    url : "/deletePost",
+                    type : "GET",
+                    data : {
+                        id : idx
+                    },
+                    success : function(response) {
+                        alert("글이 성공적으로 삭제되었습니다.");
+                        window.location.href = "/mypage.jsp";
                     },
                     error : function(xhr, status, error) {
                         alert("삭제 중 오류가 발생했습니다.");

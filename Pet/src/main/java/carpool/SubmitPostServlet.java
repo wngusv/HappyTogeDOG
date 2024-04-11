@@ -40,7 +40,7 @@ public class SubmitPostServlet extends HttpServlet {
             posts = new ArrayList<>(); // 게시글 목록이 없으면 새로 생성
         }
         newPost.setId(posts.size()+1);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentDate = new Date();
         String formattedDateTime = dateFormat.format(currentDate);
         newPost.setCreatedAt(formattedDateTime);
