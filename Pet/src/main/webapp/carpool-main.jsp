@@ -114,7 +114,6 @@ window.location.href = 'carpool-map.jsp';
 }
 
 function showSubRegions(event, region) {
-    console.log("Function called with region:", region); // 로그 추가
     event.preventDefault(); // 기본 앵커 이벤트 방지
 
     var regionsData = {
@@ -223,7 +222,6 @@ window.onload = function() {
 
 	            // 만약 요소의 텍스트가 요청된 지역과 일치하면, 클릭 이벤트를 트리거합니다.
 	            if (linkText === district) {
-	                console.log("클릭된 district:", district); // 로그 추가
 	                link.click();
 	            }
 	        });
