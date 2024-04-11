@@ -12,6 +12,8 @@
             margin: 0;
             padding: 0;
             height: 100%;
+            overflow-y: auto; /* 세로 스크롤만 허용 */
+            overflow-x: hidden; /* 가로 스크롤 없애기 */
         }
 
         .full-screen-bg {
@@ -19,12 +21,10 @@
             height: 100vh; /* 뷰포트의 전체 높이 */
             top: 120px;
             position: relative;
-            background-image: url('/images/메인최종.png');
+            background-image: url('/images/메인최종2.png');
             background-position: center; /* 이미지를 가운데 정렬 */
             background-repeat: no-repeat; /* 이미지 반복 방지 */
             background-size: contain; /* 이미지를 가로, 세로 비율에 맞게 조정 */
-            overflow-y: auto; /* 세로 스크롤만 허용 */
-            overflow-x: hidden; /* 가로 스크롤 없애기 */
         }
 
         footer {
