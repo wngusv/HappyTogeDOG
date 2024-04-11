@@ -17,7 +17,6 @@ public class ViewPostServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String postId = request.getParameter("id");
 		List<Post> posts = (List<Post>) getServletContext().getAttribute("posts");
-		System.out.println(posts);
 		Post selectedPost = null;
 		for (Post post : posts) {
 			if (post.getId() == Integer.parseInt(postId)) {
