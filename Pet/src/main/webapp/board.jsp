@@ -114,10 +114,8 @@
 				<input type="button" class="btn btn-sm custom-button-color"
 					value="글쓰기" onclick="location.href='boardWrite.jsp';">
 
-				<button type="button" class="btn btn-default"
-					onclick="sortByNewest()">최신순</button>
-				<button type="button" class="btn btn-default"
-					onclick="sortByRecommendation()">추천순</button>
+				<button type="button" class="btn btn-default" onclick="sortByNewest()">최신순</button>
+				<button type="button" class="btn btn-default" onclick="sortByRecommendation()">추천순</button>
 
 
 				<!-- 부트스트랩을 사용한 테이블 스타일 -->
@@ -303,8 +301,7 @@
 <script>
 window.onload = function() {
     var categorySelect = document.getElementsByName("categoryFilter")[0];
-    var selectedCategory = "<%=categoryFilter%>
-	";
+    var selectedCategory = "<%=categoryFilter%>";
 		// JSP 코드를 사용하여 서버에서 선택된 카테고리를 가져옵니다.
 
 		// 선택된 카테고리가 있으면 해당 카테고리를 선택 상태로 설정합니다.
