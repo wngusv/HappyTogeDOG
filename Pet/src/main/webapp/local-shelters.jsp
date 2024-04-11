@@ -15,7 +15,22 @@
 @import
 	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
 	;
+html, body {
+    height: 100%;
+    margin: 0;
+}
 
+.content-wrap {
+    min-height: 100%;
+    /* Flexbox 설정 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 컨텐츠를 상단과 하단으로 분리 */
+}
+
+footer {
+    margin-top: auto; /* 푸터를 하단에 고정 */
+}
 .container {
 	max-width: 90%;
 }
@@ -186,6 +201,7 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 <body style="background-color: rgb(254, 247, 222);">
+   <div class="content-wrap">
 	<main style="margin-bottom: 50px;">
 		<div class="container" style="padding-top: 150px;">
 			<section class="strays-info" style="width: 1200px; margin: auto;">
@@ -220,7 +236,7 @@
 		</div>
 
 	</main>
-
+</div>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533"></script>
 	<script>

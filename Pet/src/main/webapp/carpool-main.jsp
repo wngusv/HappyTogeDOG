@@ -249,13 +249,13 @@ window.onload = function() {
 </script>
 </head>
 <body style="padding-top: 50px; background-color: rgb(254, 247, 222);">
-   <div class="content-wrap">
    <header>
       <%
       request.setAttribute("pageTitle", "반려견 카풀");
       %>
       <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
    </header>
+   <div class="content-wrap">
    <main style="margin-bottom: 55px;">
       <div class="container mt-5">
          <div class="row">
@@ -335,6 +335,7 @@ window.onload = function() {
          </div>
       </div>
    </main>
+   </div>
    <%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
