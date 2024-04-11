@@ -50,7 +50,7 @@ if(session.getAttribute("signupSuccess") != null) {
 %>
 
 	<div class="full-screen-bg"></div>
-
+<input type="hidden" id="userId" value="${sessionScope.userId}" />
 	<script src="forIndex.js" defer></script>
 	<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
