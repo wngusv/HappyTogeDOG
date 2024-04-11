@@ -48,14 +48,14 @@ request.setAttribute("pageTitle", "유기견 기부");
 
 					<!-- PayPal 버튼 -->
 					<div id="paypal-container-67S6SPN9VDZ3L"
-						style="position: absolute; top: 52%; left: 41%; transform: translate(-50%, -50%) scale(1);">
+						style="position: absolute; top: 52%; left: 41%; transform: translate(-50%, -50%) scale(1.3);">
 						<script
 							src="https://www.paypal.com/sdk/js?client-id=BAAXk4KAIJ9L9-tmdyfOzfe7cySPZlzIqWkHJ22iPR4239hwkoZy0iABHvRRaV0SieAo7FEUoDB4SEiRqE&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
-						<div id="paypal-container-ASXDQLE4NMT4Y"></div>
+						<div id="paypal-container-ZFXQWUMJYVG48"></div>
 						<script>
 							paypal.HostedButtons({
-								hostedButtonId : "ASXDQLE4NMT4Y",
-							}).render("#paypal-container-ASXDQLE4NMT4Y")
+								hostedButtonId : "ZFXQWUMJYVG48",
+							}).render("#paypal-container-ZFXQWUMJYVG48")
 						</script>
 					</div>
 				</div>
