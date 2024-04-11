@@ -1,58 +1,46 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Insert title here</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <div class="logo">
-          <h1>메인페이지</h1>
-        </div>
-        <nav>
-          <ul>
-            <c:choose>
-              <c:when test="${sessionScope.userId != null}">
-                <li id="username-container">
-                  <span id="username-greeting">
-                    안녕하세요, ${sessionScope.userName}님!
-                  </span>
-                  <a id="logout-button" href="./api/logout">로그아웃</a>
-                </li>
-              </c:when>
-              <c:otherwise>
-                <li><a id="login-button" href="login.jsp">로그인</a></li>
-              </c:otherwise>
-            </c:choose>
-            <li><a href="signupform.jsp">회원가입</a></li>
-          </ul>
-        </nav>
-      </div>
-    <section class="menu">
-      <div class="container">
-        <ul>
-          <li><a href="walk-jobs.jsp">산책 아르바이트</a></li>
-          <li><a href="pet-facilities.jsp">반려동물 시설</a></li>
-          <li><a href="/AnimalServlet">지역 유기동물</a></li>
-          <li><a href="local-shelters.jsp">지역 유기견 보호센터</a></li>
-          <li><a href="donations.jsp">기부</a></li>
-          <li><a href="board.jsp">게시판</a></li>
-        </ul>
-      </div>
-    </section>
-    </header>
+<head>
+<meta charset="UTF-8" />
+<title>메인페이지</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow-y: auto; /* 세로 스크롤만 허용 */
+	overflow-x: hidden; /* 가로 스크롤 없애기 */
+}
 
+.full-screen-bg {
+	width: 100vw;
+	height: calc(100vh - 120px); /* 헤더 높이만큼 뺀 나머지 높이 */
+	margin-top: 120px; /* 헤더와 겹치지 않도록 상단 여백 설정 */
+	position: relative;
+	background-image: url('/images/메인최종2.png');
+	background-position: center; /* 이미지를 가운데 정렬 */
+	background-repeat: no-repeat; /* 이미지 반복 방지 */
+	background-size: contain; /* 이미지를 가로, 세로 비율에 맞게 조정 */
+}
+</style>
+</head>
+<body style="background-color: #FFEFD5;">
+	<header>
+		<%
+		request.setAttribute("pageTitle", "메인페이지");
+		%>
+		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
+	</header>
 
-    <footer>
-      <div class="container">
-        <p>&copy; 2024 pet. All rights reserved.</p>
-      </div>
-    </footer>
-  </body>
+	<div class="full-screen-bg"></div>
+
+	<script src="forIndex.js" defer></script>
+	<%@ include file="/WEB-INF/footer.jsp"%>
+</body>
 </html>
