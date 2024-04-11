@@ -97,17 +97,17 @@ li {
 }
 </style>
 <script>
-	// JavaScript를 사용하여 현재 페이지의 URL과 메뉴 항목의 링크 URL을 비교하여 활성화 클래스를 추가함
-	document.addEventListener("DOMContentLoaded", function() {
-		var currentPageUrl = window.location.href;
-		var menuItems = document
-				.querySelectorAll(".nav-menu li a, .navbar-nav li a");
-		menuItems.forEach(function(item) {
-			if (item.href === currentPageUrl) {
-				item.parentElement.classList.add("active");
-			}
-		});
-	});
+document.addEventListener("DOMContentLoaded", function() {
+    var currentPagePath = window.location.pathname; // 현재 페이지의 경로만 추출
+    var menuItems = document.querySelectorAll(".nav-menu li a, .navbar-nav li a");
+    menuItems.forEach(function(item) {
+        var menuItemPath = new URL(item.href).pathname; // 메뉴 항목의 링크 URL에서 경로만 추출
+        if (menuItemPath === currentPagePath) {
+            item.parentElement.classList.add("active");
+        }
+    });
+});
+
 </script>
 </head>
 <body>

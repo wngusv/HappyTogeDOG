@@ -44,18 +44,18 @@ request.setAttribute("pageTitle", "유기견 기부");
 
 				<!-- 흰 이미지와 PayPal 버튼을 겹치도록 배치 -->
 				<div class="col-md-6 img-container" style="position: relative;">
-					<img src="/images/흰이미지.png" alt="기부하기" style="width: 80%;">
+					<img src="/images/기부.png" alt="기부하기" style="width: 80%;">
 
 					<!-- PayPal 버튼 -->
 					<div id="paypal-container-67S6SPN9VDZ3L"
-						style="position: absolute; top: 52%; left: 41%; transform: translate(-50%, -50%) scale(1);">
+						style="position: absolute; top: 78%; left: 41%; transform: translate(-50%, -50%) scale(1);">
 						<script
 							src="https://www.paypal.com/sdk/js?client-id=BAAXk4KAIJ9L9-tmdyfOzfe7cySPZlzIqWkHJ22iPR4239hwkoZy0iABHvRRaV0SieAo7FEUoDB4SEiRqE&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
-						<div id="paypal-container-ASXDQLE4NMT4Y"></div>
+						<div id="paypal-container-ZFXQWUMJYVG48"></div>
 						<script>
 							paypal.HostedButtons({
-								hostedButtonId : "ASXDQLE4NMT4Y",
-							}).render("#paypal-container-ASXDQLE4NMT4Y")
+								hostedButtonId : "ZFXQWUMJYVG48",
+							}).render("#paypal-container-ZFXQWUMJYVG48")
 						</script>
 					</div>
 				</div>

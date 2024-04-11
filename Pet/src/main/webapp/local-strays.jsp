@@ -26,6 +26,7 @@
 	color: rgb(59, 38, 14);
 }
 
+
 .local-government-button {
 	background-color: rgb(205, 173, 129);
 	font-size: 15px;
@@ -108,7 +109,6 @@
 .local-government-buttons {
 	text-align: center;
 	background-color: rgb(254, 247, 222);
-	padding-top: 30px;
 	padding-bottom: 50px;
 	height: 0px;
 }
@@ -135,12 +135,8 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 
-	<main>
+	<main style="margin-bottom: 55px;'">
 		<div class="custom-container">
-			<section class="strays-info">
-				<h2>지역 유기동물</h2>
-			</section>
-
 			<div class="local-government-buttons">
 				<a href="/AnimalServlet?cidoName=all"
 					class="local-government-button">전체</a>
@@ -149,7 +145,7 @@
 						href="/AnimalServlet?cidoName=${Cido.getOrgdownNm()}">${Cido.getOrgdownNm()}</a>
 				</c:forEach>
 			</div>
-			<div class="local-government-buttons" id="filteredGovernmentButtons">
+			<div class="local-government-buttons" id="filteredGovernmentButtons" style="padding-top: 40px;">
 				<c:forEach var="government" items="${requestScope.localGovernment}">
 					<c:if test="${not government.getOrgdownNm().equals('가정보호')}">
 						<a
@@ -311,19 +307,13 @@
 		</div>
 	</main>
 
-	<footer>
-		<div class="container">
-			<p>&copy; 2024 Pet. 모든 권리 보유.</p>
-		</div>
-	</footer>
-
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
+<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 
 </html>
