@@ -227,7 +227,7 @@
       /*지도*/
       var container = document.getElementById('map');
       var options = {
-         center : new kakao.maps.LatLng(33.450701, 126.570667),
+    	 center: new kakao.maps.LatLng(36.635912, 127.491403),
          level : 10
       };
 
