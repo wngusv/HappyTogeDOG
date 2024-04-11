@@ -8,18 +8,49 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
-/* 본인인증 다이얼로그 스타일 */
-.modal-content {
-	background-color: #fefefe;
-	margin: 15% auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 80%;
-}
-/* 회색 글씨 스타일 */
-.gray-text {
-	color: #888;
-}
+ body {
+    font-family: sans-serif;
+    background-color: rgb(254, 247, 222);
+  }
+
+  .container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .img-container img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .form-wrapper {
+    padding: 20px;
+  }
+  /* 모달 전체 스타일 */
+  .modal {
+    display: none; /* 기본적으로 숨겨져 있음 */
+    position: fixed; /* 고정된 위치 */
+    z-index: 1; /* 다른 요소 위에 표시 */
+    left: 0;
+    top: 0;
+    width: 100%; /* 전체 너비 */
+    height: 100%; /* 전체 높이 */
+    overflow: auto; /* 필요한 경우 스크롤바 */
+    background-color: rgb(0, 0, 0); /* 불투명도를 가진 검정색 배경 */
+    background-color: rgba(0, 0, 0, 0.4); /* 배경의 약간의 투명도 */
+  }
+
+  /* 모달 내용 스타일 */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 상단 여백과 자동 가로 정렬 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* 모달 창의 너비 */
+    max-width: 600px; /* 최대 너비 설정 */
+  }
 </style>
 </head>
 <body style="background-color: rgb(254, 247, 222);">
@@ -129,7 +160,7 @@
 
 	<footer class="footer mt-auto py-3">
 		<div class="container">
-			<p>&copy; 2024 산책 아르바이트. All rights reserved.</p>
+			
 		</div>
 	</footer>
 

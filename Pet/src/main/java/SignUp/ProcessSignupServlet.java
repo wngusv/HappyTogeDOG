@@ -33,7 +33,7 @@ public class ProcessSignupServlet extends HttpServlet {
 		try {
 			SignUpDAO.signUp(user);
 			// 성공 메시지를 세션에 저장
-			request.getSession().setAttribute("signupSuccess", "회원가입에 성공했습니다.");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.getSession().setAttribute("signupError", "회원가입 중 오류가 발생했습니다.");

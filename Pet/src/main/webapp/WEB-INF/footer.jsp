@@ -13,7 +13,6 @@
         color: white;
         text-align: center;
         padding: 10px 0; /* 상하 패딩으로 실제 높이는 70px */
-        margin-top: 50px;
     }
     .image {
     	margin-top: 15px;
