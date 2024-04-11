@@ -79,7 +79,7 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 
-	<main>
+	<main style="height: 750px;">
 		<div class="container">
 			<section class="strays-info">
 				<%
@@ -102,7 +102,7 @@
 				String displayTown = (town != null) ? town : "";
 				%>
 				<h2 style="text-align: right;">
-					<span style="color: rgb(231, 94, 94);"><%=displayTown%></span> 게시판
+					<span style="color: rgb(231, 94, 94);"><img src="/images/지역3.png" alt="지역"> <%=displayTown%></span> 게시판
 				</h2>
 				<!-- 검색 폼 -->
 				<form action="board.jsp" method="get">
@@ -114,10 +114,8 @@
 				<input type="button" class="btn btn-sm custom-button-color"
 					value="글쓰기" onclick="location.href='boardWrite.jsp';">
 
-				<button type="button" class="btn btn-default"
-					onclick="sortByNewest()">최신순</button>
-				<button type="button" class="btn btn-default"
-					onclick="sortByRecommendation()">추천순</button>
+				<button type="button" class="btn btn-default" onclick="sortByNewest()">최신순</button>
+				<button type="button" class="btn btn-default" onclick="sortByRecommendation()">추천순</button>
 
 
 				<!-- 부트스트랩을 사용한 테이블 스타일 -->
@@ -296,21 +294,14 @@
 				%>
 
 			</section>
-
 		</div>
 	</main>
-
-	<footer>
-		<div class="container">
-			<p>&copy; 2024 Pet. 모든 권리 보유.</p>
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 <script>
 window.onload = function() {
     var categorySelect = document.getElementsByName("categoryFilter")[0];
-    var selectedCategory = "<%=categoryFilter%>
-	";
+    var selectedCategory = "<%=categoryFilter%>";
 		// JSP 코드를 사용하여 서버에서 선택된 카테고리를 가져옵니다.
 
 		// 선택된 카테고리가 있으면 해당 카테고리를 선택 상태로 설정합니다.

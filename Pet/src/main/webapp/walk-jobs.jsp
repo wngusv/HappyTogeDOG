@@ -6,6 +6,7 @@
 <%@ page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 <html>
+
 <header class="my-header">
 	<meta charset="UTF-8">
 	<title>산책 아르바이트</title>
@@ -404,17 +405,12 @@
 	</div>
 </main>
 
-<footer class="footer mt-auto py-3">
-	<div class="container">
-		<p>&copy; 2024 Pet. 모든 권리 보유.</p>
-	</div>
-</footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
