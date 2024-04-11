@@ -61,11 +61,7 @@ margin-top: 110px;
 									<p class="card-text text-primary">도착지: ${post.endInput} (${post.endRoadInput})</p>
 									<p class="card-text">작성자: ${post.userId}</p>
 									<p class="card-text">등록 시간: ${post.createdAt}</p>
-									
 								</div>
-									<c:if test="${sessionScope.userId eq post.userId}">
-                					  <button onclick="window.location.href='/deletePost?id=${post.id}';">삭제</button>
-                					</c:if>
 							</div>
 						</c:forEach>
 					</c:if>
