@@ -115,14 +115,7 @@ window.location.href = 'carpool-map.jsp';
 function showSubRegions(event, region) {
     console.log("Function called with region:", region); // 로그 추가
     event.preventDefault(); // 기본 앵커 이벤트 방지
-    
- // 클릭된 지역에 해당하는 게시물 필터링
-    var filteredPosts = posts.filter(function(post) {
-        return post.startRoadInput.includes(region); // 출발지에 클릭된 지역이 포함되어 있는지 확인
-    });
-    
-    // 필터링된 게시물을 표시
-    displayFilteredPosts(filteredPosts);
+
     
     var regionsData = {
     	'전체': [],	
@@ -187,43 +180,7 @@ window.onload = function() {
         });
     });
 };
-function displayFilteredPosts(posts) {
-    var postsContainer = document.getElementById('post-container');
-    postsContainer.innerHTML = ''; // 기존 내용을 비웁니다.
 
-    posts.forEach(function(post) {
-        var postElement = document.createElement('div');
-        postElement.className = 'card mb-3';
-
-        // 게시물 내용을 추가합니다.
-        var titleElement = document.createElement('h5');
-        titleElement.className = 'card-title';
-        titleElement.textContent = '제목: ' + post.title;
-        postElement.appendChild(titleElement);
-
-        var startElement = document.createElement('p');
-        startElement.className = 'card-text text-primary';
-        startElement.textContent = '출발지: ' + post.startInput + ' (' + post.startRoadInput + ')';
-        postElement.appendChild(startElement);
-
-        var endElement = document.createElement('p');
-        endElement.className = 'card-text text-primary';
-        endElement.textContent = '도착지: ' + post.endInput + ' (' + post.endRoadInput + ')';
-        postElement.appendChild(endElement);
-
-        var authorElement = document.createElement('p');
-        authorElement.className = 'card-text';
-        authorElement.textContent = '작성자: ' + post.userId;
-        postElement.appendChild(authorElement);
-
-        var timeElement = document.createElement('p');
-        timeElement.className = 'card-text';
-        timeElement.textContent = '등록 시간: ' + post.createdAt;
-        postElement.appendChild(timeElement);
-
-        postsContainer.appendChild(postElement);
-    });
-}
 
 	
 </script>
