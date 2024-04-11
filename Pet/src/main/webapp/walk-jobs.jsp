@@ -242,6 +242,7 @@
 							String sortBy = request.getParameter("sortBy");
 
 							if (filterLocation != null && !filterLocation.isEmpty()) {
+								
 								query = "SELECT * FROM pet.dogwalker WHERE address LIKE ?";
 								if (filterDay != null && !filterDay.isEmpty()) {
 							query += " AND day=?";
