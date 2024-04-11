@@ -64,6 +64,6 @@ request.setAttribute("pageTitle", "유기견 기부");
 		</div>
 	</main>
 
-
+<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>

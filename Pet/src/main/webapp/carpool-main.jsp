@@ -155,7 +155,6 @@ function showSubRegions(event, region) {
                 // 모든 sub-region-link에서 dynamic-highlight 클래스 제거
                 document.querySelectorAll('.sub-region-link').forEach(function(link) {
                     link.classList.remove('dynamic-highlight');
-                    filterPostsBySubRegion(subRegion);
                 });
 
                 // 현재 클릭된 버튼에만 dynamic-highlight 클래스 추가
@@ -178,8 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-
 
 function filterPostsByRegion(region) {
     // 모든 게시물을 숨깁니다.
@@ -298,7 +295,15 @@ window.onload = function() {
             </div>
          </div>
       </div>
-	    <%@ include file="/WEB-INF/footer.jsp"%>
    </main>
+   <footer>
+      <div class="container"></div>
+   </footer>
+   <script>
+       
+          
+
+   </script>
+    <%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
