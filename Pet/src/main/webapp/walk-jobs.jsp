@@ -292,8 +292,14 @@
 						<tr>
 							<td><%=rs.getInt("num")%></td>
 							<td><%=rs.getString("address")%></td>
-							<td><a
-								href="dogwalking/dogwalking_board_read.jsp?num=<%=rs.getInt("num")%>"><%=rs.getString("title")%></a></td>
+							<td>
+    <% if (session.getAttribute("userId") == null) { %>
+        <a href="javascript:void(0);" onclick="alert('로그인 후 사용가능합니다.');"><%=rs.getString("title")%></a>
+    <% } else { %>
+        <a href="dogwalking/dogwalking_board_read.jsp?num=<%=rs.getInt("num")%>"><%=rs.getString("title")%></a>
+    <% } %>
+</td>
+
 							<td><%=rs.getString("size")%></td>
 							<td><%=rs.getString("day")%></td>
 							<td><%=rs.getString("time")%></td>
