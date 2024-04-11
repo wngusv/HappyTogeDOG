@@ -36,14 +36,14 @@ margin-top: 110px;
 }
 </style>
 </head>
-<body style="background-color: rgb(254, 247, 222);">
+<body style="padding-top: 50px; background-color: rgb(254, 247, 222);">
 	<header>
 		<%
 		request.setAttribute("pageTitle", "반려견 카풀");
 		%>
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
-	<main>
+	<main style="margin-bottom: 55px;">
 		<div class="container mt-5">
 			<div class="row">
 				<div class="col-12">
@@ -87,5 +87,6 @@ margin-top: 110px;
 			window.location.href = 'carpool-map.jsp';
 		}
 	</script>
+	 <%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>

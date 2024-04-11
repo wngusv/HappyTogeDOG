@@ -79,7 +79,7 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 
-	<main>
+	<main style="height: 750px;">
 		<div class="container">
 			<section class="strays-info">
 				<%
@@ -299,12 +299,7 @@
 
 		</div>
 	</main>
-
-	<footer>
-		<div class="container">
-			<p>&copy; 2024 Pet. 모든 권리 보유.</p>
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 <script>
 window.onload = function() {

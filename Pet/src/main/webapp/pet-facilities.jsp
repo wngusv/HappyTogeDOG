@@ -171,7 +171,7 @@
 }
 </style>
 </head>
-<body style="padding-top: 150px;">
+<body>
    <header>
       <%
       request.setAttribute("pageTitle", "반려동물 시설");
@@ -180,7 +180,7 @@
 
    </header>
    <div class="space"></div>
-   <main>
+   <main style="margin-bottom: 53px;">
       <div class="container">
          <section class="strays-info"></section>
       </div>
@@ -205,12 +205,6 @@
          </div>
       </div>
    </main>
-
-   <footer>
-      <div class="container">
-         <p>&copy; 2024 Pet. 모든 권리 보유.</p>
-      </div>
-   </footer>
 
    <script type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533&libraries=services"></script>
@@ -363,5 +357,6 @@
 
       initMap();
    </script>
+   <%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>

@@ -185,7 +185,7 @@
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 <body style="background-color: rgb(254, 247, 222);">
-	<main style="margin-bottom: 150px;">
+	<main style="margin-bottom: 50px;">
 		<div class="container" style="padding-top: 150px;">
 			<section class="strays-info" style="width: 1200px; margin: auto;">
 				<div id="map-container">
@@ -215,16 +215,11 @@
 
 			</section>
 			<div id="shelter-info"></div>
-			<div id="pagination"></div>
+			<div id="pagination" style="margin-top: 30px"></div>
 		</div>
 
 	</main>
 
-	<footer>
-		<div class="container">
-			<p>&copy; 2024 Pet. 모든 권리 보유.</p>
-		</div>
-	</footer>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533"></script>
 	<script>
@@ -498,5 +493,6 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
