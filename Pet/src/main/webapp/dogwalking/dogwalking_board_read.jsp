@@ -44,6 +44,7 @@
 		String size = rs.getString("size");
 		String day = rs.getString("day");
 		String time = rs.getString("time");
+		String phone = rs.getString("phone");
 		String address = rs.getString("address");
 		String addressDetail = rs.getString("address_detail");
 		double pay = rs.getDouble("pay");
@@ -89,6 +90,10 @@
 					<tr>
 						<th scope="row">시간</th>
 						<td><%=time%></td>
+					</tr>
+					<tr>
+						<th scope="row">연락처</th>
+						<td><%=phone%></td>
 					</tr>
 					<tr>
 						<th scope="row">주소</th>

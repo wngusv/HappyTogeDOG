@@ -54,6 +54,10 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="pickupLocation">연락처:</label><br>
+            <input type="text" class="form-control" id="phone" placeholder="연락처" value="<%= user != null ? user.getPhoneNumber() : "" %>" name="phone">
+        </div>
+        <div class="form-group">
             <label for="pickupLocation">픽업위치:</label><br>
             <button type="button" class="btn btn-primary mb-2" onclick="sample6_execDaumPostcode()" style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">우편번호 찾기</button><br>
             <input type="text" class="form-control mb-2" id="sample6_address" placeholder="주소" value="<%= user != null ? user.getAddress() : "" %>" name="sample6_address" readonly>
