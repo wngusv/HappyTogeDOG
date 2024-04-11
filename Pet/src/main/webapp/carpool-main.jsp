@@ -13,7 +13,7 @@
 
 <style>
 .row {
-margin-top: 85px;
+margin-top: 110px;
 }
 .rounded-border {
 	width: 50vw;
