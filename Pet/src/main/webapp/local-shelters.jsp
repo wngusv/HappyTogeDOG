@@ -56,6 +56,7 @@ footer {
 	margin: 0 auto; /* 상하 마진을 0으로, 좌우 마진을 자동으로 설정하여 중앙 정렬 */
 	margin-right: 900px; /* 오른쪽 여백을 추가로 조정 */
 	margin-bottom: 10px;
+	cursor: pointer;
 }
 
 /*지도*/
@@ -373,7 +374,11 @@ footer {
     	    paginatedShelters.forEach(function(shelter) {
     	        var shelterElement = document.createElement('div');
     	        shelterElement.classList.add('rounded-border');
-    	        
+    	        shelterElement.setAttribute('data-lat', shelter.lat); // 위도 설정
+    	        shelterElement.setAttribute('data-lng', shelter.lng); // 경도 설정
+    	        shelterElement.setAttribute('data-careNm', shelter.careNm); 
+    	        shelterElement.setAttribute('data-careAddr', shelter.careAddr); 
+    	       
     	        shelterElement.innerHTML = '<p style="margin-left: 40px;margin-top: 10px;margin-bottom: 10px;"><img src="images/보호소.png" alt="아이콘" /> 보호소 : ' + shelter.careNm + '</p>' 
     	        + '<p style="margin-left: 40px;margin-top: 10px;margin-bottom: 10px;"><img src="images/주소.png" alt="아이콘" /> 주소 : ' + shelter.careAddr + '</p>'
     	        + '<p style="margin-left: 40px;margin-top: 10px;margin-bottom: 10px;"><img src="images/전화.png" alt="아이콘" /> 전화 : ' + shelter.careTel + '</p>';
@@ -422,14 +427,20 @@ footer {
     	            var markerPosition = new kakao.maps.LatLng(lat, lng);
     	            var marker = new kakao.maps.Marker({position: markerPosition});
     	            kakao.maps.event.addListener(marker, 'click', function() {
+    	                var content = '<div style="position: relative; padding: 10px; border-radius: 8px; background-color: #ffffff;">' +
+    	                              '보호소 이름: ' + shelter.careNm + '<br>주소: ' + shelter.careAddr +
+    	                              '<button style="position: absolute; top: 5px; right: 5px; background-color: #909090; color: white; border: none; border-radius: 4px; padding: 2px 6px; cursor: pointer; font-size: 12px;">닫기</button></div>';
+
     	                var infoWindow = new kakao.maps.InfoWindow({
-    	                    content: '<div style="padding:8px;">보호소 이름: ' + shelter.careNm + '<br>주소: ' + shelter.careAddr + '</div>'
+    	                    content: content
     	                });
+
     	                infoWindow.open(map, marker);
     	            });
 
     	            marker.setMap(map);
     	            markers.push(marker);
+
     	        }
     	    });
     	}
@@ -504,6 +515,69 @@ footer {
     	        });
     	    });
     	};
+    	document.addEventListener('click', function(e) {
+    	    var roundedBorderElement = e.target.closest('.rounded-border');
+
+    	    if (roundedBorderElement) {
+    	        // 클릭된 요소에서 위도, 경도, 보호소 이름, 주소 정보를 추출합니다.
+    	        var lat = parseFloat(roundedBorderElement.getAttribute('data-lat'));
+    	        var lng = parseFloat(roundedBorderElement.getAttribute('data-lng'));
+    	        var careNm = roundedBorderElement.getAttribute('data-careNm');
+    	        var careAddr = roundedBorderElement.getAttribute('data-careAddr');
+
+    	        // 지도의 중심을 이동합니다.
+    	        var moveLatLon = new kakao.maps.LatLng(lat, lng);
+    	        map.setCenter(moveLatLon);
+
+    	        // 기존 마커와 정보 창 제거
+    	        markers.forEach(function(marker) {
+    	            marker.setMap(null);
+    	        });
+    	        markers = []; // 마커 배열 초기화
+
+    	        // 새로운 마커 생성
+    	        var marker = new kakao.maps.Marker({
+    	            position: moveLatLon
+    	        });
+    	        marker.setMap(map);
+    	        markers.push(marker);
+
+    	        kakao.maps.event.addListener(marker, 'click', function() {
+    	            var infoWindowContent = document.createElement('div');
+    	            infoWindowContent.style.position = 'relative'; // 상대적 위치 설정
+    	            infoWindowContent.style.padding = '10px';
+    	            infoWindowContent.style.borderRadius = '8px';
+    	            infoWindowContent.style.backgroundColor = '#ffffff';
+    	            infoWindowContent.innerHTML = '보호소 이름: ' + careNm + '<br>주소: ' + careAddr;
+
+    	            var closeButton = document.createElement('button');
+    	            closeButton.innerHTML = '닫기';
+    	            closeButton.style.position = 'absolute'; // 절대 위치 설정
+    	            closeButton.style.top = '5px'; // 상단 여백
+    	            closeButton.style.right = '5px'; // 우측 여백
+    	            closeButton.style.backgroundColor = '#909090';
+    	            closeButton.style.color = 'white';
+    	            closeButton.style.border = 'none';
+    	            closeButton.style.borderRadius = '4px';
+    	            closeButton.style.padding = '2px 6px';
+    	            closeButton.style.cursor = 'pointer';
+    	            closeButton.style.fontSize = '12px'; // 폰트 크기 설정
+    	            closeButton.addEventListener('click', function() {
+    	                infoWindow.close();
+    	            });
+
+    	            infoWindowContent.appendChild(closeButton);
+
+    	            var infoWindow = new kakao.maps.InfoWindow({
+    	                content: infoWindowContent
+    	            });
+
+    	            infoWindow.open(map, marker);
+    	        });
+
+    	    }
+    	});
+
    </script>
 
 	<script
