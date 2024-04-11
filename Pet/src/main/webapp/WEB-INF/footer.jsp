@@ -9,7 +9,7 @@
     .footer {
         width: 100%;
         height: 100px; /* 푸터 높이 설정 */
-        background-color: #333;
+        background-color: rgb(155, 138, 119);
         color: white;
         text-align: center;
         padding: 10px 0; /* 상하 패딩으로 실제 높이는 70px */
