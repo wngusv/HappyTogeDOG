@@ -239,7 +239,7 @@ window.onload = function() {
       %>
       <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
    </header>
-   <main style="height: 750px; margin-bottom: 55px;">
+   <main style="margin-bottom: 55px;">
       <div class="container mt-5">
          <div class="row">
             <div id="region-list" style="text-align: center;">
@@ -292,7 +292,7 @@ window.onload = function() {
                   style="background-color: rgb(115, 182, 119); border-color: rgb(115, 182, 119); color: white;">카풀
                   모집</button>
 
-               <h2 class="mb-3"></h2>
+               <div class="mb-3">
                <br> <br>
                <c:if test="${empty posts}">
                   <div class="alert alert-info">등록된 글이 없습니다.</div>
@@ -313,6 +313,7 @@ window.onload = function() {
                      </div>
                   </c:forEach>
                </c:if>
+               </div>
             </div>
          </div>
       </div>
