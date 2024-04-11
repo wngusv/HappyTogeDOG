@@ -1,17 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, Util.MyWebContextListener"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/floating-banner.jsp"%>
+<%@ page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 <html>
-<head>
+<header class="my-header">
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
-body {
-	padding: 20px;
-}
+
 
 .card {
 	margin-bottom: 20px;
@@ -22,8 +25,9 @@ body {
 	height: auto;
 }
 </style>
-</head>
-<body>
+</header>
+<body style="background-color: rgb(254, 247, 222);">
+	    <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	<%
 	String num = request.getParameter("num");
 	if (num != null && !num.isEmpty()) {
@@ -163,6 +167,12 @@ body {
 	}
 	}
 	%>
-	<a href="/walk-jobs.jsp" class="btn btn-primary">목록으로 돌아가기</a>
+	<a href="/walk-jobs.jsp" class="btn btn-primary" style="background-color: rgb(235, 111, 98); color: white;; border-color: rgb(235, 111, 98);">목록으로 돌아가기</a>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
