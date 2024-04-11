@@ -15,6 +15,7 @@
 .row {
 margin-top: 110px;
 }
+
 .rounded-border {
 	width: 50vw;
 	border-radius: 10px;

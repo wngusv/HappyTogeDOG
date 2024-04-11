@@ -80,7 +80,7 @@
 	top: 0;
 	left: 0;;
 	bottom: 0;
-	width: 250px;
+	width: 270px;
 	margin: 150px 0 30px 10px;
 	margin-left: 50px;
 	padding: 5px;
