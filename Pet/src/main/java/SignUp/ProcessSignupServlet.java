@@ -32,10 +32,13 @@ public class ProcessSignupServlet extends HttpServlet {
 		User user = new User(id, password, name, phone, address, address_detail);
 		try {
 			SignUpDAO.signUp(user);
+			// 성공 메시지를 세션에 저장
+			request.getSession().setAttribute("signupSuccess", "회원가입에 성공했습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.getSession().setAttribute("signupError", "회원가입 중 오류가 발생했습니다.");
 		}
-		// 회원가입 정보를 처리한 후 메인 페이지로 리다이렉트합니다.
-//        response.sendRedirect("index.jsp");
+		
+        response.sendRedirect("index.jsp");
 	}
 }

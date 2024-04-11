@@ -38,6 +38,17 @@ body {
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
 
+<%
+if(session.getAttribute("signupSuccess") != null) {
+%>
+	<script>
+		alert('<%=session.getAttribute("signupSuccess")%>');
+		session.removeAttribute("signupSuccess");
+	</script>
+<%
+}
+%>
+
 	<div class="full-screen-bg"></div>
 
 	<script src="forIndex.js" defer></script>
