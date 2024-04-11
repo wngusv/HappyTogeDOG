@@ -6,6 +6,7 @@
 <%@ page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 <html>
+
 <header class="my-header">
 	<meta charset="UTF-8">
 	<title>산책 아르바이트</title>

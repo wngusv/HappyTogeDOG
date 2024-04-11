@@ -296,7 +296,6 @@
 				%>
 
 			</section>
-
 		</div>
 	</main>
 	<%@ include file="/WEB-INF/footer.jsp"%>

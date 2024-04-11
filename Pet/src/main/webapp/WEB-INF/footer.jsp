@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Non-overlapping Footer</title>
+
 <style>
     .footer {
         width: 100%;

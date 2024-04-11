@@ -26,6 +26,7 @@
 	color: rgb(59, 38, 14);
 }
 
+
 .local-government-button {
 	background-color: rgb(205, 173, 129);
 	font-size: 15px;

@@ -178,6 +178,7 @@
 </style>
 </head>
 <body>
+
 	<header>
 		<%
 		request.setAttribute("pageTitle", "지역 유기견 보호센터");

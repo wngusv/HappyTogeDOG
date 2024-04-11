@@ -43,7 +43,7 @@ margin-top: 110px;
 		%>
 		<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 	</header>
-	<main style="margin-bottom: 55px;">
+	<main style="height: 750px; margin-bottom: 55px;">
 		<div class="container mt-5">
 			<div class="row">
 				<div class="col-12">
