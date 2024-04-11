@@ -98,7 +98,7 @@
        // town 값이 null이 아닌 경우 town 출력, null인 경우 공백 출력
     String displayTown = (town != null) ? town : "";
     %>
-            <h2><%=displayTown %> 자유게시판</h2>
+            <h2 style="text-align: right;"><%=displayTown %> 게시판</h2>
             <!-- 검색 폼 -->
             <form action="board.jsp" method="get">
                <input type="text" name="find"

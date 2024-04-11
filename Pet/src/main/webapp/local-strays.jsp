@@ -16,7 +16,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>지역 유기동물</title>
 <style>
-@import	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
+	;
+
 .custom-body {
 	padding-top: 150px;
 	background-color: rgb(254, 247, 222);
@@ -41,8 +44,9 @@
 	/* Hover effect for transform */
 	transition: transform 0.3s ease;
 }
-.government-button{
-background-color: rgb(109, 95, 80);
+
+.government-button {
+	background-color: rgb(109, 95, 80);
 	font-size: 15px;
 	border-radius: 10px; /* Rounded border */
 	border: none; /* Remove default border */
@@ -57,6 +61,7 @@ background-color: rgb(109, 95, 80);
 	transition: background-color 0.3s ease;
 	transition: transform 0.3s ease;
 }
+
 .government-button:hover {
 	background-color: #ffcc00; /* Change background color on hover */
 	text-decoration: none;
@@ -66,7 +71,10 @@ background-color: rgb(109, 95, 80);
 }
 
 .row {
-	margin: 120px;
+	margin-top: 60px;
+	margin-bottom: 120px;
+	margin-left: 120px;
+	margin-right: 120px;
 }
 
 .local-government-button:hover {
@@ -84,12 +92,12 @@ background-color: rgb(109, 95, 80);
 }
 
 .card-text {
-font-size: 16px;
-color: #826D59;
+	font-size: 16px;
+	color: #826D59;
 }
 
 .card-title {
-font-size: 18px;
+	font-size: 18px;
 }
 
 .card:hover {
@@ -115,7 +123,6 @@ font-size: 18px;
 .pages {
 	text-align: center;
 }
-
 </style>
 </head>
 
@@ -144,9 +151,11 @@ font-size: 18px;
 			</div>
 			<div class="local-government-buttons" id="filteredGovernmentButtons">
 				<c:forEach var="government" items="${requestScope.localGovernment}">
-					<a
-						href="/AnimalServlet?cidoName=${ requestScope.currentCido }&orgName=${government.getOrgdownNm()}"
-						class="government-button">${government.getOrgdownNm()}</a>
+					<c:if test="${not government.getOrgdownNm().equals('가정보호')}">
+						<a
+							href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${government.getOrgdownNm()}"
+							class="government-button">${government.getOrgdownNm()}</a>
+					</c:if>
 				</c:forEach>
 			</div>
 
@@ -208,64 +217,95 @@ font-size: 18px;
 				%>
 			</div>
 
-<div class="pages">
-    <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=1" class="btn btn-primary" style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">&lt;&lt; First</a>
-    <c:choose>
-        <c:when test="${empty requestScope.nowLocate}">
-            <c:set var="startPage" value="${currentPage - 5}" />
-            <c:if test="${startPage lt 1}">
-                <c:set var="startPage" value="1" />
-            </c:if>
-            <c:set var="endPage" value="${currentPage + 5}" />
-            <c:if test="${endPage gt pages}">
-                <c:set var="endPage" value="${pages}" />
-            </c:if>
-            <c:if test="${currentPage gt 1}">
-                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${currentPage - 1}" class="btn btn-primary" style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">&lt; Previous</a>
-            </c:if>
-            <c:forEach begin="${startPage}" end="${endPage}" var="pageNumber">
-                <c:choose>
-                    <c:when test="${currentPage eq pageNumber}">
-                        <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pageNumber}" class="btn btn-secondary active" style="background-color: rgb(111, 94, 66); color: white; border-color: rgb(222, 226, 230);">${pageNumber}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pageNumber}" class="btn btn-primary" style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">${pageNumber}</a>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            <c:if test="${currentPage lt pages}">
-                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${currentPage + 1}" class="btn btn-primary" style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">Next &gt;</a>
-            </c:if>
-        </c:when>
-        <c:otherwise>
-            <c:set var="startPage" value="${currentPage - 5}" />
-            <c:if test="${startPage lt 1}">
-                <c:set var="startPage" value="1" />
-            </c:if>
-            <c:set var="endPage" value="${currentPage + 5}" />
-            <c:if test="${endPage gt pages}">
-                <c:set var="endPage" value="${pages}" />
-            </c:if>
-            <c:if test="${currentPage gt 1}">
-                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${currentPage - 1}" class="btn btn-primary">&lt; Previous</a>
-            </c:if>
-            <c:forEach begin="${startPage}" end="${endPage}" var="pageNumber">
-                <c:choose>
-                    <c:when test="${currentPage eq pageNumber}">
-                        <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${pageNumber}" class="btn btn-secondary active" style="background-color: rgb(111, 94, 66); color: white; border-color: rgb(222, 226, 230);">${pageNumber}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${pageNumber}" class="btn btn-primary" style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">${pageNumber}</a>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            <c:if test="${currentPage lt pages}">
-                <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${currentPage + 1}" class="btn btn-primary">Next &gt;</a>
-            </c:if>
-        </c:otherwise>
-    </c:choose>
-    <a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pages}" class="btn btn-primary" style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">Last &gt;&gt;</a>
-</div>
+			<div class="pages">
+				<a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=1"
+					class="btn btn-primary"
+					style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">&lt;&lt;
+					First</a>
+				<c:choose>
+					<c:when test="${empty requestScope.nowLocate}">
+						<c:set var="startPage" value="${currentPage - 5}" />
+						<c:if test="${startPage lt 1}">
+							<c:set var="startPage" value="1" />
+						</c:if>
+						<c:set var="endPage" value="${currentPage + 5}" />
+						<c:if test="${endPage gt pages}">
+							<c:set var="endPage" value="${pages}" />
+						</c:if>
+						<c:if test="${currentPage gt 1}">
+							<a
+								href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${currentPage - 1}"
+								class="btn btn-primary"
+								style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">&lt;
+								Previous</a>
+						</c:if>
+						<c:forEach begin="${startPage}" end="${endPage}" var="pageNumber">
+							<c:choose>
+								<c:when test="${currentPage eq pageNumber}">
+									<a
+										href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pageNumber}"
+										class="btn btn-secondary active"
+										style="background-color: rgb(111, 94, 66); color: white; border-color: rgb(222, 226, 230);">${pageNumber}</a>
+								</c:when>
+								<c:otherwise>
+									<a
+										href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pageNumber}"
+										class="btn btn-primary"
+										style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">${pageNumber}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${currentPage lt pages}">
+							<a
+								href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${currentPage + 1}"
+								class="btn btn-primary"
+								style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">Next
+								&gt;</a>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+						<c:set var="startPage" value="${currentPage - 5}" />
+						<c:if test="${startPage lt 1}">
+							<c:set var="startPage" value="1" />
+						</c:if>
+						<c:set var="endPage" value="${currentPage + 5}" />
+						<c:if test="${endPage gt pages}">
+							<c:set var="endPage" value="${pages}" />
+						</c:if>
+						<c:if test="${currentPage gt 1}">
+							<a
+								href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${currentPage - 1}"
+								class="btn btn-primary">&lt; Previous</a>
+						</c:if>
+						<c:forEach begin="${startPage}" end="${endPage}" var="pageNumber">
+							<c:choose>
+								<c:when test="${currentPage eq pageNumber}">
+									<a
+										href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${pageNumber}"
+										class="btn btn-secondary active"
+										style="background-color: rgb(111, 94, 66); color: white; border-color: rgb(222, 226, 230);">${pageNumber}</a>
+								</c:when>
+								<c:otherwise>
+									<a
+										href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${pageNumber}"
+										class="btn btn-primary"
+										style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">${pageNumber}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${currentPage lt pages}">
+							<a
+								href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${currentPage + 1}"
+								class="btn btn-primary">Next &gt;</a>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+				<a
+					href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pages}"
+					class="btn btn-primary"
+					style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">Last
+					&gt;&gt;</a>
+			</div>
 
 
 		</div>
@@ -282,7 +322,7 @@ font-size: 18px;
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	
+
 
 </body>
 
