@@ -53,7 +53,7 @@
 }
 
 .custom-button-color {
-	background-color: rgb(235, 136, 106); /* R: 235, G: 136, B: 106 */
+	background-color: rgb(88, 184, 117); /* R: 235, G: 136, B: 106 */
 	border-color: rgb(235, 136, 106); /* 버튼 테두리 색상도 같게 설정 */
 	color: white; /* 글씨 색상을 흰색으로 설정 */
 }
