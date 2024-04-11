@@ -13,7 +13,7 @@
         <form id="addressForm" action="/mypage/UpdateAddress.jsp" method="post">
             <div class="form-group">
                 <input type="text" id="sample6_postcode" name="postcode" class="form-control" placeholder="우편번호" readonly>
-                <button type="button" class="btn btn-primary mt-2" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
+                <button type="button" class="btn btn-primary mt-2" onclick="sample6_execDaumPostcode()">주소 찾기</button>
             </div>
             <div class="form-group">
                 <input type="text" id="sample6_address" name="address" class="form-control" placeholder="주소" readonly>

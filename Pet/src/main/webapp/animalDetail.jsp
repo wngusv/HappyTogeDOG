@@ -6,16 +6,20 @@
 <head>
 <meta charset="UTF-8" />
 <title>Animal Details</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
 /* 스타일링을 추가해도 됩니다. */
 .animal-details {
-	border: 1px solid #ccc;
 	border-radius: 5px;
-	padding: 20px;
+	padding-top: 180px;
 	margin: 10px;
 	text-align: center; /* 가운데 정렬 */
 	margin: 0 auto; /* 수평 가운데 정렬 */
 	width: 50%; /* 내용의 너비를 설정합니다. */
+}
+.details-body{
+	background-color: rgb(254, 247, 222);
 }
 #img{
 	width: 90%;
@@ -24,7 +28,11 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d4948263d9bbfca4b09376e303d5e533&libraries=services"></script>
 </head>
-<body>
+<body class="details-body">
+  <header>
+        <% request.setAttribute("pageTitle", "상세페이지"); %>
+        <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
+    </header>
 	<div class="animal-details">
 		<h2>동물 상세 정보</h2>
 		<%
