@@ -220,7 +220,7 @@ window.onload = function() {
       %>
       <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
    </header>
-   <main style="height: 750px; margin-bottom: 55px;">
+   <main style="margin-bottom: 55px;">
       <div class="container mt-5">
          <div class="row">
             <div id="region-list" style="text-align: center;">
@@ -297,12 +297,7 @@ window.onload = function() {
             </div>
          </div>
       </div>
-    <%@ include file="/WEB-INF/footer.jsp"%>
    </main>
-   <script>
-       
-          
-
-   </script>
+   <%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
