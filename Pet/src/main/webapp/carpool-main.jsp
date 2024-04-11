@@ -104,6 +104,7 @@
 <script>
 function checklogin() {
    var login = '<%=session.getAttribute("userId")%>';
+   var requestedRegion = '<%=session.getAttribute("locate")%>';
 if (login == "null" || login == "") {
    alert("로그인이 필요합니다.")
    window.location.href = 'login.jsp';
@@ -113,7 +114,6 @@ window.location.href = 'carpool-map.jsp';
 }
 
 function showSubRegions(event, region) {
-    console.log("Function called with region:", region); // 로그 추가
     event.preventDefault(); // 기본 앵커 이벤트 방지
 
     var regionsData = {
@@ -197,16 +197,35 @@ function filterPostsByRegion(region) {
 }
 
 window.onload = function() {
-    var regionLinks = document.querySelectorAll('.region-link');
-    regionLinks.forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // 기본 동작을 방지합니다.
-            regionLinks.forEach(function(otherLink) {
-                otherLink.classList.remove('highlight');
-            });
-            this.classList.add('highlight');
-        });
-    });
+	  var requestedRegion = '<%=session.getAttribute("locate")%>';
+	    
+	    // requestedRegion을 빈칸을 기준으로 앞과 뒤로 분리합니다.
+	    var regionParts = requestedRegion.split(' ');
+	    var city = regionParts[0]; // 앞의 값은 시를 나타냅니다.
+	    var district = regionParts[1]; // 뒤의 값은 시군구를 나타냅니다.
+	    
+	    // "시" 버튼을 찾아 클릭합니다.
+	    var cityButton = document.querySelector('.region-link[data-region="' + city + '"]');
+	    if (cityButton) {
+	        cityButton.click();
+	    }
+	    
+	    // 약간의 대기 시간을 두고 "시군구" 버튼을 클릭합니다.
+	    setTimeout(function() {
+	        // 모든 sub-region-link 요소를 찾습니다.
+	        var subRegionLinks = document.querySelectorAll('.sub-region-link');
+
+	        // foreach 루프를 통해 모든 sub-region-link 요소를 반복합니다.
+	        subRegionLinks.forEach(function(link) {
+	            // 각 요소의 텍스트 콘텐츠를 확인합니다.
+	            var linkText = link.textContent;
+
+	            // 만약 요소의 텍스트가 요청된 지역과 일치하면, 클릭 이벤트를 트리거합니다.
+	            if (linkText === district) {
+	                link.click();
+	            }
+	        });
+	    }, 10);
 };
 
 

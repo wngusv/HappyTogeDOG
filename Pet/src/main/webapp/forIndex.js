@@ -40,8 +40,8 @@ function showError(error) {
 }
 // 페이지가 로드될 때 위치 정보를 물어봅니다.
 window.onload = function() {
-    var userId = document.getElementById("userId").value;
-    if (userId != null && userId.trim() !== "") { // Check if userId is not empty
+      var userId = document.getElementById("userId").value;
+   if (userId != null && userId.trim() !== "") { // Check if userId is not empty
         getLocation(); // Call the getLocation function only if userId is not empty
     }
 };
