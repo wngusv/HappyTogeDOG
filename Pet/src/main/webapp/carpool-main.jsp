@@ -14,7 +14,7 @@
 
 <style>
 .row {
-	margin-top: 110px;
+	margin-top: 50px;
 }
 
 .rounded-border {
