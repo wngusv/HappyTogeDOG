@@ -36,14 +36,14 @@
 
 <main>
 	<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <form action="walk-jobs.jsp" method="get">
-                <div class="form-row align-items-end">
-                    <!-- 지역 콤보박스 -->
-                    <div class="form-group col-md-2" style="margin-top: 20px;">
-                        <label for="filterLocation" class="d-block">지역</label>
-                        <select class="form-control" id="filterLocation" name="filterLocation">
+		<div class="row">
+			<div class="col-md-12">
+				<form action="walk-jobs.jsp" method="get">
+					<div class="form-row align-items-end">
+						<!-- 지역 콤보박스 -->
+						<div class="form-group col-md-2" style="margin-top: 20px;">
+							<label for="filterLocation" class="d-block">지역</label> <select
+								class="form-control" id="filterLocation" name="filterLocation">
 								<option value=""
 									<%=(request.getParameter("filterLocation") == null) ? "selected" : ""%>>전체</option>
 								<option value="서울"
@@ -119,9 +119,9 @@
 						</div>
 
 						<!-- 근무요일 콤보박스 -->
-						 <div class="form-group col-md-2" style="margin-top: 20px;">
-                        <label for="filterDay" class="d-block">근무요일</label>
-                        <select class="form-control" id="filterDay" name="filterDay">
+						<div class="form-group col-md-2" style="margin-top: 20px;">
+							<label for="filterDay" class="d-block">근무요일</label> <select
+								class="form-control" id="filterDay" name="filterDay">
 								<option value=""
 									<%=(request.getParameter("filterDay") == null) ? "selected" : ""%>>전체</option>
 								<option value="평일"
@@ -134,9 +134,9 @@
 						</div>
 
 						<!-- 근무시간 콤보박스 -->
-						  <div class="form-group col-md-2" style="margin-top: 20px;">
-                        <label for="filterTime" class="d-block">근무시간</label>
-                        <select class="form-control" id="filterTime" name="filterTime">
+						<div class="form-group col-md-2" style="margin-top: 20px;">
+							<label for="filterTime" class="d-block">근무시간</label> <select
+								class="form-control" id="filterTime" name="filterTime">
 								<option value=""
 									<%=(request.getParameter("filterTime") == null) ? "selected" : ""%>>전체</option>
 								<option value="오전"
@@ -148,9 +148,9 @@
 							</select>
 						</div>
 
-					 <div class="form-group col-md-2" style="margin-top: 20px;">
-                        <label for="filterSize" class="d-block">견종</label>
-                        <select class="form-control" id="filterSize" name="filterSize">
+						<div class="form-group col-md-2" style="margin-top: 20px;">
+							<label for="filterSize" class="d-block">견종</label> <select
+								class="form-control" id="filterSize" name="filterSize">
 								<option value=""
 									<%=(request.getParameter("filterSize") == null) ? "selected" : ""%>>전체</option>
 								<option value="소형견(7kg이하)"
@@ -173,14 +173,18 @@
 						</div>
 
 						<!-- 검색 버튼 -->
-						 <div class="form-group col-md-2">
-                        <button type="submit" class="btn btn-primary" style="background-color: rgb(235, 111, 98); color: white; border-color: rgb(235, 111, 98); height: 38px;">검색</button>
-                    </div>
+						<div class="form-group col-md-2">
+							<button type="submit" class="btn btn-primary"
+								style="background-color: rgb(235, 111, 98); color: white; border-color: rgb(235, 111, 98); height: 38px;">검색</button>
+						</div>
 
 						<!-- 급여 높은 순 버튼 -->
-						  <div class="form-group col-md-2">
-                        <a href="walk-jobs.jsp?sortBy=pay" class="btn btn-primary float-right" style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">▼ 급여 높은 순</a>
-                    </div>
+						<div class="form-group col-md-2">
+							<a href="walk-jobs.jsp?sortBy=pay"
+								class="btn btn-primary float-right"
+								style="background-color: rgb(88, 184, 117); border-color: rgb(88, 184, 117);">▼
+								급여 높은 순</a>
+						</div>
 
 					</div>
 				</form>
@@ -216,6 +220,21 @@
 							String filterDay = request.getParameter("filterDay");
 							String filterTime = request.getParameter("filterTime");
 							String filterSize = request.getParameter("filterSize");
+							if (filterLocation == null) {
+							    filterLocation = "";
+							}
+
+							if (filterDay == null) {
+							    filterDay = "";
+							}
+
+							if (filterTime == null) {
+							    filterTime = "";
+							}
+
+							if (filterSize == null) {
+							    filterSize = "";
+							}
 							String query;
 							PreparedStatement ps;
 
@@ -223,6 +242,7 @@
 							String sortBy = request.getParameter("sortBy");
 
 							if (filterLocation != null && !filterLocation.isEmpty()) {
+								
 								query = "SELECT * FROM pet.dogwalker WHERE address LIKE ?";
 								if (filterDay != null && !filterDay.isEmpty()) {
 							query += " AND day=?";
@@ -283,12 +303,40 @@
 						<%
 						}
 						// 페이징 처리
-						String countQuery = "SELECT COUNT(*) AS total FROM pet.dogwalker";
-						PreparedStatement countPs = connection.prepareStatement(countQuery);
-						ResultSet countRs = countPs.executeQuery();
+						PreparedStatement countps;
+						String countQuery;
+						if (filterLocation != null && !filterLocation.isEmpty()) {
+						countQuery = "SELECT COUNT(*) AS total FROM pet.dogwalker WHERE address LIKE ?";
+						if (filterDay != null && !filterDay.isEmpty()) {
+							countQuery += " AND day=?";
+						}
+						if (filterTime != null && !filterTime.isEmpty()) {
+							countQuery += " AND time=?";
+						}
+						if (filterSize != null && !filterSize.isEmpty()) {
+							countQuery += " AND size=?";
+						}
+						countps = connection.prepareStatement(countQuery);
+						countps.setString(1, "%" + filterLocation + "%");
+						int parameterIndex = 2;
+						if (filterDay != null && !filterDay.isEmpty()) {
+							countps.setString(parameterIndex++, filterDay);
+						}
+						if (filterTime != null && !filterTime.isEmpty()) {
+							countps.setString(parameterIndex++, filterTime);
+						}
+						if (filterSize != null && !filterSize.isEmpty()) {
+							countps.setString(parameterIndex++, filterSize);
+						}
+						} else {
+						countQuery = "SELECT COUNT(*) AS total FROM pet.dogwalker";
+						countps = connection.prepareStatement(countQuery);
+						}
+						ResultSet countRs = countps.executeQuery();
 						countRs.next();
 						int totalRecords = countRs.getInt("total");
 						int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
+						System.out.println(totalPages);
 						%>
 					</tbody>
 				</table>
@@ -302,7 +350,7 @@
 								if (currentPage > 1) {
 								%>
 								<li class="page-item"><a class="page-link"
-									href="walk-jobs.jsp?currentPage=<%=currentPage - 1%>"
+									href="walk-jobs.jsp?currentPage=<%=currentPage - 1%>&filterLocation=<%=URLEncoder.encode(filterLocation, "UTF-8")%>&filterDay=<%=URLEncoder.encode(filterDay, "UTF-8")%>&filterTime=<%=URLEncoder.encode(filterTime, "UTF-8")%>&filterSize=<%=URLEncoder.encode(filterSize, "UTF-8")%>"
 									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 								</a></li>
 								<%
@@ -312,7 +360,8 @@
 								for (int i = 1; i <= totalPages; i++) {
 								%>
 								<li class="page-item <%=i == currentPage ? "active" : ""%>">
-									<a class="page-link" href="walk-jobs.jsp?currentPage=<%=i%>"><%=i%></a>
+									<a class="page-link"
+									href="walk-jobs.jsp?currentPage=<%=i%>&filterLocation=<%=URLEncoder.encode(filterLocation, "UTF-8")%>&filterDay=<%=URLEncoder.encode(filterDay, "UTF-8")%>&filterTime=<%=URLEncoder.encode(filterTime, "UTF-8")%>&filterSize=<%=URLEncoder.encode(filterSize, "UTF-8")%>"><%=i%></a>
 								</li>
 								<%
 								}
@@ -321,7 +370,7 @@
 								if (currentPage < totalPages) {
 								%>
 								<li class="page-item"><a class="page-link"
-									href="walk-jobs.jsp?currentPage=<%=currentPage + 1%>"
+									href="walk-jobs.jsp?currentPage=<%=currentPage + 1%>&filterLocation=<%=URLEncoder.encode(filterLocation, "UTF-8")%>&filterDay=<%=URLEncoder.encode(filterDay, "UTF-8")%>&filterTime=<%=URLEncoder.encode(filterTime, "UTF-8")%>&filterSize=<%=URLEncoder.encode(filterSize, "UTF-8")%>"
 									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 								</a></li>
 								<%
@@ -351,7 +400,7 @@
 			<%
 			} catch (Exception e) {
 			out.println("오류가 발생했습니다. 오류 메시지: " + e.getMessage());
-			}
+			} 
 			%>
 		</div>
 	</div>
