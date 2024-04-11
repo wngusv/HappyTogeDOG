@@ -27,7 +27,6 @@ public class AnimalServlet extends HttpServlet {
 		String orgName = request.getParameter("orgName");
 		String cidoName = request.getParameter("cidoName");
 		String sessionLocate = (String) request.getSession().getAttribute("locate");
-		System.out.println(sessionLocate);
 //		String realLocate = makeRealLocate(sessionLocate);
 //		System.out.println(realLocate);
 		String page = request.getParameter("page");
