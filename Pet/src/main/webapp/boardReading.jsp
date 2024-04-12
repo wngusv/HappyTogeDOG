@@ -106,13 +106,13 @@
 
 /* 댓글 작성자 아이디 라벨 스타일 */
 .comment-section .user-id {
-	background-color: #007bff; /* 배경색 */
-	color: white; /* 텍스트 색상 */
-	padding: 5px 10px; /* 패딩 */
-	border-radius: 15px; /* 라벨 모서리 둥글기 */
-	font-size: 0.8rem; /* 폰트 크기 */
-	display: inline-block; /* 인라인 블록 요소로 변경 */
-	margin-bottom: 10px; /* 아래 여백 */
+	 background-color: #004225; /* 진한 녹색 배경 */
+    color: white; 
+    padding: 5px 10px; /* 패딩 유지 */
+    border-radius: 5px; /* 모서리 둥글기 유지 */
+    font-size: 0.8rem; /* 폰트 크기 유지 */
+    display: inline-block; /* 디스플레이 유형 유지 */
+    margin-bottom: 10px; /* 아래 여백 유지 */
 }
 
 /* 댓글 입력 박스 스타일 */
@@ -172,6 +172,7 @@
 	outline: none;
 	box-shadow: none;
 }
+
 </style>
 <jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 </head>
@@ -325,11 +326,12 @@
 
 						<textarea id="comment-input" name="comment" class="form-control"
 							rows="3" placeholder="댓글을 입력하세요..."></textarea>
-						<br>
 						<button type="submit" class="btn btn-primary mt-2"style="background-color: rgb(111, 94, 75); border-color: rgb(111, 94, 75);">등록</button>
 					</form>
 				</div>
 
+				<br>
+				<br>
 				<br>
 				<button type="button" class="custom-green-button"
 					onclick="sortComments('latest')">최신순</button>

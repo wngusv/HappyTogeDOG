@@ -28,7 +28,7 @@
     <form method="post" action="form_send.jsp" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">제목:</label>
-            <input type="text" class="form-control" id="title" placeholder="제목" name="title" maxlength="20" value="">
+            <input type="text" class="form-control" id="title" placeholder="제목" name="title" maxlength="40" value="">
         </div>
         <div class="form-group">
             <label for="dogSize">견종(크기):</label>
