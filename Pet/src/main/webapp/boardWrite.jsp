@@ -41,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label for="titleInput">제목</label>
-                <input type="text" name="title" id="titleInput" class="form-control" placeholder="제목을 입력하세요." maxlength="20" required>
+                <input type="text" name="title" id="titleInput" class="form-control" placeholder="제목을 입력하세요." maxlength="80" required>
                 <div class="invalid-feedback">제목을 입력해주세요.</div>
             </div>
             <div class="form-group">
