@@ -233,7 +233,6 @@ footer {
 
 			</section>
 			<div id="shelter-info"></div>
-			<div id="pagination" style="margin-top: 30px"></div>
 		</div>
 
 	</main>
@@ -611,6 +610,9 @@ footer {
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+			<div style="margin-bottom: 80px">
+			<div id="pagination" style="margin-top: 30px"></div>
+			</div>
 		<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
