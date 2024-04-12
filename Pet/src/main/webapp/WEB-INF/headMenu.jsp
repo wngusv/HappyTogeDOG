@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <body>
 
 	<div class="header">
-		<a href="index.jsp"> <img src="/images/Group 35.png" alt="로고 이미지">
+		<a href="../index.jsp"> <img src="/images/Group 35.png" alt="로고 이미지">
 		</a>
 		<ul class="nav-menu">
 			<li><a href="../pet-facilities.jsp">주변 반려견 시설</a></li>
