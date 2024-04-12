@@ -1,4 +1,4 @@
-package userManagement;
+package UserManagement;
 
 import java.io.IOException;
 import java.net.URLEncoder;

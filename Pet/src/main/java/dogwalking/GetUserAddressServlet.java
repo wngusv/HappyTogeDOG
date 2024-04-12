@@ -2,11 +2,13 @@ package dogwalking;
 
 
 import Util.MyWebContextListener;
-import userManagement.User;
-import userManagement.UserDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import UserManagement.User;
+import UserManagement.UserDAO;
+
 import javax.servlet.annotation.*;
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package userManagement;
+package UserManagement;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
