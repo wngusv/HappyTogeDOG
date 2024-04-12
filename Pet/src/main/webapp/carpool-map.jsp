@@ -583,7 +583,7 @@
 					map: map
 				});
 
-				var REST_API_KEY = '338d403a243e055727945750ef6920a1';
+				var REST_API_KEY = '5e4bc1ae42a6cab0fa10bc8e17bfb1c1';
 				var url = 'https://apis-navi.kakaomobility.com/v1/directions?origin=' + startLng + ',' + startLat + '&destination=' + endLng + ',' + endLat;
 
 
