@@ -1,4 +1,4 @@
-package SignUp;
+package userManagement;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,16 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import SignIn.User;
-import SignUp.SignUpDAO;
-
 //@WebServlet("/SignupServlet")
 public class ProcessSignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private SignUpDAO SignUpDAO;
+	private UserDAO userDAO;
 
 	public void init() {
-		SignUpDAO = new SignUpDAO();
+		userDAO = new UserDAO();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -31,7 +28,7 @@ public class ProcessSignupServlet extends HttpServlet {
 
 		User user = new User(id, password, name, phone, address, address_detail);
 		try {
-			SignUpDAO.signUp(user);
+			userDAO.signUp(user);
 			// 성공 메시지를 세션에 저장
 			
 		} catch (Exception e) {

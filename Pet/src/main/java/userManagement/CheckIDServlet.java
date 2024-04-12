@@ -1,4 +1,4 @@
-package SignUp;
+package userManagement;
 
 import java.io.IOException;
 
@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/CheckIDServlet")
 public class CheckIDServlet extends	HttpServlet {
 	 private static final long serialVersionUID = 1L;
-	    private SignUpDAO signUpDAO;
+	    private UserDAO userDAO;
 
 	    public void init() {
-	        signUpDAO = new SignUpDAO();
+	    	userDAO = new UserDAO();
 	    }
 
 	    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	    	req.setCharacterEncoding("UTF-8");
 	    	
 	    	String id = req.getParameter("id");
-	        boolean isDuplicate = signUpDAO.checkID(id);
+	        boolean isDuplicate = userDAO.checkID(id);
 	        if (isDuplicate) {
 	        	req.setCharacterEncoding("UTF-8");
 	        	System.out.println("이미사용중인아이디");

@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import SignIn.User;
 import Util.MyWebContextListener;
-import dao.UserDAO;
+import userManagement.User;
+import userManagement.UserDAO;
 
 @WebServlet("/comment.do")
 public class comment extends HttpServlet { // 유저가 쓴 댓글 action으로 가져오기 => 디비에도 넣고, 리다이렉트 게시글보여주는 jsp이동 => 그 게시글 댓글 보이게

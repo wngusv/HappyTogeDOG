@@ -1,5 +1,7 @@
+<%@page import="userManagement.UserDAO"%>
+<%@page import="userManagement.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*,Util.MyWebContextListener,dao.UserDAO,SignIn.User"%>
+<%@ page import="java.sql.*,Util.MyWebContextListener,userManagement.UserDAO,userManagement.User"%>
 <!DOCTYPE html>
 <html>
 <head>

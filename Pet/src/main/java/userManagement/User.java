@@ -1,4 +1,4 @@
-package SignIn;
+package userManagement;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

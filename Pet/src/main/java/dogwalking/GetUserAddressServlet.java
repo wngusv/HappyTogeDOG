@@ -1,9 +1,10 @@
 package dogwalking;
 
 
-import SignIn.User;
-import dao.UserDAO;
 import Util.MyWebContextListener;
+import userManagement.User;
+import userManagement.UserDAO;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

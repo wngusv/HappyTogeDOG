@@ -1,4 +1,4 @@
-package SignIn;
+package userManagement;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 //@WebServlet("api/findId")
 public class FindIDServlet extends HttpServlet {
-	FindIDDAO findIDDAo = new FindIDDAO();
+	UserDAO userDAO = new UserDAO();
 
 
 }

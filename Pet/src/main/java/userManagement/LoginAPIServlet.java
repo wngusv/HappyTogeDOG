@@ -1,4 +1,4 @@
-package SignIn;
+package userManagement;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/api/login")
 
 public class LoginAPIServlet extends HttpServlet {
-	LoginDAO loginDao = new LoginDAO();
+	UserDAO loginDao = new UserDAO();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

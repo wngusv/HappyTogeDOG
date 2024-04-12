@@ -3,13 +3,12 @@ package SMS;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import SignIn.FindIDDAO;
+import userManagement.UserDAO;
 
 public class VerifyCodeServlet_ID extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,8 +28,8 @@ public class VerifyCodeServlet_ID extends HttpServlet {
 	        String userPhone = request.getParameter("phone");
 
 	        // 데이터베이스에서 사용자 아이디를 찾습니다.
-	        FindIDDAO findIDDAO = new FindIDDAO();
-	        String userFindId = findIDDAO.findID(userName, userPhone);
+	        UserDAO userDAO = new UserDAO();
+	        String userFindId = userDAO.findID(userName, userPhone);
 
 	        if (userFindId != null) {
 	            response.getWriter().write(" 찾은 아이디: " + userFindId);
