@@ -308,7 +308,7 @@ window.onload = function() {
 		if (selectedCategory) {
 			for (var i = 0; i < categorySelect.options.length; i++) {
 				if (categorySelect.options[i].value === selectedCategory) {
-					categorySelect.selectedIndex = i;
+					categorySelect.selectedIndex = i
 					break;
 				}
 			}
