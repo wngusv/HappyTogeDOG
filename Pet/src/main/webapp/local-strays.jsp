@@ -26,7 +26,6 @@
 	color: rgb(59, 38, 14);
 }
 
-
 .local-government-button {
 	background-color: rgb(205, 173, 129);
 	font-size: 15px;
@@ -113,11 +112,11 @@
 	height: 0px;
 }
 
-.local-government-button.highlight {
-	background-color: rgb(255, 144, 61);
-	text-decoration: bold;
-	color: rgb(59, 38, 14);
-	font-size: 15px;
+.local-government-button.highlighted {
+  background-color: rgb(255, 144, 61);
+  text-decoration: bold;
+  color: rgb(59, 38, 14);
+  font-size: 15px;
 }
 
 .pages {
@@ -139,21 +138,25 @@
 		<div class="custom-container">
 			<div class="local-government-buttons">
 				<a href="/AnimalServlet?cidoName=all"
-					class="local-government-button">전체</a>
+					class="local-government-button" onclick="highlightButton(event)">전체</a>
 				<c:forEach var="Cido" items="${requestScope.Cido}">
 					<a id="${Cido.getOrgCd()}" class="local-government-button"
-						href="/AnimalServlet?cidoName=${Cido.getOrgdownNm()}">${Cido.getOrgdownNm()}</a>
+						href="/AnimalServlet?cidoName=${Cido.getOrgdownNm()}"
+						onclick="highlightButton(event)">${Cido.getOrgdownNm()}</a>
 				</c:forEach>
 			</div>
-			<div class="local-government-buttons" id="filteredGovernmentButtons" style="padding-top: 40px;">
+			<div class="local-government-buttons" id="filteredGovernmentButtons"
+				style="padding-top: 40px;">
 				<c:forEach var="government" items="${requestScope.localGovernment}">
 					<c:if test="${not government.getOrgdownNm().equals('가정보호')}">
 						<a
 							href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${government.getOrgdownNm()}"
-							class="government-button">${government.getOrgdownNm()}</a>
+							class="government-button" onclick="highlightButton(event)">
+							${government.getOrgdownNm()} </a>
 					</c:if>
 				</c:forEach>
 			</div>
+
 
 			<div class="row">
 				<%
@@ -216,8 +219,7 @@
 			<div class="pages">
 				<a href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=1"
 					class="btn btn-primary"
-					style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">&lt;&lt;
-					First</a>
+					style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">&lt;&lt;</a>
 				<c:choose>
 					<c:when test="${empty requestScope.nowLocate}">
 						<c:set var="startPage" value="${currentPage - 5}" />
@@ -232,8 +234,7 @@
 							<a
 								href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${currentPage - 1}"
 								class="btn btn-primary"
-								style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">&lt;
-								Previous</a>
+								style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">&lt;</a>
 						</c:if>
 						<c:forEach begin="${startPage}" end="${endPage}" var="pageNumber">
 							<c:choose>
@@ -255,7 +256,7 @@
 							<a
 								href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${currentPage + 1}"
 								class="btn btn-primary"
-								style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">Next
+								style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">
 								&gt;</a>
 						</c:if>
 					</c:when>
@@ -271,7 +272,7 @@
 						<c:if test="${currentPage gt 1}">
 							<a
 								href="/AnimalServlet?cidoName=${requestScope.currentCido}&orgName=${requestScope.nowLocate}&page=${currentPage - 1}"
-								class="btn btn-primary">&lt; Previous</a>
+								class="btn btn-primary">&lt;</a>
 						</c:if>
 						<c:forEach begin="${startPage}" end="${endPage}" var="pageNumber">
 							<c:choose>
@@ -299,7 +300,7 @@
 				<a
 					href="/AnimalServlet?cidoName=${requestScope.currentCido}&page=${pages}"
 					class="btn btn-primary"
-					style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">Last
+					style="background-color: white; color: rgb(111, 94, 66); border-color: rgb(222, 226, 230);">
 					&gt;&gt;</a>
 			</div>
 
@@ -312,8 +313,76 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+	window.onload = function() {
+	    var regionLinks = document.querySelectorAll('.local-government-button, .government-button');
+	    
+	    // 각 링크에 클릭 이벤트 리스너 추가
+	    regionLinks.forEach(function(link) {
+	        link.addEventListener('click', function() {
+	            // 선택된 링크의 ID를 localStorage에 저장
+	            localStorage.setItem('highlightedLink', this.id);
+	            
+	            // 클릭된 버튼이 local-government-button 클래스를 갖는지 확인하여 cidoName 저장
+	            var cidoName = null;
+	            if (this.classList.contains('local-government-button')) {
+	                cidoName = this.getAttribute('id');
+	            }
+	            
+	            // 클릭된 버튼이 government-button 클래스를 갖는지 확인하여 orgName 저장
+	            var orgName = null;
+	            if (this.classList.contains('government-button')) {
+	                orgName = this.innerText.trim();
+	            }
+	            
+	            // cidoName과 orgName을 localStorage에 저장
+	            localStorage.setItem('cidoName', cidoName);
+	            localStorage.setItem('orgName', orgName);
+	            
+	            // 모든 버튼에서 하이라이트 제거
+	            regionLinks.forEach(function(link) {
+	                link.classList.remove('highlighted');
+	            });
+	            
+	            // 클릭된 버튼에 하이라이트 추가
+	            this.classList.add('highlighted');
+	        });
+	    });
+	    
+	    // 페이지 로드 시 localStorage에서 ID를 읽어 해당 요소 하이라이트
+	    var highlightedLink = localStorage.getItem('highlightedLink');
+	    if (highlightedLink) {
+	        var elementToHighlight = document.getElementById(highlightedLink);
+	        if (elementToHighlight) {
+	            elementToHighlight.classList.add('highlighted');
+	        }
+	    }
+	    
+	    // 페이지 로드 시 localStorage에서 cidoName과 orgName을 읽어 버튼 활성화
+	    var cidoName = localStorage.getItem('cidoName');
+	    var orgName = localStorage.getItem('orgName');
+	    if (cidoName) {
+	        var elementToHighlight = document.querySelector(`.local-government-button[id="${cidoName}"]`);
+	        if (elementToHighlight) {
+	            elementToHighlight.classList.add('highlighted');
+	        }
+	    }
+	    if (orgName) {
+	        var governmentButtons = document.querySelectorAll('.government-button');
+	        governmentButtons.forEach(function(button) {
+	            if (button.innerText.trim() === orgName) {
+	                button.classList.add('highlighted');
+	            }
+	        });
+	    }
+	};
 
-<%@ include file="/WEB-INF/footer.jsp"%>
+
+
+	</script>
+
+
+	<%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 
 </html>
