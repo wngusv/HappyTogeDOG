@@ -1,10 +1,10 @@
-<%@page import="board.contentDAO"%>
+<%@page import="Board.contentDAO"%>
 <%@page import="Util.MyWebContextListener"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
 <%@page import="java.util.List"%>
-<%@page import="board.contentDTO"%>
+<%@page import="Board.contentDTO"%>
 <%@ include file="/floating-banner.jsp"%>
 <!DOCTYPE html>
 <html>

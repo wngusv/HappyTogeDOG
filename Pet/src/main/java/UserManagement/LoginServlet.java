@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/api/login")
 
-public class LoginAPIServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 	UserDAO loginDao = new UserDAO();
 
 	@Override
