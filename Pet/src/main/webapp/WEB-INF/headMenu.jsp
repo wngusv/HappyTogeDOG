@@ -130,17 +130,17 @@ document.addEventListener("DOMContentLoaded", function() {
 						style="list-style: none;"><span id="username-greeting"><img
 							src="/images/헬로5.png" alt="마이페이지">ㅤ안녕하세요,
 							${sessionScope.userName}님!</span></li>
-					<li style="list-style: none;"><a href="mypage.jsp"><img
+					<li style="list-style: none;"><a href="../mypage.jsp"><img
 							src="/images/마이페이지4.png" alt="마이페이지">ㅤ마이페이지</a></li>
 					<li style="list-style: none;"><a id="logout-button"
-						href="./api/logout"><img src="/images/로그아웃3.png" alt="로그아웃">ㅤ로그아웃</a></li>
+						href="../api/logout"><img src="/images/로그아웃3.png" alt="로그아웃">ㅤ로그아웃</a></li>
 
 				</c:when>
 				<c:otherwise>
 					<li style="list-style: none;"><a id="login-button"
-						href="login.jsp"><img src="/images/로그인3.png" alt="로그인">ㅤ로그인</a></li>
+						href="../login.jsp"><img src="/images/로그인3.png" alt="로그인">ㅤ로그인</a></li>
 					<li style="list-style: none;"><a id="signup-button"
-						href="signupform.jsp"><img src="/images/회원가입3.png" alt="회원가입">ㅤ회원가입</a></li>
+						href="../signupform.jsp"><img src="/images/회원가입3.png" alt="회원가입">ㅤ회원가입</a></li>
 				</c:otherwise>
 			</c:choose>
 		</ul>

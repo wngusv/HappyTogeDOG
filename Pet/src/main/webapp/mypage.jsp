@@ -5,24 +5,41 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
-<header class="my-header">
     <meta charset="UTF-8">
     <title>마이페이지</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<header class="my-header">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<jsp:include page="/WEB-INF/headMenu.jsp"></jsp:include>
 </header>
+
 <style>
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.content-wrap {
+	margin-top: 100px;
+    min-height: 100%;
+    /* Flexbox 설정 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 컨텐츠를 상단과 하단으로 분리 */
+}
+
+footer {
+    margin-top: auto; /* 푸터를 하단에 고정 */
+}
     .list-group-item {
         border-right: 1px solid #ccc; /* 수직선 스타일 지정 */
         padding-right: 10px; /* 오른쪽 여백 추가 */
     }
 </style>
 <body style="padding-top: 100px; background-color: rgb(254, 247, 222);">
+ <div class="content-wrap">
     <div class="container">
-        <h1 class="mt-5">마이페이지</h1>
-        <main>
         <%
         try (Connection connection = MyWebContextListener.getConnection();) {
             String userId = (String) session.getAttribute("userId");
@@ -242,6 +259,7 @@
             }
         }
     </script>
+    </div>
     <%@ include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
