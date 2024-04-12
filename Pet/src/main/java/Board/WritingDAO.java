@@ -1,4 +1,4 @@
-package board;
+package Board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

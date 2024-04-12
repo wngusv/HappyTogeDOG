@@ -1,4 +1,4 @@
-package board;
+package Board;
 
 public class WritingDTO {
 	// 멤버 변수

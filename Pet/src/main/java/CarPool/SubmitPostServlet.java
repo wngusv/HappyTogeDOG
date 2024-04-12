@@ -1,4 +1,4 @@
-package carpool;
+package CarPool;
 
 import java.io.BufferedReader;
 import java.io.IOException;

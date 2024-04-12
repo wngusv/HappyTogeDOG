@@ -1,4 +1,4 @@
-package carpool;
+package CarPool;
 
 import lombok.Builder;
 import lombok.Data;

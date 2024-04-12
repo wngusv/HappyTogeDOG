@@ -1,4 +1,4 @@
-package dogwalking;
+package DogWalking;
 
 
 import Util.MyWebContextListener;
