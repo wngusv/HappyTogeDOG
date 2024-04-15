@@ -17,7 +17,7 @@
 
 	<servlet>
 		<servlet-name>ProcessSignupServlet</servlet-name>
-		<servlet-class>SignUp.ProcessSignupServlet</servlet-class>
+		<servlet-class>UserManagement.ProcessSignupServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ProcessSignupServlet</servlet-name>
@@ -61,7 +61,7 @@
 
 	<context-param>
 		<param-name>CHAT_ADDR</param-name>
-		<param-value>ws://192.168.0.110:8080</param-value>
+		<param-value>ws://192.168.0.106:8080</param-value>
 	</context-param>
 
 	<context-param>
