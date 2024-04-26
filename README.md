@@ -1,5 +1,6 @@
 ## <h1 align = "center">Happy togeDOG</h1>
 <p align = "center">
+![해피투게독](https://github.com/wngusv/HappyTogeDOG/assets/154950245/a6d49175-0984-44eb-97c2-a1b43b4718b4)
 
 </p>
 
