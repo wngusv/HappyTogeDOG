@@ -45,6 +45,9 @@
 ![유기 동물](https://github.com/wngusv/HappyTogeDOG/assets/154950245/5cdd163b-c713-427c-922b-c0e0fca6bcf9)
 ![유기 동물2](https://github.com/wngusv/HappyTogeDOG/assets/154950245/ca1fbd98-905c-4d6e-9a2f-659ddc9d1ff1)
 
+### [동물보호센터 조회]
+![동물 보호 센터](https://github.com/wngusv/HappyTogeDOG/assets/154950245/31596bba-0e53-45fb-89cc-6ecff5d85b53)
+
 ### [반려견 카풀]
 ![카풀 등록](https://github.com/wngusv/HappyTogeDOG/assets/154950245/9cb86300-92b6-4b55-8e08-e2b0d663bf95)
 ![카풀 목록](https://github.com/wngusv/HappyTogeDOG/assets/154950245/c534f4c0-a0b5-4de5-98e4-20592214b792)
@@ -60,41 +63,10 @@
 ![산책아르바이트게시판설명](https://github.com/wngusv/HappyTogeDOG/assets/154950245/3bac47e1-dc04-4276-8ab7-75097817ab61)
 
 
-### []
-
-
-
-### []
-- 
-- 
-- 
-
-
-### []
-
-- 
-
-
-
-### []
-
-- 
-
-
-
-### []
-
-- 
-
-
-
-### []
-
-- 
-
-### []
-
-
+### [플로팅 배너]
+![배너](https://github.com/wngusv/HappyTogeDOG/assets/154950245/6218f88f-ffc2-477d-8859-1f40a1d11e89)
+![후원 배너](https://github.com/wngusv/HappyTogeDOG/assets/154950245/506ab418-afff-43fa-9c01-a72ce7fdfa74)
+![입양 배너 링크](https://github.com/wngusv/HappyTogeDOG/assets/154950245/b2659caa-dd89-4c15-a267-4738147f54ee)
 
 
 
