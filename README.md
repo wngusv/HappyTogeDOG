@@ -38,7 +38,7 @@
 
 ### [주변 반려견 시설]
 
-- 
+ 
 ![주변 반려견 시설](https://github.com/wngusv/HappyTogeDOG/assets/154950245/29fd1f67-721a-4d39-8004-1a027b70e632)
 
 ### [유기동물 조회]
@@ -57,7 +57,7 @@
 
 ### [산책아르바이트 및 게시판]
 
-- 
+ 
 ![산책 아르바이트](https://github.com/wngusv/HappyTogeDOG/assets/154950245/5b20c352-c239-45ef-8571-6f93dcbedf63)
 ![게시판](https://github.com/wngusv/HappyTogeDOG/assets/154950245/4d94c1ec-7743-429e-b621-c36d096e3d99)
 ![산책아르바이트게시판설명](https://github.com/wngusv/HappyTogeDOG/assets/154950245/3bac47e1-dc04-4276-8ab7-75097817ab61)
